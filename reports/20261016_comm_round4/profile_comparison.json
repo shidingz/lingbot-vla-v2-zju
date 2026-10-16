@@ -1,0 +1,1547 @@
+{
+  "round3_baseline": {
+    "ranks": 8,
+    "steps_per_rank": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "kernels_per_update": 36747.25,
+    "official_mean_s_per_step": {
+      "Computing_s": 1.3918689465000025,
+      "Communication(Not Overlapped)_s": 1.0498502738125948,
+      "Overlapped_s": 0.4544735830624054,
+      "Communication_s": 1.5043238568750001,
+      "Free_s": 0.7176979236251828,
+      "Stage_s": 3.159464609375,
+      "Bubble_s": 0.0,
+      "Communication(Not Overlapped and Exclude Receive)_s": 1.0498502738125948,
+      "Preparing_s": 0.0086009140625
+    },
+    "kernel_types": {
+      "Abs": {
+        "calls_per_step": 74.0,
+        "duration_sum_s_per_step": 0.000115482
+      },
+      "Add": {
+        "calls_per_step": 2405.0,
+        "duration_sum_s_per_step": 0.0738199595625
+      },
+      "Addcdiv": {
+        "calls_per_step": 376.0,
+        "duration_sum_s_per_step": 0.0007987573125
+      },
+      "AsStrided": {
+        "calls_per_step": 224.0,
+        "duration_sum_s_per_step": 0.0050074723125
+      },
+      "Axpy": {
+        "calls_per_step": 838.0,
+        "duration_sum_s_per_step": 0.0097693308125
+      },
+      "BatchMatMulV2": {
+        "calls_per_step": 840.0,
+        "duration_sum_s_per_step": 0.1370441718125
+      },
+      "BroadcastTo": {
+        "calls_per_step": 493.0,
+        "duration_sum_s_per_step": 0.006008995
+      },
+      "Cast": {
+        "calls_per_step": 5952.0,
+        "duration_sum_s_per_step": 0.0816765010625
+      },
+      "ClipByValueV2": {
+        "calls_per_step": 138.0,
+        "duration_sum_s_per_step": 0.000509688
+      },
+      "ConcatD": {
+        "calls_per_step": 554.0,
+        "duration_sum_s_per_step": 0.02946780925
+      },
+      "Conv2D": {
+        "calls_per_step": 145.0,
+        "duration_sum_s_per_step": 0.009338713375
+      },
+      "Conv2DTranspose": {
+        "calls_per_step": 24.0,
+        "duration_sum_s_per_step": 0.001574249125
+      },
+      "Cos": {
+        "calls_per_step": 38.0,
+        "duration_sum_s_per_step": 0.0005887525
+      },
+      "Cumsum": {
+        "calls_per_step": 39.0,
+        "duration_sum_s_per_step": 0.0013185105
+      },
+      "DSARandomNormal": {
+        "calls_per_step": 1.0,
+        "duration_sum_s_per_step": 4.2575625000000005e-06
+      },
+      "DSARandomUniform": {
+        "calls_per_step": 2.0,
+        "duration_sum_s_per_step": 2.1775e-06
+      },
+      "Equal": {
+        "calls_per_step": 83.0,
+        "duration_sum_s_per_step": 0.0001779306875
+      },
+      "Exp": {
+        "calls_per_step": 40.0,
+        "duration_sum_s_per_step": 9.4051875e-05
+      },
+      "Fill": {
+        "calls_per_step": 257.0,
+        "duration_sum_s_per_step": 0.0003608779375
+      },
+      "FlashAttentionScore": {
+        "calls_per_step": 132.0,
+        "duration_sum_s_per_step": 0.0395453471875
+      },
+      "FlashAttentionScoreGrad": {
+        "calls_per_step": 36.0,
+        "duration_sum_s_per_step": 0.07138031025
+      },
+      "FloorDiv": {
+        "calls_per_step": 36.0,
+        "duration_sum_s_per_step": 0.0021904515625
+      },
+      "FloorMod": {
+        "calls_per_step": 2.0,
+        "duration_sum_s_per_step": 6.035625e-06
+      },
+      "ForeachAddScalar": {
+        "calls_per_step": 8.0,
+        "duration_sum_s_per_step": 0.000101545375
+      },
+      "ForeachAddcmulScalar": {
+        "calls_per_step": 24.0,
+        "duration_sum_s_per_step": 0.00033115725
+      },
+      "ForeachCopy": {
+        "calls_per_step": 154.0,
+        "duration_sum_s_per_step": 0.009132034375
+      },
+      "ForeachDivScalarList": {
+        "calls_per_step": 8.0,
+        "duration_sum_s_per_step": 0.0001147869375
+      },
+      "ForeachLerpScalar": {
+        "calls_per_step": 16.0,
+        "duration_sum_s_per_step": 0.0002366535625
+      },
+      "ForeachMulScalar": {
+        "calls_per_step": 16.0,
+        "duration_sum_s_per_step": 0.000217940625
+      },
+      "ForeachNorm": {
+        "calls_per_step": 40.0,
+        "duration_sum_s_per_step": 0.00174499775
+      },
+      "ForeachSqrt": {
+        "calls_per_step": 16.0,
+        "duration_sum_s_per_step": 0.000218129
+      },
+      "GatherElements": {
+        "calls_per_step": 73.0,
+        "duration_sum_s_per_step": 0.0021822654375
+      },
+      "GatherV2": {
+        "calls_per_step": 5.0,
+        "duration_sum_s_per_step": 0.0001090041875
+      },
+      "Gelu": {
+        "calls_per_step": 128.0,
+        "duration_sum_s_per_step": 0.012353132625
+      },
+      "GeluGrad": {
+        "calls_per_step": 4.0,
+        "duration_sum_s_per_step": 0.0003591568125
+      },
+      "Greater": {
+        "calls_per_step": 8.0,
+        "duration_sum_s_per_step": 8.183075e-05
+      },
+      "GreaterEqual": {
+        "calls_per_step": 2.0,
+        "duration_sum_s_per_step": 4.6875625e-06
+      },
+      "GroupedMatmul": {
+        "calls_per_step": 216.0,
+        "duration_sum_s_per_step": 0.0063520664375
+      },
+      "GroupedMatmulAdd": {
+        "calls_per_step": 108.0,
+        "duration_sum_s_per_step": 0.0075557585
+      },
+      "Index": {
+        "calls_per_step": 84.0,
+        "duration_sum_s_per_step": 0.0025814421875
+      },
+      "IndexPutV2": {
+        "calls_per_step": 84.0,
+        "duration_sum_s_per_step": 0.0025463809375
+      },
+      "IsNegInf": {
+        "calls_per_step": 24.0,
+        "duration_sum_s_per_step": 0.0127154006875
+      },
+      "L1LossGrad": {
+        "calls_per_step": 1.0,
+        "duration_sum_s_per_step": 7.6125625e-06
+      },
+      "LayerNormGradV3": {
+        "calls_per_step": 16.0,
+        "duration_sum_s_per_step": 0.001395149875
+      },
+      "LayerNormV3": {
+        "calls_per_step": 308.0,
+        "duration_sum_s_per_step": 0.016319552
+      },
+      "LayerNormV4": {
+        "calls_per_step": 56.0,
+        "duration_sum_s_per_step": 0.0039879481875
+      },
+      "Lerp": {
+        "calls_per_step": 1166.0,
+        "duration_sum_s_per_step": 0.0146595906875
+      },
+      "LessEqual": {
+        "calls_per_step": 1.0,
+        "duration_sum_s_per_step": 5.01285625e-05
+      },
+      "LinSpace": {
+        "calls_per_step": 29.0,
+        "duration_sum_s_per_step": 0.000174109375
+      },
+      "LinearIndex": {
+        "calls_per_step": 39.0,
+        "duration_sum_s_per_step": 0.0003910860625
+      },
+      "Log": {
+        "calls_per_step": 36.0,
+        "duration_sum_s_per_step": 0.0001268144375
+      },
+      "LogicalAnd": {
+        "calls_per_step": 3.0,
+        "duration_sum_s_per_step": 2.8470750000000002e-05
+      },
+      "LogicalNot": {
+        "calls_per_step": 74.0,
+        "duration_sum_s_per_step": 0.0004266740625
+      },
+      "LogicalOr": {
+        "calls_per_step": 71.0,
+        "duration_sum_s_per_step": 0.000750457375
+      },
+      "LpLoss": {
+        "calls_per_step": 1.0,
+        "duration_sum_s_per_step": 7.3925e-06
+      },
+      "LpNormReduceV2": {
+        "calls_per_step": 2.0,
+        "duration_sum_s_per_step": 0.000183507875
+      },
+      "LpNormUpdateV2": {
+        "calls_per_step": 2.0,
+        "duration_sum_s_per_step": 1.785075e-05
+      },
+      "LpNormV2": {
+        "calls_per_step": 60.0,
+        "duration_sum_s_per_step": 0.00230547325
+      },
+      "MSELossV2": {
+        "calls_per_step": 2.0,
+        "duration_sum_s_per_step": 5.4647125e-05
+      },
+      "MaskedFill": {
+        "calls_per_step": 42.0,
+        "duration_sum_s_per_step": 0.000426584375
+      },
+      "MatMulV2": {
+        "calls_per_step": 1381.0,
+        "duration_sum_s_per_step": 0.03920268625
+      },
+      "MatMulV3": {
+        "calls_per_step": 884.0,
+        "duration_sum_s_per_step": 0.24265258225
+      },
+      "MemSet": {
+        "calls_per_step": 1158.125,
+        "duration_sum_s_per_step": 0.0201664181875
+      },
+      "MseLossGrad": {
+        "calls_per_step": 2.0,
+        "duration_sum_s_per_step": 8.12225625e-05
+      },
+      "Mul": {
+        "calls_per_step": 4689.0,
+        "duration_sum_s_per_step": 0.09633495975
+      },
+      "Muls": {
+        "calls_per_step": 526.0,
+        "duration_sum_s_per_step": 0.011934920875
+      },
+      "NanToNum": {
+        "calls_per_step": 2.0,
+        "duration_sum_s_per_step": 3.6907875e-05
+      },
+      "Neg": {
+        "calls_per_step": 319.0,
+        "duration_sum_s_per_step": 0.003550781625
+      },
+      "NonZero": {
+        "calls_per_step": 30.0,
+        "duration_sum_s_per_step": 0.0021100109374999998
+      },
+      "NotEqual": {
+        "calls_per_step": 38.0,
+        "duration_sum_s_per_step": 9.7436375e-05
+      },
+      "OneHot": {
+        "calls_per_step": 72.0,
+        "duration_sum_s_per_step": 0.0011349124375
+      },
+      "OnesLike": {
+        "calls_per_step": 8.0,
+        "duration_sum_s_per_step": 4.20815e-05
+      },
+      "Pack": {
+        "calls_per_step": 118.0,
+        "duration_sum_s_per_step": 0.0020289314375
+      },
+      "PadV3": {
+        "calls_per_step": 89.125,
+        "duration_sum_s_per_step": 0.0051174813125
+      },
+      "Pow": {
+        "calls_per_step": 184.0,
+        "duration_sum_s_per_step": 0.031278906
+      },
+      "Pows": {
+        "calls_per_step": 330.0,
+        "duration_sum_s_per_step": 0.0055589099375
+      },
+      "Range": {
+        "calls_per_step": 8.0,
+        "duration_sum_s_per_step": 6.926106250000001e-05
+      },
+      "RealDiv": {
+        "calls_per_step": 670.0,
+        "duration_sum_s_per_step": 0.011073155125000001
+      },
+      "Reciprocal": {
+        "calls_per_step": 3.0,
+        "duration_sum_s_per_step": 4.6925e-06
+      },
+      "ReduceAll": {
+        "calls_per_step": 25.0,
+        "duration_sum_s_per_step": 0.004541052875
+      },
+      "ReduceAny": {
+        "calls_per_step": 38.0,
+        "duration_sum_s_per_step": 0.0007167546875
+      },
+      "ReduceLogSumExp": {
+        "calls_per_step": 36.0,
+        "duration_sum_s_per_step": 0.0002513945
+      },
+      "ReduceMax": {
+        "calls_per_step": 112.0,
+        "duration_sum_s_per_step": 0.0004052976875
+      },
+      "ReduceMean": {
+        "calls_per_step": 391.0,
+        "duration_sum_s_per_step": 0.0067342325625
+      },
+      "ReduceMin": {
+        "calls_per_step": 109.0,
+        "duration_sum_s_per_step": 0.000230944125
+      },
+      "ReduceSum": {
+        "calls_per_step": 946.0,
+        "duration_sum_s_per_step": 0.025411157187500002
+      },
+      "Relu": {
+        "calls_per_step": 52.0,
+        "duration_sum_s_per_step": 0.000579340125
+      },
+      "RepeatInterleave": {
+        "calls_per_step": 38.0,
+        "duration_sum_s_per_step": 0.0061710703125
+      },
+      "ResizeBilinearV2": {
+        "calls_per_step": 14.0,
+        "duration_sum_s_per_step": 0.0050575464375
+      },
+      "ResizeNearestNeighborV2": {
+        "calls_per_step": 8.0,
+        "duration_sum_s_per_step": 0.000291152625
+      },
+      "RmsNorm": {
+        "calls_per_step": 73.0,
+        "duration_sum_s_per_step": 0.00113733325
+      },
+      "RmsNormGrad": {
+        "calls_per_step": 73.0,
+        "duration_sum_s_per_step": 0.0027038385624999998
+      },
+      "Rsqrt": {
+        "calls_per_step": 145.0,
+        "duration_sum_s_per_step": 0.0006242936875
+      },
+      "ScatterAddWithSorted": {
+        "calls_per_step": 2.0,
+        "duration_sum_s_per_step": 0.0001515005625
+      },
+      "ScatterElementsV2": {
+        "calls_per_step": 37.0,
+        "duration_sum_s_per_step": 0.0005703414375
+      },
+      "SelectV2": {
+        "calls_per_step": 134.0,
+        "duration_sum_s_per_step": 0.0367500745
+      },
+      "Sigmoid": {
+        "calls_per_step": 39.0,
+        "duration_sum_s_per_step": 0.0001923785
+      },
+      "SigmoidGrad": {
+        "calls_per_step": 37.0,
+        "duration_sum_s_per_step": 0.0001917529375
+      },
+      "Sign": {
+        "calls_per_step": 36.0,
+        "duration_sum_s_per_step": 6.00308125e-05
+      },
+      "SiluGrad": {
+        "calls_per_step": 109.0,
+        "duration_sum_s_per_step": 0.007823446375
+      },
+      "Sin": {
+        "calls_per_step": 38.0,
+        "duration_sum_s_per_step": 0.0005741463125
+      },
+      "Slice": {
+        "calls_per_step": 4005.0,
+        "duration_sum_s_per_step": 0.1110625108125
+      },
+      "SmoothL1LossGradV2": {
+        "calls_per_step": 2.0,
+        "duration_sum_s_per_step": 0.0001713136875
+      },
+      "SmoothL1LossV2": {
+        "calls_per_step": 2.0,
+        "duration_sum_s_per_step": 6.14019375e-05
+      },
+      "SoftmaxGrad": {
+        "calls_per_step": 4.0,
+        "duration_sum_s_per_step": 0.00016908525
+      },
+      "SoftmaxV2": {
+        "calls_per_step": 64.0,
+        "duration_sum_s_per_step": 0.025243037625
+      },
+      "Sort": {
+        "calls_per_step": 38.0,
+        "duration_sum_s_per_step": 0.000307278875
+      },
+      "StridedSlice": {
+        "calls_per_step": 80.0,
+        "duration_sum_s_per_step": 0.00119456025
+      },
+      "Sub": {
+        "calls_per_step": 194.0,
+        "duration_sum_s_per_step": 0.000620897
+      },
+      "Swish": {
+        "calls_per_step": 109.0,
+        "duration_sum_s_per_step": 0.003570487375
+      },
+      "TensorMove": {
+        "calls_per_step": 539.0,
+        "duration_sum_s_per_step": 0.0093275249375
+      },
+      "Tile": {
+        "calls_per_step": 52.0,
+        "duration_sum_s_per_step": 0.00032601625
+      },
+      "TopKV2": {
+        "calls_per_step": 74.0,
+        "duration_sum_s_per_step": 0.00204732175
+      },
+      "TransData": {
+        "calls_per_step": 419.0,
+        "duration_sum_s_per_step": 0.0083142424375
+      },
+      "Transpose": {
+        "calls_per_step": 1319.0,
+        "duration_sum_s_per_step": 0.057697320125
+      },
+      "UpsampleBicubic2d": {
+        "calls_per_step": 6.0,
+        "duration_sum_s_per_step": 0.00095364325
+      },
+      "UpsampleBilinear2dAA": {
+        "calls_per_step": 4.0,
+        "duration_sum_s_per_step": 0.0004393149375
+      },
+      "ViewCopy": {
+        "calls_per_step": 305.0,
+        "duration_sum_s_per_step": 0.028638242
+      },
+      "ZerosLike": {
+        "calls_per_step": 618.0,
+        "duration_sum_s_per_step": 0.0112409166875
+      },
+      "hcom_allGather_": {
+        "calls_per_step": 174.0,
+        "duration_sum_s_per_step": 0.9028802035
+      },
+      "hcom_allReduce_": {
+        "calls_per_step": 6.0,
+        "duration_sum_s_per_step": 0.037876425062499997
+      },
+      "hcom_reduceScatter_": {
+        "calls_per_step": 74.0,
+        "duration_sum_s_per_step": 0.5635672283125
+      }
+    }
+  },
+  "hsdp_2x4": {
+    "ranks": 8,
+    "steps_per_rank": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "kernels_per_update": 38086.5,
+    "official_mean_s_per_step": {
+      "Computing_s": 1.5119958132500142,
+      "Communication(Not Overlapped)_s": 6.308706336623809,
+      "Overlapped_s": 0.5483439667511923,
+      "Communication_s": 6.857050303375001,
+      "Free_s": 2.1678910608127175,
+      "Stage_s": 9.9886629765625,
+      "Bubble_s": 0.0,
+      "Communication(Not Overlapped and Exclude Receive)_s": 6.308706336623809,
+      "Preparing_s": 0.0082011875
+    },
+    "kernel_types": {
+      "Abs": {
+        "calls_per_step": 74.0,
+        "duration_sum_s_per_step": 0.000118178375
+      },
+      "Add": {
+        "calls_per_step": 2560.0,
+        "duration_sum_s_per_step": 0.0786098115
+      },
+      "Addcdiv": {
+        "calls_per_step": 376.0,
+        "duration_sum_s_per_step": 0.0007810251875
+      },
+      "AsStrided": {
+        "calls_per_step": 224.0,
+        "duration_sum_s_per_step": 0.005069686875
+      },
+      "Axpy": {
+        "calls_per_step": 993.0,
+        "duration_sum_s_per_step": 0.0121105584375
+      },
+      "BatchMatMulV2": {
+        "calls_per_step": 1305.0,
+        "duration_sum_s_per_step": 0.1488661101875
+      },
+      "BroadcastTo": {
+        "calls_per_step": 493.0,
+        "duration_sum_s_per_step": 0.00652140975
+      },
+      "Cast": {
+        "calls_per_step": 6014.0,
+        "duration_sum_s_per_step": 0.09000899275
+      },
+      "ClipByValueV2": {
+        "calls_per_step": 169.0,
+        "duration_sum_s_per_step": 0.000610209
+      },
+      "ConcatD": {
+        "calls_per_step": 586.0,
+        "duration_sum_s_per_step": 0.030310178
+      },
+      "Conv2D": {
+        "calls_per_step": 145.0,
+        "duration_sum_s_per_step": 0.009555113375
+      },
+      "Conv2DTranspose": {
+        "calls_per_step": 24.0,
+        "duration_sum_s_per_step": 0.0015762044375
+      },
+      "Cos": {
+        "calls_per_step": 38.0,
+        "duration_sum_s_per_step": 0.0005806788125000001
+      },
+      "Cumsum": {
+        "calls_per_step": 39.0,
+        "duration_sum_s_per_step": 0.0015781975
+      },
+      "DSARandomNormal": {
+        "calls_per_step": 1.0,
+        "duration_sum_s_per_step": 4.764375e-06
+      },
+      "DSARandomUniform": {
+        "calls_per_step": 2.0,
+        "duration_sum_s_per_step": 2.5188125e-06
+      },
+      "Equal": {
+        "calls_per_step": 83.0,
+        "duration_sum_s_per_step": 0.0001776516875
+      },
+      "Exp": {
+        "calls_per_step": 40.0,
+        "duration_sum_s_per_step": 9.515925e-05
+      },
+      "Fill": {
+        "calls_per_step": 257.0,
+        "duration_sum_s_per_step": 0.0003623080625
+      },
+      "FlashAttentionScore": {
+        "calls_per_step": 132.0,
+        "duration_sum_s_per_step": 0.0397801694375
+      },
+      "FlashAttentionScoreGrad": {
+        "calls_per_step": 36.0,
+        "duration_sum_s_per_step": 0.0749950865625
+      },
+      "FloorDiv": {
+        "calls_per_step": 36.0,
+        "duration_sum_s_per_step": 0.0025562743125
+      },
+      "FloorMod": {
+        "calls_per_step": 2.0,
+        "duration_sum_s_per_step": 6.09375e-06
+      },
+      "ForeachAddScalar": {
+        "calls_per_step": 8.0,
+        "duration_sum_s_per_step": 9.85081875e-05
+      },
+      "ForeachAddcmulScalar": {
+        "calls_per_step": 24.0,
+        "duration_sum_s_per_step": 0.0003381751875
+      },
+      "ForeachCopy": {
+        "calls_per_step": 154.0,
+        "duration_sum_s_per_step": 0.0141349211875
+      },
+      "ForeachDivScalarList": {
+        "calls_per_step": 8.0,
+        "duration_sum_s_per_step": 0.000114427875
+      },
+      "ForeachLerpScalar": {
+        "calls_per_step": 16.0,
+        "duration_sum_s_per_step": 0.000240516125
+      },
+      "ForeachMulScalar": {
+        "calls_per_step": 16.0,
+        "duration_sum_s_per_step": 0.00021776162500000001
+      },
+      "ForeachNorm": {
+        "calls_per_step": 40.0,
+        "duration_sum_s_per_step": 0.0023690294375
+      },
+      "ForeachSqrt": {
+        "calls_per_step": 16.0,
+        "duration_sum_s_per_step": 0.0002212473125
+      },
+      "GatherElements": {
+        "calls_per_step": 73.0,
+        "duration_sum_s_per_step": 0.00220906675
+      },
+      "GatherV2": {
+        "calls_per_step": 5.0,
+        "duration_sum_s_per_step": 0.000108348625
+      },
+      "Gelu": {
+        "calls_per_step": 128.0,
+        "duration_sum_s_per_step": 0.0123671118125
+      },
+      "GeluGrad": {
+        "calls_per_step": 4.0,
+        "duration_sum_s_per_step": 0.0003570025
+      },
+      "Greater": {
+        "calls_per_step": 8.0,
+        "duration_sum_s_per_step": 8.4557e-05
+      },
+      "GreaterEqual": {
+        "calls_per_step": 2.0,
+        "duration_sum_s_per_step": 4.7394375e-06
+      },
+      "GroupedMatmul": {
+        "calls_per_step": 216.0,
+        "duration_sum_s_per_step": 0.00634427925
+      },
+      "GroupedMatmulAdd": {
+        "calls_per_step": 108.0,
+        "duration_sum_s_per_step": 0.0075828665625
+      },
+      "Index": {
+        "calls_per_step": 84.0,
+        "duration_sum_s_per_step": 0.0026055290625
+      },
+      "IndexPutV2": {
+        "calls_per_step": 84.0,
+        "duration_sum_s_per_step": 0.00255736475
+      },
+      "IsNegInf": {
+        "calls_per_step": 24.0,
+        "duration_sum_s_per_step": 0.012707528374999999
+      },
+      "L1LossGrad": {
+        "calls_per_step": 1.0,
+        "duration_sum_s_per_step": 8.1244375e-06
+      },
+      "LayerNormGradV3": {
+        "calls_per_step": 16.0,
+        "duration_sum_s_per_step": 0.0014109555
+      },
+      "LayerNormV3": {
+        "calls_per_step": 308.0,
+        "duration_sum_s_per_step": 0.0162738440625
+      },
+      "LayerNormV4": {
+        "calls_per_step": 56.0,
+        "duration_sum_s_per_step": 0.0039704361875
+      },
+      "Lerp": {
+        "calls_per_step": 1166.0,
+        "duration_sum_s_per_step": 0.0213676356875
+      },
+      "LessEqual": {
+        "calls_per_step": 1.0,
+        "duration_sum_s_per_step": 5.1232875e-05
+      },
+      "LinSpace": {
+        "calls_per_step": 29.0,
+        "duration_sum_s_per_step": 0.000173202625
+      },
+      "LinearIndex": {
+        "calls_per_step": 39.0,
+        "duration_sum_s_per_step": 0.000391011375
+      },
+      "Log": {
+        "calls_per_step": 36.0,
+        "duration_sum_s_per_step": 0.0001344173125
+      },
+      "LogicalAnd": {
+        "calls_per_step": 3.0,
+        "duration_sum_s_per_step": 2.7646375000000002e-05
+      },
+      "LogicalNot": {
+        "calls_per_step": 74.0,
+        "duration_sum_s_per_step": 0.0004368504375
+      },
+      "LogicalOr": {
+        "calls_per_step": 71.0,
+        "duration_sum_s_per_step": 0.0007624
+      },
+      "LpLoss": {
+        "calls_per_step": 1.0,
+        "duration_sum_s_per_step": 6.6775e-06
+      },
+      "LpNormReduceV2": {
+        "calls_per_step": 2.0,
+        "duration_sum_s_per_step": 0.0001839816875
+      },
+      "LpNormUpdateV2": {
+        "calls_per_step": 2.0,
+        "duration_sum_s_per_step": 1.751025e-05
+      },
+      "LpNormV2": {
+        "calls_per_step": 91.0,
+        "duration_sum_s_per_step": 0.00307331175
+      },
+      "MSELossV2": {
+        "calls_per_step": 2.0,
+        "duration_sum_s_per_step": 5.22835625e-05
+      },
+      "MaskedFill": {
+        "calls_per_step": 42.0,
+        "duration_sum_s_per_step": 0.0004646804375
+      },
+      "MatMulV2": {
+        "calls_per_step": 1381.0,
+        "duration_sum_s_per_step": 0.0401211394375
+      },
+      "MatMulV3": {
+        "calls_per_step": 884.0,
+        "duration_sum_s_per_step": 0.2483213441875
+      },
+      "MemSet": {
+        "calls_per_step": 1149.25,
+        "duration_sum_s_per_step": 0.02039970075
+      },
+      "MseLossGrad": {
+        "calls_per_step": 2.0,
+        "duration_sum_s_per_step": 7.81165e-05
+      },
+      "Mul": {
+        "calls_per_step": 4689.0,
+        "duration_sum_s_per_step": 0.10207786625
+      },
+      "Muls": {
+        "calls_per_step": 836.0,
+        "duration_sum_s_per_step": 0.0145285424375
+      },
+      "NanToNum": {
+        "calls_per_step": 2.0,
+        "duration_sum_s_per_step": 3.7010125e-05
+      },
+      "Neg": {
+        "calls_per_step": 319.0,
+        "duration_sum_s_per_step": 0.003702357625
+      },
+      "NonZero": {
+        "calls_per_step": 30.0,
+        "duration_sum_s_per_step": 0.00211001125
+      },
+      "NotEqual": {
+        "calls_per_step": 38.0,
+        "duration_sum_s_per_step": 9.754774999999999e-05
+      },
+      "OneHot": {
+        "calls_per_step": 72.0,
+        "duration_sum_s_per_step": 0.0011613899375
+      },
+      "OnesLike": {
+        "calls_per_step": 8.0,
+        "duration_sum_s_per_step": 4.006725e-05
+      },
+      "Pack": {
+        "calls_per_step": 118.0,
+        "duration_sum_s_per_step": 0.0025702531875
+      },
+      "PadV3": {
+        "calls_per_step": 80.25,
+        "duration_sum_s_per_step": 0.0049523816875
+      },
+      "Pow": {
+        "calls_per_step": 184.0,
+        "duration_sum_s_per_step": 0.031560276375
+      },
+      "Pows": {
+        "calls_per_step": 330.0,
+        "duration_sum_s_per_step": 0.005763064125
+      },
+      "Range": {
+        "calls_per_step": 8.0,
+        "duration_sum_s_per_step": 6.90755625e-05
+      },
+      "RealDiv": {
+        "calls_per_step": 775.0,
+        "duration_sum_s_per_step": 0.02493224175
+      },
+      "Reciprocal": {
+        "calls_per_step": 3.0,
+        "duration_sum_s_per_step": 4.835e-06
+      },
+      "ReduceAll": {
+        "calls_per_step": 25.0,
+        "duration_sum_s_per_step": 0.0045471560625
+      },
+      "ReduceAny": {
+        "calls_per_step": 38.0,
+        "duration_sum_s_per_step": 0.0007524733125
+      },
+      "ReduceLogSumExp": {
+        "calls_per_step": 36.0,
+        "duration_sum_s_per_step": 0.0002538108125
+      },
+      "ReduceMax": {
+        "calls_per_step": 112.0,
+        "duration_sum_s_per_step": 0.00040984875
+      },
+      "ReduceMean": {
+        "calls_per_step": 391.0,
+        "duration_sum_s_per_step": 0.0067854440625
+      },
+      "ReduceMin": {
+        "calls_per_step": 109.0,
+        "duration_sum_s_per_step": 0.00023473025
+      },
+      "ReduceSum": {
+        "calls_per_step": 946.0,
+        "duration_sum_s_per_step": 0.0262454844375
+      },
+      "Relu": {
+        "calls_per_step": 52.0,
+        "duration_sum_s_per_step": 0.0005454570625
+      },
+      "RepeatInterleave": {
+        "calls_per_step": 38.0,
+        "duration_sum_s_per_step": 0.006199158875
+      },
+      "ResizeBilinearV2": {
+        "calls_per_step": 14.0,
+        "duration_sum_s_per_step": 0.0050568415625
+      },
+      "ResizeNearestNeighborV2": {
+        "calls_per_step": 8.0,
+        "duration_sum_s_per_step": 0.000292020875
+      },
+      "RmsNorm": {
+        "calls_per_step": 73.0,
+        "duration_sum_s_per_step": 0.00112806675
+      },
+      "RmsNormGrad": {
+        "calls_per_step": 73.0,
+        "duration_sum_s_per_step": 0.0027169200625000002
+      },
+      "Rsqrt": {
+        "calls_per_step": 145.0,
+        "duration_sum_s_per_step": 0.0006416885
+      },
+      "ScatterAddWithSorted": {
+        "calls_per_step": 2.0,
+        "duration_sum_s_per_step": 0.000145189
+      },
+      "ScatterElementsV2": {
+        "calls_per_step": 37.0,
+        "duration_sum_s_per_step": 0.0005844865
+      },
+      "SelectV2": {
+        "calls_per_step": 134.0,
+        "duration_sum_s_per_step": 0.0376717449375
+      },
+      "Sigmoid": {
+        "calls_per_step": 39.0,
+        "duration_sum_s_per_step": 0.00019640625
+      },
+      "SigmoidGrad": {
+        "calls_per_step": 37.0,
+        "duration_sum_s_per_step": 0.0001865868125
+      },
+      "Sign": {
+        "calls_per_step": 36.0,
+        "duration_sum_s_per_step": 5.85341875e-05
+      },
+      "SiluGrad": {
+        "calls_per_step": 109.0,
+        "duration_sum_s_per_step": 0.008231824625
+      },
+      "Sin": {
+        "calls_per_step": 38.0,
+        "duration_sum_s_per_step": 0.000574440875
+      },
+      "Slice": {
+        "calls_per_step": 4005.0,
+        "duration_sum_s_per_step": 0.1647763549375
+      },
+      "SmoothL1LossGradV2": {
+        "calls_per_step": 2.0,
+        "duration_sum_s_per_step": 0.000169786
+      },
+      "SmoothL1LossV2": {
+        "calls_per_step": 2.0,
+        "duration_sum_s_per_step": 6.214775e-05
+      },
+      "SoftmaxGrad": {
+        "calls_per_step": 4.0,
+        "duration_sum_s_per_step": 0.0001694233125
+      },
+      "SoftmaxV2": {
+        "calls_per_step": 64.0,
+        "duration_sum_s_per_step": 0.02523800175
+      },
+      "Sort": {
+        "calls_per_step": 38.0,
+        "duration_sum_s_per_step": 0.00030858225
+      },
+      "StridedSlice": {
+        "calls_per_step": 80.0,
+        "duration_sum_s_per_step": 0.0012106883125
+      },
+      "Sub": {
+        "calls_per_step": 194.0,
+        "duration_sum_s_per_step": 0.0006159345625
+      },
+      "Swish": {
+        "calls_per_step": 109.0,
+        "duration_sum_s_per_step": 0.003591639125
+      },
+      "TensorMove": {
+        "calls_per_step": 446.0,
+        "duration_sum_s_per_step": 0.009196222625
+      },
+      "Tile": {
+        "calls_per_step": 52.0,
+        "duration_sum_s_per_step": 0.000331069375
+      },
+      "TopKV2": {
+        "calls_per_step": 74.0,
+        "duration_sum_s_per_step": 0.0020372911875
+      },
+      "TransData": {
+        "calls_per_step": 419.0,
+        "duration_sum_s_per_step": 0.0084153934375
+      },
+      "Transpose": {
+        "calls_per_step": 1349.0,
+        "duration_sum_s_per_step": 0.06165331325
+      },
+      "UpsampleBicubic2d": {
+        "calls_per_step": 6.0,
+        "duration_sum_s_per_step": 0.0009602960625
+      },
+      "UpsampleBilinear2dAA": {
+        "calls_per_step": 4.0,
+        "duration_sum_s_per_step": 0.000446157375
+      },
+      "ViewCopy": {
+        "calls_per_step": 305.0,
+        "duration_sum_s_per_step": 0.02994318475
+      },
+      "ZerosLike": {
+        "calls_per_step": 618.0,
+        "duration_sum_s_per_step": 0.011737914375
+      },
+      "hcom_allGather_": {
+        "calls_per_step": 174.0,
+        "duration_sum_s_per_step": 3.3339464939375
+      },
+      "hcom_allReduce_": {
+        "calls_per_step": 80.0,
+        "duration_sum_s_per_step": 3.2508594095625
+      },
+      "hcom_reduceScatter_": {
+        "calls_per_step": 74.0,
+        "duration_sum_s_per_step": 0.72833535875
+      }
+    }
+  },
+  "task_queue_2": {
+    "ranks": 8,
+    "steps_per_rank": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "kernels_per_update": 36747.25,
+    "official_mean_s_per_step": {
+      "Computing_s": 1.4037017836250065,
+      "Communication(Not Overlapped)_s": 0.8234273446250568,
+      "Overlapped_s": 0.39860294712494326,
+      "Communication_s": 1.22203029175,
+      "Free_s": 0.6055909685626812,
+      "Stage_s": 2.833031125,
+      "Bubble_s": 0.0,
+      "Communication(Not Overlapped and Exclude Receive)_s": 0.8234273446250568,
+      "Preparing_s": 0.0092664765625
+    },
+    "kernel_types": {
+      "Abs": {
+        "calls_per_step": 74.0,
+        "duration_sum_s_per_step": 0.000117942125
+      },
+      "Add": {
+        "calls_per_step": 2405.0,
+        "duration_sum_s_per_step": 0.07636513775
+      },
+      "Addcdiv": {
+        "calls_per_step": 376.0,
+        "duration_sum_s_per_step": 0.00081584325
+      },
+      "AsStrided": {
+        "calls_per_step": 224.0,
+        "duration_sum_s_per_step": 0.00504648425
+      },
+      "Axpy": {
+        "calls_per_step": 838.0,
+        "duration_sum_s_per_step": 0.009797522437500001
+      },
+      "BatchMatMulV2": {
+        "calls_per_step": 840.0,
+        "duration_sum_s_per_step": 0.136825361375
+      },
+      "BroadcastTo": {
+        "calls_per_step": 493.0,
+        "duration_sum_s_per_step": 0.0064650421875
+      },
+      "Cast": {
+        "calls_per_step": 5952.0,
+        "duration_sum_s_per_step": 0.0842451161875
+      },
+      "ClipByValueV2": {
+        "calls_per_step": 138.0,
+        "duration_sum_s_per_step": 0.00051307875
+      },
+      "ConcatD": {
+        "calls_per_step": 554.0,
+        "duration_sum_s_per_step": 0.0302087701875
+      },
+      "Conv2D": {
+        "calls_per_step": 145.0,
+        "duration_sum_s_per_step": 0.0093984771875
+      },
+      "Conv2DTranspose": {
+        "calls_per_step": 24.0,
+        "duration_sum_s_per_step": 0.0015782069375
+      },
+      "Cos": {
+        "calls_per_step": 38.0,
+        "duration_sum_s_per_step": 0.0005991189375
+      },
+      "Cumsum": {
+        "calls_per_step": 39.0,
+        "duration_sum_s_per_step": 0.001309827125
+      },
+      "DSARandomNormal": {
+        "calls_per_step": 1.0,
+        "duration_sum_s_per_step": 4.174375e-06
+      },
+      "DSARandomUniform": {
+        "calls_per_step": 2.0,
+        "duration_sum_s_per_step": 2.1581249999999998e-06
+      },
+      "Equal": {
+        "calls_per_step": 83.0,
+        "duration_sum_s_per_step": 0.00017610225
+      },
+      "Exp": {
+        "calls_per_step": 40.0,
+        "duration_sum_s_per_step": 9.4222625e-05
+      },
+      "Fill": {
+        "calls_per_step": 257.0,
+        "duration_sum_s_per_step": 0.0003610068125
+      },
+      "FlashAttentionScore": {
+        "calls_per_step": 132.0,
+        "duration_sum_s_per_step": 0.039875118125
+      },
+      "FlashAttentionScoreGrad": {
+        "calls_per_step": 36.0,
+        "duration_sum_s_per_step": 0.07194120875
+      },
+      "FloorDiv": {
+        "calls_per_step": 36.0,
+        "duration_sum_s_per_step": 0.0022030703125
+      },
+      "FloorMod": {
+        "calls_per_step": 2.0,
+        "duration_sum_s_per_step": 6.0769375e-06
+      },
+      "ForeachAddScalar": {
+        "calls_per_step": 8.0,
+        "duration_sum_s_per_step": 9.97785625e-05
+      },
+      "ForeachAddcmulScalar": {
+        "calls_per_step": 24.0,
+        "duration_sum_s_per_step": 0.0003335123125
+      },
+      "ForeachCopy": {
+        "calls_per_step": 154.0,
+        "duration_sum_s_per_step": 0.0092403094375
+      },
+      "ForeachDivScalarList": {
+        "calls_per_step": 8.0,
+        "duration_sum_s_per_step": 0.000116178125
+      },
+      "ForeachLerpScalar": {
+        "calls_per_step": 16.0,
+        "duration_sum_s_per_step": 0.0002348975
+      },
+      "ForeachMulScalar": {
+        "calls_per_step": 16.0,
+        "duration_sum_s_per_step": 0.0002065101875
+      },
+      "ForeachNorm": {
+        "calls_per_step": 40.0,
+        "duration_sum_s_per_step": 0.0017444175
+      },
+      "ForeachSqrt": {
+        "calls_per_step": 16.0,
+        "duration_sum_s_per_step": 0.000218866875
+      },
+      "GatherElements": {
+        "calls_per_step": 73.0,
+        "duration_sum_s_per_step": 0.0022049339375
+      },
+      "GatherV2": {
+        "calls_per_step": 5.0,
+        "duration_sum_s_per_step": 0.000108270875
+      },
+      "Gelu": {
+        "calls_per_step": 128.0,
+        "duration_sum_s_per_step": 0.012339212375
+      },
+      "GeluGrad": {
+        "calls_per_step": 4.0,
+        "duration_sum_s_per_step": 0.000357862625
+      },
+      "Greater": {
+        "calls_per_step": 8.0,
+        "duration_sum_s_per_step": 8.39285625e-05
+      },
+      "GreaterEqual": {
+        "calls_per_step": 2.0,
+        "duration_sum_s_per_step": 4.7150625e-06
+      },
+      "GroupedMatmul": {
+        "calls_per_step": 216.0,
+        "duration_sum_s_per_step": 0.0063311055625
+      },
+      "GroupedMatmulAdd": {
+        "calls_per_step": 108.0,
+        "duration_sum_s_per_step": 0.00746117675
+      },
+      "Index": {
+        "calls_per_step": 84.0,
+        "duration_sum_s_per_step": 0.0026134394375
+      },
+      "IndexPutV2": {
+        "calls_per_step": 84.0,
+        "duration_sum_s_per_step": 0.002550430125
+      },
+      "IsNegInf": {
+        "calls_per_step": 24.0,
+        "duration_sum_s_per_step": 0.0127210063125
+      },
+      "L1LossGrad": {
+        "calls_per_step": 1.0,
+        "duration_sum_s_per_step": 7.8439375e-06
+      },
+      "LayerNormGradV3": {
+        "calls_per_step": 16.0,
+        "duration_sum_s_per_step": 0.001411210875
+      },
+      "LayerNormV3": {
+        "calls_per_step": 308.0,
+        "duration_sum_s_per_step": 0.01635700975
+      },
+      "LayerNormV4": {
+        "calls_per_step": 56.0,
+        "duration_sum_s_per_step": 0.0039875819375
+      },
+      "Lerp": {
+        "calls_per_step": 1166.0,
+        "duration_sum_s_per_step": 0.0147463858125
+      },
+      "LessEqual": {
+        "calls_per_step": 1.0,
+        "duration_sum_s_per_step": 5.0347875e-05
+      },
+      "LinSpace": {
+        "calls_per_step": 29.0,
+        "duration_sum_s_per_step": 0.000175258875
+      },
+      "LinearIndex": {
+        "calls_per_step": 39.0,
+        "duration_sum_s_per_step": 0.0003935073125
+      },
+      "Log": {
+        "calls_per_step": 36.0,
+        "duration_sum_s_per_step": 0.0001267629375
+      },
+      "LogicalAnd": {
+        "calls_per_step": 3.0,
+        "duration_sum_s_per_step": 2.8537625e-05
+      },
+      "LogicalNot": {
+        "calls_per_step": 74.0,
+        "duration_sum_s_per_step": 0.00040995687500000003
+      },
+      "LogicalOr": {
+        "calls_per_step": 71.0,
+        "duration_sum_s_per_step": 0.000772939375
+      },
+      "LpLoss": {
+        "calls_per_step": 1.0,
+        "duration_sum_s_per_step": 6.646875e-06
+      },
+      "LpNormReduceV2": {
+        "calls_per_step": 2.0,
+        "duration_sum_s_per_step": 0.0001845358125
+      },
+      "LpNormUpdateV2": {
+        "calls_per_step": 2.0,
+        "duration_sum_s_per_step": 1.75631875e-05
+      },
+      "LpNormV2": {
+        "calls_per_step": 60.0,
+        "duration_sum_s_per_step": 0.002288320875
+      },
+      "MSELossV2": {
+        "calls_per_step": 2.0,
+        "duration_sum_s_per_step": 5.16985e-05
+      },
+      "MaskedFill": {
+        "calls_per_step": 42.0,
+        "duration_sum_s_per_step": 0.0004243314375
+      },
+      "MatMulV2": {
+        "calls_per_step": 1381.0,
+        "duration_sum_s_per_step": 0.0393476805625
+      },
+      "MatMulV3": {
+        "calls_per_step": 884.0,
+        "duration_sum_s_per_step": 0.243424106875
+      },
+      "MemSet": {
+        "calls_per_step": 1158.125,
+        "duration_sum_s_per_step": 0.0204192066875
+      },
+      "MseLossGrad": {
+        "calls_per_step": 2.0,
+        "duration_sum_s_per_step": 8.10874375e-05
+      },
+      "Mul": {
+        "calls_per_step": 4689.0,
+        "duration_sum_s_per_step": 0.09915364475
+      },
+      "Muls": {
+        "calls_per_step": 526.0,
+        "duration_sum_s_per_step": 0.0113748275
+      },
+      "NanToNum": {
+        "calls_per_step": 2.0,
+        "duration_sum_s_per_step": 3.6109625e-05
+      },
+      "Neg": {
+        "calls_per_step": 319.0,
+        "duration_sum_s_per_step": 0.0037372881875
+      },
+      "NonZero": {
+        "calls_per_step": 30.0,
+        "duration_sum_s_per_step": 0.0021028916875
+      },
+      "NotEqual": {
+        "calls_per_step": 38.0,
+        "duration_sum_s_per_step": 9.75905625e-05
+      },
+      "OneHot": {
+        "calls_per_step": 72.0,
+        "duration_sum_s_per_step": 0.0011675344375
+      },
+      "OnesLike": {
+        "calls_per_step": 8.0,
+        "duration_sum_s_per_step": 4.31121875e-05
+      },
+      "Pack": {
+        "calls_per_step": 118.0,
+        "duration_sum_s_per_step": 0.002027928125
+      },
+      "PadV3": {
+        "calls_per_step": 89.125,
+        "duration_sum_s_per_step": 0.0050778683125
+      },
+      "Pow": {
+        "calls_per_step": 184.0,
+        "duration_sum_s_per_step": 0.0316101435625
+      },
+      "Pows": {
+        "calls_per_step": 330.0,
+        "duration_sum_s_per_step": 0.0055704359375
+      },
+      "Range": {
+        "calls_per_step": 8.0,
+        "duration_sum_s_per_step": 6.8192875e-05
+      },
+      "RealDiv": {
+        "calls_per_step": 670.0,
+        "duration_sum_s_per_step": 0.0116655969375
+      },
+      "Reciprocal": {
+        "calls_per_step": 3.0,
+        "duration_sum_s_per_step": 4.782e-06
+      },
+      "ReduceAll": {
+        "calls_per_step": 25.0,
+        "duration_sum_s_per_step": 0.0045830531875
+      },
+      "ReduceAny": {
+        "calls_per_step": 38.0,
+        "duration_sum_s_per_step": 0.0007050454374999999
+      },
+      "ReduceLogSumExp": {
+        "calls_per_step": 36.0,
+        "duration_sum_s_per_step": 0.0002529451875
+      },
+      "ReduceMax": {
+        "calls_per_step": 112.0,
+        "duration_sum_s_per_step": 0.0004089713125
+      },
+      "ReduceMean": {
+        "calls_per_step": 391.0,
+        "duration_sum_s_per_step": 0.0067777403125
+      },
+      "ReduceMin": {
+        "calls_per_step": 109.0,
+        "duration_sum_s_per_step": 0.0002345048125
+      },
+      "ReduceSum": {
+        "calls_per_step": 946.0,
+        "duration_sum_s_per_step": 0.0258324808125
+      },
+      "Relu": {
+        "calls_per_step": 52.0,
+        "duration_sum_s_per_step": 0.0005493556875
+      },
+      "RepeatInterleave": {
+        "calls_per_step": 38.0,
+        "duration_sum_s_per_step": 0.0061660079375
+      },
+      "ResizeBilinearV2": {
+        "calls_per_step": 14.0,
+        "duration_sum_s_per_step": 0.0050569074375
+      },
+      "ResizeNearestNeighborV2": {
+        "calls_per_step": 8.0,
+        "duration_sum_s_per_step": 0.0002933505
+      },
+      "RmsNorm": {
+        "calls_per_step": 73.0,
+        "duration_sum_s_per_step": 0.001145811875
+      },
+      "RmsNormGrad": {
+        "calls_per_step": 73.0,
+        "duration_sum_s_per_step": 0.0027361794375
+      },
+      "Rsqrt": {
+        "calls_per_step": 145.0,
+        "duration_sum_s_per_step": 0.0006420878125
+      },
+      "ScatterAddWithSorted": {
+        "calls_per_step": 2.0,
+        "duration_sum_s_per_step": 0.00014164549999999998
+      },
+      "ScatterElementsV2": {
+        "calls_per_step": 37.0,
+        "duration_sum_s_per_step": 0.00056964425
+      },
+      "SelectV2": {
+        "calls_per_step": 134.0,
+        "duration_sum_s_per_step": 0.037141273687500004
+      },
+      "Sigmoid": {
+        "calls_per_step": 39.0,
+        "duration_sum_s_per_step": 0.0001988141875
+      },
+      "SigmoidGrad": {
+        "calls_per_step": 37.0,
+        "duration_sum_s_per_step": 0.0001884449375
+      },
+      "Sign": {
+        "calls_per_step": 36.0,
+        "duration_sum_s_per_step": 5.93159375e-05
+      },
+      "SiluGrad": {
+        "calls_per_step": 109.0,
+        "duration_sum_s_per_step": 0.008016344125
+      },
+      "Sin": {
+        "calls_per_step": 38.0,
+        "duration_sum_s_per_step": 0.0005707365
+      },
+      "Slice": {
+        "calls_per_step": 4005.0,
+        "duration_sum_s_per_step": 0.1107038275
+      },
+      "SmoothL1LossGradV2": {
+        "calls_per_step": 2.0,
+        "duration_sum_s_per_step": 0.0001710335625
+      },
+      "SmoothL1LossV2": {
+        "calls_per_step": 2.0,
+        "duration_sum_s_per_step": 6.25473125e-05
+      },
+      "SoftmaxGrad": {
+        "calls_per_step": 4.0,
+        "duration_sum_s_per_step": 0.0001715794375
+      },
+      "SoftmaxV2": {
+        "calls_per_step": 64.0,
+        "duration_sum_s_per_step": 0.025238879125
+      },
+      "Sort": {
+        "calls_per_step": 38.0,
+        "duration_sum_s_per_step": 0.0003087845625
+      },
+      "StridedSlice": {
+        "calls_per_step": 80.0,
+        "duration_sum_s_per_step": 0.0011976885
+      },
+      "Sub": {
+        "calls_per_step": 194.0,
+        "duration_sum_s_per_step": 0.0006226075625
+      },
+      "Swish": {
+        "calls_per_step": 109.0,
+        "duration_sum_s_per_step": 0.003613125875
+      },
+      "TensorMove": {
+        "calls_per_step": 539.0,
+        "duration_sum_s_per_step": 0.0093944985625
+      },
+      "Tile": {
+        "calls_per_step": 52.0,
+        "duration_sum_s_per_step": 0.00032598668749999997
+      },
+      "TopKV2": {
+        "calls_per_step": 74.0,
+        "duration_sum_s_per_step": 0.0020217879375
+      },
+      "TransData": {
+        "calls_per_step": 419.0,
+        "duration_sum_s_per_step": 0.00829775
+      },
+      "Transpose": {
+        "calls_per_step": 1319.0,
+        "duration_sum_s_per_step": 0.0578111079375
+      },
+      "UpsampleBicubic2d": {
+        "calls_per_step": 6.0,
+        "duration_sum_s_per_step": 0.0009545859375
+      },
+      "UpsampleBilinear2dAA": {
+        "calls_per_step": 4.0,
+        "duration_sum_s_per_step": 0.000438215125
+      },
+      "ViewCopy": {
+        "calls_per_step": 305.0,
+        "duration_sum_s_per_step": 0.02868298725
+      },
+      "ZerosLike": {
+        "calls_per_step": 618.0,
+        "duration_sum_s_per_step": 0.0117044239375
+      },
+      "hcom_allGather_": {
+        "calls_per_step": 174.0,
+        "duration_sum_s_per_step": 0.7672836665625
+      },
+      "hcom_allReduce_": {
+        "calls_per_step": 6.0,
+        "duration_sum_s_per_step": 0.031441938375
+      },
+      "hcom_reduceScatter_": {
+        "calls_per_step": 74.0,
+        "duration_sum_s_per_step": 0.4233046868125
+      }
+    }
+  }
+}

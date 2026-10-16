@@ -103,6 +103,12 @@ export LINGBOT_MUON_LOCAL_BATCH="${LINGBOT_MUON_LOCAL_BATCH:-8}"
 export LINGBOT_HOST_METADATA="${LINGBOT_HOST_METADATA:-1}"
 export LINGBOT_NPU_FUSED_RMSNORM="${LINGBOT_NPU_FUSED_RMSNORM:-1}"
 export LINGBOT_FSDP_FORWARD_PREFETCH="${LINGBOT_FSDP_FORWARD_PREFETCH:-0}"
+# 8 卡实测 Level 2 比 torch_npu 默认 Level 1 更快；设为 1 可回退。
+export TASK_QUEUE_ENABLE="${TASK_QUEUE_ENABLE:-2}"
+case "$TASK_QUEUE_ENABLE" in
+  0|1|2) ;;
+  *) echo "[错误] TASK_QUEUE_ENABLE 必须为 0、1 或 2。" >&2; exit 1 ;;
+esac
 case "$LINGBOT_JOINT_ATTN_BACKEND" in
   ""|eager|sdpa_fp32) ;;
   *) echo "[错误] LINGBOT_JOINT_ATTN_BACKEND 必须为空、eager 或 sdpa_fp32。" >&2; exit 1 ;;
@@ -348,6 +354,7 @@ if [ "$DRY_RUN" = "1" ]; then
   printf 'export LINGBOT_JOINT_ATTN_BACKEND=%q\n' "$LINGBOT_JOINT_ATTN_BACKEND"
   printf 'export LINGBOT_MOE_MONITOR_BATCH_COUNTS=%q\n' "$LINGBOT_MOE_MONITOR_BATCH_COUNTS"
   printf 'export LINGBOT_ADAMW_FOREACH_NPU=%q\n' "$LINGBOT_ADAMW_FOREACH_NPU"
+  printf 'export TASK_QUEUE_ENABLE=%q\n' "$TASK_QUEUE_ENABLE"
   for speed_switch in LINGBOT_MUON_LOCAL_BATCH LINGBOT_HOST_METADATA LINGBOT_NPU_FUSED_RMSNORM LINGBOT_FSDP_FORWARD_PREFETCH; do
     printf 'export %s=%q\n' "$speed_switch" "${!speed_switch}"
   done
@@ -408,6 +415,7 @@ printf '[NPU speed] moe=%s joint_attention=%s monitor_batch=%s adamw_foreach=%s 
 printf '[NPU speed round3] muon_local_batch=%s host_metadata=%s fused_rmsnorm=%s fsdp_forward_prefetch=%s\n' \
   "$LINGBOT_MUON_LOCAL_BATCH" "$LINGBOT_HOST_METADATA" "$LINGBOT_NPU_FUSED_RMSNORM" \
   "$LINGBOT_FSDP_FORWARD_PREFETCH" | tee -a "$LOG_DIR/train.log"
+printf '[NPU comm round4] task_queue_enable=%s\n' "$TASK_QUEUE_ENABLE" | tee -a "$LOG_DIR/train.log"
 "${COMMAND[@]}" 2>&1 | tee -a "$LOG_DIR/train.log"
 
 echo "日志已保存: $LOG_DIR/train.log"

@@ -1,0 +1,69 @@
+{
+  "ranks": 8,
+  "dtype": "float32",
+  "correctness": "bitwise equal",
+  "warmups": 3,
+  "measured_iterations": 12,
+  "results": [
+    {
+      "shape": [
+        8,
+        64,
+        768
+      ],
+      "api": "list",
+      "median_wall_s_rank0": 0.0011546313762664795,
+      "max_median_wall_s_across_ranks": 0.0012080315500497818
+    },
+    {
+      "shape": [
+        8,
+        64,
+        768
+      ],
+      "api": "tensor",
+      "median_wall_s_rank0": 0.0015893708914518356,
+      "max_median_wall_s_across_ranks": 0.0015893708914518356
+    },
+    {
+      "shape": [
+        4,
+        96,
+        4096
+      ],
+      "api": "list",
+      "median_wall_s_rank0": 0.0014286506921052933,
+      "max_median_wall_s_across_ranks": 0.001474207267165184
+    },
+    {
+      "shape": [
+        4,
+        96,
+        4096
+      ],
+      "api": "tensor",
+      "median_wall_s_rank0": 0.001192726194858551,
+      "max_median_wall_s_across_ranks": 0.0012250915169715881
+    },
+    {
+      "shape": [
+        16,
+        96,
+        4096
+      ],
+      "api": "list",
+      "median_wall_s_rank0": 0.0034873895347118378,
+      "max_median_wall_s_across_ranks": 0.003513321280479431
+    },
+    {
+      "shape": [
+        16,
+        96,
+        4096
+      ],
+      "api": "tensor",
+      "median_wall_s_rank0": 0.0025501027703285217,
+      "max_median_wall_s_across_ranks": 0.0025776755064725876
+    }
+  ]
+}

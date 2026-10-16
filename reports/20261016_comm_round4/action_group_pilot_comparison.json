@@ -1,0 +1,72 @@
+{
+  "cases": {
+    "baseline": "/cache/lingbot/profiling/speed_round3_20261016/no_prefetch/run_case",
+    "grouped": "/cache/lingbot/profiling/comm_round4_20261016/action_group_pilot/run_case"
+  },
+  "dataset_hash_matches": true,
+  "steps": 20,
+  "complete": true,
+  "performance": [
+    {
+      "steps": [
+        2,
+        20
+      ],
+      "baseline_mean_step_time_s": 2.463265858198467,
+      "grouped_mean_step_time_s": 2.304558088904933,
+      "throughput_gain_percent": 6.886689906304255,
+      "baseline_median_s": 2.4581668376922607,
+      "grouped_median_s": 2.2987141609191895
+    },
+    {
+      "steps": [
+        5,
+        20
+      ],
+      "baseline_mean_step_time_s": 2.445711672306061,
+      "grouped_mean_step_time_s": 2.3008808940649033,
+      "throughput_gain_percent": 6.294579550586343,
+      "baseline_median_s": 2.4354175329208374,
+      "grouped_median_s": 2.297953724861145
+    },
+    {
+      "steps": [
+        10,
+        20
+      ],
+      "baseline_mean_step_time_s": 2.4358514222231777,
+      "grouped_mean_step_time_s": 2.303503296592019,
+      "throughput_gain_percent": 5.745514921856842,
+      "baseline_median_s": 2.43414306640625,
+      "grouped_median_s": 2.300971269607544
+    }
+  ],
+  "numerical_deltas": {
+    "loss": {
+      "max_absolute_delta": 0.000732421875,
+      "mean_absolute_delta": 0.00028076171875
+    },
+    "vla_loss": {
+      "max_absolute_delta": 0.000732421875,
+      "mean_absolute_delta": 0.00028076171875
+    },
+    "depth_loss": {
+      "max_absolute_delta": 0.0019073486328125,
+      "mean_absolute_delta": 9.5367431640625e-05
+    },
+    "future_depth_loss": {
+      "max_absolute_delta": 0.0,
+      "mean_absolute_delta": 0.0
+    },
+    "future_video_loss": {
+      "max_absolute_delta": 0.000476837158203125,
+      "mean_absolute_delta": 4.76837158203125e-05
+    },
+    "grad_norm": {
+      "max_absolute_delta": 0.019312620162963867,
+      "mean_absolute_delta": 0.0053076684474945065
+    }
+  },
+  "fsdp_warnings": 8,
+  "limitation": "FSDP2 warned on all ranks that one grouped module did not run forward before backward. Pilot is not sufficient to validate grouped training."
+}

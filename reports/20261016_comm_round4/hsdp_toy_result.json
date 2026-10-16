@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "ranks": 8,
+  "steps": 3,
+  "max_abs_error_rank0": {
+    "loss": 0.0,
+    "gradient": 9.313225746154785e-10,
+    "parameter": 0.0,
+    "norm": 1.4901161193847656e-08
+  }
+}

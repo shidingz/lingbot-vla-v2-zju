@@ -1,0 +1,94 @@
+Round 4: eight-card FSDP2 communication/dispatch optimization (2026-10-16)
+
+Decision
+--------
+Set TASK_QUEUE_ENABLE=2 by default in train_robotwin_npu.sh. An explicit
+TASK_QUEUE_ENABLE=1 restores torch_npu's previous default Level 1 behavior;
+0 disables the queue entirely. The model, 8-way
+FSDP2 mesh, optimizer, and batch size are unchanged. This change improves
+host-to-NPU task dispatch and observed communication overlap; it does not
+reduce the number of collective calls.
+
+Controlled end-to-end comparison
+--------------------------------
+Hardware: 8 x Ascend 910B1. RoboTwin default micro batch 12/card, global
+batch 96; 8-way FSDP2, no expert parallelism. Baseline (queue unset, hence
+Level 1 by torch_npu default) ran
+120 updates; candidate (TASK_QUEUE_ENABLE=2) ran 132 updates. Both exited
+successfully, used the same data-list hash and source snapshot except for
+the candidate's profiler instrumentation. The source snapshots passed the
+360-file post-run hash check. Checkpoint writing, resume and uploads were
+disabled in both trials. The speed window is updates 31-110, before the
+candidate's all-rank profiler capture at updates 121-124.
+
+                           Baseline       Queue=2       Change
+Wall seconds/update        2.4625         2.1750        -11.68%
+Global samples/second      38.9848        44.1379       +13.22%
+Logged seconds/update      2.4490         2.1535        -12.07%
+Rank-0 allocated peak GiB  50.48          50.48         unchanged
+
+Wall timestamps have one-second resolution; over this 80-update window
+the rounding uncertainty is about 0.0125 seconds/update. All 120 paired
+updates had finite metrics. The mean absolute loss difference was 0.00034,
+the maximum loss difference 0.00195, and the maximum gradient-norm
+difference 0.03595. These short runs establish speed and basic numerical
+health, not long-run convergence equivalence.
+
+Device-side attribution (8 ranks, four captured updates/rank)
+-------------------------------------------------------------
+The prior round-3 no-prefetch 8-way FSDP trace captured the same 121-124
+window and effective baseline model settings. The queue candidate trace
+has the same 36,747 kernels/update, including 174 all-gather, 74
+reduce-scatter and 6 all-reduce calls/update. Ascend's official overlap
+breakdown changes as follows (seconds/update, profiler overhead included):
+
+                                   Baseline       Queue=2       Reduction
+Non-overlapped communication       1.04985        0.82343       21.57%
+All communication                  1.50432        1.22203       18.77%
+Device Free                        0.71770        0.60559       15.62%
+Computing                          1.39187        1.40370       -0.85%
+Stage                              3.15946        2.83303       10.33%
+
+The collective kernel-duration sums fall from 0.90288 to 0.76728 s for
+all-gather and 0.56357 to 0.42330 s for reduce-scatter. These are sums
+across kernels, not critical-path times. Lower Free and non-overlapped
+communication with unchanged collective counts support the dispatch and
+overlap explanation. The exact internal HCCL scheduling mechanism was not
+separately isolated.
+
+Rejected communication candidates
+---------------------------------
+* 2 x 4 HSDP passed an 8-rank toy numerical check, but a 132-update real
+  run took 8.775 s/update in the 31-110 window versus 2.4625 baseline.
+  All-reduce calls rose from 6 to 80/update, non-overlapped communication
+  from 1.05 to 6.31 s/update, and allocated peak from 50.48 to 54.35 GiB.
+* Pairing adjacent action decoder layers into FSDP2 units passed a toy
+  gradient test and a 20-update pilot showed +6.89% throughput on steps
+  2-20. PyTorch warned on every rank that one grouped module had not run
+  forward before backward. The real model calls these layers in multiple
+  phases; the grouping was removed from production rather than promoted.
+* An 8-rank Muon all-gather API microbenchmark was bitwise-correct but
+  mixed: all_gather_into_tensor was slower for the small representative
+  shape and faster for larger shapes. No end-to-end benefit was established,
+  so the optimizer was left unchanged.
+
+Evidence and reproduction
+-------------------------
+Machine-readable comparison: comparison.json. Native profiler breakdown:
+profile_comparison.json and profile_summary_console.txt. Grouping pilot:
+action_group_pilot_comparison.json. Muon API microbenchmark:
+muon_allgather_benchmark.json. Experiment runner: run_case.py; analysis
+scripts: analyze.py and summarize_profile.py. Raw snapshots, manifests,
+logs, resource samples and traces are under
+/cache/lingbot/profiling/comm_round4_20261016/{baseline_8,task_queue_2,
+hsdp_2x4,action_group_pilot}/run_case.
+Toy and microbenchmark console logs are under
+/cache/lingbot/profiling/comm_round4_20261016/logs/.
+
+Vendor guidance: Ascend's MindSpeed-LLM FSDP2 tuning guide recommends
+TASK_QUEUE_ENABLE=2 when device Free time is high, and notes that
+ASCEND_LAUNCH_BLOCKING=1 disables it and that peak memory can increase:
+https://github.com/Ascend/MindSpeed-LLM/blob/master/docs/zh/pytorch/tuning/fsdp2_backend_performance_optimization.md
+The torch_npu environment-variable reference specifies that unset means
+Level 1, while 0 disables the queue:
+https://github.com/Ascend/pytorch/blob/master/docs/zh/api/environment_variable/op_execution/TASK_QUEUE_ENABLE.md

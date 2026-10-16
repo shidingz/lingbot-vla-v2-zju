@@ -1,0 +1,15 @@
+round3_baseline kernels/step 36747.25
+official {'Computing_s': 1.3918689465000025, 'Communication(Not Overlapped)_s': 1.0498502738125948, 'Overlapped_s': 0.4544735830624054, 'Communication_s': 1.5043238568750001, 'Free_s': 0.7176979236251828, 'Stage_s': 3.159464609375, 'Bubble_s': 0.0, 'Communication(Not Overlapped and Exclude Receive)_s': 1.0498502738125948, 'Preparing_s': 0.0086009140625}
+hcom_allGather_ {'calls_per_step': 174.0, 'duration_sum_s_per_step': 0.9028802035}
+hcom_reduceScatter_ {'calls_per_step': 74.0, 'duration_sum_s_per_step': 0.5635672283125}
+hcom_allReduce_ {'calls_per_step': 6.0, 'duration_sum_s_per_step': 0.037876425062499997}
+hsdp_2x4 kernels/step 38086.5
+official {'Computing_s': 1.5119958132500142, 'Communication(Not Overlapped)_s': 6.308706336623809, 'Overlapped_s': 0.5483439667511923, 'Communication_s': 6.857050303375001, 'Free_s': 2.1678910608127175, 'Stage_s': 9.9886629765625, 'Bubble_s': 0.0, 'Communication(Not Overlapped and Exclude Receive)_s': 6.308706336623809, 'Preparing_s': 0.0082011875}
+hcom_allGather_ {'calls_per_step': 174.0, 'duration_sum_s_per_step': 3.3339464939375}
+hcom_reduceScatter_ {'calls_per_step': 74.0, 'duration_sum_s_per_step': 0.72833535875}
+hcom_allReduce_ {'calls_per_step': 80.0, 'duration_sum_s_per_step': 3.2508594095625}
+task_queue_2 kernels/step 36747.25
+official {'Computing_s': 1.4037017836250065, 'Communication(Not Overlapped)_s': 0.8234273446250568, 'Overlapped_s': 0.39860294712494326, 'Communication_s': 1.22203029175, 'Free_s': 0.6055909685626812, 'Stage_s': 2.833031125, 'Bubble_s': 0.0, 'Communication(Not Overlapped and Exclude Receive)_s': 0.8234273446250568, 'Preparing_s': 0.0092664765625}
+hcom_allGather_ {'calls_per_step': 174.0, 'duration_sum_s_per_step': 0.7672836665625}
+hcom_reduceScatter_ {'calls_per_step': 74.0, 'duration_sum_s_per_step': 0.4233046868125}
+hcom_allReduce_ {'calls_per_step': 6.0, 'duration_sum_s_per_step': 0.031441938375}
