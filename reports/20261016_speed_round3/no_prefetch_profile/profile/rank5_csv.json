@@ -1,0 +1,683 @@
+{
+  "source_directory": "/cache/lingbot/profiling/speed_round3_20261016/no_prefetch/run_case/trace/rank5/notebook-1412a60d-0f41-4869-980d-933b2766338c_1873643_20261016132727098_ascend_pt/ASCEND_PROFILER_OUTPUT",
+  "recorded_steps": 4,
+  "official_steps": [
+    {
+      "step": "120",
+      "device_id": "5",
+      "Computing_s": 1.3909760080000058,
+      "Communication(Not Overlapped)_s": 1.2082731340001183,
+      "Overlapped_s": 0.5611519779998814,
+      "Communication_s": 1.7694251119999997,
+      "Free_s": 0.5580937220001796,
+      "Stage_s": 3.15734275,
+      "Bubble_s": 0.0,
+      "Communication(Not Overlapped and Exclude Receive)_s": 1.2082731340001183,
+      "Preparing_s": 0.01057175
+    },
+    {
+      "step": "121",
+      "device_id": "5",
+      "Computing_s": 1.3911231800000023,
+      "Communication(Not Overlapped)_s": 1.2956867680001352,
+      "Overlapped_s": 0.5768218639998667,
+      "Communication_s": 1.872508632000002,
+      "Free_s": 0.520282530000109,
+      "Stage_s": 3.2070925,
+      "Bubble_s": 0.0,
+      "Communication(Not Overlapped and Exclude Receive)_s": 1.2956867680001352,
+      "Preparing_s": 0.0076845
+    },
+    {
+      "step": "122",
+      "device_id": "5",
+      "Computing_s": 1.3925784380000104,
+      "Communication(Not Overlapped)_s": 1.2321568680001287,
+      "Overlapped_s": 0.5877316159998719,
+      "Communication_s": 1.8198884840000007,
+      "Free_s": 0.5363084900001114,
+      "Stage_s": 3.16104375,
+      "Bubble_s": 0.0,
+      "Communication(Not Overlapped and Exclude Receive)_s": 1.2321568680001287,
+      "Preparing_s": 0.01000675
+    },
+    {
+      "step": "123",
+      "device_id": "5",
+      "Computing_s": 1.3959593439999873,
+      "Communication(Not Overlapped)_s": 0.42469634599999934,
+      "Overlapped_s": 0.10169031000000064,
+      "Communication_s": 0.526386656,
+      "Free_s": 1.2539020420003013,
+      "Stage_s": 3.07474375,
+      "Bubble_s": 0.0,
+      "Communication(Not Overlapped and Exclude Receive)_s": 0.42469634599999934,
+      "Preparing_s": 0.00806625
+    }
+  ],
+  "official_mean_s_per_step": {
+    "Computing_s": 1.3926592425000015,
+    "Communication(Not Overlapped)_s": 1.0402032790000955,
+    "Overlapped_s": 0.45684894199990517,
+    "Communication_s": 1.4970522210000006,
+    "Free_s": 0.7171466960001753,
+    "Stage_s": 3.1500556875,
+    "Bubble_s": 0.0,
+    "Communication(Not Overlapped and Exclude Receive)_s": 1.0402032790000955,
+    "Preparing_s": 0.0090823125
+  },
+  "kernel_types": [
+    {
+      "name": "Slice",
+      "calls_per_step": 4005.0,
+      "duration_sum_s_per_step": 0.1108906715
+    },
+    {
+      "name": "Cast",
+      "calls_per_step": 5948.0,
+      "duration_sum_s_per_step": 0.082915396
+    },
+    {
+      "name": "RealDiv",
+      "calls_per_step": 670.0,
+      "duration_sum_s_per_step": 0.0108513115
+    },
+    {
+      "name": "UpsampleBilinear2dAA",
+      "calls_per_step": 4.0,
+      "duration_sum_s_per_step": 0.0004396885
+    },
+    {
+      "name": "Sub",
+      "calls_per_step": 194.0,
+      "duration_sum_s_per_step": 0.000612441
+    },
+    {
+      "name": "TransData",
+      "calls_per_step": 419.0,
+      "duration_sum_s_per_step": 0.0085236255
+    },
+    {
+      "name": "MemSet",
+      "calls_per_step": 1158.0,
+      "duration_sum_s_per_step": 0.0210052795
+    },
+    {
+      "name": "Conv2D",
+      "calls_per_step": 145.0,
+      "duration_sum_s_per_step": 0.009348631
+    },
+    {
+      "name": "Transpose",
+      "calls_per_step": 1319.0,
+      "duration_sum_s_per_step": 0.0576161
+    },
+    {
+      "name": "BroadcastTo",
+      "calls_per_step": 493.0,
+      "duration_sum_s_per_step": 0.0062256765
+    },
+    {
+      "name": "ConcatD",
+      "calls_per_step": 554.0,
+      "duration_sum_s_per_step": 0.02985133
+    },
+    {
+      "name": "UpsampleBicubic2d",
+      "calls_per_step": 6.0,
+      "duration_sum_s_per_step": 0.0009717435
+    },
+    {
+      "name": "Add",
+      "calls_per_step": 2405.0,
+      "duration_sum_s_per_step": 0.073952118
+    },
+    {
+      "name": "LayerNormV3",
+      "calls_per_step": 308.0,
+      "duration_sum_s_per_step": 0.016360897
+    },
+    {
+      "name": "MatMulV2",
+      "calls_per_step": 1381.0,
+      "duration_sum_s_per_step": 0.0393570175
+    },
+    {
+      "name": "AsStrided",
+      "calls_per_step": 224.0,
+      "duration_sum_s_per_step": 0.005010633
+    },
+    {
+      "name": "FlashAttentionScore",
+      "calls_per_step": 132.0,
+      "duration_sum_s_per_step": 0.039549301
+    },
+    {
+      "name": "Mul",
+      "calls_per_step": 4689.0,
+      "duration_sum_s_per_step": 0.096519849
+    },
+    {
+      "name": "Gelu",
+      "calls_per_step": 128.0,
+      "duration_sum_s_per_step": 0.012369989
+    },
+    {
+      "name": "Pack",
+      "calls_per_step": 118.0,
+      "duration_sum_s_per_step": 0.002008253
+    },
+    {
+      "name": "ReduceSum",
+      "calls_per_step": 946.0,
+      "duration_sum_s_per_step": 0.0256383005
+    },
+    {
+      "name": "LinSpace",
+      "calls_per_step": 29.0,
+      "duration_sum_s_per_step": 0.0001738635
+    },
+    {
+      "name": "Conv2DTranspose",
+      "calls_per_step": 24.0,
+      "duration_sum_s_per_step": 0.001572095
+    },
+    {
+      "name": "PadV3",
+      "calls_per_step": 89.0,
+      "duration_sum_s_per_step": 0.0051503035
+    },
+    {
+      "name": "Relu",
+      "calls_per_step": 52.0,
+      "duration_sum_s_per_step": 0.000591684
+    },
+    {
+      "name": "ResizeBilinearV2",
+      "calls_per_step": 14.0,
+      "duration_sum_s_per_step": 0.005055786
+    },
+    {
+      "name": "Exp",
+      "calls_per_step": 40.0,
+      "duration_sum_s_per_step": 9.20375e-05
+    },
+    {
+      "name": "LpNormReduceV2",
+      "calls_per_step": 2.0,
+      "duration_sum_s_per_step": 0.00018314
+    },
+    {
+      "name": "LpNormUpdateV2",
+      "calls_per_step": 2.0,
+      "duration_sum_s_per_step": 1.72655e-05
+    },
+    {
+      "name": "TensorMove",
+      "calls_per_step": 539.0,
+      "duration_sum_s_per_step": 0.009214216
+    },
+    {
+      "name": "ClipByValueV2",
+      "calls_per_step": 138.0,
+      "duration_sum_s_per_step": 0.0004896535
+    },
+    {
+      "name": "Sigmoid",
+      "calls_per_step": 39.0,
+      "duration_sum_s_per_step": 0.000189655
+    },
+    {
+      "name": "Greater",
+      "calls_per_step": 8.0,
+      "duration_sum_s_per_step": 8.45615e-05
+    },
+    {
+      "name": "ResizeNearestNeighborV2",
+      "calls_per_step": 8.0,
+      "duration_sum_s_per_step": 0.000292195
+    },
+    {
+      "name": "ZerosLike",
+      "calls_per_step": 618.0,
+      "duration_sum_s_per_step": 0.011268192
+    },
+    {
+      "name": "Fill",
+      "calls_per_step": 257.0,
+      "duration_sum_s_per_step": 0.000360752
+    },
+    {
+      "name": "StridedSlice",
+      "calls_per_step": 80.0,
+      "duration_sum_s_per_step": 0.0011976225
+    },
+    {
+      "name": "ViewCopy",
+      "calls_per_step": 305.0,
+      "duration_sum_s_per_step": 0.026717436
+    },
+    {
+      "name": "LogicalAnd",
+      "calls_per_step": 3.0,
+      "duration_sum_s_per_step": 2.56955e-05
+    },
+    {
+      "name": "OnesLike",
+      "calls_per_step": 8.0,
+      "duration_sum_s_per_step": 4.3201e-05
+    },
+    {
+      "name": "ReduceAny",
+      "calls_per_step": 38.0,
+      "duration_sum_s_per_step": 0.0007113775
+    },
+    {
+      "name": "BatchMatMulV2",
+      "calls_per_step": 840.0,
+      "duration_sum_s_per_step": 0.1370650545
+    },
+    {
+      "name": "NanToNum",
+      "calls_per_step": 2.0,
+      "duration_sum_s_per_step": 4.0681e-05
+    },
+    {
+      "name": "Abs",
+      "calls_per_step": 74.0,
+      "duration_sum_s_per_step": 0.0001146675
+    },
+    {
+      "name": "Equal",
+      "calls_per_step": 83.0,
+      "duration_sum_s_per_step": 0.0001775135
+    },
+    {
+      "name": "NonZero",
+      "calls_per_step": 30.0,
+      "duration_sum_s_per_step": 0.002112687
+    },
+    {
+      "name": "NotEqual",
+      "calls_per_step": 38.0,
+      "duration_sum_s_per_step": 9.6122e-05
+    },
+    {
+      "name": "Tile",
+      "calls_per_step": 52.0,
+      "duration_sum_s_per_step": 0.000326513
+    },
+    {
+      "name": "MatMulV3",
+      "calls_per_step": 884.0,
+      "duration_sum_s_per_step": 0.2435887375
+    },
+    {
+      "name": "ReduceAll",
+      "calls_per_step": 25.0,
+      "duration_sum_s_per_step": 0.0045435565
+    },
+    {
+      "name": "Range",
+      "calls_per_step": 8.0,
+      "duration_sum_s_per_step": 6.6496e-05
+    },
+    {
+      "name": "FloorMod",
+      "calls_per_step": 2.0,
+      "duration_sum_s_per_step": 6.075e-06
+    },
+    {
+      "name": "IndexPutV2",
+      "calls_per_step": 84.0,
+      "duration_sum_s_per_step": 0.0025772355
+    },
+    {
+      "name": "Sin",
+      "calls_per_step": 38.0,
+      "duration_sum_s_per_step": 0.0005883605
+    },
+    {
+      "name": "Cos",
+      "calls_per_step": 38.0,
+      "duration_sum_s_per_step": 0.0005718745
+    },
+    {
+      "name": "Index",
+      "calls_per_step": 84.0,
+      "duration_sum_s_per_step": 0.0025404375
+    },
+    {
+      "name": "Neg",
+      "calls_per_step": 319.0,
+      "duration_sum_s_per_step": 0.003398861
+    },
+    {
+      "name": "SoftmaxV2",
+      "calls_per_step": 64.0,
+      "duration_sum_s_per_step": 0.0252675785
+    },
+    {
+      "name": "IsNegInf",
+      "calls_per_step": 24.0,
+      "duration_sum_s_per_step": 0.0126775615
+    },
+    {
+      "name": "SelectV2",
+      "calls_per_step": 134.0,
+      "duration_sum_s_per_step": 0.036579671
+    },
+    {
+      "name": "ReduceMean",
+      "calls_per_step": 391.0,
+      "duration_sum_s_per_step": 0.0067490935
+    },
+    {
+      "name": "ForeachCopy",
+      "calls_per_step": 154.0,
+      "duration_sum_s_per_step": 0.009672324
+    },
+    {
+      "name": "hcom_allGather_",
+      "calls_per_step": 174.0,
+      "duration_sum_s_per_step": 0.925425546
+    },
+    {
+      "name": "DSARandomNormal",
+      "calls_per_step": 1.0,
+      "duration_sum_s_per_step": 4.2855e-06
+    },
+    {
+      "name": "DSARandomUniform",
+      "calls_per_step": 2.0,
+      "duration_sum_s_per_step": 2.18e-06
+    },
+    {
+      "name": "Pow",
+      "calls_per_step": 184.0,
+      "duration_sum_s_per_step": 0.030975171
+    },
+    {
+      "name": "GatherV2",
+      "calls_per_step": 5.0,
+      "duration_sum_s_per_step": 0.0001117875
+    },
+    {
+      "name": "LayerNormV4",
+      "calls_per_step": 56.0,
+      "duration_sum_s_per_step": 0.0039951775
+    },
+    {
+      "name": "Reciprocal",
+      "calls_per_step": 3.0,
+      "duration_sum_s_per_step": 4.935e-06
+    },
+    {
+      "name": "Swish",
+      "calls_per_step": 109.0,
+      "duration_sum_s_per_step": 0.003537335
+    },
+    {
+      "name": "Cumsum",
+      "calls_per_step": 39.0,
+      "duration_sum_s_per_step": 0.0013246655
+    },
+    {
+      "name": "LessEqual",
+      "calls_per_step": 1.0,
+      "duration_sum_s_per_step": 4.90305e-05
+    },
+    {
+      "name": "LogicalNot",
+      "calls_per_step": 74.0,
+      "duration_sum_s_per_step": 0.0004266915
+    },
+    {
+      "name": "MaskedFill",
+      "calls_per_step": 42.0,
+      "duration_sum_s_per_step": 0.0004160905
+    },
+    {
+      "name": "ReduceMax",
+      "calls_per_step": 112.0,
+      "duration_sum_s_per_step": 0.0004107255
+    },
+    {
+      "name": "Pows",
+      "calls_per_step": 330.0,
+      "duration_sum_s_per_step": 0.005380267
+    },
+    {
+      "name": "Rsqrt",
+      "calls_per_step": 145.0,
+      "duration_sum_s_per_step": 0.000599985
+    },
+    {
+      "name": "RmsNorm",
+      "calls_per_step": 73.0,
+      "duration_sum_s_per_step": 0.001227135
+    },
+    {
+      "name": "LogicalOr",
+      "calls_per_step": 71.0,
+      "duration_sum_s_per_step": 0.0007830725
+    },
+    {
+      "name": "RepeatInterleave",
+      "calls_per_step": 38.0,
+      "duration_sum_s_per_step": 0.006135823
+    },
+    {
+      "name": "TopKV2",
+      "calls_per_step": 74.0,
+      "duration_sum_s_per_step": 0.001992667
+    },
+    {
+      "name": "GatherElements",
+      "calls_per_step": 73.0,
+      "duration_sum_s_per_step": 0.002204102
+    },
+    {
+      "name": "OneHot",
+      "calls_per_step": 72.0,
+      "duration_sum_s_per_step": 0.001197884
+    },
+    {
+      "name": "Sort",
+      "calls_per_step": 38.0,
+      "duration_sum_s_per_step": 0.0003075335
+    },
+    {
+      "name": "FloorDiv",
+      "calls_per_step": 36.0,
+      "duration_sum_s_per_step": 0.0021477215
+    },
+    {
+      "name": "GroupedMatmul",
+      "calls_per_step": 216.0,
+      "duration_sum_s_per_step": 0.0063550935
+    },
+    {
+      "name": "Muls",
+      "calls_per_step": 526.0,
+      "duration_sum_s_per_step": 0.011898395
+    },
+    {
+      "name": "SmoothL1LossV2",
+      "calls_per_step": 2.0,
+      "duration_sum_s_per_step": 6.0012e-05
+    },
+    {
+      "name": "MSELossV2",
+      "calls_per_step": 2.0,
+      "duration_sum_s_per_step": 5.1706e-05
+    },
+    {
+      "name": "LpNormV2",
+      "calls_per_step": 60.0,
+      "duration_sum_s_per_step": 0.0022768125
+    },
+    {
+      "name": "LpLoss",
+      "calls_per_step": 1.0,
+      "duration_sum_s_per_step": 7.74e-06
+    },
+    {
+      "name": "ReduceLogSumExp",
+      "calls_per_step": 36.0,
+      "duration_sum_s_per_step": 0.000259236
+    },
+    {
+      "name": "LinearIndex",
+      "calls_per_step": 39.0,
+      "duration_sum_s_per_step": 0.0003687315
+    },
+    {
+      "name": "ScatterAddWithSorted",
+      "calls_per_step": 2.0,
+      "duration_sum_s_per_step": 0.000154283
+    },
+    {
+      "name": "ScatterElementsV2",
+      "calls_per_step": 37.0,
+      "duration_sum_s_per_step": 0.000618886
+    },
+    {
+      "name": "ReduceMin",
+      "calls_per_step": 109.0,
+      "duration_sum_s_per_step": 0.0002336455
+    },
+    {
+      "name": "Log",
+      "calls_per_step": 36.0,
+      "duration_sum_s_per_step": 0.0001203755
+    },
+    {
+      "name": "SigmoidGrad",
+      "calls_per_step": 37.0,
+      "duration_sum_s_per_step": 0.000167599
+    },
+    {
+      "name": "L1LossGrad",
+      "calls_per_step": 1.0,
+      "duration_sum_s_per_step": 8.14e-06
+    },
+    {
+      "name": "GreaterEqual",
+      "calls_per_step": 2.0,
+      "duration_sum_s_per_step": 4.6255e-06
+    },
+    {
+      "name": "MseLossGrad",
+      "calls_per_step": 2.0,
+      "duration_sum_s_per_step": 8.38315e-05
+    },
+    {
+      "name": "LayerNormGradV3",
+      "calls_per_step": 16.0,
+      "duration_sum_s_per_step": 0.0013477295
+    },
+    {
+      "name": "GeluGrad",
+      "calls_per_step": 4.0,
+      "duration_sum_s_per_step": 0.0003517025
+    },
+    {
+      "name": "SoftmaxGrad",
+      "calls_per_step": 4.0,
+      "duration_sum_s_per_step": 0.0001684665
+    },
+    {
+      "name": "SmoothL1LossGradV2",
+      "calls_per_step": 2.0,
+      "duration_sum_s_per_step": 0.0001705175
+    },
+    {
+      "name": "RmsNormGrad",
+      "calls_per_step": 73.0,
+      "duration_sum_s_per_step": 0.002722437
+    },
+    {
+      "name": "hcom_reduceScatter_",
+      "calls_per_step": 74.0,
+      "duration_sum_s_per_step": 0.525250076
+    },
+    {
+      "name": "SiluGrad",
+      "calls_per_step": 109.0,
+      "duration_sum_s_per_step": 0.007927443
+    },
+    {
+      "name": "GroupedMatmulAdd",
+      "calls_per_step": 108.0,
+      "duration_sum_s_per_step": 0.0075363525
+    },
+    {
+      "name": "FlashAttentionScoreGrad",
+      "calls_per_step": 36.0,
+      "duration_sum_s_per_step": 0.070920954
+    },
+    {
+      "name": "ForeachNorm",
+      "calls_per_step": 40.0,
+      "duration_sum_s_per_step": 0.0017357645
+    },
+    {
+      "name": "hcom_allReduce_",
+      "calls_per_step": 6.0,
+      "duration_sum_s_per_step": 0.046376599
+    },
+    {
+      "name": "Sign",
+      "calls_per_step": 36.0,
+      "duration_sum_s_per_step": 6.039e-05
+    },
+    {
+      "name": "Lerp",
+      "calls_per_step": 1166.0,
+      "duration_sum_s_per_step": 0.01473951
+    },
+    {
+      "name": "Axpy",
+      "calls_per_step": 838.0,
+      "duration_sum_s_per_step": 0.0098184895
+    },
+    {
+      "name": "ForeachMulScalar",
+      "calls_per_step": 16.0,
+      "duration_sum_s_per_step": 0.0002121505
+    },
+    {
+      "name": "ForeachLerpScalar",
+      "calls_per_step": 16.0,
+      "duration_sum_s_per_step": 0.0002391695
+    },
+    {
+      "name": "ForeachAddcmulScalar",
+      "calls_per_step": 24.0,
+      "duration_sum_s_per_step": 0.000339711
+    },
+    {
+      "name": "ForeachSqrt",
+      "calls_per_step": 16.0,
+      "duration_sum_s_per_step": 0.0002239195
+    },
+    {
+      "name": "ForeachDivScalarList",
+      "calls_per_step": 8.0,
+      "duration_sum_s_per_step": 0.000110642
+    },
+    {
+      "name": "ForeachAddScalar",
+      "calls_per_step": 8.0,
+      "duration_sum_s_per_step": 9.58665e-05
+    },
+    {
+      "name": "Addcdiv",
+      "calls_per_step": 376.0,
+      "duration_sum_s_per_step": 0.0007989205
+    }
+  ],
+  "kernel_count": 146972,
+  "kernel_calls_per_step": 36743.0
+}

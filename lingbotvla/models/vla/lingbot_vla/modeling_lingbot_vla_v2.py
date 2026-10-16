@@ -218,7 +218,15 @@ class QwenvlWithExpertV2Model(PreTrainedModel):
         image_grid_thw: torch.LongTensor,
     ):
         precompute_grid_thw = getattr(self.config, "precompute_grid_thw", False)
-        if precompute_grid_thw and self.position_embeddings is None:
+        # Cached rotary positions/sequence boundaries are valid only for this
+        # grid and device. In particular, a shorter final batch must rebuild.
+        grid_key = None
+        if precompute_grid_thw:
+            grid_key = (image_grid_thw.device, tuple(image_grid_thw.shape),
+                        tuple(image_grid_thw.detach().cpu().reshape(-1).tolist()))
+        if precompute_grid_thw and (
+            self.position_embeddings is None or getattr(self, "_visual_grid_key", None) != grid_key
+        ):
             (
                 self.pos_embeds,
                 self.position_embeddings,
@@ -226,6 +234,7 @@ class QwenvlWithExpertV2Model(PreTrainedModel):
                 self.visual_split_sizes,
                 self.visual_max_seqlen,
             ) = self.qwenvl.visual.preprcess_grid_thw(grid_thw=image_grid_thw)
+            self._visual_grid_key = grid_key
         image_embeds, deepstack_image_embeds = self.qwenvl.visual(
             pixel_values,
             grid_thw=image_grid_thw,
@@ -265,13 +274,22 @@ class QwenvlWithExpertV2Model(PreTrainedModel):
 
     def build_prefix_position_ids(self, input_ids, attention_mask,
                                    image_grid_thw=None, video_grid_thw=None):
+        device = input_ids.device
+        # HF's index builder is a Python loop over integer metadata. Transfer
+        # each metadata tensor once instead of synchronizing each scalar read.
+        host_metadata = device.type == "npu" and os.environ.get("LINGBOT_HOST_METADATA", "0") == "1"
+        if host_metadata:
+            input_ids = input_ids.cpu()
+            attention_mask = attention_mask.cpu() if attention_mask is not None else None
+            image_grid_thw = image_grid_thw.cpu() if image_grid_thw is not None else None
+            video_grid_thw = video_grid_thw.cpu() if video_grid_thw is not None else None
         position_ids, _ = self.qwenvl.model.get_rope_index(
             input_ids=input_ids,
             image_grid_thw=image_grid_thw,
             video_grid_thw=video_grid_thw,
             attention_mask=attention_mask,
         )
-        return position_ids
+        return position_ids.to(device=device) if host_metadata else position_ids
 
     def apply_mrope(self, query_states, key_states, position_ids):
         position_embeddings = self.qwenvl.model.language_model.rotary_emb(query_states, position_ids)
@@ -332,6 +350,39 @@ class QwenvlWithExpertV2Model(PreTrainedModel):
             f"(got action={action_num_layers}, vlm={num_layers})."
         )
 
+        prefetch = self.training and os.environ.get("LINGBOT_FSDP_FORWARD_PREFETCH", "0") == "1"
+        if not prefetch and getattr(self, "_joint_prefetch_configured", False):
+            # A trained model may later run evaluation with only one branch.
+            for model in models:
+                for layer in model.layers:
+                    if hasattr(layer, "set_modules_to_forward_prefetch"):
+                        layer.set_modules_to_forward_prefetch([])
+        self._joint_prefetch_configured = prefetch
+        active_models = [i for i, hidden in enumerate(inputs_embeds) if hidden is not None]
+
+        def prefetch_after(model_index, layer_index, output_stage):
+            # Each joint decoder is invoked twice: QKV, then post-attention.
+            # Follow that actual order instead of prefetching the next layer
+            # twice. Only one upcoming FSDP unit is kept ahead of computation.
+            current = models[model_index].layers[layer_index]
+            if not hasattr(current, "set_modules_to_forward_prefetch"):
+                return
+            index = active_models.index(model_index)
+            if index + 1 < len(active_models):
+                following = models[active_models[index + 1]].layers[layer_index]
+            elif not output_stage:
+                following = models[active_models[0]].layers[layer_index]
+            elif layer_index + 1 < num_layers:
+                following = models[active_models[0]].layers[layer_index + 1]
+            else:
+                following = None
+            modules = (
+                [following]
+                if following is not current and hasattr(following, "set_modules_to_forward_prefetch")
+                else []
+            )
+            current.set_modules_to_forward_prefetch(modules)
+
         for layer_idx in range(num_layers):
             query_states = []
             key_states = []
@@ -339,6 +390,8 @@ class QwenvlWithExpertV2Model(PreTrainedModel):
             for i, hidden_states in enumerate(inputs_embeds):
                 if hidden_states is None:
                     continue
+                if prefetch:
+                    prefetch_after(i, layer_idx, False)
                 if i == 1:
                     q, k, v = models[i].layers[layer_idx](
                         hidden_states, compute_kqv=True, ada_cond=ada_cond
@@ -382,6 +435,8 @@ class QwenvlWithExpertV2Model(PreTrainedModel):
                 if hidden_states is None:
                     outputs_embeds.append(None)
                     continue
+                if prefetch:
+                    prefetch_after(i, layer_idx, True)
                 end = start + hidden_states.shape[1]
                 if i == 1:
                     out_emb, router_logits = models[i].layers[layer_idx](

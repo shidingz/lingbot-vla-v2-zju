@@ -1,0 +1,14 @@
+report.html — 两页可视报告
+analysis.txt — 完整中文解释
+findings.json — 结论和数值
+run_summary.json — 基线/采集扰动/8卡资源
+analysis/summary.json — 官方8卡设备时间线与kernel统计
+attribution_scope_summary.json — 主机阶段与同步交集
+cross_rank_sequence_diagnostic.json — 归一化通信序号核验
+host_sampling_analysis.json — CPU堆栈及采样质量
+host_config_audit.json — 当前配置与上次160步比较
+run_profile.py — 隔离实验启动器
+instrument_snapshot.py — 仅快照的计时标记补丁
+analyze_profile.py — 通信/kernel解析
+attribution_scope_analysis.py — CPU范围与同步解析
+原始数据：/cache/lingbot/profiling/round3_profile_20261016_195822/profile_132

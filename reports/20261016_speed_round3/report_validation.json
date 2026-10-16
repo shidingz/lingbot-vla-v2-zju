@@ -1,0 +1,33 @@
+{
+  "checked_at": "2026-10-16T21:38:45.730712+08:00",
+  "passed": true,
+  "pdf_pages": 2,
+  "page_text_bounds": [
+    {
+      "text_top_pt": 46.929185,
+      "text_bottom_pt": 726.035507,
+      "text_right_pt": 550.843435
+    },
+    {
+      "text_top_pt": 46.929185,
+      "text_bottom_pt": 766.177793,
+      "text_right_pt": 552.683747
+    }
+  ],
+  "visual_review": "Both pages inspected at 1400px before minor wording changes; final PDF text bounds and required content rechecked.",
+  "launcher_checks": 44,
+  "launcher_hashes_match": true,
+  "npu_test_checks": 21,
+  "distributed_passed": true,
+  "git_diff_check": true,
+  "bash_syntax": true,
+  "idle_npu_count": 8,
+  "main_vs_frozen_source_differences": [
+    "lingbotvla/utils/training_profiler.py",
+    "tasks/vla/train_lingbotvla.py",
+    "train_robotwin_npu.sh"
+  ],
+  "difference_explanation": "Two files contain isolated benchmark-only profiling instrumentation; launcher default now matches tested prefetch=0 plus documentation edits. Optimization source files unchanged.",
+  "report_sha256": "c2ea57e681f1c5d7c507ed6128ffe7850519b7e395482a4f354383f97591c024",
+  "pdf_sha256": "68af07fab947b6183c39fd72c92f866acb18096383a9537012a429878ac4f243"
+}

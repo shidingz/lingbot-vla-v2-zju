@@ -1,0 +1,4 @@
+WARNING: Ignored `font-weight:100 900` at 2:134654, invalid value.
+WARNING: Using fontTools instead of HarfBuzz-Subset for font "ReportCJK". This will be unsupported in future versions of WeasyPrint. Please install HarfBuzz-Subset >= 4.1.0 with your package manager.
+WARNING: Using fontTools instead of HarfBuzz-Subset for font "ReportCJK". This will be unsupported in future versions of WeasyPrint. Please install HarfBuzz-Subset >= 4.1.0 with your package manager.
+WARNING: Using fontTools instead of HarfBuzz-Subset for font "Cantarell". This will be unsupported in future versions of WeasyPrint. Please install HarfBuzz-Subset >= 4.1.0 with your package manager.

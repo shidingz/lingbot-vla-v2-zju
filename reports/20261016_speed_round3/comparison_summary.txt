@@ -1,0 +1,102 @@
+{
+  "cases": {
+    "baseline": {
+      "steps": 120,
+      "exit": 0,
+      "eligible": true,
+      "peak_gib": 50.61
+    },
+    "candidate": {
+      "steps": 0,
+      "exit": 1,
+      "eligible": false,
+      "peak_gib": null
+    },
+    "candidate_v2": {
+      "steps": 120,
+      "exit": 0,
+      "eligible": true,
+      "peak_gib": 50.48
+    },
+    "default_profile": {
+      "steps": 132,
+      "exit": 0,
+      "eligible": true,
+      "peak_gib": 50.48
+    },
+    "no_prefetch": {
+      "steps": 132,
+      "exit": 0,
+      "eligible": true,
+      "peak_gib": 50.48
+    }
+  },
+  "comparisons": {
+    "candidate_v2": {
+      "13:60": {
+        "baseline_s": 2.6458333333333335,
+        "candidate_s": 2.5,
+        "throughput_gain_percent": 5.833333333333335,
+        "update_time_reduction_percent": 5.511811023622048
+      },
+      "31:110": {
+        "baseline_s": 2.65,
+        "candidate_s": 2.5125,
+        "throughput_gain_percent": 5.472636815920384,
+        "update_time_reduction_percent": 5.188679245283012
+      },
+      "81:110": {
+        "baseline_s": 2.6333333333333333,
+        "candidate_s": 2.533333333333333,
+        "throughput_gain_percent": 3.9473684210526327,
+        "update_time_reduction_percent": 3.797468354430378
+      },
+      "115:120": {
+        "baseline_s": 2.6666666666666665,
+        "candidate_s": 2.5,
+        "throughput_gain_percent": 6.666666666666665,
+        "update_time_reduction_percent": 6.25
+      }
+    },
+    "default_profile": {
+      "13:60": {
+        "baseline_s": 2.6458333333333335,
+        "candidate_s": 2.4375,
+        "throughput_gain_percent": 8.547008547008561,
+        "update_time_reduction_percent": 7.874015748031504
+      },
+      "31:110": {
+        "baseline_s": 2.65,
+        "candidate_s": 2.45,
+        "throughput_gain_percent": 8.163265306122437,
+        "update_time_reduction_percent": 7.547169811320742
+      },
+      "81:110": {
+        "baseline_s": 2.6333333333333333,
+        "candidate_s": 2.433333333333333,
+        "throughput_gain_percent": 8.219178082191792,
+        "update_time_reduction_percent": 7.594936708860766
+      }
+    },
+    "no_prefetch": {
+      "13:60": {
+        "baseline_s": 2.6458333333333335,
+        "candidate_s": 2.4583333333333335,
+        "throughput_gain_percent": 7.6271186440677985,
+        "update_time_reduction_percent": 7.0866141732283445
+      },
+      "31:110": {
+        "baseline_s": 2.65,
+        "candidate_s": 2.4625,
+        "throughput_gain_percent": 7.614213197969533,
+        "update_time_reduction_percent": 7.075471698113212
+      },
+      "81:110": {
+        "baseline_s": 2.6333333333333333,
+        "candidate_s": 2.433333333333333,
+        "throughput_gain_percent": 8.219178082191792,
+        "update_time_reduction_percent": 7.594936708860766
+      }
+    }
+  }
+}

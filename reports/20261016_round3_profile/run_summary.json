@@ -1,0 +1,3480 @@
+{
+  "completed_at": "2026-10-16T20:12:41.099941+08:00",
+  "status": "passed",
+  "run": "/cache/lingbot/profiling/round3_profile_20261016_195822/profile_132",
+  "updates": 132,
+  "exit_code": 0,
+  "all_numeric_values_finite": true,
+  "lr_horizon": 5717,
+  "global_batch_size": 96,
+  "rank0_peak_allocated_gib": 50.61,
+  "windows": {
+    "13-42": {
+      "available": true,
+      "steps_inclusive": [
+        13,
+        42
+      ],
+      "updates": 30,
+      "logged_step_seconds": {
+        "count": 30,
+        "mean": 2.636037906010946,
+        "median": 2.636848568916321,
+        "p95": 2.730686795711517,
+        "min": 2.5624048709869385,
+        "max": 2.776127815246582,
+        "stddev": 0.05347394426965705
+      },
+      "wall_start_step": 12,
+      "wall_end_step": 42,
+      "wall_start_at": "2026-10-16T20:03:57",
+      "wall_end_at": "2026-10-16T20:05:17",
+      "wall_total_seconds": 80.0,
+      "wall_seconds_per_update": 2.6666666666666665,
+      "wall_timestamp_quantization_uncertainty_seconds_per_update": 0.03333333333333333,
+      "global_samples_per_second": 36.0,
+      "profiler_overlap_risk": false,
+      "usable_for_speed_comparison": true,
+      "loss": {
+        "count": 30,
+        "mean": 0.3626220703125,
+        "median": 0.362060546875,
+        "p95": 0.41491699218749994,
+        "min": 0.3125,
+        "max": 0.432373046875,
+        "stddev": 0.03267851525281276
+      },
+      "grad_norm": {
+        "count": 30,
+        "mean": 0.8894627551237743,
+        "median": 0.8736205995082855,
+        "p95": 0.9892502814531325,
+        "min": 0.7749605774879456,
+        "max": 1.0962942838668823,
+        "stddev": 0.06802588751071106
+      },
+      "resources": {
+        "query_cycles": 12,
+        "cards": {
+          "0": {
+            "NPU ID": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "Chip Count": {
+              "count": 12,
+              "mean": 1.0,
+              "median": 1.0,
+              "p95": 1.0,
+              "min": 1.0,
+              "max": 1.0,
+              "stddev": 0.0
+            },
+            "DDR Capacity(MB)": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Usage Rate(%)": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Total(page)": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Usage Rate(%)": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Capacity(MB)": {
+              "count": 12,
+              "mean": 65536.0,
+              "median": 65536.0,
+              "p95": 65536.0,
+              "min": 65536.0,
+              "max": 65536.0,
+              "stddev": 0.0
+            },
+            "HBM Usage Rate(%)": {
+              "count": 12,
+              "mean": 93.0,
+              "median": 93.0,
+              "p95": 93.0,
+              "min": 93.0,
+              "max": 93.0,
+              "stddev": 0.0
+            },
+            "Aicore Usage Rate(%)": {
+              "count": 12,
+              "mean": 15.0,
+              "median": 16.0,
+              "p95": 29.45,
+              "min": 0.0,
+              "max": 30.0,
+              "stddev": 11.438239957848992
+            },
+            "Aivector Usage Rate(%)": {
+              "count": 12,
+              "mean": 29.083333333333332,
+              "median": 25.5,
+              "p95": 51.39999999999999,
+              "min": 0.0,
+              "max": 58.0,
+              "stddev": 15.413513190992147
+            },
+            "Aicpu Usage Rate(%)": {
+              "count": 12,
+              "mean": 0.25,
+              "median": 0.0,
+              "p95": 1.0,
+              "min": 0.0,
+              "max": 1.0,
+              "stddev": 0.4330127018922193
+            },
+            "Ctrlcpu Usage Rate(%)": {
+              "count": 12,
+              "mean": 6.416666666666667,
+              "median": 4.5,
+              "p95": 19.0,
+              "min": 1.0,
+              "max": 19.0,
+              "stddev": 5.780114377953279
+            },
+            "DDR Bandwidth Usage Rate(%)": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Bandwidth Usage Rate(%)": {
+              "count": 12,
+              "mean": 26.25,
+              "median": 21.5,
+              "p95": 53.84999999999998,
+              "min": 4.0,
+              "max": 72.0,
+              "stddev": 18.435134028985704
+            },
+            "Chip ID": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            }
+          },
+          "1": {
+            "NPU ID": {
+              "count": 12,
+              "mean": 1.0,
+              "median": 1.0,
+              "p95": 1.0,
+              "min": 1.0,
+              "max": 1.0,
+              "stddev": 0.0
+            },
+            "Chip Count": {
+              "count": 12,
+              "mean": 1.0,
+              "median": 1.0,
+              "p95": 1.0,
+              "min": 1.0,
+              "max": 1.0,
+              "stddev": 0.0
+            },
+            "DDR Capacity(MB)": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Usage Rate(%)": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Total(page)": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Usage Rate(%)": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Capacity(MB)": {
+              "count": 12,
+              "mean": 65536.0,
+              "median": 65536.0,
+              "p95": 65536.0,
+              "min": 65536.0,
+              "max": 65536.0,
+              "stddev": 0.0
+            },
+            "HBM Usage Rate(%)": {
+              "count": 12,
+              "mean": 92.0,
+              "median": 92.0,
+              "p95": 92.0,
+              "min": 92.0,
+              "max": 92.0,
+              "stddev": 0.0
+            },
+            "Aicore Usage Rate(%)": {
+              "count": 12,
+              "mean": 19.25,
+              "median": 21.5,
+              "p95": 33.349999999999994,
+              "min": 0.0,
+              "max": 35.0,
+              "stddev": 11.113992681900296
+            },
+            "Aivector Usage Rate(%)": {
+              "count": 12,
+              "mean": 35.666666666666664,
+              "median": 40.5,
+              "p95": 55.25,
+              "min": 6.0,
+              "max": 58.0,
+              "stddev": 16.110727964792762
+            },
+            "Aicpu Usage Rate(%)": {
+              "count": 12,
+              "mean": 0.16666666666666666,
+              "median": 0.0,
+              "p95": 1.0,
+              "min": 0.0,
+              "max": 1.0,
+              "stddev": 0.37267799624996495
+            },
+            "Ctrlcpu Usage Rate(%)": {
+              "count": 12,
+              "mean": 2.25,
+              "median": 2.0,
+              "p95": 3.4499999999999993,
+              "min": 0.0,
+              "max": 4.0,
+              "stddev": 0.9242113755341181
+            },
+            "DDR Bandwidth Usage Rate(%)": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Bandwidth Usage Rate(%)": {
+              "count": 12,
+              "mean": 21.0,
+              "median": 19.5,
+              "p95": 38.9,
+              "min": 3.0,
+              "max": 40.0,
+              "stddev": 13.765899897936205
+            },
+            "Chip ID": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            }
+          },
+          "2": {
+            "NPU ID": {
+              "count": 12,
+              "mean": 2.0,
+              "median": 2.0,
+              "p95": 2.0,
+              "min": 2.0,
+              "max": 2.0,
+              "stddev": 0.0
+            },
+            "Chip Count": {
+              "count": 12,
+              "mean": 1.0,
+              "median": 1.0,
+              "p95": 1.0,
+              "min": 1.0,
+              "max": 1.0,
+              "stddev": 0.0
+            },
+            "DDR Capacity(MB)": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Usage Rate(%)": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Total(page)": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Usage Rate(%)": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Capacity(MB)": {
+              "count": 12,
+              "mean": 65536.0,
+              "median": 65536.0,
+              "p95": 65536.0,
+              "min": 65536.0,
+              "max": 65536.0,
+              "stddev": 0.0
+            },
+            "HBM Usage Rate(%)": {
+              "count": 12,
+              "mean": 91.0,
+              "median": 91.0,
+              "p95": 91.0,
+              "min": 91.0,
+              "max": 91.0,
+              "stddev": 0.0
+            },
+            "Aicore Usage Rate(%)": {
+              "count": 12,
+              "mean": 22.833333333333332,
+              "median": 21.0,
+              "p95": 45.14999999999998,
+              "min": 3.0,
+              "max": 60.0,
+              "stddev": 14.17058769266665
+            },
+            "Aivector Usage Rate(%)": {
+              "count": 12,
+              "mean": 27.583333333333332,
+              "median": 23.0,
+              "p95": 49.9,
+              "min": 3.0,
+              "max": 51.0,
+              "stddev": 17.423443657580695
+            },
+            "Aicpu Usage Rate(%)": {
+              "count": 12,
+              "mean": 0.25,
+              "median": 0.0,
+              "p95": 1.0,
+              "min": 0.0,
+              "max": 1.0,
+              "stddev": 0.4330127018922193
+            },
+            "Ctrlcpu Usage Rate(%)": {
+              "count": 12,
+              "mean": 3.5833333333333335,
+              "median": 2.0,
+              "p95": 9.84999999999999,
+              "min": 1.0,
+              "max": 17.0,
+              "stddev": 4.152475834433664
+            },
+            "DDR Bandwidth Usage Rate(%)": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Bandwidth Usage Rate(%)": {
+              "count": 12,
+              "mean": 29.333333333333332,
+              "median": 21.0,
+              "p95": 62.45,
+              "min": 0.0,
+              "max": 63.0,
+              "stddev": 21.549684194643987
+            },
+            "Chip ID": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            }
+          },
+          "3": {
+            "NPU ID": {
+              "count": 12,
+              "mean": 3.0,
+              "median": 3.0,
+              "p95": 3.0,
+              "min": 3.0,
+              "max": 3.0,
+              "stddev": 0.0
+            },
+            "Chip Count": {
+              "count": 12,
+              "mean": 1.0,
+              "median": 1.0,
+              "p95": 1.0,
+              "min": 1.0,
+              "max": 1.0,
+              "stddev": 0.0
+            },
+            "DDR Capacity(MB)": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Usage Rate(%)": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Total(page)": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Usage Rate(%)": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Capacity(MB)": {
+              "count": 12,
+              "mean": 65536.0,
+              "median": 65536.0,
+              "p95": 65536.0,
+              "min": 65536.0,
+              "max": 65536.0,
+              "stddev": 0.0
+            },
+            "HBM Usage Rate(%)": {
+              "count": 12,
+              "mean": 92.0,
+              "median": 92.0,
+              "p95": 92.0,
+              "min": 92.0,
+              "max": 92.0,
+              "stddev": 0.0
+            },
+            "Aicore Usage Rate(%)": {
+              "count": 12,
+              "mean": 21.166666666666668,
+              "median": 19.5,
+              "p95": 44.59999999999998,
+              "min": 0.0,
+              "max": 60.0,
+              "stddev": 14.93783414317112
+            },
+            "Aivector Usage Rate(%)": {
+              "count": 12,
+              "mean": 28.083333333333332,
+              "median": 23.0,
+              "p95": 51.39999999999999,
+              "min": 0.0,
+              "max": 58.0,
+              "stddev": 17.811318186915745
+            },
+            "Aicpu Usage Rate(%)": {
+              "count": 12,
+              "mean": 0.16666666666666666,
+              "median": 0.0,
+              "p95": 1.0,
+              "min": 0.0,
+              "max": 1.0,
+              "stddev": 0.37267799624996495
+            },
+            "Ctrlcpu Usage Rate(%)": {
+              "count": 12,
+              "mean": 3.3333333333333335,
+              "median": 2.0,
+              "p95": 8.599999999999994,
+              "min": 1.0,
+              "max": 13.0,
+              "stddev": 3.144660377352201
+            },
+            "DDR Bandwidth Usage Rate(%)": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Bandwidth Usage Rate(%)": {
+              "count": 12,
+              "mean": 19.0,
+              "median": 15.0,
+              "p95": 38.45,
+              "min": 1.0,
+              "max": 39.0,
+              "stddev": 14.39907404430345
+            },
+            "Chip ID": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            }
+          },
+          "4": {
+            "NPU ID": {
+              "count": 12,
+              "mean": 4.0,
+              "median": 4.0,
+              "p95": 4.0,
+              "min": 4.0,
+              "max": 4.0,
+              "stddev": 0.0
+            },
+            "Chip Count": {
+              "count": 12,
+              "mean": 1.0,
+              "median": 1.0,
+              "p95": 1.0,
+              "min": 1.0,
+              "max": 1.0,
+              "stddev": 0.0
+            },
+            "DDR Capacity(MB)": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Usage Rate(%)": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Total(page)": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Usage Rate(%)": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Capacity(MB)": {
+              "count": 12,
+              "mean": 65536.0,
+              "median": 65536.0,
+              "p95": 65536.0,
+              "min": 65536.0,
+              "max": 65536.0,
+              "stddev": 0.0
+            },
+            "HBM Usage Rate(%)": {
+              "count": 12,
+              "mean": 92.0,
+              "median": 92.0,
+              "p95": 92.0,
+              "min": 92.0,
+              "max": 92.0,
+              "stddev": 0.0
+            },
+            "Aicore Usage Rate(%)": {
+              "count": 12,
+              "mean": 22.25,
+              "median": 23.5,
+              "p95": 34.349999999999994,
+              "min": 10.0,
+              "max": 36.0,
+              "stddev": 7.790218225441442
+            },
+            "Aivector Usage Rate(%)": {
+              "count": 12,
+              "mean": 25.0,
+              "median": 19.5,
+              "p95": 45.0,
+              "min": 7.0,
+              "max": 45.0,
+              "stddev": 12.335585379975555
+            },
+            "Aicpu Usage Rate(%)": {
+              "count": 12,
+              "mean": 0.4166666666666667,
+              "median": 0.0,
+              "p95": 1.0,
+              "min": 0.0,
+              "max": 1.0,
+              "stddev": 0.4930066485916347
+            },
+            "Ctrlcpu Usage Rate(%)": {
+              "count": 12,
+              "mean": 2.5,
+              "median": 2.0,
+              "p95": 6.0,
+              "min": 1.0,
+              "max": 6.0,
+              "stddev": 1.8027756377319946
+            },
+            "DDR Bandwidth Usage Rate(%)": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Bandwidth Usage Rate(%)": {
+              "count": 12,
+              "mean": 21.416666666666668,
+              "median": 19.5,
+              "p95": 44.39999999999999,
+              "min": 1.0,
+              "max": 51.0,
+              "stddev": 15.124253884260062
+            },
+            "Chip ID": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            }
+          },
+          "5": {
+            "NPU ID": {
+              "count": 12,
+              "mean": 5.0,
+              "median": 5.0,
+              "p95": 5.0,
+              "min": 5.0,
+              "max": 5.0,
+              "stddev": 0.0
+            },
+            "Chip Count": {
+              "count": 12,
+              "mean": 1.0,
+              "median": 1.0,
+              "p95": 1.0,
+              "min": 1.0,
+              "max": 1.0,
+              "stddev": 0.0
+            },
+            "DDR Capacity(MB)": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Usage Rate(%)": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Total(page)": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Usage Rate(%)": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Capacity(MB)": {
+              "count": 12,
+              "mean": 65536.0,
+              "median": 65536.0,
+              "p95": 65536.0,
+              "min": 65536.0,
+              "max": 65536.0,
+              "stddev": 0.0
+            },
+            "HBM Usage Rate(%)": {
+              "count": 12,
+              "mean": 91.0,
+              "median": 91.0,
+              "p95": 91.0,
+              "min": 91.0,
+              "max": 91.0,
+              "stddev": 0.0
+            },
+            "Aicore Usage Rate(%)": {
+              "count": 12,
+              "mean": 17.833333333333332,
+              "median": 18.0,
+              "p95": 29.499999999999993,
+              "min": 0.0,
+              "max": 35.0,
+              "stddev": 9.145429945545965
+            },
+            "Aivector Usage Rate(%)": {
+              "count": 12,
+              "mean": 24.0,
+              "median": 20.0,
+              "p95": 47.05,
+              "min": 2.0,
+              "max": 52.0,
+              "stddev": 14.183323540928857
+            },
+            "Aicpu Usage Rate(%)": {
+              "count": 12,
+              "mean": 0.4166666666666667,
+              "median": 0.0,
+              "p95": 1.8999999999999986,
+              "min": 0.0,
+              "max": 3.0,
+              "stddev": 0.8620067027323833
+            },
+            "Ctrlcpu Usage Rate(%)": {
+              "count": 12,
+              "mean": 2.9166666666666665,
+              "median": 3.0,
+              "p95": 4.449999999999999,
+              "min": 1.0,
+              "max": 5.0,
+              "stddev": 1.114924013354971
+            },
+            "DDR Bandwidth Usage Rate(%)": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Bandwidth Usage Rate(%)": {
+              "count": 12,
+              "mean": 18.75,
+              "median": 14.5,
+              "p95": 43.94999999999999,
+              "min": 3.0,
+              "max": 50.0,
+              "stddev": 14.810609935673368
+            },
+            "Chip ID": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            }
+          },
+          "6": {
+            "NPU ID": {
+              "count": 12,
+              "mean": 6.0,
+              "median": 6.0,
+              "p95": 6.0,
+              "min": 6.0,
+              "max": 6.0,
+              "stddev": 0.0
+            },
+            "Chip Count": {
+              "count": 12,
+              "mean": 1.0,
+              "median": 1.0,
+              "p95": 1.0,
+              "min": 1.0,
+              "max": 1.0,
+              "stddev": 0.0
+            },
+            "DDR Capacity(MB)": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Usage Rate(%)": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Total(page)": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Usage Rate(%)": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Capacity(MB)": {
+              "count": 12,
+              "mean": 65536.0,
+              "median": 65536.0,
+              "p95": 65536.0,
+              "min": 65536.0,
+              "max": 65536.0,
+              "stddev": 0.0
+            },
+            "HBM Usage Rate(%)": {
+              "count": 12,
+              "mean": 92.58333333333333,
+              "median": 93.0,
+              "p95": 93.0,
+              "min": 92.0,
+              "max": 93.0,
+              "stddev": 0.4930066485916347
+            },
+            "Aicore Usage Rate(%)": {
+              "count": 12,
+              "mean": 17.25,
+              "median": 15.0,
+              "p95": 32.45,
+              "min": 2.0,
+              "max": 33.0,
+              "stddev": 9.019654464926395
+            },
+            "Aivector Usage Rate(%)": {
+              "count": 12,
+              "mean": 21.416666666666668,
+              "median": 19.5,
+              "p95": 50.849999999999994,
+              "min": 2.0,
+              "max": 58.0,
+              "stddev": 15.819072525137356
+            },
+            "Aicpu Usage Rate(%)": {
+              "count": 12,
+              "mean": 0.25,
+              "median": 0.0,
+              "p95": 1.0,
+              "min": 0.0,
+              "max": 1.0,
+              "stddev": 0.4330127018922193
+            },
+            "Ctrlcpu Usage Rate(%)": {
+              "count": 12,
+              "mean": 5.166666666666667,
+              "median": 3.0,
+              "p95": 13.74999999999999,
+              "min": 2.0,
+              "max": 22.0,
+              "stddev": 5.30461015427985
+            },
+            "DDR Bandwidth Usage Rate(%)": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Bandwidth Usage Rate(%)": {
+              "count": 12,
+              "mean": 25.75,
+              "median": 24.0,
+              "p95": 54.949999999999974,
+              "min": 1.0,
+              "max": 72.0,
+              "stddev": 20.129269733400662
+            },
+            "Chip ID": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            }
+          },
+          "7": {
+            "NPU ID": {
+              "count": 12,
+              "mean": 7.0,
+              "median": 7.0,
+              "p95": 7.0,
+              "min": 7.0,
+              "max": 7.0,
+              "stddev": 0.0
+            },
+            "Chip Count": {
+              "count": 12,
+              "mean": 1.0,
+              "median": 1.0,
+              "p95": 1.0,
+              "min": 1.0,
+              "max": 1.0,
+              "stddev": 0.0
+            },
+            "DDR Capacity(MB)": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Usage Rate(%)": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Total(page)": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Usage Rate(%)": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Capacity(MB)": {
+              "count": 12,
+              "mean": 65536.0,
+              "median": 65536.0,
+              "p95": 65536.0,
+              "min": 65536.0,
+              "max": 65536.0,
+              "stddev": 0.0
+            },
+            "HBM Usage Rate(%)": {
+              "count": 12,
+              "mean": 92.0,
+              "median": 92.0,
+              "p95": 92.0,
+              "min": 92.0,
+              "max": 92.0,
+              "stddev": 0.0
+            },
+            "Aicore Usage Rate(%)": {
+              "count": 12,
+              "mean": 16.583333333333332,
+              "median": 15.5,
+              "p95": 33.8,
+              "min": 0.0,
+              "max": 36.0,
+              "stddev": 10.250677484385552
+            },
+            "Aivector Usage Rate(%)": {
+              "count": 12,
+              "mean": 19.0,
+              "median": 17.0,
+              "p95": 51.849999999999994,
+              "min": 0.0,
+              "max": 59.0,
+              "stddev": 17.402107152104694
+            },
+            "Aicpu Usage Rate(%)": {
+              "count": 12,
+              "mean": 0.16666666666666666,
+              "median": 0.0,
+              "p95": 1.0,
+              "min": 0.0,
+              "max": 1.0,
+              "stddev": 0.37267799624996495
+            },
+            "Ctrlcpu Usage Rate(%)": {
+              "count": 12,
+              "mean": 5.416666666666667,
+              "median": 4.0,
+              "p95": 12.399999999999991,
+              "min": 1.0,
+              "max": 19.0,
+              "stddev": 4.405646629295434
+            },
+            "DDR Bandwidth Usage Rate(%)": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Bandwidth Usage Rate(%)": {
+              "count": 12,
+              "mean": 14.833333333333334,
+              "median": 13.5,
+              "p95": 29.39999999999999,
+              "min": 2.0,
+              "max": 36.0,
+              "stddev": 9.745369270695813
+            },
+            "Chip ID": {
+              "count": 12,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            }
+          }
+        },
+        "limitation": "Eight cards sampled in groups of four; per-card timestamps retained. Samples are not simultaneous, continuous time averages, or MFU."
+      },
+      "host_sampling_overlap": false
+    },
+    "81-116": {
+      "available": true,
+      "steps_inclusive": [
+        81,
+        116
+      ],
+      "updates": 36,
+      "logged_step_seconds": {
+        "count": 36,
+        "mean": 2.6240099204911127,
+        "median": 2.6228781938552856,
+        "p95": 2.6915553212165833,
+        "min": 2.546884775161743,
+        "max": 2.7132115364074707,
+        "stddev": 0.04713373726387812
+      },
+      "wall_start_step": 80,
+      "wall_end_step": 116,
+      "wall_start_at": "2026-10-16T20:06:58",
+      "wall_end_at": "2026-10-16T20:08:33",
+      "wall_total_seconds": 95.0,
+      "wall_seconds_per_update": 2.638888888888889,
+      "wall_timestamp_quantization_uncertainty_seconds_per_update": 0.027777777777777776,
+      "global_samples_per_second": 36.37894736842105,
+      "profiler_overlap_risk": false,
+      "usable_for_speed_comparison": true,
+      "loss": {
+        "count": 36,
+        "mean": 0.24616834852430555,
+        "median": 0.24420166015625,
+        "p95": 0.2806396484375,
+        "min": 0.2021484375,
+        "max": 0.289306640625,
+        "stddev": 0.02117739677325807
+      },
+      "grad_norm": {
+        "count": 36,
+        "mean": 0.5785991185241275,
+        "median": 0.5791786015033722,
+        "p95": 0.6930729895830154,
+        "min": 0.45629000663757324,
+        "max": 0.719706654548645,
+        "stddev": 0.06347491376174612
+      },
+      "resources": {
+        "query_cycles": 14,
+        "cards": {
+          "0": {
+            "NPU ID": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "Chip Count": {
+              "count": 14,
+              "mean": 1.0,
+              "median": 1.0,
+              "p95": 1.0,
+              "min": 1.0,
+              "max": 1.0,
+              "stddev": 0.0
+            },
+            "DDR Capacity(MB)": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Usage Rate(%)": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Total(page)": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Usage Rate(%)": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Capacity(MB)": {
+              "count": 14,
+              "mean": 65536.0,
+              "median": 65536.0,
+              "p95": 65536.0,
+              "min": 65536.0,
+              "max": 65536.0,
+              "stddev": 0.0
+            },
+            "HBM Usage Rate(%)": {
+              "count": 14,
+              "mean": 93.0,
+              "median": 93.0,
+              "p95": 93.0,
+              "min": 93.0,
+              "max": 93.0,
+              "stddev": 0.0
+            },
+            "Aicore Usage Rate(%)": {
+              "count": 14,
+              "mean": 16.571428571428573,
+              "median": 18.0,
+              "p95": 32.0,
+              "min": 0.0,
+              "max": 32.0,
+              "stddev": 10.293647734086756
+            },
+            "Aivector Usage Rate(%)": {
+              "count": 14,
+              "mean": 23.142857142857142,
+              "median": 18.0,
+              "p95": 50.55,
+              "min": 0.0,
+              "max": 59.0,
+              "stddev": 19.755133665010952
+            },
+            "Aicpu Usage Rate(%)": {
+              "count": 14,
+              "mean": 0.14285714285714285,
+              "median": 0.0,
+              "p95": 1.0,
+              "min": 0.0,
+              "max": 1.0,
+              "stddev": 0.3499271061118826
+            },
+            "Ctrlcpu Usage Rate(%)": {
+              "count": 14,
+              "mean": 4.285714285714286,
+              "median": 4.5,
+              "p95": 7.35,
+              "min": 1.0,
+              "max": 8.0,
+              "stddev": 2.0503857277724746
+            },
+            "DDR Bandwidth Usage Rate(%)": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Bandwidth Usage Rate(%)": {
+              "count": 14,
+              "mean": 34.142857142857146,
+              "median": 32.5,
+              "p95": 67.8,
+              "min": 7.0,
+              "max": 73.0,
+              "stddev": 18.30244770069661
+            },
+            "Chip ID": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            }
+          },
+          "1": {
+            "NPU ID": {
+              "count": 14,
+              "mean": 1.0,
+              "median": 1.0,
+              "p95": 1.0,
+              "min": 1.0,
+              "max": 1.0,
+              "stddev": 0.0
+            },
+            "Chip Count": {
+              "count": 14,
+              "mean": 1.0,
+              "median": 1.0,
+              "p95": 1.0,
+              "min": 1.0,
+              "max": 1.0,
+              "stddev": 0.0
+            },
+            "DDR Capacity(MB)": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Usage Rate(%)": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Total(page)": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Usage Rate(%)": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Capacity(MB)": {
+              "count": 14,
+              "mean": 65536.0,
+              "median": 65536.0,
+              "p95": 65536.0,
+              "min": 65536.0,
+              "max": 65536.0,
+              "stddev": 0.0
+            },
+            "HBM Usage Rate(%)": {
+              "count": 14,
+              "mean": 92.0,
+              "median": 92.0,
+              "p95": 92.0,
+              "min": 92.0,
+              "max": 92.0,
+              "stddev": 0.0
+            },
+            "Aicore Usage Rate(%)": {
+              "count": 14,
+              "mean": 19.0,
+              "median": 21.0,
+              "p95": 32.7,
+              "min": 0.0,
+              "max": 34.0,
+              "stddev": 11.414276774536102
+            },
+            "Aivector Usage Rate(%)": {
+              "count": 14,
+              "mean": 25.357142857142858,
+              "median": 23.0,
+              "p95": 46.35,
+              "min": 1.0,
+              "max": 47.0,
+              "stddev": 15.75983657845448
+            },
+            "Aicpu Usage Rate(%)": {
+              "count": 14,
+              "mean": 0.21428571428571427,
+              "median": 0.0,
+              "p95": 1.0,
+              "min": 0.0,
+              "max": 1.0,
+              "stddev": 0.4103259033241449
+            },
+            "Ctrlcpu Usage Rate(%)": {
+              "count": 14,
+              "mean": 3.0,
+              "median": 3.0,
+              "p95": 5.699999999999999,
+              "min": 1.0,
+              "max": 7.0,
+              "stddev": 1.647508942095828
+            },
+            "DDR Bandwidth Usage Rate(%)": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Bandwidth Usage Rate(%)": {
+              "count": 14,
+              "mean": 33.5,
+              "median": 31.0,
+              "p95": 72.0,
+              "min": 3.0,
+              "max": 72.0,
+              "stddev": 24.913421511879324
+            },
+            "Chip ID": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            }
+          },
+          "2": {
+            "NPU ID": {
+              "count": 14,
+              "mean": 2.0,
+              "median": 2.0,
+              "p95": 2.0,
+              "min": 2.0,
+              "max": 2.0,
+              "stddev": 0.0
+            },
+            "Chip Count": {
+              "count": 14,
+              "mean": 1.0,
+              "median": 1.0,
+              "p95": 1.0,
+              "min": 1.0,
+              "max": 1.0,
+              "stddev": 0.0
+            },
+            "DDR Capacity(MB)": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Usage Rate(%)": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Total(page)": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Usage Rate(%)": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Capacity(MB)": {
+              "count": 14,
+              "mean": 65536.0,
+              "median": 65536.0,
+              "p95": 65536.0,
+              "min": 65536.0,
+              "max": 65536.0,
+              "stddev": 0.0
+            },
+            "HBM Usage Rate(%)": {
+              "count": 14,
+              "mean": 91.0,
+              "median": 91.0,
+              "p95": 91.0,
+              "min": 91.0,
+              "max": 91.0,
+              "stddev": 0.0
+            },
+            "Aicore Usage Rate(%)": {
+              "count": 14,
+              "mean": 19.571428571428573,
+              "median": 20.5,
+              "p95": 35.15,
+              "min": 0.0,
+              "max": 41.0,
+              "stddev": 11.267616592406284
+            },
+            "Aivector Usage Rate(%)": {
+              "count": 14,
+              "mean": 21.928571428571427,
+              "median": 18.0,
+              "p95": 47.4,
+              "min": 4.0,
+              "max": 50.0,
+              "stddev": 14.473938577981588
+            },
+            "Aicpu Usage Rate(%)": {
+              "count": 14,
+              "mean": 0.14285714285714285,
+              "median": 0.0,
+              "p95": 1.0,
+              "min": 0.0,
+              "max": 1.0,
+              "stddev": 0.3499271061118826
+            },
+            "Ctrlcpu Usage Rate(%)": {
+              "count": 14,
+              "mean": 4.357142857142857,
+              "median": 2.0,
+              "p95": 18.0,
+              "min": 0.0,
+              "max": 18.0,
+              "stddev": 5.664515397973383
+            },
+            "DDR Bandwidth Usage Rate(%)": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Bandwidth Usage Rate(%)": {
+              "count": 14,
+              "mean": 28.5,
+              "median": 24.5,
+              "p95": 53.05,
+              "min": 8.0,
+              "max": 55.0,
+              "stddev": 14.241538841411366
+            },
+            "Chip ID": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            }
+          },
+          "3": {
+            "NPU ID": {
+              "count": 14,
+              "mean": 3.0,
+              "median": 3.0,
+              "p95": 3.0,
+              "min": 3.0,
+              "max": 3.0,
+              "stddev": 0.0
+            },
+            "Chip Count": {
+              "count": 14,
+              "mean": 1.0,
+              "median": 1.0,
+              "p95": 1.0,
+              "min": 1.0,
+              "max": 1.0,
+              "stddev": 0.0
+            },
+            "DDR Capacity(MB)": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Usage Rate(%)": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Total(page)": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Usage Rate(%)": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Capacity(MB)": {
+              "count": 14,
+              "mean": 65536.0,
+              "median": 65536.0,
+              "p95": 65536.0,
+              "min": 65536.0,
+              "max": 65536.0,
+              "stddev": 0.0
+            },
+            "HBM Usage Rate(%)": {
+              "count": 14,
+              "mean": 92.0,
+              "median": 92.0,
+              "p95": 92.0,
+              "min": 92.0,
+              "max": 92.0,
+              "stddev": 0.0
+            },
+            "Aicore Usage Rate(%)": {
+              "count": 14,
+              "mean": 19.357142857142858,
+              "median": 17.5,
+              "p95": 33.05,
+              "min": 0.0,
+              "max": 35.0,
+              "stddev": 9.551418315451098
+            },
+            "Aivector Usage Rate(%)": {
+              "count": 14,
+              "mean": 25.428571428571427,
+              "median": 20.5,
+              "p95": 47.35,
+              "min": 0.0,
+              "max": 48.0,
+              "stddev": 14.65661374706355
+            },
+            "Aicpu Usage Rate(%)": {
+              "count": 14,
+              "mean": 0.42857142857142855,
+              "median": 0.0,
+              "p95": 1.3499999999999996,
+              "min": 0.0,
+              "max": 2.0,
+              "stddev": 0.6226998490772391
+            },
+            "Ctrlcpu Usage Rate(%)": {
+              "count": 14,
+              "mean": 3.0714285714285716,
+              "median": 3.0,
+              "p95": 6.35,
+              "min": 0.0,
+              "max": 7.0,
+              "stddev": 1.8308579454251852
+            },
+            "DDR Bandwidth Usage Rate(%)": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Bandwidth Usage Rate(%)": {
+              "count": 14,
+              "mean": 27.428571428571427,
+              "median": 25.5,
+              "p95": 60.3,
+              "min": 4.0,
+              "max": 72.0,
+              "stddev": 19.062732099624146
+            },
+            "Chip ID": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            }
+          },
+          "4": {
+            "NPU ID": {
+              "count": 14,
+              "mean": 4.0,
+              "median": 4.0,
+              "p95": 4.0,
+              "min": 4.0,
+              "max": 4.0,
+              "stddev": 0.0
+            },
+            "Chip Count": {
+              "count": 14,
+              "mean": 1.0,
+              "median": 1.0,
+              "p95": 1.0,
+              "min": 1.0,
+              "max": 1.0,
+              "stddev": 0.0
+            },
+            "DDR Capacity(MB)": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Usage Rate(%)": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Total(page)": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Usage Rate(%)": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Capacity(MB)": {
+              "count": 14,
+              "mean": 65536.0,
+              "median": 65536.0,
+              "p95": 65536.0,
+              "min": 65536.0,
+              "max": 65536.0,
+              "stddev": 0.0
+            },
+            "HBM Usage Rate(%)": {
+              "count": 14,
+              "mean": 92.0,
+              "median": 92.0,
+              "p95": 92.0,
+              "min": 92.0,
+              "max": 92.0,
+              "stddev": 0.0
+            },
+            "Aicore Usage Rate(%)": {
+              "count": 14,
+              "mean": 16.428571428571427,
+              "median": 15.5,
+              "p95": 31.35,
+              "min": 0.0,
+              "max": 32.0,
+              "stddev": 9.00566714998542
+            },
+            "Aivector Usage Rate(%)": {
+              "count": 14,
+              "mean": 29.571428571428573,
+              "median": 23.0,
+              "p95": 50.55,
+              "min": 0.0,
+              "max": 59.0,
+              "stddev": 16.939869647475728
+            },
+            "Aicpu Usage Rate(%)": {
+              "count": 14,
+              "mean": 0.2857142857142857,
+              "median": 0.0,
+              "p95": 1.3499999999999996,
+              "min": 0.0,
+              "max": 2.0,
+              "stddev": 0.5890150893739515
+            },
+            "Ctrlcpu Usage Rate(%)": {
+              "count": 14,
+              "mean": 2.642857142857143,
+              "median": 3.0,
+              "p95": 4.0,
+              "min": 1.0,
+              "max": 4.0,
+              "stddev": 0.8112726208286105
+            },
+            "DDR Bandwidth Usage Rate(%)": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Bandwidth Usage Rate(%)": {
+              "count": 14,
+              "mean": 27.571428571428573,
+              "median": 23.0,
+              "p95": 47.4,
+              "min": 5.0,
+              "max": 50.0,
+              "stddev": 11.932634038720908
+            },
+            "Chip ID": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            }
+          },
+          "5": {
+            "NPU ID": {
+              "count": 14,
+              "mean": 5.0,
+              "median": 5.0,
+              "p95": 5.0,
+              "min": 5.0,
+              "max": 5.0,
+              "stddev": 0.0
+            },
+            "Chip Count": {
+              "count": 14,
+              "mean": 1.0,
+              "median": 1.0,
+              "p95": 1.0,
+              "min": 1.0,
+              "max": 1.0,
+              "stddev": 0.0
+            },
+            "DDR Capacity(MB)": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Usage Rate(%)": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Total(page)": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Usage Rate(%)": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Capacity(MB)": {
+              "count": 14,
+              "mean": 65536.0,
+              "median": 65536.0,
+              "p95": 65536.0,
+              "min": 65536.0,
+              "max": 65536.0,
+              "stddev": 0.0
+            },
+            "HBM Usage Rate(%)": {
+              "count": 14,
+              "mean": 91.0,
+              "median": 91.0,
+              "p95": 91.0,
+              "min": 91.0,
+              "max": 91.0,
+              "stddev": 0.0
+            },
+            "Aicore Usage Rate(%)": {
+              "count": 14,
+              "mean": 17.285714285714285,
+              "median": 17.0,
+              "p95": 32.35,
+              "min": 0.0,
+              "max": 33.0,
+              "stddev": 9.452350965527582
+            },
+            "Aivector Usage Rate(%)": {
+              "count": 14,
+              "mean": 31.785714285714285,
+              "median": 26.0,
+              "p95": 59.0,
+              "min": 12.0,
+              "max": 59.0,
+              "stddev": 16.50618313337923
+            },
+            "Aicpu Usage Rate(%)": {
+              "count": 14,
+              "mean": 0.35714285714285715,
+              "median": 0.0,
+              "p95": 1.3499999999999996,
+              "min": 0.0,
+              "max": 2.0,
+              "stddev": 0.6102859818083951
+            },
+            "Ctrlcpu Usage Rate(%)": {
+              "count": 14,
+              "mean": 5.571428571428571,
+              "median": 4.0,
+              "p95": 16.7,
+              "min": 1.0,
+              "max": 18.0,
+              "stddev": 4.880197386439635
+            },
+            "DDR Bandwidth Usage Rate(%)": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Bandwidth Usage Rate(%)": {
+              "count": 14,
+              "mean": 17.428571428571427,
+              "median": 13.0,
+              "p95": 38.35,
+              "min": 2.0,
+              "max": 39.0,
+              "stddev": 12.793493244136064
+            },
+            "Chip ID": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            }
+          },
+          "6": {
+            "NPU ID": {
+              "count": 14,
+              "mean": 6.0,
+              "median": 6.0,
+              "p95": 6.0,
+              "min": 6.0,
+              "max": 6.0,
+              "stddev": 0.0
+            },
+            "Chip Count": {
+              "count": 14,
+              "mean": 1.0,
+              "median": 1.0,
+              "p95": 1.0,
+              "min": 1.0,
+              "max": 1.0,
+              "stddev": 0.0
+            },
+            "DDR Capacity(MB)": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Usage Rate(%)": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Total(page)": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Usage Rate(%)": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Capacity(MB)": {
+              "count": 14,
+              "mean": 65536.0,
+              "median": 65536.0,
+              "p95": 65536.0,
+              "min": 65536.0,
+              "max": 65536.0,
+              "stddev": 0.0
+            },
+            "HBM Usage Rate(%)": {
+              "count": 14,
+              "mean": 93.0,
+              "median": 93.0,
+              "p95": 93.0,
+              "min": 93.0,
+              "max": 93.0,
+              "stddev": 0.0
+            },
+            "Aicore Usage Rate(%)": {
+              "count": 14,
+              "mean": 19.142857142857142,
+              "median": 18.5,
+              "p95": 32.0,
+              "min": 0.0,
+              "max": 32.0,
+              "stddev": 8.6177320753461
+            },
+            "Aivector Usage Rate(%)": {
+              "count": 14,
+              "mean": 33.42857142857143,
+              "median": 33.5,
+              "p95": 51.199999999999996,
+              "min": 16.0,
+              "max": 59.0,
+              "stddev": 13.90639259844338
+            },
+            "Aicpu Usage Rate(%)": {
+              "count": 14,
+              "mean": 0.35714285714285715,
+              "median": 0.0,
+              "p95": 1.3499999999999996,
+              "min": 0.0,
+              "max": 2.0,
+              "stddev": 0.6102859818083951
+            },
+            "Ctrlcpu Usage Rate(%)": {
+              "count": 14,
+              "mean": 4.428571428571429,
+              "median": 3.0,
+              "p95": 10.199999999999996,
+              "min": 1.0,
+              "max": 18.0,
+              "stddev": 4.048179232944215
+            },
+            "DDR Bandwidth Usage Rate(%)": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Bandwidth Usage Rate(%)": {
+              "count": 14,
+              "mean": 30.642857142857142,
+              "median": 25.5,
+              "p95": 72.35,
+              "min": 5.0,
+              "max": 73.0,
+              "stddev": 20.38769636975463
+            },
+            "Chip ID": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            }
+          },
+          "7": {
+            "NPU ID": {
+              "count": 14,
+              "mean": 7.0,
+              "median": 7.0,
+              "p95": 7.0,
+              "min": 7.0,
+              "max": 7.0,
+              "stddev": 0.0
+            },
+            "Chip Count": {
+              "count": 14,
+              "mean": 1.0,
+              "median": 1.0,
+              "p95": 1.0,
+              "min": 1.0,
+              "max": 1.0,
+              "stddev": 0.0
+            },
+            "DDR Capacity(MB)": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Usage Rate(%)": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Total(page)": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Usage Rate(%)": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Capacity(MB)": {
+              "count": 14,
+              "mean": 65536.0,
+              "median": 65536.0,
+              "p95": 65536.0,
+              "min": 65536.0,
+              "max": 65536.0,
+              "stddev": 0.0
+            },
+            "HBM Usage Rate(%)": {
+              "count": 14,
+              "mean": 92.0,
+              "median": 92.0,
+              "p95": 92.0,
+              "min": 92.0,
+              "max": 92.0,
+              "stddev": 0.0
+            },
+            "Aicore Usage Rate(%)": {
+              "count": 14,
+              "mean": 21.857142857142858,
+              "median": 23.5,
+              "p95": 32.35,
+              "min": 5.0,
+              "max": 33.0,
+              "stddev": 8.192829119394096
+            },
+            "Aivector Usage Rate(%)": {
+              "count": 14,
+              "mean": 31.5,
+              "median": 30.0,
+              "p95": 51.849999999999994,
+              "min": 7.0,
+              "max": 59.0,
+              "stddev": 15.070074414452732
+            },
+            "Aicpu Usage Rate(%)": {
+              "count": 14,
+              "mean": 0.35714285714285715,
+              "median": 0.0,
+              "p95": 1.0,
+              "min": 0.0,
+              "max": 1.0,
+              "stddev": 0.47915742374995496
+            },
+            "Ctrlcpu Usage Rate(%)": {
+              "count": 14,
+              "mean": 4.5,
+              "median": 5.5,
+              "p95": 7.0,
+              "min": 2.0,
+              "max": 7.0,
+              "stddev": 1.9548474547720012
+            },
+            "DDR Bandwidth Usage Rate(%)": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Bandwidth Usage Rate(%)": {
+              "count": 14,
+              "mean": 18.071428571428573,
+              "median": 12.5,
+              "p95": 39.35,
+              "min": 2.0,
+              "max": 40.0,
+              "stddev": 12.69681785619804
+            },
+            "Chip ID": {
+              "count": 14,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            }
+          }
+        },
+        "limitation": "Eight cards sampled in groups of four; per-card timestamps retained. Samples are not simultaneous, continuous time averages, or MFU."
+      },
+      "host_sampling_overlap": false
+    },
+    "121-124": {
+      "available": true,
+      "steps_inclusive": [
+        121,
+        124
+      ],
+      "updates": 4,
+      "logged_step_seconds": {
+        "count": 4,
+        "mean": 3.4581475853919983,
+        "median": 3.4079980850219727,
+        "p95": 3.6628204584121704,
+        "min": 3.312664031982422,
+        "max": 3.703930139541626,
+        "stddev": 0.1479534127003858
+      },
+      "wall_start_step": 120,
+      "wall_end_step": 124,
+      "wall_start_at": "2026-10-16T20:08:44",
+      "wall_end_at": "2026-10-16T20:08:58",
+      "wall_total_seconds": 14.0,
+      "wall_seconds_per_update": 3.5,
+      "wall_timestamp_quantization_uncertainty_seconds_per_update": 0.25,
+      "global_samples_per_second": 27.428571428571427,
+      "profiler_overlap_risk": true,
+      "usable_for_speed_comparison": false,
+      "loss": {
+        "count": 4,
+        "mean": 0.209259033203125,
+        "median": 0.21063232421875,
+        "p95": 0.22047119140625,
+        "min": 0.194091796875,
+        "max": 0.2216796875,
+        "stddev": 0.010074452980634741
+      },
+      "grad_norm": {
+        "count": 4,
+        "mean": 0.5206269025802612,
+        "median": 0.5124277621507645,
+        "p95": 0.6038611114025116,
+        "min": 0.4483995735645294,
+        "max": 0.6092525124549866,
+        "stddev": 0.07179657390391825
+      },
+      "resources": {
+        "query_cycles": 2,
+        "cards": {
+          "0": {
+            "NPU ID": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "Chip Count": {
+              "count": 2,
+              "mean": 1.0,
+              "median": 1.0,
+              "p95": 1.0,
+              "min": 1.0,
+              "max": 1.0,
+              "stddev": 0.0
+            },
+            "DDR Capacity(MB)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Usage Rate(%)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Total(page)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Usage Rate(%)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Capacity(MB)": {
+              "count": 2,
+              "mean": 65536.0,
+              "median": 65536.0,
+              "p95": 65536.0,
+              "min": 65536.0,
+              "max": 65536.0,
+              "stddev": 0.0
+            },
+            "HBM Usage Rate(%)": {
+              "count": 2,
+              "mean": 93.0,
+              "median": 93.0,
+              "p95": 93.0,
+              "min": 93.0,
+              "max": 93.0,
+              "stddev": 0.0
+            },
+            "Aicore Usage Rate(%)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "Aivector Usage Rate(%)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "Aicpu Usage Rate(%)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "Ctrlcpu Usage Rate(%)": {
+              "count": 2,
+              "mean": 3.5,
+              "median": 3.5,
+              "p95": 3.95,
+              "min": 3.0,
+              "max": 4.0,
+              "stddev": 0.5
+            },
+            "DDR Bandwidth Usage Rate(%)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Bandwidth Usage Rate(%)": {
+              "count": 2,
+              "mean": 41.5,
+              "median": 41.5,
+              "p95": 59.05,
+              "min": 22.0,
+              "max": 61.0,
+              "stddev": 19.5
+            },
+            "Chip ID": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            }
+          },
+          "1": {
+            "NPU ID": {
+              "count": 2,
+              "mean": 1.0,
+              "median": 1.0,
+              "p95": 1.0,
+              "min": 1.0,
+              "max": 1.0,
+              "stddev": 0.0
+            },
+            "Chip Count": {
+              "count": 2,
+              "mean": 1.0,
+              "median": 1.0,
+              "p95": 1.0,
+              "min": 1.0,
+              "max": 1.0,
+              "stddev": 0.0
+            },
+            "DDR Capacity(MB)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Usage Rate(%)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Total(page)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Usage Rate(%)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Capacity(MB)": {
+              "count": 2,
+              "mean": 65536.0,
+              "median": 65536.0,
+              "p95": 65536.0,
+              "min": 65536.0,
+              "max": 65536.0,
+              "stddev": 0.0
+            },
+            "HBM Usage Rate(%)": {
+              "count": 2,
+              "mean": 92.0,
+              "median": 92.0,
+              "p95": 92.0,
+              "min": 92.0,
+              "max": 92.0,
+              "stddev": 0.0
+            },
+            "Aicore Usage Rate(%)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "Aivector Usage Rate(%)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "Aicpu Usage Rate(%)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "Ctrlcpu Usage Rate(%)": {
+              "count": 2,
+              "mean": 2.5,
+              "median": 2.5,
+              "p95": 2.95,
+              "min": 2.0,
+              "max": 3.0,
+              "stddev": 0.5
+            },
+            "DDR Bandwidth Usage Rate(%)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Bandwidth Usage Rate(%)": {
+              "count": 2,
+              "mean": 25.0,
+              "median": 25.0,
+              "p95": 37.599999999999994,
+              "min": 11.0,
+              "max": 39.0,
+              "stddev": 14.0
+            },
+            "Chip ID": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            }
+          },
+          "2": {
+            "NPU ID": {
+              "count": 2,
+              "mean": 2.0,
+              "median": 2.0,
+              "p95": 2.0,
+              "min": 2.0,
+              "max": 2.0,
+              "stddev": 0.0
+            },
+            "Chip Count": {
+              "count": 2,
+              "mean": 1.0,
+              "median": 1.0,
+              "p95": 1.0,
+              "min": 1.0,
+              "max": 1.0,
+              "stddev": 0.0
+            },
+            "DDR Capacity(MB)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Usage Rate(%)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Total(page)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Usage Rate(%)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Capacity(MB)": {
+              "count": 2,
+              "mean": 65536.0,
+              "median": 65536.0,
+              "p95": 65536.0,
+              "min": 65536.0,
+              "max": 65536.0,
+              "stddev": 0.0
+            },
+            "HBM Usage Rate(%)": {
+              "count": 2,
+              "mean": 91.0,
+              "median": 91.0,
+              "p95": 91.0,
+              "min": 91.0,
+              "max": 91.0,
+              "stddev": 0.0
+            },
+            "Aicore Usage Rate(%)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "Aivector Usage Rate(%)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "Aicpu Usage Rate(%)": {
+              "count": 2,
+              "mean": 0.5,
+              "median": 0.5,
+              "p95": 0.95,
+              "min": 0.0,
+              "max": 1.0,
+              "stddev": 0.5
+            },
+            "Ctrlcpu Usage Rate(%)": {
+              "count": 2,
+              "mean": 5.0,
+              "median": 5.0,
+              "p95": 5.9,
+              "min": 4.0,
+              "max": 6.0,
+              "stddev": 1.0
+            },
+            "DDR Bandwidth Usage Rate(%)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Bandwidth Usage Rate(%)": {
+              "count": 2,
+              "mean": 38.0,
+              "median": 38.0,
+              "p95": 67.69999999999999,
+              "min": 5.0,
+              "max": 71.0,
+              "stddev": 33.0
+            },
+            "Chip ID": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            }
+          },
+          "3": {
+            "NPU ID": {
+              "count": 2,
+              "mean": 3.0,
+              "median": 3.0,
+              "p95": 3.0,
+              "min": 3.0,
+              "max": 3.0,
+              "stddev": 0.0
+            },
+            "Chip Count": {
+              "count": 2,
+              "mean": 1.0,
+              "median": 1.0,
+              "p95": 1.0,
+              "min": 1.0,
+              "max": 1.0,
+              "stddev": 0.0
+            },
+            "DDR Capacity(MB)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Usage Rate(%)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Total(page)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Usage Rate(%)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Capacity(MB)": {
+              "count": 2,
+              "mean": 65536.0,
+              "median": 65536.0,
+              "p95": 65536.0,
+              "min": 65536.0,
+              "max": 65536.0,
+              "stddev": 0.0
+            },
+            "HBM Usage Rate(%)": {
+              "count": 2,
+              "mean": 92.0,
+              "median": 92.0,
+              "p95": 92.0,
+              "min": 92.0,
+              "max": 92.0,
+              "stddev": 0.0
+            },
+            "Aicore Usage Rate(%)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "Aivector Usage Rate(%)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "Aicpu Usage Rate(%)": {
+              "count": 2,
+              "mean": 0.5,
+              "median": 0.5,
+              "p95": 0.95,
+              "min": 0.0,
+              "max": 1.0,
+              "stddev": 0.5
+            },
+            "Ctrlcpu Usage Rate(%)": {
+              "count": 2,
+              "mean": 1.5,
+              "median": 1.5,
+              "p95": 1.95,
+              "min": 1.0,
+              "max": 2.0,
+              "stddev": 0.5
+            },
+            "DDR Bandwidth Usage Rate(%)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Bandwidth Usage Rate(%)": {
+              "count": 2,
+              "mean": 5.5,
+              "median": 5.5,
+              "p95": 8.649999999999999,
+              "min": 2.0,
+              "max": 9.0,
+              "stddev": 3.5
+            },
+            "Chip ID": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            }
+          },
+          "4": {
+            "NPU ID": {
+              "count": 2,
+              "mean": 4.0,
+              "median": 4.0,
+              "p95": 4.0,
+              "min": 4.0,
+              "max": 4.0,
+              "stddev": 0.0
+            },
+            "Chip Count": {
+              "count": 2,
+              "mean": 1.0,
+              "median": 1.0,
+              "p95": 1.0,
+              "min": 1.0,
+              "max": 1.0,
+              "stddev": 0.0
+            },
+            "DDR Capacity(MB)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Usage Rate(%)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Total(page)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Usage Rate(%)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Capacity(MB)": {
+              "count": 2,
+              "mean": 65536.0,
+              "median": 65536.0,
+              "p95": 65536.0,
+              "min": 65536.0,
+              "max": 65536.0,
+              "stddev": 0.0
+            },
+            "HBM Usage Rate(%)": {
+              "count": 2,
+              "mean": 92.0,
+              "median": 92.0,
+              "p95": 92.0,
+              "min": 92.0,
+              "max": 92.0,
+              "stddev": 0.0
+            },
+            "Aicore Usage Rate(%)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "Aivector Usage Rate(%)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "Aicpu Usage Rate(%)": {
+              "count": 2,
+              "mean": 0.5,
+              "median": 0.5,
+              "p95": 0.95,
+              "min": 0.0,
+              "max": 1.0,
+              "stddev": 0.5
+            },
+            "Ctrlcpu Usage Rate(%)": {
+              "count": 2,
+              "mean": 2.0,
+              "median": 2.0,
+              "p95": 2.9,
+              "min": 1.0,
+              "max": 3.0,
+              "stddev": 1.0
+            },
+            "DDR Bandwidth Usage Rate(%)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Bandwidth Usage Rate(%)": {
+              "count": 2,
+              "mean": 23.0,
+              "median": 23.0,
+              "p95": 29.299999999999997,
+              "min": 16.0,
+              "max": 30.0,
+              "stddev": 7.0
+            },
+            "Chip ID": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            }
+          },
+          "5": {
+            "NPU ID": {
+              "count": 2,
+              "mean": 5.0,
+              "median": 5.0,
+              "p95": 5.0,
+              "min": 5.0,
+              "max": 5.0,
+              "stddev": 0.0
+            },
+            "Chip Count": {
+              "count": 2,
+              "mean": 1.0,
+              "median": 1.0,
+              "p95": 1.0,
+              "min": 1.0,
+              "max": 1.0,
+              "stddev": 0.0
+            },
+            "DDR Capacity(MB)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Usage Rate(%)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Total(page)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Usage Rate(%)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Capacity(MB)": {
+              "count": 2,
+              "mean": 65536.0,
+              "median": 65536.0,
+              "p95": 65536.0,
+              "min": 65536.0,
+              "max": 65536.0,
+              "stddev": 0.0
+            },
+            "HBM Usage Rate(%)": {
+              "count": 2,
+              "mean": 91.0,
+              "median": 91.0,
+              "p95": 91.0,
+              "min": 91.0,
+              "max": 91.0,
+              "stddev": 0.0
+            },
+            "Aicore Usage Rate(%)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "Aivector Usage Rate(%)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "Aicpu Usage Rate(%)": {
+              "count": 2,
+              "mean": 1.0,
+              "median": 1.0,
+              "p95": 1.0,
+              "min": 1.0,
+              "max": 1.0,
+              "stddev": 0.0
+            },
+            "Ctrlcpu Usage Rate(%)": {
+              "count": 2,
+              "mean": 3.5,
+              "median": 3.5,
+              "p95": 3.95,
+              "min": 3.0,
+              "max": 4.0,
+              "stddev": 0.5
+            },
+            "DDR Bandwidth Usage Rate(%)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Bandwidth Usage Rate(%)": {
+              "count": 2,
+              "mean": 19.5,
+              "median": 19.5,
+              "p95": 26.25,
+              "min": 12.0,
+              "max": 27.0,
+              "stddev": 7.5
+            },
+            "Chip ID": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            }
+          },
+          "6": {
+            "NPU ID": {
+              "count": 2,
+              "mean": 6.0,
+              "median": 6.0,
+              "p95": 6.0,
+              "min": 6.0,
+              "max": 6.0,
+              "stddev": 0.0
+            },
+            "Chip Count": {
+              "count": 2,
+              "mean": 1.0,
+              "median": 1.0,
+              "p95": 1.0,
+              "min": 1.0,
+              "max": 1.0,
+              "stddev": 0.0
+            },
+            "DDR Capacity(MB)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Usage Rate(%)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Total(page)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Usage Rate(%)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Capacity(MB)": {
+              "count": 2,
+              "mean": 65536.0,
+              "median": 65536.0,
+              "p95": 65536.0,
+              "min": 65536.0,
+              "max": 65536.0,
+              "stddev": 0.0
+            },
+            "HBM Usage Rate(%)": {
+              "count": 2,
+              "mean": 93.0,
+              "median": 93.0,
+              "p95": 93.0,
+              "min": 93.0,
+              "max": 93.0,
+              "stddev": 0.0
+            },
+            "Aicore Usage Rate(%)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "Aivector Usage Rate(%)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "Aicpu Usage Rate(%)": {
+              "count": 2,
+              "mean": 1.0,
+              "median": 1.0,
+              "p95": 1.0,
+              "min": 1.0,
+              "max": 1.0,
+              "stddev": 0.0
+            },
+            "Ctrlcpu Usage Rate(%)": {
+              "count": 2,
+              "mean": 5.5,
+              "median": 5.5,
+              "p95": 6.85,
+              "min": 4.0,
+              "max": 7.0,
+              "stddev": 1.5
+            },
+            "DDR Bandwidth Usage Rate(%)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Bandwidth Usage Rate(%)": {
+              "count": 2,
+              "mean": 11.0,
+              "median": 11.0,
+              "p95": 17.299999999999997,
+              "min": 4.0,
+              "max": 18.0,
+              "stddev": 7.0
+            },
+            "Chip ID": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            }
+          },
+          "7": {
+            "NPU ID": {
+              "count": 2,
+              "mean": 7.0,
+              "median": 7.0,
+              "p95": 7.0,
+              "min": 7.0,
+              "max": 7.0,
+              "stddev": 0.0
+            },
+            "Chip Count": {
+              "count": 2,
+              "mean": 1.0,
+              "median": 1.0,
+              "p95": 1.0,
+              "min": 1.0,
+              "max": 1.0,
+              "stddev": 0.0
+            },
+            "DDR Capacity(MB)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Usage Rate(%)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Total(page)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "DDR Hugepages Usage Rate(%)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Capacity(MB)": {
+              "count": 2,
+              "mean": 65536.0,
+              "median": 65536.0,
+              "p95": 65536.0,
+              "min": 65536.0,
+              "max": 65536.0,
+              "stddev": 0.0
+            },
+            "HBM Usage Rate(%)": {
+              "count": 2,
+              "mean": 92.0,
+              "median": 92.0,
+              "p95": 92.0,
+              "min": 92.0,
+              "max": 92.0,
+              "stddev": 0.0
+            },
+            "Aicore Usage Rate(%)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "Aivector Usage Rate(%)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "Aicpu Usage Rate(%)": {
+              "count": 2,
+              "mean": 1.0,
+              "median": 1.0,
+              "p95": 1.0,
+              "min": 1.0,
+              "max": 1.0,
+              "stddev": 0.0
+            },
+            "Ctrlcpu Usage Rate(%)": {
+              "count": 2,
+              "mean": 5.5,
+              "median": 5.5,
+              "p95": 6.85,
+              "min": 4.0,
+              "max": 7.0,
+              "stddev": 1.5
+            },
+            "DDR Bandwidth Usage Rate(%)": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            },
+            "HBM Bandwidth Usage Rate(%)": {
+              "count": 2,
+              "mean": 17.0,
+              "median": 17.0,
+              "p95": 25.099999999999998,
+              "min": 8.0,
+              "max": 26.0,
+              "stddev": 9.0
+            },
+            "Chip ID": {
+              "count": 2,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "stddev": 0.0
+            }
+          }
+        },
+        "limitation": "Eight cards sampled in groups of four; per-card timestamps retained. Samples are not simultaneous, continuous time averages, or MFU."
+      },
+      "host_sampling_overlap": false
+    }
+  },
+  "host_sampling_excluded_steps": [
+    50,
+    64
+  ],
+  "native_warmup_step": 120,
+  "native_active_steps": [
+    121,
+    124
+  ],
+  "capture_logged_time_overhead_pct_vs_unprofiled": 31.788662778560205,
+  "snapshot_hash_check": {
+    "passed": true,
+    "changed": [],
+    "checked_files": 359
+  },
+  "limits": [
+    "Profiler measurements include collection overhead; their absolute durations cannot be substituted for unprofiled step durations.",
+    "The capture-window logged-time increase is a within-run comparison, not an independent A/B attribution of profiler cost; it excludes trace export after update 124 and other outside-timer work.",
+    "CPU scopes and kernel totals are asynchronous/inclusive and must not be added into wall time.",
+    "Device communication elapsed includes dependencies and cannot by itself prove a network bandwidth bottleneck.",
+    "All steps from 120 onward are excluded from ordinary throughput; trace export after update 124 may delay later updates.",
+    "Only four native steps per rank and two ranks of Python stacks are captured; not a full epoch."
+  ]
+}

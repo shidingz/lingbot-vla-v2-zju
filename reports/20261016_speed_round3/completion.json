@@ -1,0 +1,14 @@
+{
+  "selected_case": "no_prefetch",
+  "fsdp_prefetch_default": "0",
+  "default_seconds_per_update": 2.4625,
+  "baseline_seconds_per_update": 2.65,
+  "throughput_gain_percent": 7.614213197969533,
+  "update_time_reduction_percent": 7.075471698113212,
+  "kernel_count_reduction_percent": 13.743405571301981,
+  "ai_core_sample_mean_percent": {
+    "baseline": 20.036290322580644,
+    "no_prefetch": 19.508620689655174
+  },
+  "report": "/home/ma-user/work/lingbot-vla-v2/reports/20261016_speed_round3/report.html"
+}

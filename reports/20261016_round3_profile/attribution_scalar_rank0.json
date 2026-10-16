@@ -1,0 +1,323 @@
+{
+  "trace": "/cache/lingbot/profiling/round3_profile_20261016_195822/profile_132/trace/rank0/notebook-1412a60d-0f41-4869-980d-933b2766338c_270331_20261016120841409_ascend_pt/ASCEND_PROFILER_OUTPUT/trace_view.json",
+  "captured_steps": 4,
+  "by_scope": {
+    "<outside_instrumented_scope>": {
+      "calls": 412,
+      "host_inclusive_us": 284218.5
+    },
+    "teacher.rgb_normalize": {
+      "calls": 16,
+      "host_inclusive_us": 46.25
+    },
+    "teacher.current_depth": {
+      "calls": 44,
+      "host_inclusive_us": 455.0
+    },
+    "teacher.future_depth": {
+      "calls": 44,
+      "host_inclusive_us": 428.0
+    },
+    "teacher.video": {
+      "calls": 48,
+      "host_inclusive_us": 540.25
+    },
+    "train.forward": {
+      "calls": 5668,
+      "host_inclusive_us": 480860.75
+    },
+    "model.moe_experts": {
+      "calls": 144,
+      "host_inclusive_us": 223.75
+    },
+    "train.scalar_reads": {
+      "calls": 28,
+      "host_inclusive_us": 171281.25
+    },
+    "train.clip_grad": {
+      "calls": 8,
+      "host_inclusive_us": 24.75
+    },
+    "Optimizer.step#DistributedMuon.step": {
+      "calls": 2476,
+      "host_inclusive_us": 3431.0
+    },
+    "Optimizer.step#AdamW.step": {
+      "calls": 3008,
+      "host_inclusive_us": 2350.0
+    },
+    "train.metrics_reduce": {
+      "calls": 8,
+      "host_inclusive_us": 272.5
+    }
+  },
+  "by_scope_and_enclosing_operator": {
+    "Optimizer.step#AdamW.step | <direct_in_scope>": {
+      "calls": 3008,
+      "host_inclusive_us": 2350.0
+    },
+    "train.forward | <direct_in_scope>": {
+      "calls": 2416,
+      "host_inclusive_us": 443311.75
+    },
+    "Optimizer.step#DistributedMuon.step | aten::mul_": {
+      "calls": 2332,
+      "host_inclusive_us": 3204.25
+    },
+    "train.forward | aten::add": {
+      "calls": 1360,
+      "host_inclusive_us": 2576.25
+    },
+    "train.forward | aten::mul": {
+      "calls": 840,
+      "host_inclusive_us": 1242.75
+    },
+    "train.forward | aten::floor_divide": {
+      "calls": 580,
+      "host_inclusive_us": 1082.0
+    },
+    "train.forward | aten::is_nonzero": {
+      "calls": 288,
+      "host_inclusive_us": 21120.0
+    },
+    "<outside_instrumented_scope> | aten::mul": {
+      "calls": 212,
+      "host_inclusive_us": 595.75
+    },
+    "<outside_instrumented_scope> | <direct_in_scope>": {
+      "calls": 188,
+      "host_inclusive_us": 283577.25
+    },
+    "train.forward | aten::sub_": {
+      "calls": 144,
+      "host_inclusive_us": 221.75
+    },
+    "model.moe_experts | aten::floor_divide": {
+      "calls": 144,
+      "host_inclusive_us": 223.75
+    },
+    "Optimizer.step#DistributedMuon.step | aten::mul": {
+      "calls": 144,
+      "host_inclusive_us": 226.75
+    },
+    "train.scalar_reads | <direct_in_scope>": {
+      "calls": 28,
+      "host_inclusive_us": 171281.25
+    },
+    "teacher.video | aten::mul": {
+      "calls": 24,
+      "host_inclusive_us": 31.25
+    },
+    "train.forward | aten::div": {
+      "calls": 24,
+      "host_inclusive_us": 56.75
+    },
+    "teacher.rgb_normalize | aten::div": {
+      "calls": 16,
+      "host_inclusive_us": 46.25
+    },
+    "teacher.current_depth | aten::div": {
+      "calls": 12,
+      "host_inclusive_us": 20.25
+    },
+    "teacher.future_depth | aten::div": {
+      "calls": 12,
+      "host_inclusive_us": 20.5
+    },
+    "train.forward | aten::repeat_interleave": {
+      "calls": 12,
+      "host_inclusive_us": 11244.0
+    },
+    "<outside_instrumented_scope> | aten::repeat_interleave": {
+      "calls": 8,
+      "host_inclusive_us": 31.0
+    },
+    "teacher.current_depth | aten::mul": {
+      "calls": 8,
+      "host_inclusive_us": 12.0
+    },
+    "teacher.current_depth | aten::linalg_lu_solve": {
+      "calls": 8,
+      "host_inclusive_us": 9.0
+    },
+    "teacher.current_depth | aten::add": {
+      "calls": 8,
+      "host_inclusive_us": 17.25
+    },
+    "teacher.future_depth | aten::mul": {
+      "calls": 8,
+      "host_inclusive_us": 8.75
+    },
+    "teacher.future_depth | aten::linalg_lu_solve": {
+      "calls": 8,
+      "host_inclusive_us": 8.0
+    },
+    "teacher.future_depth | aten::add": {
+      "calls": 8,
+      "host_inclusive_us": 15.75
+    },
+    "teacher.video | aten::div": {
+      "calls": 8,
+      "host_inclusive_us": 16.75
+    },
+    "teacher.video | aten::sub": {
+      "calls": 8,
+      "host_inclusive_us": 6.25
+    },
+    "teacher.current_depth | aten::_linalg_check_errors": {
+      "calls": 4,
+      "host_inclusive_us": 390.25
+    },
+    "teacher.current_depth | aten::mul_": {
+      "calls": 4,
+      "host_inclusive_us": 6.25
+    },
+    "teacher.future_depth | aten::_linalg_check_errors": {
+      "calls": 4,
+      "host_inclusive_us": 368.75
+    },
+    "teacher.future_depth | aten::mul_": {
+      "calls": 4,
+      "host_inclusive_us": 6.25
+    },
+    "teacher.video | aten::is_nonzero": {
+      "calls": 4,
+      "host_inclusive_us": 324.75
+    },
+    "teacher.video | <direct_in_scope>": {
+      "calls": 4,
+      "host_inclusive_us": 161.25
+    },
+    "train.forward | aten::sub": {
+      "calls": 4,
+      "host_inclusive_us": 5.5
+    },
+    "train.clip_grad | aten::add": {
+      "calls": 4,
+      "host_inclusive_us": 17.5
+    },
+    "train.clip_grad | aten::mul": {
+      "calls": 4,
+      "host_inclusive_us": 7.25
+    },
+    "train.metrics_reduce | <direct_in_scope>": {
+      "calls": 4,
+      "host_inclusive_us": 260.5
+    },
+    "train.metrics_reduce | aten::div_": {
+      "calls": 4,
+      "host_inclusive_us": 12.0
+    },
+    "<outside_instrumented_scope> | aten::div": {
+      "calls": 4,
+      "host_inclusive_us": 14.5
+    }
+  },
+  "runtime_synchronize_by_scope_and_parent": {
+    "teacher.video | aten::copy_ | AscendCL@aclrtSynchronizeStream": {
+      "calls": 16,
+      "host_inclusive_us": 567944.75
+    },
+    "train.forward | aten::_local_scalar_dense | AscendCL@aclrtSynchronizeStreamWithTimeout": {
+      "calls": 2668,
+      "host_inclusive_us": 357299.5
+    },
+    "<outside_instrumented_scope> | aten::_local_scalar_dense | AscendCL@aclrtSynchronizeStreamWithTimeout": {
+      "calls": 140,
+      "host_inclusive_us": 274030.5
+    },
+    "train.scalar_reads | aten::_local_scalar_dense | AscendCL@aclrtSynchronizeStreamWithTimeout": {
+      "calls": 28,
+      "host_inclusive_us": 170195.75
+    },
+    "train.forward | aten::copy_ | AscendCL@aclrtSynchronizeStream": {
+      "calls": 320,
+      "host_inclusive_us": 48134.0
+    },
+    "train.post_step_sync | <direct_in_scope> | AscendCL@aclrtSynchronizeDeviceWithTimeout": {
+      "calls": 4,
+      "host_inclusive_us": 16489.5
+    },
+    "<outside_instrumented_scope> | aten::copy_ | AscendCL@aclrtSynchronizeStream": {
+      "calls": 20,
+      "host_inclusive_us": 4433.25
+    },
+    "teacher.future_depth | aten::copy_ | AscendCL@aclrtSynchronizeStream": {
+      "calls": 32,
+      "host_inclusive_us": 1596.0
+    },
+    "teacher.current_depth | aten::copy_ | AscendCL@aclrtSynchronizeStream": {
+      "calls": 32,
+      "host_inclusive_us": 1512.0
+    },
+    "teacher.geometry_recover | aten::copy_ | AscendCL@aclrtSynchronizeStream": {
+      "calls": 40,
+      "host_inclusive_us": 1208.0
+    },
+    "train.forward | aten::index | AscendCL@aclrtSynchronizeStreamWithTimeout": {
+      "calls": 76,
+      "host_inclusive_us": 620.75
+    },
+    "train.forward | aten::_index_put_impl_ | AscendCL@aclrtSynchronizeStreamWithTimeout": {
+      "calls": 60,
+      "host_inclusive_us": 452.75
+    },
+    "train.pre_step_sync | <direct_in_scope> | AscendCL@aclrtSynchronizeDeviceWithTimeout": {
+      "calls": 4,
+      "host_inclusive_us": 429.0
+    },
+    "train.forward | aten::nonzero | AscendCL@aclrtSynchronizeStreamWithTimeout": {
+      "calls": 48,
+      "host_inclusive_us": 325.0
+    },
+    "<outside_instrumented_scope> | aten::_index_put_impl_ | AscendCL@aclrtSynchronizeStreamWithTimeout": {
+      "calls": 24,
+      "host_inclusive_us": 210.5
+    },
+    "train.metrics_reduce | aten::copy_ | AscendCL@aclrtSynchronizeStream": {
+      "calls": 8,
+      "host_inclusive_us": 169.75
+    },
+    "teacher.future_depth | aten::_local_scalar_dense | AscendCL@aclrtSynchronizeStreamWithTimeout": {
+      "calls": 4,
+      "host_inclusive_us": 111.25
+    },
+    "teacher.video | aten::_local_scalar_dense | AscendCL@aclrtSynchronizeStreamWithTimeout": {
+      "calls": 8,
+      "host_inclusive_us": 111.0
+    },
+    "teacher.current_depth | aten::_index_put_impl_ | AscendCL@aclrtSynchronizeStreamWithTimeout": {
+      "calls": 12,
+      "host_inclusive_us": 98.25
+    },
+    "teacher.current_depth | aten::_local_scalar_dense | AscendCL@aclrtSynchronizeStreamWithTimeout": {
+      "calls": 4,
+      "host_inclusive_us": 97.5
+    },
+    "<outside_instrumented_scope> | <direct_in_scope> | AscendCL@aclrtSynchronizeDeviceWithTimeout": {
+      "calls": 1,
+      "host_inclusive_us": 89.75
+    },
+    "teacher.future_depth | aten::_index_put_impl_ | AscendCL@aclrtSynchronizeStreamWithTimeout": {
+      "calls": 12,
+      "host_inclusive_us": 87.25
+    },
+    "<outside_instrumented_scope> | aten::index | AscendCL@aclrtSynchronizeStreamWithTimeout": {
+      "calls": 12,
+      "host_inclusive_us": 83.0
+    },
+    "teacher.video | aten::_index_put_impl_ | AscendCL@aclrtSynchronizeStreamWithTimeout": {
+      "calls": 12,
+      "host_inclusive_us": 80.5
+    },
+    "teacher.video | aten::index | AscendCL@aclrtSynchronizeStreamWithTimeout": {
+      "calls": 8,
+      "host_inclusive_us": 54.5
+    },
+    "train.metrics_reduce | aten::_local_scalar_dense | AscendCL@aclrtSynchronizeStreamWithTimeout": {
+      "calls": 4,
+      "host_inclusive_us": 40.5
+    }
+  },
+  "interpretation": "Counts/host ranges of aten::_local_scalar_dense only; Python source locations require native stack support or targeted follow-up ranges. Enclosing aten::Int/ScalarImplicit/is_nonzero indicates scalar-shape/control conversion, not Python loss logging."
+}

@@ -8,5 +8,40 @@
     "steps": 4,
     "max_absolute_difference_from_official_seconds": 1.7319479184152442e-13
   },
-  "note": "Only parser validation; synthetic values are not new experimental results."
+  "note": "Only parser validation; synthetic values are not new experimental results.",
+  "new_capture_union_audit": {
+    "compute_max_abs_delta_seconds": 3.241851231905457e-14,
+    "communication_max_abs_delta_seconds": 1.5543122344752192e-15,
+    "nonoverlapped_max_abs_delta_seconds": 0.003883497999899621,
+    "nonoverlap_delta_note": "Nonzero differences occur only at final captured profiler step123 for ranks1\u20137, up to3.8835ms; retain official CSV for headline timing. Other compute/communication unions match to floating output precision."
+  },
+  "cross_rank_match_audit": {
+    "exact_name_matching": "rejected; local sequence offsets differ",
+    "relative_sequence_step_type_checks": "1016/1016 passed across all8 ranks",
+    "group_and_payload_check": {
+      "all_sequence_types_steps_match": true,
+      "payload_counts": {
+        "same_group": 1016,
+        "same_hccs_payload_all8": 637,
+        "same_nonzero_payload_with_missing_zero": 378,
+        "different_nonzero_payload": 1
+      },
+      "different_nonzero_payload_examples": [
+        {
+          "index": 508,
+          "type": "hcom_allGather_",
+          "sizes": {
+            "rank0": 238.931982,
+            "rank1": 209.698816,
+            "rank2": 209.698816,
+            "rank3": 209.698816,
+            "rank4": 209.698816,
+            "rank5": 209.698816,
+            "rank6": 209.698816,
+            "rank7": 209.698816
+          }
+        }
+      ]
+    }
+  }
 }

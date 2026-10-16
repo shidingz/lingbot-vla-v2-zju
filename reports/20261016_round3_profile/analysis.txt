@@ -1,0 +1,54 @@
+当前默认8卡训练：全面profiling结果（2026-10-16）
+
+当前更显著的是通信暴露时间与大量细碎任务，MoE 专家矩阵乘已不是最大的设备算子热点。同步需要分清“等待正在执行的计算”和“设备空闲”；现有记录不能把通信耗时全部归为传输带宽不足。
+
+本次连续132步，exit0；全8rank各4步native trace（更新121–124 / ProfilerStep120–123）。
+无trace窗口81–116：2.6389秒/步，36.379样本/秒；native日志步时3.4581秒，相对同run基线增加31.79%。
+CPU采样steps50–62，保守排除50–64；native warmup120，120以后均不参与正常速度统计。
+无trace窗口8卡AI Core抽样均值18.65%，AI Vector 27.77%，HBM容量占用92.0%。每卡14次采样，不是MFU或连续时间平均。
+
+设备时间线（8rank×4步均值，仅采集窗口）：
+  Computing: 1.4388秒/步，42.09%
+  Communication(Not Overlapped): 0.9901秒/步，28.97%
+  Free: 0.9886秒/步，28.92%
+
+主机阶段（8rank×4步均值，包含同步/异步提交及嵌套范围，不能与上表相加）：
+  train.forward: 1.158351秒/步
+  train.backward: 1.117926秒/步
+  train.teachers: 0.549339秒/步
+  teacher.geometry_scipy: 0.129281秒/步
+  train.optimizer: 0.401837秒/步
+  Optimizer.step#DistributedMuon.step: 0.328205秒/步
+  Optimizer.step#AdamW.step: 0.068590秒/步
+  optimizer.muon_newton_schulz: 0.145539秒/步
+  model.moe_experts: 0.067195秒/步
+  train.scalar_reads: 0.042941秒/步
+  train.data_wait: 0.000776秒/步
+  train.h2d: 0.001059秒/步
+
+结论：
+1. 8卡各采集4步，官方时间线约42.1%计算、29.0%未重叠通信、28.9%Free。计算类别包含向量/其他设备任务，不能当AI Core利用率；Free本身不标识原因。
+2. 每卡每步约4.26万个设备任务，约88.0%的非通信任务短于50微秒，大量任务在向量核执行。任务碎片化与调度成本值得优先优化。
+3. 归一化通信序号并核对step/type/group/传输计数后发现：更新122的一次reduceScatter，rank0持续33.000毫秒，rank2仅0.031毫秒，但各卡结束时差0.187毫秒。这支持到达不齐/等待的存在，不能把通信总时长全归结为带宽。
+4. 当前EP=1，没有MoE专家跨卡all-to-all。GMM及权重梯度GMMAdd的kernel耗时总和约14毫秒/步；该口径不含完整路由和反向框架开销。 MoE架构的大参数量仍可能通过FSDP权重通信间接增加开销，不能将上述14毫秒解读为整个MoE的总成本。
+5. teacher主机范围约0.549秒，几何SciPy约0.129秒；Muon约0.328秒，AdamW约0.069秒。阶段含嵌套/异步等待，不与通信时间相加。
+6. CPU同步范围union约0.330秒，但其中设备无kernel的交集仅约0.048秒。多次scalar读取可能只是CPU常量，不等于同次数的NPU同步。
+7. 数据等待约0.00078秒、显式步首/步尾同步约0.00020/0.00443秒，不支持把这些作为当前第一优化目标。
+
+下一轮优化优先级：
+1. FSDP通信与任务调度：检查已启用的前向预取是否实际覆盖通信，评估分片与通信粒度、发起时机；结合主机小算子下发优化。显存已约92%，任何减少重分片的方案需验证额外显存。
+2. Muon同形状3D参数合批：继续缩减Newton–Schulz与逐参数更新的小算子下发，先做数值/优化器状态对照，再跑整模型A/B。
+3. teacher批处理与几何后处理：评估当前/未来帧合批，以及SciPy拟合的批量实现；保留监督目标与数值语义，不能直接删掉几何处理。
+
+口径与限制：
+采集窗口日志步时比同run基线高约31.8%；不是独立A/B精确测得的采集成本，且不包含trace导出。不能把profile秒数或占比直接套在2.64秒实际步时上。
+4步×8rank，CPU堆栈只采rank0/4且非阻塞读取有失败；无完整epoch或任务成功率评测。
+HCCL time-info中Transit/Wait/Synchronization全为0，但带宽子记录有传输，说明该分解不可用于分离纯传输和等待；不能读作“无等待”或“传输占全部”。
+原始同名HCOM匹配因各rank编号起点不同而无效；未经归一化与独立核验的数据不用于因果结论。
+主机范围、kernel总和、设备union和资源抽样是不同口径，不能互相相加；npu-smi抽样不是MFU。
+0.048秒只是CPU同步范围与设备无任务区间的交集，不含全部异步HCCL或stream依赖等待，不能作为可优化等待时间的上限。
+
+原始实验：/cache/lingbot/profiling/round3_profile_20261016_195822/profile_132
+当前实验已结束；NPU空闲状态已核对。
+
+补充定位：rank0的teacher.video内，每步4次aten::copy_包含aclrtSynchronizeStream，合计约0.142秒；主要不是.item。该等待与设备计算重叠，不能视为可直接删除的0.142秒。见attribution_scalar_rank0.json及attribution_findings.txt。

@@ -1,0 +1,1553 @@
+{
+  "run": "/cache/lingbot/profiling/round3_profile_20261016_195822/profile_132",
+  "metadata": {
+    "run": "/cache/lingbot/profiling/round3_profile_20261016_195822/profile_132",
+    "source_snapshot": "/cache/lingbot/profiling/round3_profile_20261016_195822/source",
+    "created_at": "2026-10-16T19:58:41.103068+08:00",
+    "rate_hz": 20,
+    "duration_seconds": 30,
+    "start_after_step": 50,
+    "idle_stacks": true,
+    "nonblocking": true,
+    "native_stacks": false,
+    "subprocesses": false,
+    "limitations": [
+      "Idle stacks show waits and cannot measure CPU utilization.",
+      "Nonblocking Python stacks may be incomplete or inconsistent.",
+      "Sampled steps must be excluded from unprofiled throughput.",
+      "Two ranks are sampled; this is not a full eight-rank wall-time attribution."
+    ],
+    "started_at": "2026-10-16T20:05:39.340390+08:00",
+    "completed_step_at_start": 50,
+    "process_ids": {
+      "0": 270331,
+      "4": 270335
+    },
+    "commands": {
+      "0": [
+        "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/bin/py-spy",
+        "record",
+        "--pid",
+        "270331",
+        "--rate",
+        "20",
+        "--duration",
+        "30",
+        "--format",
+        "speedscope",
+        "--output",
+        "/cache/lingbot/profiling/round3_profile_20261016_195822/profile_132/host_rank0.speedscope.json",
+        "--idle",
+        "--nonblocking",
+        "--full-filenames"
+      ],
+      "4": [
+        "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/bin/py-spy",
+        "record",
+        "--pid",
+        "270335",
+        "--rate",
+        "20",
+        "--duration",
+        "30",
+        "--format",
+        "speedscope",
+        "--output",
+        "/cache/lingbot/profiling/round3_profile_20261016_195822/profile_132/host_rank4.speedscope.json",
+        "--idle",
+        "--nonblocking",
+        "--full-filenames"
+      ]
+    },
+    "finished_at": "2026-10-16T20:06:11.622108+08:00",
+    "completed_step_at_end": 62,
+    "return_codes": {
+      "0": 0,
+      "4": 0
+    },
+    "exclude_steps_inclusive": [
+      50,
+      64
+    ],
+    "exclusion_note": "Conservative guard: include start boundary and two updates after last completed step."
+  },
+  "ranks": {
+    "0": {
+      "main_thread_name": "Thread 270331 \"MainThread\"",
+      "total_threads": 31,
+      "main_thread_samples": 460,
+      "main_thread_sampled_seconds": 23.000000000000192,
+      "sampling_quality": {
+        "total_thread_samples": 14260,
+        "failed_collection_cycles": 139,
+        "main_thread_retained_sample_fraction": 0.7679465776293823,
+        "quality_note": "Nonblocking collection discarded failed cycles. This retention fraction is not compute utilization; nonrandom omissions may bias all conditional stack percentages."
+      },
+      "stage_samples": [
+        {
+          "location": "train.backward",
+          "sampled_seconds": 7.149999999999983,
+          "sample_fraction_pct": 31.0869565217388
+        },
+        {
+          "location": "train.forward",
+          "sampled_seconds": 5.849999999999987,
+          "sample_fraction_pct": 25.434782608695386
+        },
+        {
+          "location": "train.teachers",
+          "sampled_seconds": 4.249999999999993,
+          "sample_fraction_pct": 18.478260869565034
+        },
+        {
+          "location": "train.optimizer",
+          "sampled_seconds": 3.099999999999997,
+          "sample_fraction_pct": 13.478260869565093
+        },
+        {
+          "location": "outside_named_train_stage",
+          "sampled_seconds": 1.1500000000000004,
+          "sample_fraction_pct": 4.999999999999959
+        },
+        {
+          "location": "train.clip_grad",
+          "sampled_seconds": 0.8000000000000002,
+          "sample_fraction_pct": 3.478260869565189
+        },
+        {
+          "location": "train.scalar_reads",
+          "sampled_seconds": 0.39999999999999997,
+          "sample_fraction_pct": 1.7391304347825942
+        },
+        {
+          "location": "unknown_empty_stack",
+          "sampled_seconds": 0.2,
+          "sample_fraction_pct": 0.8695652173912971
+        },
+        {
+          "location": "train.post_step_sync",
+          "sampled_seconds": 0.1,
+          "sample_fraction_pct": 0.43478260869564855
+        }
+      ],
+      "top_leaf_samples": [
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/autograd/graph.py:823:_engine_run_backward",
+          "sampled_seconds": 7.149999999999983,
+          "sample_fraction_pct": 31.0869565217388
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch_npu/contrib/transfer_to_npu.py:161:decorated",
+          "sampled_seconds": 2.6499999999999986,
+          "sample_fraction_pct": 11.521739130434682
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/MoGe/moge/utils/geometry_numpy.py:85:fn",
+          "sampled_seconds": 0.5499999999999999,
+          "sample_fraction_pct": 2.3913043478260665
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:969:main",
+          "sampled_seconds": 0.39999999999999997,
+          "sample_fraction_pct": 1.7391304347825942
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/muon.py:551:_step_megabatch_chunk",
+          "sampled_seconds": 0.39999999999999997,
+          "sample_fraction_pct": 1.7391304347825942
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1035:main",
+          "sampled_seconds": 0.39999999999999997,
+          "sample_fraction_pct": 1.7391304347825942
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/linear.py:125:forward",
+          "sampled_seconds": 0.39999999999999997,
+          "sample_fraction_pct": 1.7391304347825942
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/scipy/optimize/_lsq/least_squares.py:63:call_minpack",
+          "sampled_seconds": 0.3,
+          "sample_fraction_pct": 1.3043478260869457
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/_ops.py:723:__call__",
+          "sampled_seconds": 0.25,
+          "sample_fraction_pct": 1.0869565217391213
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/MoGe/moge/utils/geometry_numpy.py:86:fn",
+          "sampled_seconds": 0.25,
+          "sample_fraction_pct": 1.0869565217391213
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/muon.py:119:batched_newton_schulz",
+          "sampled_seconds": 0.25,
+          "sample_fraction_pct": 1.0869565217391213
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/muon.py:107:batched_newton_schulz",
+          "sampled_seconds": 0.25,
+          "sample_fraction_pct": 1.0869565217391213
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/muon.py:118:batched_newton_schulz",
+          "sampled_seconds": 0.2,
+          "sample_fraction_pct": 0.8695652173912971
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py:881:_deepstack_process",
+          "sampled_seconds": 0.2,
+          "sample_fraction_pct": 0.8695652173912971
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py:606:rot_pos_emb",
+          "sampled_seconds": 0.2,
+          "sample_fraction_pct": 0.8695652173912971
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/_ops.py:1123:__call__",
+          "sampled_seconds": 0.15000000000000002,
+          "sample_fraction_pct": 0.6521739130434729
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/muon.py:553:_step_megabatch_chunk",
+          "sampled_seconds": 0.15000000000000002,
+          "sample_fraction_pct": 0.6521739130434729
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/muon.py:116:batched_newton_schulz",
+          "sampled_seconds": 0.15000000000000002,
+          "sample_fraction_pct": 0.6521739130434729
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1739:_wrapped_call_impl",
+          "sampled_seconds": 0.15000000000000002,
+          "sample_fraction_pct": 0.6521739130434729
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py:626:rot_pos_emb",
+          "sampled_seconds": 0.15000000000000002,
+          "sample_fraction_pct": 0.6521739130434729
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/utils/_foreach_utils.py:37:_group_tensors_by_device_and_dtype",
+          "sampled_seconds": 0.15000000000000002,
+          "sample_fraction_pct": 0.6521739130434729
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/ops/npu_moe.py:70:grouped_moe_npu_forward",
+          "sampled_seconds": 0.15000000000000002,
+          "sample_fraction_pct": 0.6521739130434729
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/muon.py:547:_step_megabatch_chunk",
+          "sampled_seconds": 0.1,
+          "sample_fraction_pct": 0.43478260869564855
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch_npu/npu/utils.py:58:synchronize",
+          "sampled_seconds": 0.1,
+          "sample_fraction_pct": 0.43478260869564855
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/layers/block.py:313:forward",
+          "sampled_seconds": 0.1,
+          "sample_fraction_pct": 0.43478260869564855
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py:697:fast_pos_embed_interpolate",
+          "sampled_seconds": 0.1,
+          "sample_fraction_pct": 0.43478260869564855
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py:113:rotate_half",
+          "sampled_seconds": 0.1,
+          "sample_fraction_pct": 0.43478260869564855
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py:951:get_rope_index",
+          "sampled_seconds": 0.1,
+          "sample_fraction_pct": 0.43478260869564855
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/ops/triton_moe_loss.py:234:_vectorized_segment_f_i",
+          "sampled_seconds": 0.1,
+          "sample_fraction_pct": 0.43478260869564855
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/optim/optimizer.py:975:zero_grad",
+          "sampled_seconds": 0.1,
+          "sample_fraction_pct": 0.43478260869564855
+        }
+      ],
+      "top_inclusive_frame_samples": [
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1251:<module>",
+          "sampled_seconds": 22.25000000000018,
+          "sample_fraction_pct": 96.7391304347826
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/autograd/__init__.py:347:backward",
+          "sampled_seconds": 7.149999999999983,
+          "sample_fraction_pct": 31.0869565217388
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/autograd/graph.py:823:_engine_run_backward",
+          "sampled_seconds": 7.149999999999983,
+          "sample_fraction_pct": 31.0869565217388
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:966:main",
+          "sampled_seconds": 7.149999999999983,
+          "sample_fraction_pct": 31.0869565217388
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/_tensor.py:626:backward",
+          "sampled_seconds": 7.149999999999983,
+          "sample_fraction_pct": 31.0869565217388
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/utils/_contextlib.py:116:decorate_context",
+          "sampled_seconds": 7.149999999999983,
+          "sample_fraction_pct": 31.0869565217388
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1739:_wrapped_call_impl",
+          "sampled_seconds": 6.799999999999984,
+          "sample_fraction_pct": 29.56521739130403
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1845:_call_impl",
+          "sampled_seconds": 5.799999999999987,
+          "sample_fraction_pct": 25.21739130434756
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:928:main",
+          "sampled_seconds": 5.799999999999987,
+          "sample_fraction_pct": 25.21739130434756
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1793:inner",
+          "sampled_seconds": 5.449999999999989,
+          "sample_fraction_pct": 23.695652173912798
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:1302:forward",
+          "sampled_seconds": 5.449999999999989,
+          "sample_fraction_pct": 23.695652173912798
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1750:_call_impl",
+          "sampled_seconds": 3.899999999999994,
+          "sample_fraction_pct": 16.95652173913027
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/optim/lr_scheduler.py:140:wrapper",
+          "sampled_seconds": 2.9999999999999973,
+          "sample_fraction_pct": 13.043478260869444
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/optimizer.py:233:step",
+          "sampled_seconds": 2.9999999999999973,
+          "sample_fraction_pct": 13.043478260869444
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1031:main",
+          "sampled_seconds": 2.9999999999999973,
+          "sample_fraction_pct": 13.043478260869444
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/optim/optimizer.py:493:wrapper",
+          "sampled_seconds": 2.849999999999998,
+          "sample_fraction_pct": 12.391304347825974
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch_npu/contrib/transfer_to_npu.py:161:decorated",
+          "sampled_seconds": 2.849999999999998,
+          "sample_fraction_pct": 12.391304347825974
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:845:forward",
+          "sampled_seconds": 2.6999999999999984,
+          "sample_fraction_pct": 11.739130434782503
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/utils/training_profiler.py:98:wrapped",
+          "sampled_seconds": 2.3999999999999995,
+          "sample_fraction_pct": 10.434782608695564
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:908:main",
+          "sampled_seconds": 2.3499999999999996,
+          "sample_fraction_pct": 10.21739130434774
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/transformers/modeling_layers.py:94:__call__",
+          "sampled_seconds": 2.25,
+          "sample_fraction_pct": 9.782608695652092
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/_dynamo/eval_frame.py:745:_fn",
+          "sampled_seconds": 2.2,
+          "sample_fraction_pct": 9.56521739130427
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/module_utils.py:403:get_video_target",
+          "sampled_seconds": 2.1500000000000004,
+          "sample_fraction_pct": 9.347826086956445
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/dino_video/teacher.py:90:get_future_feature",
+          "sampled_seconds": 2.1500000000000004,
+          "sample_fraction_pct": 9.347826086956445
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/models/inference/causal_eval.py:66:get_intermediate_layers",
+          "sampled_seconds": 2.1500000000000004,
+          "sample_fraction_pct": 9.347826086956445
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:815:forward",
+          "sampled_seconds": 2.1000000000000005,
+          "sample_fraction_pct": 9.130434782608623
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/module_utils.py:434:get_depth_target",
+          "sampled_seconds": 1.7500000000000009,
+          "sample_fraction_pct": 7.608695652173854
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/models/navit_video_vision_transformer.py:300:forward_features_packed",
+          "sampled_seconds": 1.7000000000000008,
+          "sample_fraction_pct": 7.391304347826029
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:538:embed_prefix",
+          "sampled_seconds": 1.6500000000000008,
+          "sample_fraction_pct": 7.173913043478205
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:253:embed_image",
+          "sampled_seconds": 1.6500000000000008,
+          "sample_fraction_pct": 7.173913043478205
+        }
+      ],
+      "selected_function_inclusive_samples": [
+        {
+          "location": "_engine_run_backward",
+          "sampled_seconds": 7.149999999999983,
+          "sample_fraction_pct": 31.0869565217388
+        },
+        {
+          "location": "get_video_target",
+          "sampled_seconds": 2.3499999999999996,
+          "sample_fraction_pct": 10.21739130434774
+        },
+        {
+          "location": "get_depth_target",
+          "sampled_seconds": 1.900000000000001,
+          "sample_fraction_pct": 8.260869565217327
+        },
+        {
+          "location": "recover_focal_shift",
+          "sampled_seconds": 1.4000000000000006,
+          "sample_fraction_pct": 6.086956521739082
+        },
+        {
+          "location": "solve_optimal_focal_shift",
+          "sampled_seconds": 1.3500000000000005,
+          "sample_fraction_pct": 5.869565217391258
+        },
+        {
+          "location": "_step_megabatch",
+          "sampled_seconds": 1.1500000000000004,
+          "sample_fraction_pct": 4.999999999999959
+        },
+        {
+          "location": "_step_megabatch_chunk",
+          "sampled_seconds": 1.1500000000000004,
+          "sample_fraction_pct": 4.999999999999959
+        },
+        {
+          "location": "batched_newton_schulz",
+          "sampled_seconds": 1.1000000000000003,
+          "sample_fraction_pct": 4.782608695652136
+        }
+      ],
+      "top_stacks": [
+        {
+          "stack": [
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1251:<module>",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:966:main",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/_tensor.py:626:backward",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/autograd/__init__.py:347:backward",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/autograd/graph.py:823:_engine_run_backward"
+          ],
+          "sampled_seconds": 7.149999999999983,
+          "sample_fraction_pct": 31.0869565217388
+        },
+        {
+          "stack": [
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1251:<module>",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:908:main",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/module_utils.py:403:get_video_target",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/utils/_contextlib.py:116:decorate_context",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/dino_video/teacher.py:90:get_future_feature",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/utils/_contextlib.py:116:decorate_context",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/models/inference/causal_eval.py:66:get_intermediate_layers",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/models/navit_video_vision_transformer.py:300:forward_features_packed",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch_npu/contrib/transfer_to_npu.py:161:decorated"
+          ],
+          "sampled_seconds": 1.7000000000000008,
+          "sample_fraction_pct": 7.391304347826029
+        },
+        {
+          "stack": [
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1251:<module>",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:969:main"
+          ],
+          "sampled_seconds": 0.39999999999999997,
+          "sample_fraction_pct": 1.7391304347825942
+        },
+        {
+          "stack": [
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1251:<module>",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1031:main",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/optim/lr_scheduler.py:140:wrapper",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/optimizer.py:233:step",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/optim/optimizer.py:493:wrapper",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/utils/_contextlib.py:116:decorate_context",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/muon.py:365:step",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/muon.py:441:_step_megabatch",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/muon.py:551:_step_megabatch_chunk"
+          ],
+          "sampled_seconds": 0.39999999999999997,
+          "sample_fraction_pct": 1.7391304347825942
+        },
+        {
+          "stack": [
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1251:<module>",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1035:main"
+          ],
+          "sampled_seconds": 0.39999999999999997,
+          "sample_fraction_pct": 1.7391304347825942
+        },
+        {
+          "stack": [
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1251:<module>",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:905:main",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/module_utils.py:434:get_depth_target",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/utils/_contextlib.py:116:decorate_context",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/MoGe/moge/model/v2.py:258:infer",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/utils/training_profiler.py:98:wrapped",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/MoGe/moge/utils/geometry_torch.py:158:recover_focal_shift",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/utils/training_profiler.py:98:wrapped",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/MoGe/moge/utils/geometry_numpy.py:90:solve_optimal_focal_shift",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/scipy/optimize/_lsq/least_squares.py:943:least_squares",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/scipy/optimize/_lsq/least_squares.py:63:call_minpack",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/scipy/optimize/_lsq/least_squares.py:836:fun_wrapped",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/MoGe/moge/utils/geometry_numpy.py:85:fn"
+          ],
+          "sampled_seconds": 0.2,
+          "sample_fraction_pct": 0.8695652173912971
+        },
+        {
+          "stack": [
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1251:<module>",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:908:main",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/module_utils.py:378:get_video_target",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch_npu/contrib/transfer_to_npu.py:161:decorated"
+          ],
+          "sampled_seconds": 0.2,
+          "sample_fraction_pct": 0.8695652173912971
+        },
+        {
+          "stack": [
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1251:<module>",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:902:main",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/module_utils.py:434:get_depth_target",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/utils/_contextlib.py:116:decorate_context",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/MoGe/moge/model/v2.py:258:infer",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/utils/training_profiler.py:98:wrapped",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/MoGe/moge/utils/geometry_torch.py:158:recover_focal_shift",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/utils/training_profiler.py:98:wrapped",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/MoGe/moge/utils/geometry_numpy.py:90:solve_optimal_focal_shift",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/scipy/optimize/_lsq/least_squares.py:943:least_squares",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/scipy/optimize/_lsq/least_squares.py:63:call_minpack",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/scipy/optimize/_lsq/least_squares.py:836:fun_wrapped",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/MoGe/moge/utils/geometry_numpy.py:85:fn"
+          ],
+          "sampled_seconds": 0.2,
+          "sample_fraction_pct": 0.8695652173912971
+        },
+        {
+          "stack": [
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1251:<module>",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:928:main",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1739:_wrapped_call_impl",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1845:_call_impl",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1793:inner",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:1302:forward",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:845:forward",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:401:forward",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:305:_apply_deepstack",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py:881:_deepstack_process"
+          ],
+          "sampled_seconds": 0.2,
+          "sample_fraction_pct": 0.8695652173912971
+        },
+        {
+          "stack": [
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1251:<module>",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:928:main",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1739:_wrapped_call_impl",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1845:_call_impl",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1793:inner",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:1302:forward",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:815:forward",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:538:embed_prefix",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:253:embed_image",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:229:get_image_features",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1739:_wrapped_call_impl",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1750:_call_impl",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/qwen3vl_in_vla.py:292:forward_without_grid_thw",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/_dynamo/eval_frame.py:745:_fn",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/qwen3vl_in_vla.py:262:preprcess_grid_thw",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py:606:rot_pos_emb"
+          ],
+          "sampled_seconds": 0.2,
+          "sample_fraction_pct": 0.8695652173912971
+        },
+        {
+          "stack": [
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1251:<module>",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:905:main",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/module_utils.py:434:get_depth_target",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/utils/_contextlib.py:116:decorate_context",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/MoGe/moge/model/v2.py:258:infer",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/utils/training_profiler.py:98:wrapped",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/MoGe/moge/utils/geometry_torch.py:158:recover_focal_shift",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/utils/training_profiler.py:98:wrapped",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/MoGe/moge/utils/geometry_numpy.py:90:solve_optimal_focal_shift",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/scipy/optimize/_lsq/least_squares.py:943:least_squares",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/scipy/optimize/_lsq/least_squares.py:63:call_minpack",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/scipy/optimize/_lsq/least_squares.py:836:fun_wrapped",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/MoGe/moge/utils/geometry_numpy.py:86:fn"
+          ],
+          "sampled_seconds": 0.2,
+          "sample_fraction_pct": 0.8695652173912971
+        },
+        {
+          "stack": [
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1251:<module>",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1031:main",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/optim/lr_scheduler.py:140:wrapper",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/optimizer.py:233:step",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/optim/optimizer.py:493:wrapper",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/utils/_contextlib.py:116:decorate_context",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/muon.py:365:step",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/muon.py:441:_step_megabatch",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/muon.py:553:_step_megabatch_chunk"
+          ],
+          "sampled_seconds": 0.15000000000000002,
+          "sample_fraction_pct": 0.6521739130434729
+        },
+        {
+          "stack": [
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1251:<module>",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:902:main",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/module_utils.py:434:get_depth_target",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/utils/_contextlib.py:116:decorate_context",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/MoGe/moge/model/v2.py:258:infer",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/utils/training_profiler.py:98:wrapped",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/MoGe/moge/utils/geometry_torch.py:158:recover_focal_shift",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/utils/training_profiler.py:98:wrapped",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/MoGe/moge/utils/geometry_numpy.py:90:solve_optimal_focal_shift",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/scipy/optimize/_lsq/least_squares.py:943:least_squares",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/scipy/optimize/_lsq/least_squares.py:63:call_minpack"
+          ],
+          "sampled_seconds": 0.15000000000000002,
+          "sample_fraction_pct": 0.6521739130434729
+        },
+        {
+          "stack": [
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1251:<module>",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:905:main",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/module_utils.py:434:get_depth_target",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/utils/_contextlib.py:116:decorate_context",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/MoGe/moge/model/v2.py:258:infer",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/utils/training_profiler.py:98:wrapped",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/MoGe/moge/utils/geometry_torch.py:158:recover_focal_shift",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/utils/training_profiler.py:98:wrapped",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/MoGe/moge/utils/geometry_numpy.py:90:solve_optimal_focal_shift",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/scipy/optimize/_lsq/least_squares.py:943:least_squares",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/scipy/optimize/_lsq/least_squares.py:63:call_minpack"
+          ],
+          "sampled_seconds": 0.15000000000000002,
+          "sample_fraction_pct": 0.6521739130434729
+        },
+        {
+          "stack": [
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1251:<module>",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:928:main",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1739:_wrapped_call_impl",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1845:_call_impl",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1793:inner",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:1302:forward",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:815:forward",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:538:embed_prefix",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:253:embed_image",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:229:get_image_features",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1739:_wrapped_call_impl",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1750:_call_impl",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/qwen3vl_in_vla.py:292:forward_without_grid_thw",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/_dynamo/eval_frame.py:745:_fn",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/qwen3vl_in_vla.py:262:preprcess_grid_thw",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py:626:rot_pos_emb"
+          ],
+          "sampled_seconds": 0.15000000000000002,
+          "sample_fraction_pct": 0.6521739130434729
+        },
+        {
+          "stack": [
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1251:<module>",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:928:main",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1739:_wrapped_call_impl",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1845:_call_impl",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1793:inner",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:1302:forward",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:925:forward",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:1111:_moe_losses_and_metrics",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/ops/triton_moe_loss.py:402:triton_sequence_wise_balance_loss",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/ops/triton_moe_loss.py:193:_build_segment_info",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch_npu/contrib/transfer_to_npu.py:161:decorated"
+          ],
+          "sampled_seconds": 0.15000000000000002,
+          "sample_fraction_pct": 0.6521739130434729
+        },
+        {
+          "stack": [
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1251:<module>",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1031:main",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/optim/lr_scheduler.py:140:wrapper",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/optimizer.py:233:step",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/optim/optimizer.py:493:wrapper",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/utils/_contextlib.py:116:decorate_context",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/muon.py:388:step",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/utils/training_profiler.py:98:wrapped",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/utils/_contextlib.py:116:decorate_context",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/muon.py:119:batched_newton_schulz"
+          ],
+          "sampled_seconds": 0.15000000000000002,
+          "sample_fraction_pct": 0.6521739130434729
+        },
+        {
+          "stack": [
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1251:<module>",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1031:main",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/optim/lr_scheduler.py:140:wrapper",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/optimizer.py:233:step",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/optim/optimizer.py:493:wrapper",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/utils/_contextlib.py:116:decorate_context",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/muon.py:365:step",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/muon.py:441:_step_megabatch",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/muon.py:547:_step_megabatch_chunk"
+          ],
+          "sampled_seconds": 0.1,
+          "sample_fraction_pct": 0.43478260869564855
+        },
+        {
+          "stack": [
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1251:<module>",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1044:main",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch_npu/contrib/transfer_to_npu.py:161:decorated",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch_npu/npu/utils.py:58:synchronize"
+          ],
+          "sampled_seconds": 0.1,
+          "sample_fraction_pct": 0.43478260869564855
+        },
+        {
+          "stack": [
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1251:<module>",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:908:main",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/module_utils.py:403:get_video_target",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/utils/_contextlib.py:116:decorate_context",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/dino_video/teacher.py:90:get_future_feature",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/utils/_contextlib.py:116:decorate_context",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/models/inference/causal_eval.py:66:get_intermediate_layers",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/models/navit_video_vision_transformer.py:254:forward_features_packed",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1739:_wrapped_call_impl",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1750:_call_impl",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/layers/block.py:313:forward"
+          ],
+          "sampled_seconds": 0.1,
+          "sample_fraction_pct": 0.43478260869564855
+        }
+      ],
+      "raw_profile": "/cache/lingbot/profiling/round3_profile_20261016_195822/profile_132/host_rank0.speedscope.json"
+    },
+    "4": {
+      "main_thread_name": "Thread 270335 \"MainThread\"",
+      "total_threads": 29,
+      "main_thread_samples": 484,
+      "main_thread_sampled_seconds": 24.20000000000021,
+      "sampling_quality": {
+        "total_thread_samples": 14036,
+        "failed_collection_cycles": 115,
+        "main_thread_retained_sample_fraction": 0.8080133555926544,
+        "quality_note": "Nonblocking collection discarded failed cycles. This retention fraction is not compute utilization; nonrandom omissions may bias all conditional stack percentages."
+      },
+      "stage_samples": [
+        {
+          "location": "train.forward",
+          "sampled_seconds": 7.399999999999982,
+          "sample_fraction_pct": 30.578512396693874
+        },
+        {
+          "location": "train.backward",
+          "sampled_seconds": 6.749999999999984,
+          "sample_fraction_pct": 27.892561983470767
+        },
+        {
+          "location": "train.teachers",
+          "sampled_seconds": 4.449999999999992,
+          "sample_fraction_pct": 18.388429752065925
+        },
+        {
+          "location": "train.optimizer",
+          "sampled_seconds": 2.7499999999999982,
+          "sample_fraction_pct": 11.363636363636259
+        },
+        {
+          "location": "outside_named_train_stage",
+          "sampled_seconds": 1.2500000000000004,
+          "sample_fraction_pct": 5.165289256198304
+        },
+        {
+          "location": "train.clip_grad",
+          "sampled_seconds": 0.8000000000000002,
+          "sample_fraction_pct": 3.3057851239669143
+        },
+        {
+          "location": "train.scalar_reads",
+          "sampled_seconds": 0.44999999999999996,
+          "sample_fraction_pct": 1.8595041322313886
+        },
+        {
+          "location": "unknown_empty_stack",
+          "sampled_seconds": 0.3,
+          "sample_fraction_pct": 1.2396694214875925
+        },
+        {
+          "location": "train.data_wait",
+          "sampled_seconds": 0.05,
+          "sample_fraction_pct": 0.2066115702479321
+        }
+      ],
+      "top_leaf_samples": [
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/autograd/graph.py:823:_engine_run_backward",
+          "sampled_seconds": 6.749999999999984,
+          "sample_fraction_pct": 27.892561983470767
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch_npu/contrib/transfer_to_npu.py:161:decorated",
+          "sampled_seconds": 2.5999999999999988,
+          "sample_fraction_pct": 10.743801652892465
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:969:main",
+          "sampled_seconds": 0.44999999999999996,
+          "sample_fraction_pct": 1.8595041322313886
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/_ops.py:723:__call__",
+          "sampled_seconds": 0.44999999999999996,
+          "sample_fraction_pct": 1.8595041322313886
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/linear.py:125:forward",
+          "sampled_seconds": 0.44999999999999996,
+          "sample_fraction_pct": 1.8595041322313886
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1035:main",
+          "sampled_seconds": 0.39999999999999997,
+          "sample_fraction_pct": 1.652892561983457
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/muon.py:488:_step_megabatch_chunk",
+          "sampled_seconds": 0.3,
+          "sample_fraction_pct": 1.2396694214875925
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/_ops.py:1123:__call__",
+          "sampled_seconds": 0.3,
+          "sample_fraction_pct": 1.2396694214875925
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/_tensor.py:1106:__floordiv__",
+          "sampled_seconds": 0.25,
+          "sample_fraction_pct": 1.0330578512396604
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py:881:_deepstack_process",
+          "sampled_seconds": 0.25,
+          "sample_fraction_pct": 1.0330578512396604
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/muon.py:107:batched_newton_schulz",
+          "sampled_seconds": 0.25,
+          "sample_fraction_pct": 1.0330578512396604
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/muon.py:553:_step_megabatch_chunk",
+          "sampled_seconds": 0.25,
+          "sample_fraction_pct": 1.0330578512396604
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/MoGe/moge/utils/geometry_numpy.py:86:fn",
+          "sampled_seconds": 0.25,
+          "sample_fraction_pct": 1.0330578512396604
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py:113:rotate_half",
+          "sampled_seconds": 0.2,
+          "sample_fraction_pct": 0.8264462809917285
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1750:_call_impl",
+          "sampled_seconds": 0.2,
+          "sample_fraction_pct": 0.8264462809917285
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py:606:rot_pos_emb",
+          "sampled_seconds": 0.2,
+          "sample_fraction_pct": 0.8264462809917285
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/muon.py:413:step",
+          "sampled_seconds": 0.15000000000000002,
+          "sample_fraction_pct": 0.6198347107437964
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/MoGe/moge/utils/geometry_numpy.py:85:fn",
+          "sampled_seconds": 0.15000000000000002,
+          "sample_fraction_pct": 0.6198347107437964
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/qwen2_action_expert.py:286:forward",
+          "sampled_seconds": 0.15000000000000002,
+          "sample_fraction_pct": 0.6198347107437964
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/muon.py:551:_step_megabatch_chunk",
+          "sampled_seconds": 0.15000000000000002,
+          "sample_fraction_pct": 0.6198347107437964
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py:351:forward",
+          "sampled_seconds": 0.15000000000000002,
+          "sample_fraction_pct": 0.6198347107437964
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/scipy/optimize/_lsq/least_squares.py:63:call_minpack",
+          "sampled_seconds": 0.15000000000000002,
+          "sample_fraction_pct": 0.6198347107437964
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/ops/npu_moe.py:71:grouped_moe_npu_forward",
+          "sampled_seconds": 0.15000000000000002,
+          "sample_fraction_pct": 0.6198347107437964
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/qwen2_action_expert.py:50:_update_moe_runtime_stats",
+          "sampled_seconds": 0.15000000000000002,
+          "sample_fraction_pct": 0.6198347107437964
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/layers/sdpa_attention_packed.py:79:sdpa_attention_block_causal",
+          "sampled_seconds": 0.15000000000000002,
+          "sample_fraction_pct": 0.6198347107437964
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:952:main",
+          "sampled_seconds": 0.15000000000000002,
+          "sample_fraction_pct": 0.6198347107437964
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/layers/layer_scale.py:29:forward",
+          "sampled_seconds": 0.1,
+          "sample_fraction_pct": 0.4132231404958642
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py:989:get_rope_index",
+          "sampled_seconds": 0.1,
+          "sample_fraction_pct": 0.4132231404958642
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/muon.py:119:batched_newton_schulz",
+          "sampled_seconds": 0.1,
+          "sample_fraction_pct": 0.4132231404958642
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch_npu/distributed/fsdp/_add_fsdp_patch.py:252:_get_param_all_gather_inputs",
+          "sampled_seconds": 0.1,
+          "sample_fraction_pct": 0.4132231404958642
+        }
+      ],
+      "top_inclusive_frame_samples": [
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1251:<module>",
+          "sampled_seconds": 23.100000000000193,
+          "sample_fraction_pct": 95.45454545454542
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1739:_wrapped_call_impl",
+          "sampled_seconds": 9.199999999999996,
+          "sample_fraction_pct": 38.01652892561949
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/utils/_contextlib.py:116:decorate_context",
+          "sampled_seconds": 7.349999999999982,
+          "sample_fraction_pct": 30.371900826445945
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1845:_call_impl",
+          "sampled_seconds": 7.199999999999982,
+          "sample_fraction_pct": 29.752066115702153
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:928:main",
+          "sampled_seconds": 7.199999999999982,
+          "sample_fraction_pct": 29.752066115702153
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1793:inner",
+          "sampled_seconds": 6.799999999999984,
+          "sample_fraction_pct": 28.0991735537187
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:1302:forward",
+          "sampled_seconds": 6.799999999999984,
+          "sample_fraction_pct": 28.0991735537187
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/autograd/__init__.py:347:backward",
+          "sampled_seconds": 6.749999999999984,
+          "sample_fraction_pct": 27.892561983470767
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/autograd/graph.py:823:_engine_run_backward",
+          "sampled_seconds": 6.749999999999984,
+          "sample_fraction_pct": 27.892561983470767
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:966:main",
+          "sampled_seconds": 6.749999999999984,
+          "sample_fraction_pct": 27.892561983470767
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/_tensor.py:626:backward",
+          "sampled_seconds": 6.749999999999984,
+          "sample_fraction_pct": 27.892561983470767
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1750:_call_impl",
+          "sampled_seconds": 5.599999999999988,
+          "sample_fraction_pct": 23.140495867768347
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:845:forward",
+          "sampled_seconds": 3.7499999999999947,
+          "sample_fraction_pct": 15.495867768594886
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/transformers/modeling_layers.py:94:__call__",
+          "sampled_seconds": 3.149999999999997,
+          "sample_fraction_pct": 13.016528925619708
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch_npu/contrib/transfer_to_npu.py:161:decorated",
+          "sampled_seconds": 2.849999999999998,
+          "sample_fraction_pct": 11.776859504132121
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/optim/lr_scheduler.py:140:wrapper",
+          "sampled_seconds": 2.7499999999999982,
+          "sample_fraction_pct": 11.363636363636259
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/optimizer.py:233:step",
+          "sampled_seconds": 2.7499999999999982,
+          "sample_fraction_pct": 11.363636363636259
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1031:main",
+          "sampled_seconds": 2.7499999999999982,
+          "sample_fraction_pct": 11.363636363636259
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/_dynamo/eval_frame.py:745:_fn",
+          "sampled_seconds": 2.6999999999999984,
+          "sample_fraction_pct": 11.157024793388326
+        },
+        {
+          "location": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/optim/optimizer.py:493:wrapper",
+          "sampled_seconds": 2.6499999999999986,
+          "sample_fraction_pct": 10.950413223140396
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:815:forward",
+          "sampled_seconds": 2.4499999999999993,
+          "sample_fraction_pct": 10.123966942148671
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/module_utils.py:403:get_video_target",
+          "sampled_seconds": 2.3,
+          "sample_fraction_pct": 9.504132231404876
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:908:main",
+          "sampled_seconds": 2.3,
+          "sample_fraction_pct": 9.504132231404876
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/dino_video/teacher.py:90:get_future_feature",
+          "sampled_seconds": 2.3,
+          "sample_fraction_pct": 9.504132231404876
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/models/inference/causal_eval.py:66:get_intermediate_layers",
+          "sampled_seconds": 2.3,
+          "sample_fraction_pct": 9.504132231404876
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:538:embed_prefix",
+          "sampled_seconds": 1.800000000000001,
+          "sample_fraction_pct": 7.4380165289255595
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:253:embed_image",
+          "sampled_seconds": 1.800000000000001,
+          "sample_fraction_pct": 7.4380165289255595
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:229:get_image_features",
+          "sampled_seconds": 1.800000000000001,
+          "sample_fraction_pct": 7.4380165289255595
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/models/navit_video_vision_transformer.py:300:forward_features_packed",
+          "sampled_seconds": 1.7500000000000009,
+          "sample_fraction_pct": 7.2314049586776274
+        },
+        {
+          "location": "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/module_utils.py:434:get_depth_target",
+          "sampled_seconds": 1.6000000000000008,
+          "sample_fraction_pct": 6.611570247933831
+        }
+      ],
+      "selected_function_inclusive_samples": [
+        {
+          "location": "_engine_run_backward",
+          "sampled_seconds": 6.749999999999984,
+          "sample_fraction_pct": 27.892561983470767
+        },
+        {
+          "location": "get_video_target",
+          "sampled_seconds": 2.3,
+          "sample_fraction_pct": 9.504132231404876
+        },
+        {
+          "location": "get_depth_target",
+          "sampled_seconds": 2.1500000000000004,
+          "sample_fraction_pct": 8.884297520661082
+        },
+        {
+          "location": "_step_megabatch",
+          "sampled_seconds": 1.2500000000000004,
+          "sample_fraction_pct": 5.165289256198304
+        },
+        {
+          "location": "_step_megabatch_chunk",
+          "sampled_seconds": 1.2500000000000004,
+          "sample_fraction_pct": 5.165289256198304
+        },
+        {
+          "location": "recover_focal_shift",
+          "sampled_seconds": 1.0000000000000002,
+          "sample_fraction_pct": 4.1322314049586435
+        },
+        {
+          "location": "solve_optimal_focal_shift",
+          "sampled_seconds": 0.8500000000000002,
+          "sample_fraction_pct": 3.5123966942148463
+        },
+        {
+          "location": "batched_newton_schulz",
+          "sampled_seconds": 0.5499999999999999,
+          "sample_fraction_pct": 2.272727272727253
+        }
+      ],
+      "top_stacks": [
+        {
+          "stack": [
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1251:<module>",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:966:main",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/_tensor.py:626:backward",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/autograd/__init__.py:347:backward",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/autograd/graph.py:823:_engine_run_backward"
+          ],
+          "sampled_seconds": 6.749999999999984,
+          "sample_fraction_pct": 27.892561983470767
+        },
+        {
+          "stack": [
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1251:<module>",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:908:main",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/module_utils.py:403:get_video_target",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/utils/_contextlib.py:116:decorate_context",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/dino_video/teacher.py:90:get_future_feature",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/utils/_contextlib.py:116:decorate_context",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/models/inference/causal_eval.py:66:get_intermediate_layers",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/models/navit_video_vision_transformer.py:300:forward_features_packed",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch_npu/contrib/transfer_to_npu.py:161:decorated"
+          ],
+          "sampled_seconds": 1.7500000000000009,
+          "sample_fraction_pct": 7.2314049586776274
+        },
+        {
+          "stack": [
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1251:<module>",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:969:main"
+          ],
+          "sampled_seconds": 0.44999999999999996,
+          "sample_fraction_pct": 1.8595041322313886
+        },
+        {
+          "stack": [
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1251:<module>",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1035:main"
+          ],
+          "sampled_seconds": 0.39999999999999997,
+          "sample_fraction_pct": 1.652892561983457
+        },
+        {
+          "stack": [
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1251:<module>",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1031:main",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/optim/lr_scheduler.py:140:wrapper",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/optimizer.py:233:step",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/optim/optimizer.py:493:wrapper",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/utils/_contextlib.py:116:decorate_context",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/muon.py:365:step",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/muon.py:441:_step_megabatch",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/muon.py:488:_step_megabatch_chunk"
+          ],
+          "sampled_seconds": 0.3,
+          "sample_fraction_pct": 1.2396694214875925
+        },
+        {
+          "stack": [
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1251:<module>",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:928:main",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1739:_wrapped_call_impl",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1845:_call_impl",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1793:inner",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:1302:forward",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:845:forward",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:401:forward",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:305:_apply_deepstack",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py:881:_deepstack_process"
+          ],
+          "sampled_seconds": 0.25,
+          "sample_fraction_pct": 1.0330578512396604
+        },
+        {
+          "stack": [
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1251:<module>",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1031:main",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/optim/lr_scheduler.py:140:wrapper",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/optimizer.py:233:step",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/optim/optimizer.py:493:wrapper",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/utils/_contextlib.py:116:decorate_context",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/muon.py:365:step",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/muon.py:441:_step_megabatch",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/muon.py:553:_step_megabatch_chunk"
+          ],
+          "sampled_seconds": 0.25,
+          "sample_fraction_pct": 1.0330578512396604
+        },
+        {
+          "stack": [
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1251:<module>",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1031:main",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/optim/lr_scheduler.py:140:wrapper",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/optimizer.py:233:step",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/optim/optimizer.py:493:wrapper",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/optim/optimizer.py:91:_use_grad",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/optim/adamw.py:243:step",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/optim/optimizer.py:154:maybe_fallback",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/optim/adamw.py:875:adamw",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/optim/adamw.py:703:_multi_tensor_adamw",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/_compile.py:32:inner",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/_dynamo/eval_frame.py:745:_fn",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/distributed/tensor/_api.py:346:__torch_dispatch__",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/distributed/tensor/_dispatch.py:216:dispatch",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/_ops.py:723:__call__"
+          ],
+          "sampled_seconds": 0.2,
+          "sample_fraction_pct": 0.8264462809917285
+        },
+        {
+          "stack": [
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1251:<module>",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:928:main",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1739:_wrapped_call_impl",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1845:_call_impl",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1793:inner",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:1302:forward",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:815:forward",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:538:embed_prefix",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:253:embed_image",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:229:get_image_features",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1739:_wrapped_call_impl",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1750:_call_impl",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/qwen3vl_in_vla.py:292:forward_without_grid_thw",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/_dynamo/eval_frame.py:745:_fn",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/qwen3vl_in_vla.py:262:preprcess_grid_thw",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py:606:rot_pos_emb"
+          ],
+          "sampled_seconds": 0.2,
+          "sample_fraction_pct": 0.8264462809917285
+        },
+        {
+          "stack": [
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1251:<module>",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1031:main",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/optim/lr_scheduler.py:140:wrapper",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/optimizer.py:233:step",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/optim/optimizer.py:493:wrapper",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/utils/_contextlib.py:116:decorate_context",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/muon.py:413:step"
+          ],
+          "sampled_seconds": 0.15000000000000002,
+          "sample_fraction_pct": 0.6198347107437964
+        },
+        {
+          "stack": [
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1251:<module>",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:928:main",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1739:_wrapped_call_impl",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1845:_call_impl",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1793:inner",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:1302:forward",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:845:forward",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:387:forward",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/transformers/modeling_layers.py:94:__call__",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1739:_wrapped_call_impl",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1845:_call_impl",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1793:inner",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/qwen2_action_expert.py:427:forward",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1739:_wrapped_call_impl",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1750:_call_impl",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/qwen2_action_expert.py:286:forward"
+          ],
+          "sampled_seconds": 0.15000000000000002,
+          "sample_fraction_pct": 0.6198347107437964
+        },
+        {
+          "stack": [
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1251:<module>",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:902:main",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/module_utils.py:434:get_depth_target",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/utils/_contextlib.py:116:decorate_context",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/MoGe/moge/model/v2.py:258:infer",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/utils/training_profiler.py:98:wrapped",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/MoGe/moge/utils/geometry_torch.py:158:recover_focal_shift",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/utils/training_profiler.py:98:wrapped",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/MoGe/moge/utils/geometry_numpy.py:90:solve_optimal_focal_shift",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/scipy/optimize/_lsq/least_squares.py:943:least_squares",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/scipy/optimize/_lsq/least_squares.py:63:call_minpack",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/scipy/optimize/_lsq/least_squares.py:836:fun_wrapped",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/MoGe/moge/utils/geometry_numpy.py:86:fn"
+          ],
+          "sampled_seconds": 0.15000000000000002,
+          "sample_fraction_pct": 0.6198347107437964
+        },
+        {
+          "stack": [
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1251:<module>",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:928:main",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1739:_wrapped_call_impl",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1845:_call_impl",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1793:inner",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:1302:forward",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:845:forward",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:387:forward",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/transformers/modeling_layers.py:94:__call__",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1739:_wrapped_call_impl",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1845:_call_impl",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1793:inner",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/qwen2_action_expert.py:427:forward",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1739:_wrapped_call_impl",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1750:_call_impl",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/qwen2_action_expert.py:337:forward",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1739:_wrapped_call_impl",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1750:_call_impl",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/utils/training_profiler.py:67:forward",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/qwen2_action_expert.py:187:forward",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/ops/fused_moe.py:413:fused_moe_forward",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/ops/npu_moe.py:71:grouped_moe_npu_forward"
+          ],
+          "sampled_seconds": 0.15000000000000002,
+          "sample_fraction_pct": 0.6198347107437964
+        },
+        {
+          "stack": [
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1251:<module>",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:908:main",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/module_utils.py:403:get_video_target",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/utils/_contextlib.py:116:decorate_context",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/dino_video/teacher.py:90:get_future_feature",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/utils/_contextlib.py:116:decorate_context",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/models/inference/causal_eval.py:66:get_intermediate_layers",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/models/navit_video_vision_transformer.py:254:forward_features_packed",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1739:_wrapped_call_impl",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1750:_call_impl",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/layers/block.py:313:forward",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/layers/block.py:259:_forward_packed",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/layers/sdpa_attention_packed.py:79:sdpa_attention_block_causal"
+          ],
+          "sampled_seconds": 0.15000000000000002,
+          "sample_fraction_pct": 0.6198347107437964
+        },
+        {
+          "stack": [
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1251:<module>",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:952:main"
+          ],
+          "sampled_seconds": 0.15000000000000002,
+          "sample_fraction_pct": 0.6198347107437964
+        },
+        {
+          "stack": [
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1251:<module>",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1028:main",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/utils/clip_grad.py:34:_no_grad_wrapper",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/utils/clip_grad.py:215:clip_grad_norm_",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/utils/clip_grad.py:34:_no_grad_wrapper",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/utils/clip_grad.py:87:_get_total_norm",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/_compile.py:32:inner",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/_dynamo/eval_frame.py:745:_fn",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/distributed/tensor/_api.py:346:__torch_dispatch__",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/distributed/tensor/_dispatch.py:216:dispatch",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/_ops.py:723:__call__"
+          ],
+          "sampled_seconds": 0.1,
+          "sample_fraction_pct": 0.4132231404958642
+        },
+        {
+          "stack": [
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1251:<module>",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:908:main",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/module_utils.py:403:get_video_target",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/utils/_contextlib.py:116:decorate_context",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/dino_video/teacher.py:90:get_future_feature",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/utils/_contextlib.py:116:decorate_context",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/models/inference/causal_eval.py:66:get_intermediate_layers",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/models/navit_video_vision_transformer.py:254:forward_features_packed",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1739:_wrapped_call_impl",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1750:_call_impl",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/layers/block.py:313:forward",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/layers/block.py:272:_forward_packed",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1739:_wrapped_call_impl",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1750:_call_impl",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/layers/layer_scale.py:29:forward"
+          ],
+          "sampled_seconds": 0.1,
+          "sample_fraction_pct": 0.4132231404958642
+        },
+        {
+          "stack": [
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1251:<module>",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:928:main",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1739:_wrapped_call_impl",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1845:_call_impl",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1793:inner",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:1302:forward",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:815:forward",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:538:embed_prefix",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:253:embed_image",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:229:get_image_features",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1739:_wrapped_call_impl",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1750:_call_impl",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/qwen3vl_in_vla.py:294:forward_without_grid_thw",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py:697:fast_pos_embed_interpolate",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/_tensor.py:39:wrapped",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/_tensor.py:1106:__floordiv__"
+          ],
+          "sampled_seconds": 0.1,
+          "sample_fraction_pct": 0.4132231404958642
+        },
+        {
+          "stack": [
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1251:<module>",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:928:main",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1739:_wrapped_call_impl",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1845:_call_impl",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1793:inner",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:1302:forward",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:815:forward",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:538:embed_prefix",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:253:embed_image",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:229:get_image_features",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1739:_wrapped_call_impl",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1750:_call_impl",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/qwen3vl_in_vla.py:302:forward_without_grid_thw",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/transformers/modeling_layers.py:94:__call__",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1739:_wrapped_call_impl",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1750:_call_impl",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/qwen3vl_in_vla.py:147:forward",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1739:_wrapped_call_impl",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1750:_call_impl",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/qwen3vl_in_vla.py:69:forward",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py:124:apply_rotary_pos_emb_vision",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py:113:rotate_half"
+          ],
+          "sampled_seconds": 0.1,
+          "sample_fraction_pct": 0.4132231404958642
+        },
+        {
+          "stack": [
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1251:<module>",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:928:main",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1739:_wrapped_call_impl",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1845:_call_impl",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/module.py:1793:inner",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:1302:forward",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:815:forward",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:732:embed_prefix",
+            "/cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:268:build_prefix_position_ids",
+            "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py:989:get_rope_index"
+          ],
+          "sampled_seconds": 0.1,
+          "sample_fraction_pct": 0.4132231404958642
+        }
+      ],
+      "raw_profile": "/cache/lingbot/profiling/round3_profile_20261016_195822/profile_132/host_rank4.speedscope.json"
+    }
+  },
+  "interpretation": [
+    "Percentages are main-thread Python stack sample fractions, including blocking/idle time.",
+    "They are neither CPU busy percentages nor NPU kernel-time percentages.",
+    "Inclusive frame percentages overlap and must not be added.",
+    "Phase labels are disjoint and derived from actual snapshot training scope source ranges.",
+    "Native extensions are not unwound: a Python frame may represent waiting on NPU, communication, or C/C++ work.",
+    "Nonblocking sampling may miss or produce inconsistent stacks; cross-check the native trace.",
+    "Main-thread retained sample fractions are approximately 77%/81%; use this only as location evidence, not precise wall-time attribution."
+  ]
+}

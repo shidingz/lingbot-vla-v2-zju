@@ -1,0 +1,62 @@
+当前默认配置：第二轮优化后的 8 卡 / 132 步独立 profiling
+原始 run：/cache/lingbot/profiling/round3_profile_20261016_195822/profile_132
+本文件只使用此 run 新采集的 8 rank × 4 active step。
+
+Host 阶段均值（秒/步，采集窗口内）
+  ProfilerStep                   3.420470
+  train.forward                 1.158351
+  train.backward                1.117926
+  train.teachers                0.549339
+  train.optimizer               0.401837
+  train.clip_grad               0.082029
+  train.scalar_reads            0.042941
+  train.data_wait               0.000776
+  train.h2d                     0.001059
+
+嵌套细分（不能与上述父阶段重复相加）
+  teacher.video                 0.212289
+  teacher.current_depth         0.170139
+  teacher.future_depth          0.166563
+  teacher.geometry_recover      0.144389  已包含在两个 depth scope 内
+  teacher.geometry_scipy        0.129281  CPU 几何拟合，属于 geometry_recover 的子范围
+  DistributedMuon.step          0.328205
+  Muon Newton-Schulz            0.145539  属于 Muon.step 的子范围
+  AdamW.step                    0.068590
+  model.moe_experts forward     0.067195  不含全部 routing、backward 或 FSDP 参数通信
+
+同步解释
+8 rank 平均 CPU 同步区间 union：0.329747 秒/步。
+其中 0.281998 秒与设备执行重叠，0.124134 秒与 HCCL 重叠，只有 0.047749 秒位于
+没有设备 kernel 的区间。这里都是时间交集，并非可删除时间；与 FSDP exposed communication
+不能重复相加。异步 HCCL 的设备流依赖不要求 CPU 阻塞，因此 CPU 同步 union 也不能代表全部
+通信等待。通信分类已核对 COMMUNICATION/HCCL core 及 hcom/hccl name/type。
+
+rank0 逐算子复核（4 步总量归一为每步；其他 rank 的完整 phase 均值见 JSON）
+aten::_local_scalar_dense 共 2976 次/步，但次数并不等于设备回读次数。
+  forward（不含 MoE experts 子范围）1417 次/步，host inclusive 0.120215 秒/步。
+  Muon                               619 次/步，host inclusive 0.000858 秒/步。
+  AdamW                              752 次/步，host inclusive 0.000588 秒/步。
+  MoE experts                         36 次/步，host inclusive 0.000056 秒/步。
+  显式 loss 标量读取                    7 次/步，host inclusive 0.042820 秒/步。
+Muon/AdamW 的大量便宜 scalar 主要是参数更新中的 CPU 常量读取，不是成百上千次昂贵 D2H。
+forward 的 runtime scalar 同步确实值得继续优化；已读取源码中的视觉网格/位置编码路径以及
+py-spy 样本与此方向一致，但未启用 native stack，不能把全部时间精确指认到某一 Python 行。
+
+rank0 teacher.video：16 次 aten::copy_ 内 runtime stream synchronize / 4 步，即 4 次/步，
+其 host duration 共 0.141986 秒/步；同 scope 的 scalar read 仅约 0.000135 秒/步。
+因此这里不是 .item() 热点。大部分同步期间设备仍有工作，可能是在等待此前提交的运算。
+可排查 video 的常量/元数据 copy 和异步准备，但不能把 0.142 秒直接当作可实现加速。
+
+结论边界
+- 数据读取在本窗口未形成明显阻塞；不能据此断言完整 epoch 永远无 I/O 波动。
+- 几何拟合、Muon 与 forward 标量/形状处理都有明确改进空间；几何拟合并非本轮最大阶段。
+- grouped-MoE 专家 forward 本身未再呈现第一轮那类巨大 Python 同步热点。
+- MoE 的整体影响仍包括 routing/backward 和参数量所造成的 FSDP 通信，不可由一个 experts
+  forward range 推出“整个 MoE 只占 2%”。EP=1 无专家 all-to-all 也不代表没有 MoE 参数通信。
+- 当前 host 绝对时间含 profiling 观测开销，生产速度使用同一 run 的无采集窗口。
+
+机器可读依据
+  attribution_scope_summary.json：8 rank phase 与 sync union、设备时间交集。
+  attribution_rank0.json ... attribution_rank7.json：逐 rank 完整数字。
+  attribution_scalar_rank0.json：标量操作与 runtime synchronize 的父算子。
+  attribution_scope_audit.txt：范围设计与口径。

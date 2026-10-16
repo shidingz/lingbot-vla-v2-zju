@@ -13,6 +13,7 @@ import csv
 import json
 from pathlib import Path
 import statistics
+from concurrent.futures import ProcessPoolExecutor
 
 import ijson
 
@@ -52,7 +53,9 @@ def events(path):
     with path.open("rb") as stream:
         first = stream.read(1024).lstrip()[:1]
         stream.seek(0)
-        yield from ijson.items(stream, "item" if first == b"[" else "traceEvents.item", use_float=True)
+        # Preserve unsigned-64 sentinel IDs (18446744073709551615); the
+        # use_float=True backend rejects those before we can discard them.
+        yield from ijson.items(stream, "item" if first == b"[" else "traceEvents.item")
 
 
 def custom_scope(name):
@@ -67,7 +70,7 @@ def sync_kind(name):
         return "scalar_device_read"
     if name == "aten::item":
         return "scalar_item"
-    if name == "c10d::wait_tensor" or "wait_work" in lower:
+    if "wait_tensor" in lower or "wait_work" in lower:
         return "distributed_wait"
     return None
 
@@ -124,7 +127,9 @@ def analyze(output):
         for row in csv.DictReader(stream):
             start = float(row["Start Time(us)"])
             interval = (start, start + float(row["Duration(us)"]))
-            if row.get("Accelerator Core", "") == "HCCL" or "hccl" in row.get("Name", "").lower():
+            core = row.get("Accelerator Core", "").upper()
+            kernel_name, kernel_type = row.get("Name", "").lower(), row.get("Type", "").lower()
+            if core in {"COMMUNICATION", "HCCL"} or "hccl" in kernel_name or kernel_name.startswith("hcom") or kernel_type.startswith(("hcom", "hccl")):
                 hccl.append(interval)
             else:
                 compute.append(interval)
@@ -180,10 +185,13 @@ def analyze(output):
                 "device_uncovered_overlap_s_per_step": (total - active) / nsteps / 1e6,
                 "hccl_overlap_s_per_step": duration(intersection(intervals, hccl)) / nsteps / 1e6}
 
+    train_scope_union = intersection([(s["start"], s["end"]) for s in scopes if s["name"].startswith("train.")], step_intervals)
     return {
         "output": str(output), "captured_steps": nsteps,
         "step_names": [s["name"] for s in steps],
         "host_step_s": step_us / nsteps / 1e6,
+        "train_scope_covered_wall_s_per_step": duration(train_scope_union) / nsteps / 1e6,
+        "outside_train_scopes_wall_s_per_step": (step_us - duration(train_scope_union)) / nsteps / 1e6,
         "trace_categories": dict(categories),
         "phases": dict(sorted(phase_stats.items(), key=lambda x: x[1]["host_inclusive_s_per_step"], reverse=True)),
         "sync_union": summarize_sync(all_sync),
@@ -198,10 +206,15 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("run", type=Path)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--expected-ranks", type=int, default=8)
+    parser.add_argument("--expected-steps", type=int, default=4)
+    parser.add_argument("--workers", type=int, default=4)
     args = parser.parse_args()
     paths = sorted((args.run / "trace").glob("rank*/*/ASCEND_PROFILER_OUTPUT"))
     if not paths:
         raise SystemExit("No new trace outputs found")
+    if len(paths) != args.expected_ranks:
+        raise SystemExit(f"Expected {args.expected_ranks} rank outputs, found {len(paths)}")
     result = {"run": str(args.run.resolve()), "ranks": {}, "interpretation": [
         "Host ranges are inclusive and overlap parent ranges; do not sum teachers+subranges or optimizer+NewtonSchulz.",
         "Host runtime wait is often time spent draining earlier device work, not independent CPU compute cost.",
@@ -212,10 +225,15 @@ def main():
         "operator_csv_device_total_inclusive is summed correlated device work, may overlap and is not wall time or an additive fraction.",
         "AscendCL runtime scopes use a synthetic PID; same OS thread ID maps them to Python scopes in each rank trace.",
     ]}
-    for path in paths:
-        rank = path.parents[1].name
-        result["ranks"][rank] = analyze(path)
-        print(rank, result["ranks"][rank]["host_step_s"], flush=True)
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    with ProcessPoolExecutor(max_workers=args.workers) as pool:
+        for path, rank_result in zip(paths, pool.map(analyze, paths)):
+            rank = path.parents[1].name
+            result["ranks"][rank] = rank_result
+            if result["ranks"][rank]["captured_steps"] != args.expected_steps:
+                raise ValueError(f"Unexpected captured step count for {rank}")
+            (args.output.parent / f"attribution_{rank}.json").write_text(json.dumps(result["ranks"][rank], ensure_ascii=False, indent=2) + "\n")
+            print(rank, result["ranks"][rank]["host_step_s"], flush=True)
     names = set.intersection(*(set(r["phases"]) for r in result["ranks"].values()))
     result["common_phases_across_ranks"] = {
         name: {"mean_host_s_per_step": statistics.mean(vals), "min_host_s_per_step": min(vals), "max_host_s_per_step": max(vals)}

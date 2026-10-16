@@ -1,0 +1,379 @@
+{
+  "output": "/cache/lingbot/profiling/speed_round3_20261016/default_profile/run_case/trace/rank5/notebook-1412a60d-0f41-4869-980d-933b2766338c_371883_20261016131130060_ascend_pt/ASCEND_PROFILER_OUTPUT",
+  "captured_steps": 4,
+  "step_names": [
+    "ProfilerStep#120",
+    "ProfilerStep#121",
+    "ProfilerStep#122",
+    "ProfilerStep#123"
+  ],
+  "host_step_s": 3.242913375,
+  "train_scope_covered_wall_s_per_step": 3.1706265,
+  "outside_train_scopes_wall_s_per_step": 0.072286875,
+  "trace_categories": {
+    "cpu_op": 777988,
+    "dequeue": 141267,
+    "async_task_queue": 282534,
+    "enqueue": 141267,
+    "": 884159,
+    "fwdbwd": 50760,
+    "HostToDevice": 310176,
+    "async_npu": 310176
+  },
+  "phases": {
+    "train.forward": {
+      "calls": 4,
+      "host_inclusive_s_per_step": 1.232077375,
+      "host_excluding_nested_custom_scopes_s_per_step": 1.163533625,
+      "contained_sync_union_s_per_step": 0.220663375,
+      "host_step_fraction": 0.3799291663163836,
+      "operator_csv_host_self_s_per_step": 0.272636495,
+      "operator_csv_device_total_inclusive_s_per_step": 1.1619505665000147,
+      "operator_csv_device_self_s_per_step": 0.0
+    },
+    "train.backward": {
+      "calls": 4,
+      "host_inclusive_s_per_step": 1.1119215,
+      "host_excluding_nested_custom_scopes_s_per_step": 1.1119215,
+      "contained_sync_union_s_per_step": 0.0,
+      "host_step_fraction": 0.3428773363395808,
+      "operator_csv_host_self_s_per_step": 0.12348197,
+      "operator_csv_device_total_inclusive_s_per_step": 1.4570675370000106,
+      "operator_csv_device_self_s_per_step": 0.0
+    },
+    "train.teachers": {
+      "calls": 4,
+      "host_inclusive_s_per_step": 0.403343875,
+      "host_excluding_nested_custom_scopes_s_per_step": 0.0003355625,
+      "contained_sync_union_s_per_step": 0.0025070625,
+      "host_step_fraction": 0.12437701176646447,
+      "operator_csv_host_self_s_per_step": 0.00033558249999999997,
+      "operator_csv_device_total_inclusive_s_per_step": 0.33383317999999995,
+      "operator_csv_device_self_s_per_step": 0.0
+    },
+    "train.optimizer": {
+      "calls": 4,
+      "host_inclusive_s_per_step": 0.286641125,
+      "host_excluding_nested_custom_scopes_s_per_step": 0.0054343125,
+      "contained_sync_union_s_per_step": 0.00309625,
+      "host_step_fraction": 0.0883900036336925,
+      "operator_csv_host_self_s_per_step": 0.000355525,
+      "operator_csv_device_total_inclusive_s_per_step": 0.2873962729999992,
+      "operator_csv_device_self_s_per_step": 0.0
+    },
+    "Optimizer.step#DistributedMuon.step": {
+      "calls": 4,
+      "host_inclusive_s_per_step": 0.214543375,
+      "host_excluding_nested_custom_scopes_s_per_step": 0.1617285,
+      "contained_sync_union_s_per_step": 0.0017831875,
+      "host_step_fraction": 0.0661576028067663,
+      "operator_csv_host_self_s_per_step": 0.0588760775,
+      "operator_csv_device_total_inclusive_s_per_step": 0.28536404399999954,
+      "operator_csv_device_self_s_per_step": 0.0
+    },
+    "teacher.current_depth": {
+      "calls": 4,
+      "host_inclusive_s_per_step": 0.1670493125,
+      "host_excluding_nested_custom_scopes_s_per_step": 0.0928450625,
+      "contained_sync_union_s_per_step": 0.00100475,
+      "host_step_fraction": 0.051512110618742626,
+      "operator_csv_host_self_s_per_step": 0.0323874225,
+      "operator_csv_device_total_inclusive_s_per_step": 0.06506355049999997,
+      "operator_csv_device_self_s_per_step": 0.0
+    },
+    "teacher.future_depth": {
+      "calls": 4,
+      "host_inclusive_s_per_step": 0.1612138125,
+      "host_excluding_nested_custom_scopes_s_per_step": 0.0889910625,
+      "contained_sync_union_s_per_step": 0.000740625,
+      "host_step_fraction": 0.0497126484299014,
+      "operator_csv_host_self_s_per_step": 0.03119635,
+      "operator_csv_device_total_inclusive_s_per_step": 0.06505104049999995,
+      "operator_csv_device_self_s_per_step": 0.0
+    },
+    "teacher.geometry_recover": {
+      "calls": 8,
+      "host_inclusive_s_per_step": 0.146167625,
+      "host_excluding_nested_custom_scopes_s_per_step": 0.0162451875,
+      "contained_sync_union_s_per_step": 0.00059025,
+      "host_step_fraction": 0.04507293538175376,
+      "operator_csv_host_self_s_per_step": 0.012199895,
+      "operator_csv_device_total_inclusive_s_per_step": 0.0005715455,
+      "operator_csv_device_self_s_per_step": 0.0
+    },
+    "teacher.geometry_scipy": {
+      "calls": 96,
+      "host_inclusive_s_per_step": 0.1299224375,
+      "host_excluding_nested_custom_scopes_s_per_step": 0.1299224375,
+      "contained_sync_union_s_per_step": 0.0,
+      "host_step_fraction": 0.04006349306200632,
+      "operator_csv_host_self_s_per_step": 0.12992232999999995,
+      "operator_csv_device_total_inclusive_s_per_step": 0.0,
+      "operator_csv_device_self_s_per_step": 0.0
+    },
+    "train.clip_grad": {
+      "calls": 4,
+      "host_inclusive_s_per_step": 0.0823074375,
+      "host_excluding_nested_custom_scopes_s_per_step": 0.0823074375,
+      "contained_sync_union_s_per_step": 3.875e-05,
+      "host_step_fraction": 0.025380708018449615,
+      "operator_csv_host_self_s_per_step": 0.0315537875,
+      "operator_csv_device_total_inclusive_s_per_step": 0.006836336,
+      "operator_csv_device_self_s_per_step": 0.0
+    },
+    "teacher.video": {
+      "calls": 4,
+      "host_inclusive_s_per_step": 0.0747451875,
+      "host_excluding_nested_custom_scopes_s_per_step": 0.0744573125,
+      "contained_sync_union_s_per_step": 0.0007616875,
+      "host_step_fraction": 0.02304877708921226,
+      "operator_csv_host_self_s_per_step": 0.02542932,
+      "operator_csv_device_total_inclusive_s_per_step": 0.20371858899999984,
+      "operator_csv_device_self_s_per_step": 0.0
+    },
+    "model.moe_experts": {
+      "calls": 144,
+      "host_inclusive_s_per_step": 0.06854375,
+      "host_excluding_nested_custom_scopes_s_per_step": 0.06854375,
+      "contained_sync_union_s_per_step": 0.0001266875,
+      "host_step_fraction": 0.021136472694094088,
+      "operator_csv_host_self_s_per_step": 0.01755862249999999,
+      "operator_csv_device_total_inclusive_s_per_step": 0.023567796000000012,
+      "operator_csv_device_self_s_per_step": 0.0
+    },
+    "Optimizer.step#AdamW.step": {
+      "calls": 4,
+      "host_inclusive_s_per_step": 0.0666634375,
+      "host_excluding_nested_custom_scopes_s_per_step": 0.0666634375,
+      "contained_sync_union_s_per_step": 0.0013130625,
+      "host_step_fraction": 0.020556650699928115,
+      "operator_csv_host_self_s_per_step": 0.01635751,
+      "operator_csv_device_total_inclusive_s_per_step": 0.002032228999999999,
+      "operator_csv_device_self_s_per_step": 0.0
+    },
+    "optimizer.muon_newton_schulz": {
+      "calls": 204,
+      "host_inclusive_s_per_step": 0.052814875,
+      "host_excluding_nested_custom_scopes_s_per_step": 0.052814875,
+      "contained_sync_union_s_per_step": 0.0,
+      "host_step_fraction": 0.01628624292192202,
+      "operator_csv_host_self_s_per_step": 0.022620919999999992,
+      "operator_csv_device_total_inclusive_s_per_step": 0.12501659750000008,
+      "operator_csv_device_self_s_per_step": 0.0
+    },
+    "train.scalar_reads": {
+      "calls": 4,
+      "host_inclusive_s_per_step": 0.0452448125,
+      "host_excluding_nested_custom_scopes_s_per_step": 0.0452448125,
+      "contained_sync_union_s_per_step": 0.04510275,
+      "host_step_fraction": 0.013951902893490024,
+      "operator_csv_host_self_s_per_step": 0.00014193000000000002,
+      "operator_csv_device_total_inclusive_s_per_step": 0.0,
+      "operator_csv_device_self_s_per_step": 0.0
+    },
+    "train.post_step_sync": {
+      "calls": 4,
+      "host_inclusive_s_per_step": 0.004727875,
+      "host_excluding_nested_custom_scopes_s_per_step": 0.004727875,
+      "contained_sync_union_s_per_step": 0.00454875,
+      "host_step_fraction": 0.0014579097414219398,
+      "operator_csv_host_self_s_per_step": 0.0047278475,
+      "operator_csv_device_total_inclusive_s_per_step": 0.0,
+      "operator_csv_device_self_s_per_step": 0.0
+    },
+    "train.metrics_reduce": {
+      "calls": 4,
+      "host_inclusive_s_per_step": 0.002437875,
+      "host_excluding_nested_custom_scopes_s_per_step": 0.002437875,
+      "contained_sync_union_s_per_step": 0.0014256875,
+      "host_step_fraction": 0.0007517545854890435,
+      "operator_csv_host_self_s_per_step": 0.00036565,
+      "operator_csv_device_total_inclusive_s_per_step": 0.0014762755000000002,
+      "operator_csv_device_self_s_per_step": 0.0
+    },
+    "train.h2d": {
+      "calls": 4,
+      "host_inclusive_s_per_step": 0.0009900625,
+      "host_excluding_nested_custom_scopes_s_per_step": 0.0009900625,
+      "contained_sync_union_s_per_step": 0.0,
+      "host_step_fraction": 0.00030530032273834635,
+      "operator_csv_host_self_s_per_step": 0.0005094825,
+      "operator_csv_device_total_inclusive_s_per_step": 0.003456265,
+      "operator_csv_device_self_s_per_step": 0.0
+    },
+    "train.data_wait": {
+      "calls": 4,
+      "host_inclusive_s_per_step": 0.000728,
+      "host_excluding_nested_custom_scopes_s_per_step": 0.000728,
+      "contained_sync_union_s_per_step": 0.0,
+      "host_step_fraction": 0.00022448949935333995,
+      "operator_csv_host_self_s_per_step": 0.0003034475,
+      "operator_csv_device_total_inclusive_s_per_step": 1.1000000000000002e-07,
+      "operator_csv_device_self_s_per_step": 0.0
+    },
+    "teacher.rgb_normalize": {
+      "calls": 16,
+      "host_inclusive_s_per_step": 0.00054725,
+      "host_excluding_nested_custom_scopes_s_per_step": 0.00054725,
+      "contained_sync_union_s_per_step": 1.85e-05,
+      "host_step_fraction": 0.00016875258038614739,
+      "operator_csv_host_self_s_per_step": 0.0003299000000000001,
+      "operator_csv_device_total_inclusive_s_per_step": 6.677549999999999e-05,
+      "operator_csv_device_self_s_per_step": 0.0
+    },
+    "train.pre_step_sync": {
+      "calls": 4,
+      "host_inclusive_s_per_step": 0.0002065625,
+      "host_excluding_nested_custom_scopes_s_per_step": 0.0002065625,
+      "contained_sync_union_s_per_step": 9.9375e-05,
+      "host_step_fraction": 6.369658270628335e-05,
+      "operator_csv_host_self_s_per_step": 0.00020660999999999998,
+      "operator_csv_device_total_inclusive_s_per_step": 0.0,
+      "operator_csv_device_self_s_per_step": 0.0
+    }
+  },
+  "sync_union": {
+    "host_union_s_per_step": 0.3430316875,
+    "device_active_overlap_s_per_step": 0.334951,
+    "device_uncovered_overlap_s_per_step": 0.0080806875,
+    "hccl_overlap_s_per_step": 0.188896125
+  },
+  "sync_by_innermost_scope": {
+    "train.forward": {
+      "host_union_s_per_step": 0.2205366875,
+      "device_active_overlap_s_per_step": 0.21857,
+      "device_uncovered_overlap_s_per_step": 0.0019666875,
+      "hccl_overlap_s_per_step": 0.097231875
+    },
+    "<outside_instrumented_scope>": {
+      "host_union_s_per_step": 0.0655496875,
+      "device_active_overlap_s_per_step": 0.06522725,
+      "device_uncovered_overlap_s_per_step": 0.0003224375,
+      "hccl_overlap_s_per_step": 0.04385125
+    },
+    "train.scalar_reads": {
+      "host_union_s_per_step": 0.04510275,
+      "device_active_overlap_s_per_step": 0.0449739375,
+      "device_uncovered_overlap_s_per_step": 0.0001288125,
+      "hccl_overlap_s_per_step": 0.044873125
+    },
+    "train.post_step_sync": {
+      "host_union_s_per_step": 0.00454875,
+      "device_active_overlap_s_per_step": 4.08125e-05,
+      "device_uncovered_overlap_s_per_step": 0.0045079375,
+      "hccl_overlap_s_per_step": 4.00625e-05
+    },
+    "Optimizer.step#DistributedMuon.step": {
+      "host_union_s_per_step": 0.0017831875,
+      "device_active_overlap_s_per_step": 0.001718375,
+      "device_uncovered_overlap_s_per_step": 6.48125e-05,
+      "hccl_overlap_s_per_step": 0.0010819375
+    },
+    "train.metrics_reduce": {
+      "host_union_s_per_step": 0.0014256875,
+      "device_active_overlap_s_per_step": 0.0012478125,
+      "device_uncovered_overlap_s_per_step": 0.000177875,
+      "hccl_overlap_s_per_step": 0.0012478125
+    },
+    "Optimizer.step#AdamW.step": {
+      "host_union_s_per_step": 0.0013130625,
+      "device_active_overlap_s_per_step": 0.001309875,
+      "device_uncovered_overlap_s_per_step": 3.1875e-06,
+      "hccl_overlap_s_per_step": 0.000440375
+    },
+    "teacher.video": {
+      "host_union_s_per_step": 0.0007526875,
+      "device_active_overlap_s_per_step": 0.000673,
+      "device_uncovered_overlap_s_per_step": 7.96875e-05,
+      "hccl_overlap_s_per_step": 0.0
+    },
+    "teacher.geometry_recover": {
+      "host_union_s_per_step": 0.00059025,
+      "device_active_overlap_s_per_step": 0.00033825,
+      "device_uncovered_overlap_s_per_step": 0.000252,
+      "hccl_overlap_s_per_step": 0.0
+    },
+    "teacher.future_depth": {
+      "host_union_s_per_step": 0.0005845625,
+      "device_active_overlap_s_per_step": 0.000384125,
+      "device_uncovered_overlap_s_per_step": 0.0002004375,
+      "hccl_overlap_s_per_step": 0.0
+    },
+    "teacher.current_depth": {
+      "host_union_s_per_step": 0.0005610625,
+      "device_active_overlap_s_per_step": 0.0003371875,
+      "device_uncovered_overlap_s_per_step": 0.000223875,
+      "hccl_overlap_s_per_step": 0.0
+    },
+    "model.moe_experts": {
+      "host_union_s_per_step": 0.0001266875,
+      "device_active_overlap_s_per_step": 0.0001258125,
+      "device_uncovered_overlap_s_per_step": 8.75e-07,
+      "hccl_overlap_s_per_step": 0.0001258125
+    },
+    "train.pre_step_sync": {
+      "host_union_s_per_step": 9.9375e-05,
+      "device_active_overlap_s_per_step": 0.0,
+      "device_uncovered_overlap_s_per_step": 9.9375e-05,
+      "hccl_overlap_s_per_step": 0.0
+    },
+    "train.clip_grad": {
+      "host_union_s_per_step": 3.875e-05,
+      "device_active_overlap_s_per_step": 3.875e-06,
+      "device_uncovered_overlap_s_per_step": 3.4875e-05,
+      "hccl_overlap_s_per_step": 3.875e-06
+    },
+    "teacher.rgb_normalize": {
+      "host_union_s_per_step": 1.85e-05,
+      "device_active_overlap_s_per_step": 6.875e-07,
+      "device_uncovered_overlap_s_per_step": 1.78125e-05,
+      "hccl_overlap_s_per_step": 0.0
+    }
+  },
+  "sync_by_operator": {
+    "AscendCL@aclrtSynchronizeStream": {
+      "calls": 368,
+      "host_union_s_per_step": 0.21815625,
+      "device_active_overlap_s_per_step": 0.2168034375,
+      "device_uncovered_overlap_s_per_step": 0.0013528125,
+      "hccl_overlap_s_per_step": 0.0972690625
+    },
+    "aten::item": {
+      "calls": 9348,
+      "host_union_s_per_step": 0.1199493125,
+      "device_active_overlap_s_per_step": 0.1179566875,
+      "device_uncovered_overlap_s_per_step": 0.001992625,
+      "hccl_overlap_s_per_step": 0.091523375
+    },
+    "aten::_local_scalar_dense": {
+      "calls": 9348,
+      "host_union_s_per_step": 0.11660525,
+      "device_active_overlap_s_per_step": 0.115289375,
+      "device_uncovered_overlap_s_per_step": 0.001315875,
+      "hccl_overlap_s_per_step": 0.0897926875
+    },
+    "AscendCL@aclrtSynchronizeStreamWithTimeout": {
+      "calls": 188,
+      "host_union_s_per_step": 0.1058785,
+      "device_active_overlap_s_per_step": 0.1055915,
+      "device_uncovered_overlap_s_per_step": 0.000287,
+      "hccl_overlap_s_per_step": 0.087402
+    },
+    "AscendCL@aclrtSynchronizeDeviceWithTimeout": {
+      "calls": 9,
+      "host_union_s_per_step": 0.004648125,
+      "device_active_overlap_s_per_step": 4.08125e-05,
+      "device_uncovered_overlap_s_per_step": 0.0046073125,
+      "hccl_overlap_s_per_step": 4.00625e-05
+    },
+    "_c10d_functional::wait_tensor": {
+      "calls": 8,
+      "host_union_s_per_step": 5.0125e-05,
+      "device_active_overlap_s_per_step": 1.5625e-05,
+      "device_uncovered_overlap_s_per_step": 3.45e-05,
+      "hccl_overlap_s_per_step": 0.0
+    }
+  },
+  "kernel_clock_overlap_verified": true,
+  "memcpy_device_union_s_per_step": 0.0
+}

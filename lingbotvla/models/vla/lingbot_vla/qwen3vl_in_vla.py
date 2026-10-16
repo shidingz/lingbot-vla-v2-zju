@@ -1,3 +1,4 @@
+import os
 import torch
 from torch import nn
 import torch.nn.functional as F
@@ -259,6 +260,10 @@ class Qwen3VLForConditionalGeneration(_Qwen3VLForConditionalGeneration, Generati
 
 @torch.compiler.disable
 def preprcess_grid_thw(self, grid_thw: torch.Tensor):
+    device = grid_thw.device
+    host_metadata = device.type == "npu" and os.environ.get("LINGBOT_HOST_METADATA", "0") == "1"
+    if host_metadata:
+        grid_thw = grid_thw.cpu()
     rotary_pos_emb = self.rot_pos_emb(grid_thw)
 
     seq_len = int(torch.prod(grid_thw, dim=1).sum().item())
@@ -273,7 +278,7 @@ def preprcess_grid_thw(self, grid_thw: torch.Tensor):
     cu_seqlens = F.pad(cu_seqlens, (1, 0), value=0)
     split_sizes = (grid_thw.prod(-1) // self.spatial_merge_size**2).tolist()
     max_seqlen = int((cu_seqlens[1:] - cu_seqlens[:-1]).max().item())
-    return None, position_embeddings, cu_seqlens, split_sizes, max_seqlen
+    return None, position_embeddings, cu_seqlens.to(device), split_sizes, max_seqlen
 
 
 def forward_without_grid_thw(
@@ -288,9 +293,11 @@ def forward_without_grid_thw(
 ) -> torch.Tensor:
     hidden_states = self.patch_embed(hidden_states)
 
-    if pos_embeds is None or position_embeddings is None or cu_seqlens is None or max_seqlen is None:
+    if position_embeddings is None or cu_seqlens is None or max_seqlen is None:
         pos_embeds, position_embeddings, cu_seqlens, _, max_seqlen = self.preprcess_grid_thw(grid_thw)
     if pos_embeds is None:
+        if grid_thw.device.type == "npu" and os.environ.get("LINGBOT_HOST_METADATA", "0") == "1":
+            grid_thw = grid_thw.cpu()
         pos_embeds = self.fast_pos_embed_interpolate(grid_thw)
 
     hidden_states = hidden_states + pos_embeds

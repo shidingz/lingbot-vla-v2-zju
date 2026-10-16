@@ -1,0 +1,151 @@
+{
+  "per_rank": {
+    "rank0": {
+      "steps": [
+        "120",
+        "121",
+        "122",
+        "123"
+      ],
+      "Computing": 1.4377662399999853,
+      "Communication(Not Overlapped)": 1.1721400350001074,
+      "Overlapped": 0.46307611999989257,
+      "Communication": 1.635216155,
+      "Free": 0.8703314700003175,
+      "Stage": 3.4802376875,
+      "Bubble": 0.0,
+      "Communication(Not Overlapped and Exclude Receive)": 1.1721400350001074,
+      "Preparing": 0.0080841875
+    },
+    "rank1": {
+      "steps": [
+        "120",
+        "121",
+        "122",
+        "123"
+      ],
+      "Computing": 1.4370977649999885,
+      "Communication(Not Overlapped)": 0.9914009550000807,
+      "Overlapped": 0.4084349599999194,
+      "Communication": 1.3998359150000004,
+      "Free": 0.9849608850003331,
+      "Stage": 3.4143903125,
+      "Bubble": 0.0,
+      "Communication(Not Overlapped and Exclude Receive)": 0.9914009550000807,
+      "Preparing": 0.0081684375
+    },
+    "rank2": {
+      "steps": [
+        "120",
+        "121",
+        "122",
+        "123"
+      ],
+      "Computing": 1.4388728449999881,
+      "Communication(Not Overlapped)": 0.7613089600000491,
+      "Overlapped": 0.3249847999999508,
+      "Communication": 1.08629376,
+      "Free": 1.2083860400003295,
+      "Stage": 3.40950675,
+      "Bubble": 0.0,
+      "Communication(Not Overlapped and Exclude Receive)": 0.7613089600000491,
+      "Preparing": 0.007136625
+    },
+    "rank3": {
+      "steps": [
+        "120",
+        "121",
+        "122",
+        "123"
+      ],
+      "Computing": 1.4392955239999912,
+      "Communication(Not Overlapped)": 0.9996141920000781,
+      "Overlapped": 0.41163296999992205,
+      "Communication": 1.411247162,
+      "Free": 0.9687504290003428,
+      "Stage": 3.408437375,
+      "Bubble": 0.0,
+      "Communication(Not Overlapped and Exclude Receive)": 0.9996141920000781,
+      "Preparing": 0.0088399375
+    },
+    "rank4": {
+      "steps": [
+        "120",
+        "121",
+        "122",
+        "123"
+      ],
+      "Computing": 1.4424143549999848,
+      "Communication(Not Overlapped)": 0.90402156000007,
+      "Overlapped": 0.4124704849999304,
+      "Communication": 1.3164920450000002,
+      "Free": 1.060435970000315,
+      "Stage": 3.407745125,
+      "Bubble": 0.0,
+      "Communication(Not Overlapped and Exclude Receive)": 0.90402156000007,
+      "Preparing": 0.0107699375
+    },
+    "rank5": {
+      "steps": [
+        "120",
+        "121",
+        "122",
+        "123"
+      ],
+      "Computing": 1.440657743999991,
+      "Communication(Not Overlapped)": 0.7915265905000523,
+      "Overlapped": 0.3865595579999479,
+      "Communication": 1.1780861485,
+      "Free": 1.1757703965003299,
+      "Stage": 3.407959,
+      "Bubble": 0.0,
+      "Communication(Not Overlapped and Exclude Receive)": 0.7915265905000523,
+      "Preparing": 0.008305625
+    },
+    "rank6": {
+      "steps": [
+        "120",
+        "121",
+        "122",
+        "123"
+      ],
+      "Computing": 1.4404260649999958,
+      "Communication(Not Overlapped)": 1.1238980150000994,
+      "Overlapped": 0.4344093599999002,
+      "Communication": 1.5583073749999998,
+      "Free": 0.8426028300003162,
+      "Stage": 3.4077023125,
+      "Bubble": 0.0,
+      "Communication(Not Overlapped and Exclude Receive)": 1.1238980150000994,
+      "Preparing": 0.0107356875
+    },
+    "rank7": {
+      "steps": [
+        "120",
+        "121",
+        "122",
+        "123"
+      ],
+      "Computing": 1.4341618509999996,
+      "Communication(Not Overlapped)": 1.1768698765001115,
+      "Overlapped": 0.4869302339998883,
+      "Communication": 1.6638001104999998,
+      "Free": 0.7971808185003155,
+      "Stage": 3.409183375,
+      "Bubble": 0.0,
+      "Communication(Not Overlapped and Exclude Receive)": 1.1768698765001115,
+      "Preparing": 0.0086813125
+    }
+  },
+  "rank_mean_seconds": {
+    "Computing": 1.4388365486249906,
+    "Communication(Not Overlapped)": 0.990097523000081,
+    "Overlapped": 0.41606231087491896,
+    "Communication": 1.406159833875,
+    "Free": 0.9885523548753249,
+    "Stage": 3.4181452421875,
+    "Bubble": 0.0,
+    "Communication(Not Overlapped and Exclude Receive)": 0.990097523000081,
+    "Preparing": 0.00884021875
+  }
+}

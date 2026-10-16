@@ -57,6 +57,7 @@ from .flex_attention import build_block_mask, flex_attention_with_block_mask
 import time
 
 from lingbotvla.models.loader import LingBotVLAWeightLoader
+from lingbotvla.ops.rms_norm import qwen_rms_norm
 from lingbotvla.models.vla.vision_models.align_heads.depth_head import TaskTokenDepthHead
 from lingbotvla.models.vla.lingbot_vla.qwen2_action_expert import (
     Qwen2ForCausalLM,
@@ -228,11 +229,7 @@ class AdaRMSNorm(nn.Module):
 
     def forward(self, hidden_states, cond):
         input_dtype = hidden_states.dtype
-        hidden_states = hidden_states.to(torch.float32)
-        variance = hidden_states.pow(2).mean(-1, keepdim=True)
-        hidden_states = hidden_states * torch.rsqrt(variance + self.variance_epsilon)
-
-        hidden_states = self.weight * hidden_states
+        hidden_states = qwen_rms_norm(hidden_states.float(), self.weight, self.variance_epsilon)
         # cond = cond.to(torch.float32)
         gamma = self.gamma(cond).unsqueeze(1)  # [B, 1, H]
         beta  = self.beta(cond).unsqueeze(1)   # [B, 1, H]
@@ -258,11 +255,7 @@ class FixAdaRMSNorm(nn.Module):
 
     def forward(self, hidden_states, cond):
         input_dtype = hidden_states.dtype
-        hidden_states = hidden_states.to(torch.float32)
-        variance = hidden_states.pow(2).mean(-1, keepdim=True)
-        hidden_states = hidden_states * torch.rsqrt(variance + self.variance_epsilon)
-
-        hidden_states = self.weight * hidden_states
+        hidden_states = qwen_rms_norm(hidden_states.float(), self.weight, self.variance_epsilon)
         cond = cond.to(torch.float32)
         gamma = self.gamma(cond).unsqueeze(1)  # [B, 1, H]
         beta  = self.beta(cond).unsqueeze(1)   # [B, 1, H]

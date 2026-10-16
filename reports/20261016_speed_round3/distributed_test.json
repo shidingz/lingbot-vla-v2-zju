@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "ranks": 2,
+  "steps": 4,
+  "max_parameter_error_rank0": 0.0,
+  "covers": [
+    "Shard(0) 3D experts",
+    "unchanged 2D all-gather",
+    "missing gradients",
+    "old checkpoint load",
+    "FSDP2 two-stage prefetch forward/backward"
+  ]
+}

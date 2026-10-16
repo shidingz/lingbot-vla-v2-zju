@@ -68,6 +68,7 @@ def main():
         "snapshot_hash_check": snapshot,
         "limits": [
             "Profiler measurements include collection overhead; their absolute durations cannot be substituted for unprofiled step durations.",
+            "The capture-window logged-time increase is a within-run comparison, not an independent A/B attribution of profiler cost; it excludes trace export after update 124 and other outside-timer work.",
             "CPU scopes and kernel totals are asynchronous/inclusive and must not be added into wall time.",
             "Device communication elapsed includes dependencies and cannot by itself prove a network bandwidth bottleneck.",
             "All steps from 120 onward are excluded from ordinary throughput; trace export after update 124 may delay later updates.",

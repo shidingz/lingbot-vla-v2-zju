@@ -341,7 +341,8 @@ def analyze_trace(path, nsteps, compute, communication, device_gaps):
         # Only retain a small subset. Device task events have their own CSV above.
         scope = name.startswith(("train.", "teacher.", "model.", "optim.", "Optimizer.step", "FullySharded", "FSDP", "round3.")) or category == "user_annotation"
         is_step = name.startswith("ProfilerStep#")
-        is_selected = bool(selected_pattern.search(name)) and category not in {"kernel", "Communication", "communication"}
+        host_category = any(term in category.lower() for term in ("cpu", "runtime", "ascendcl", "aclnn", "host", "python"))
+        is_selected = bool(selected_pattern.search(name)) and host_category
         if not (scope or is_step or is_selected):
             continue
         start, dur = ns(event["ts"]), ns(event["dur"])
@@ -428,19 +429,33 @@ def aggregate(results, csv_only):
 
 def collective_cross_rank_timing(results):
     groups = collections.defaultdict(dict)
+    offsets = {}
+    validation = {"contiguous_sequence_per_rank": True, "same_step_and_type_each_position": True,
+                  "all_positions_on_all_ranks": True}
     for rank, result in results.items():
+        numbers = [int(event["name"].rsplit("_", 2)[1]) for event in result["collective_events"]]
+        offset = min(numbers)
+        offsets[rank] = offset
+        if sorted(numbers) != list(range(offset, offset + len(numbers))):
+            validation["contiguous_sequence_per_rank"] = False
         for event in result["collective_events"]:
-            key = (event["step"], event["name"])
+            key = int(event["name"].rsplit("_", 2)[1]) - offset
             if rank in groups[key]:
-                raise ValueError(f"Duplicate collective name within rank/step: {rank} {key}")
+                raise ValueError(f"Duplicate rank-local collective sequence: {rank} {key}")
             groups[key][rank] = event
     common, incomplete = [], 0
-    for (step, name), events in groups.items():
+    for position, events in sorted(groups.items()):
         if len(events) != len(results):
             incomplete += 1
+            validation["all_positions_on_all_ranks"] = False
+            continue
+        if len({e["type"] for e in events.values()}) != 1 or len({e["step"] for e in events.values()}) != 1:
+            validation["same_step_and_type_each_position"] = False
             continue
         starts, ends = [e["start_ns"] for e in events.values()], [e["end_ns"] for e in events.values()]
-        common.append({"step": step, "name": name, "type": next(iter(events.values()))["type"],
+        common.append({"step": next(iter(events.values()))["step"], "normalized_position": position,
+                       "rank_names": {rank: e["name"] for rank, e in events.items()},
+                       "type": next(iter(events.values()))["type"],
                        "start_skew_ms": (max(starts) - min(starts)) / 1e6,
                        "end_skew_ms": (max(ends) - min(ends)) / 1e6,
                        "envelope_ms": (max(ends) - min(starts)) / 1e6,
@@ -449,15 +464,20 @@ def collective_cross_rank_timing(results):
                        "earliest_start_rank": min(events, key=lambda rank: events[rank]["start_ns"]),
                        "rank_durations_ms": {rank: e["duration_ms"] for rank, e in events.items()}})
     skew = [e["start_skew_ms"] for e in common]
-    return {"matching": "Exact (Step Id, kernel Name), only groups present on all captured ranks.",
+    end_skew = [e["end_skew_ms"] for e in common]
+    return {"status": "sequence_alignment_inference" if all(validation.values()) else "UNVALIDATED_DO_NOT_USE_FOR_ATTRIBUTION",
+            "matching": "Normalize each rank-local HCOM sequence by its first captured value; require contiguous numbering and identical collective type/step at every position. Logical identity is inferred from sequence, not guaranteed by a native global operation identifier.",
+            "rejected_matching": "Exact kernel Name is invalid across ranks: their profiler-local sequence offsets differ. Same Name can refer to different tensor sizes and different logical collectives.",
+            "sequence_offsets": offsets, "validation": validation,
             "matched_collectives": len(common), "incomplete_groups": incomplete,
             "start_skew_ms": {"median": percentile(skew, .5), "p90": percentile(skew, .9), "max": max(skew, default=0)},
+            "end_skew_ms": {"median": percentile(end_skew, .5), "p90": percentile(end_skew, .9), "max": max(end_skew, default=0)},
             "largest_start_skew": sorted(common, key=lambda e: e["start_skew_ms"], reverse=True)[:40],
             "by_type": {kind: {"count": len(sub), "mean_start_skew_ms": statistics.mean(e["start_skew_ms"] for e in sub),
                                "mean_last_start_to_last_end_ms": statistics.mean(e["last_start_to_last_end_ms"] for e in sub)}
                         for kind in sorted({e["type"] for e in common})
                         for sub in [[e for e in common if e["type"] == kind]]},
-            "limits": "Cross-device timestamps use profiler clock alignment. Arrival skew is evidence of rank timing imbalance, not exact blocked time; transfer may overlap arrivals. Last-start-to-last-end includes communication execution/synchronization and is not pure wire time. Never sum per-collective envelopes as elapsed step time."}
+            "limits": "Sequence identity is inferred and must be checked against communication group/payload before strong causal claims. Cross-device timestamps use profiler clock alignment. Arrival skew is not exact blocked time; transfer may overlap arrivals. Last-start-to-last-end includes communication execution/synchronization and is not pure wire time. Never sum per-collective envelopes as elapsed step time."}
 
 
 def self_test():
@@ -466,6 +486,18 @@ def self_test():
     assert intersect([(1, 5), (7, 10)], [(3, 8)]) == [(3, 5), (7, 8)]
     assert is_communication("hcom_allGather__2", "hcom_allGather", "COMMUNICATION")
     assert not is_communication("MatMul", "MatMul", "AI_CORE")
+    # HCOM names contain rank-local counters, not global operation identities.
+    test = {}
+    for rank, offset, delay in (("rank0", 6, 0), ("rank1", 8, 1000)):
+        test[rank] = {"collective_events": [
+            {"step": "120", "name": f"hcom_allGather__612_{offset + i}_1", "type": "hcom_allGather_",
+             "start_ns": 10000 * i + delay, "end_ns": 10000 * i + 5000,
+             "duration_ms": (5000 - delay) / 1e6} for i in range(2)]}
+    result = collective_cross_rank_timing(test)
+    assert result["matched_collectives"] == 2
+    assert result["sequence_offsets"] == {"rank0": 6, "rank1": 8}
+    assert result["start_skew_ms"]["max"] == .001
+    assert result["end_skew_ms"]["max"] == 0
 
 
 def main():

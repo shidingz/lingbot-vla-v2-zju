@@ -10,6 +10,15 @@ import numpy as np
 import matplotlib
 import einops
 from PIL import Image, ImageDraw
+from functools import lru_cache
+
+
+@lru_cache(maxsize=16)
+def _video_rgb_constants(device, dtype):
+    # Small immutable constants only; never cache teacher outputs or images.
+    mean = torch.tensor([0.485, 0.456, 0.406], device=device, dtype=dtype).view(1, 3, 1, 1)
+    std = torch.tensor([0.229, 0.224, 0.225], device=device, dtype=dtype).view(1, 3, 1, 1)
+    return mean, std
 
 _VISION_MODELS_DIR = Path(__file__).resolve().parent
 for _DEPTH_PACKAGE_DIR in (
@@ -375,8 +384,7 @@ def get_video_target(video_teacher, pil_images, future_pil_images, config, effec
     if futures.shape[-2:] != (input_size, input_size):
         futures = F.interpolate(futures, size=(input_size, input_size), mode="bilinear", align_corners=False)
 
-    mean = torch.tensor([0.485, 0.456, 0.406], device=device, dtype=current.dtype).view(1, 3, 1, 1)
-    std = torch.tensor([0.229, 0.224, 0.225], device=device, dtype=current.dtype).view(1, 3, 1, 1)
+    mean, std = _video_rgb_constants(device, current.dtype)
     current = (current - mean) / std
     futures = (futures - mean) / std
     futures = einops.rearrange(futures, "(b n) c h w -> b n c h w", n=num_future_frames)

@@ -4,6 +4,7 @@ import ast
 from collections import defaultdict
 import json
 from pathlib import Path
+import re
 
 
 HERE = Path(__file__).resolve().parent
@@ -43,6 +44,10 @@ def main():
         assert len(profiles) == 1, profiles
         profile = profiles[0]
         assert profile["type"] == "sampled" and profile["unit"] == "seconds"
+        log = (run / f"host_rank{rank}.log").read_text()
+        log_summary = re.findall(r"Samples: (\d+) Errors: (\d+)", log)
+        assert len(log_summary) == 1, log_summary
+        all_thread_samples, collection_errors = map(int, log_summary[0])
         stages, leaves, inclusive, stacks, selected = [defaultdict(float) for _ in range(5)]
         selected_names = {"recover_focal_shift", "solve_optimal_focal_shift", "batched_newton_schulz",
                           "_step_megabatch", "_step_megabatch_chunk", "get_depth_target",
@@ -76,6 +81,11 @@ def main():
         results[str(rank)] = dict(
             main_thread_name=profile["name"], total_threads=len(data["profiles"]),
             main_thread_samples=len(profile["samples"]), main_thread_sampled_seconds=total,
+            sampling_quality=dict(
+                total_thread_samples=all_thread_samples, failed_collection_cycles=collection_errors,
+                main_thread_retained_sample_fraction=len(profile["samples"])/(len(profile["samples"])+collection_errors),
+                quality_note="Nonblocking collection discarded failed cycles. This retention fraction is not compute utilization; nonrandom omissions may bias all conditional stack percentages.",
+            ),
             stage_samples=top(stages), top_leaf_samples=top(leaves),
             top_inclusive_frame_samples=top(inclusive),
             selected_function_inclusive_samples=top(selected),
@@ -91,6 +101,7 @@ def main():
                       "Phase labels are disjoint and derived from actual snapshot training scope source ranges.",
                       "Native extensions are not unwound: a Python frame may represent waiting on NPU, communication, or C/C++ work.",
                       "Nonblocking sampling may miss or produce inconsistent stacks; cross-check the native trace.",
+                      "Main-thread retained sample fractions are approximately 77%/81%; use this only as location evidence, not precise wall-time attribution.",
                   ])
     (HERE / "host_sampling_analysis.json").write_text(json.dumps(output, ensure_ascii=False, indent=2) + "\n")
     lines = ["Low-rate Python host stack sampling (20 Hz, 30 seconds, ranks 0/4)",
@@ -98,6 +109,8 @@ def main():
              f"Excluded training steps: {metadata['exclude_steps_inclusive']}", ""]
     for rank, data in results.items():
         lines.append(f"Rank {rank}: {data['main_thread_samples']} main-thread samples ({data['main_thread_sampled_seconds']:.3f}s weighted)")
+        quality = data["sampling_quality"]
+        lines.append(f"Collection quality: {quality['failed_collection_cycles']} failed cycles; {100*quality['main_thread_retained_sample_fraction']:.1f}% retained. Omission may be biased; this is not utilization.")
         lines.extend(f"  {row['location']}: {row['sample_fraction_pct']:.2f}%" for row in data["stage_samples"])
         lines.append("Top leaves:")
         lines.extend(f"  {row['sample_fraction_pct']:.2f}% {row['location']}" for row in data["top_leaf_samples"][:12])

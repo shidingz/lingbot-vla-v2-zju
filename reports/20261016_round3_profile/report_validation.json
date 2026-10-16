@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "pages": 2,
+  "relative_links_checked": 10,
+  "geometry": [
+    {
+      "page": 1,
+      "text_bottom_px": 985.0631905142714,
+      "page_height_px": 1122.5196850393702
+    },
+    {
+      "page": 2,
+      "text_bottom_px": 994.3631905142718,
+      "page_height_px": 1122.5196850393702
+    }
+  ],
+  "rendered_pdf": "/tmp/round3-profile-final.pdf",
+  "latest_communication_example_included": true,
+  "moe_fsdp_caveat_included": true
+}

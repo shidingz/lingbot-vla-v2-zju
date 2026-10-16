@@ -1,0 +1,125 @@
+{
+  "status": "completed",
+  "run": "/cache/lingbot/profiling/round3_profile_20261016_195822/profile_132",
+  "facts": {
+    "unprofiled_wall_s": 2.638888888888889,
+    "unprofiled_samples_s": 36.37894736842105,
+    "profiled_logged_s": 3.4581475853919983,
+    "capture_logged_time_increase_pct": 31.788662778560205,
+    "ai_core_sample_mean_pct_all8": 18.651785714285715,
+    "ai_vector_sample_mean_pct_all8": 27.767857142857142,
+    "hbm_occupancy_sample_mean_pct_all8": 92.0,
+    "official_stage_s": 3.4181452421875,
+    "official_device_categories": {
+      "Computing": {
+        "seconds": 1.4388365486249906,
+        "percent_of_stage": 42.09407285759989
+      },
+      "Communication(Not Overlapped)": {
+        "seconds": 0.990097523000081,
+        "percent_of_stage": 28.965928971656318
+      },
+      "Free": {
+        "seconds": 0.988552354875325,
+        "percent_of_stage": 28.92072410131654
+      }
+    },
+    "kernel_calls_per_step_rank_mean": 42602.25,
+    "noncommunication_kernel_under50us_pct": 88.03817158914477,
+    "noncommunication_kernel_median_us_rank_mean": 11.865,
+    "ai_vector_kernel_calls_per_step_rank_mean": 34686.125,
+    "gmm_kernel_duration_sum_s_per_step_rank_mean": 0.0139395311875,
+    "collectives_per_step": {
+      "all_gather": 174,
+      "reduce_scatter": 74,
+      "all_reduce": 6
+    },
+    "host_scope_mean_s_per_step": {
+      "Optimizer.step#AdamW.step": 0.06859046875,
+      "Optimizer.step#DistributedMuon.step": 0.3282050859375,
+      "model.moe_experts": 0.0671954609375,
+      "optimizer.muon_newton_schulz": 0.14553890625,
+      "teacher.current_depth": 0.1701393515625,
+      "teacher.future_depth": 0.166563140625,
+      "teacher.geometry_recover": 0.144388984375,
+      "teacher.geometry_scipy": 0.129280828125,
+      "teacher.rgb_normalize": 0.0005920703125,
+      "teacher.video": 0.212289109375,
+      "train.backward": 1.1179259765625,
+      "train.clip_grad": 0.0820292578125,
+      "train.data_wait": 0.0007756484375,
+      "train.forward": 1.1583511484375,
+      "train.h2d": 0.0010587578125,
+      "train.metrics_reduce": 0.0013333125,
+      "train.optimizer": 0.401836640625,
+      "train.post_step_sync": 0.00442771875,
+      "train.pre_step_sync": 0.0001954921875,
+      "train.scalar_reads": 0.0429414921875,
+      "train.teachers": 0.5493395
+    },
+    "host_sync_union_mean_s_per_step": 0.3297471875,
+    "host_sync_with_no_recorded_device_kernel_mean_s_per_step": 0.0477494375
+  },
+  "summary": "当前更显著的是通信暴露时间与大量细碎任务，MoE 专家矩阵乘已不是最大的设备算子热点。同步需要分清“等待正在执行的计算”和“设备空闲”；现有记录不能把通信耗时全部归为传输带宽不足。",
+  "conclusions": [
+    "8卡各采集4步，官方时间线约42.1%计算、29.0%未重叠通信、28.9%Free。计算类别包含向量/其他设备任务，不能当AI Core利用率；Free本身不标识原因。",
+    "每卡每步约4.26万个设备任务，约88.0%的非通信任务短于50微秒，大量任务在向量核执行。任务碎片化与调度成本值得优先优化。",
+    "归一化通信序号并核对step/type/group/传输计数后发现：更新122的一次reduceScatter，rank0持续33.000毫秒，rank2仅0.031毫秒，但各卡结束时差0.187毫秒。这支持到达不齐/等待的存在，不能把通信总时长全归结为带宽。",
+    "当前EP=1，没有MoE专家跨卡all-to-all。GMM及权重梯度GMMAdd的kernel耗时总和约14毫秒/步；该口径不含完整路由和反向框架开销。 MoE架构的大参数量仍可能通过FSDP权重通信间接增加开销，不能将上述14毫秒解读为整个MoE的总成本。",
+    "teacher主机范围约0.549秒，几何SciPy约0.129秒；Muon约0.328秒，AdamW约0.069秒。阶段含嵌套/异步等待，不与通信时间相加。",
+    "CPU同步范围union约0.330秒，但其中设备无kernel的交集仅约0.048秒。多次scalar读取可能只是CPU常量，不等于同次数的NPU同步。",
+    "数据等待约0.00078秒、显式步首/步尾同步约0.00020/0.00443秒，不支持把这些作为当前第一优化目标。"
+  ],
+  "recommendations": [
+    {
+      "priority": "1",
+      "title": "FSDP通信与任务调度",
+      "detail": "检查已启用的前向预取是否实际覆盖通信，评估分片与通信粒度、发起时机；结合主机小算子下发优化。显存已约92%，任何减少重分片的方案需验证额外显存。"
+    },
+    {
+      "priority": "2",
+      "title": "Muon同形状3D参数合批",
+      "detail": "继续缩减Newton–Schulz与逐参数更新的小算子下发，先做数值/优化器状态对照，再跑整模型A/B。"
+    },
+    {
+      "priority": "3",
+      "title": "teacher批处理与几何后处理",
+      "detail": "评估当前/未来帧合批，以及SciPy拟合的批量实现；保留监督目标与数值语义，不能直接删掉几何处理。"
+    }
+  ],
+  "limitations": [
+    "采集窗口日志步时比同run基线高约31.8%；不是独立A/B精确测得的采集成本，且不包含trace导出。不能把profile秒数或占比直接套在2.64秒实际步时上。",
+    "4步×8rank，CPU堆栈只采rank0/4且非阻塞读取有失败；无完整epoch或任务成功率评测。",
+    "HCCL time-info中Transit/Wait/Synchronization全为0，但带宽子记录有传输，说明该分解不可用于分离纯传输和等待；不能读作“无等待”或“传输占全部”。",
+    "原始同名HCOM匹配因各rank编号起点不同而无效；未经归一化与独立核验的数据不用于因果结论。",
+    "主机范围、kernel总和、设备union和资源抽样是不同口径，不能互相相加；npu-smi抽样不是MFU。",
+    "0.048秒只是CPU同步范围与设备无任务区间的交集，不含全部异步HCCL或stream依赖等待，不能作为可优化等待时间的上限。"
+  ],
+  "sources": [
+    "run_summary.json",
+    "analysis/summary.json",
+    "attribution_scope_summary.json",
+    "host_sampling_analysis.json",
+    "host_config_audit.json",
+    "cross_rank_sequence_diagnostic.json"
+  ],
+  "communication_wait_example": {
+    "training_update": 122,
+    "profile_step_id": 121,
+    "relative_sequence_index": 328,
+    "reported_hccs_transit_MB_per_rank": 0.000768,
+    "rank0_duration_ms": 32.99982,
+    "rank2_duration_ms": 0.03056,
+    "start_skew_ms": 32.97819,
+    "end_skew_ms": 0.187472,
+    "interpretation": "Relative-sequence alignment plus step/type/group/reported-traffic agreement supports wait/arrival skew. Reported HCCS traffic is not a logical tensor-size measurement. Not a pure wire-time or unprofiled-wait estimate."
+  },
+  "additional_observation": {
+    "scope": "teacher.video",
+    "rank": 0,
+    "runtime": "aclrtSynchronizeStream under aten::copy_",
+    "calls_per_update": 4,
+    "host_union_seconds_per_update": 0.141986,
+    "interpretation": "Runtime waits occur under copies, not primarily scalar item reads; overlap with device execution prevents counting this as removable idle time."
+  }
+}

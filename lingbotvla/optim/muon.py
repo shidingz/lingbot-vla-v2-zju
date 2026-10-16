@@ -10,6 +10,7 @@ with one batched NS pass, and scattered back locally.
 
 from collections import defaultdict
 import math
+import os
 from typing import Any, Dict, Iterable, List, Optional, Sequence, Tuple
 
 import torch
@@ -298,6 +299,10 @@ class DistributedMuon(Optimizer):
             "adjust_lr_fn": adjust_lr_fn,
         }
         super().__init__(params, defaults)
+        # Runtime scheduling only: retain the existing per-parameter state dict.
+        self.local_batch_size = int(os.environ.get("LINGBOT_MUON_LOCAL_BATCH", "0"))
+        if self.local_batch_size < 0 or self.local_batch_size > 32:
+            raise ValueError("LINGBOT_MUON_LOCAL_BATCH must be between 0 and 32")
 
         for group in self.param_groups:
             for p in group["params"]:
@@ -343,6 +348,7 @@ class DistributedMuon(Optimizer):
             # skip the actual update for grad=None params inside the batch.
             fsdp_2d_groups: Dict[tuple, List[Tensor]] = defaultdict(list)
             other_params: List[Tuple[Tensor, str]] = []
+            local_3d_groups: Dict[tuple, List[Tensor]] = defaultdict(list)
 
             for p in group["params"]:
                 kind = _classify_param(p)
@@ -357,12 +363,20 @@ class DistributedMuon(Optimizer):
                         raise RuntimeError("DistributedMuon does not support complex parameters")
                     if p.grad.is_sparse:
                         raise RuntimeError("DistributedMuon does not support sparse gradients")
-                    other_params.append((p, kind))
+                    if self.local_batch_size > 1 and p.ndim == 3 and kind in (_KIND_LOCAL, _KIND_MOE_LOCAL_3D):
+                        local = p.to_local() if isinstance(p, DTensor) else p
+                        key = (tuple(local.shape), local.dtype, local.device)
+                        local_3d_groups[key].append(p)
+                    else:
+                        other_params.append((p, kind))
 
             # --- Mega-batch path for FSDP_GATHER_2D ---
             # Sort by key to guarantee identical ordering across all ranks.
             for _key in sorted(fsdp_2d_groups.keys()):
                 self._step_megabatch(fsdp_2d_groups[_key], group_config)
+
+            for params in local_3d_groups.values():
+                self._step_local_3d_batch(params, group_config)
 
             # --- Per-param fallback for remaining kinds ---
             # Operate on local tensors to avoid DTensor dispatch issues
@@ -413,6 +427,44 @@ class DistributedMuon(Optimizer):
                 p_local.add_(ortho_local.to(dtype=p_local.dtype), alpha=-adjusted_lr)
 
         return loss
+
+    def _step_local_3d_batch(self, params: List[Tensor], config: dict) -> None:
+        """Batch independent expert matrices without gathering or mixing norms.
+
+        Bound the stacked FP32 input to 32 MiB (or one parameter). The NS
+        intermediates take additional memory. Each expert still normalizes over
+        its own trailing matrix dimensions; momentum stays per parameter.
+        """
+        first = params[0].to_local() if isinstance(params[0], DTensor) else params[0]
+        if first.numel() == 0:
+            for p in params:
+                if "momentum_buffer" not in self.state[p]:
+                    self.state[p]["momentum_buffer"] = torch.zeros_like(p, memory_format=torch.preserve_format)
+            return
+        chunk_size = min(self.local_batch_size, max(1, (32 * 1024**2) // (first.numel() * first.element_size())))
+        for start in range(0, len(params), chunk_size):
+            chunk = params[start:start + chunk_size]
+            updates = []
+            for p in chunk:
+                state = self.state[p]
+                if "momentum_buffer" not in state:
+                    state["momentum_buffer"] = torch.zeros_like(p, memory_format=torch.preserve_format)
+                buf = state["momentum_buffer"]
+                buf = buf.to_local() if isinstance(buf, DTensor) else buf
+                grad = p.grad.to_local() if isinstance(p.grad, DTensor) else p.grad
+                buf.lerp_(grad, 1 - config["momentum"])
+                updates.append(grad.lerp(buf, config["momentum"]) if config["nesterov"] else buf.clone())
+            stacked = torch.cat(updates, dim=0)
+            del updates
+            ortho = batched_newton_schulz(stacked, config["ns_coefficients"], config["ns_steps"], config["eps"])
+            del stacked
+            lr = config["lr"]
+            adjusted_lr = _adjust_lr(lr, config["adjust_lr_fn"], params[0].shape[-2:])
+            for p, update in zip(chunk, ortho.split(first.shape[0], dim=0)):
+                local = p.to_local() if isinstance(p, DTensor) else p
+                if config["weight_decay"] != 0.0:
+                    local.mul_(1 - lr * config["weight_decay"])
+                local.add_(update.to(local.dtype), alpha=-adjusted_lr)
 
     def _step_megabatch(self, params: List[Tensor], config: dict) -> None:
         """Process a batch of same-shape FSDP_GATHER_2D params with batched comms + NS."""

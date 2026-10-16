@@ -1,0 +1,51 @@
+第三轮昇腾训练优化（2026-10-16）
+
+最终配置与效果
+默认入口 train_robotwin_npu.sh：Muon 专家合批 8、CPU 整数元数据 1、FP32 RMSNorm 融合 1、显式 FSDP 前向预取 0。
+同为 8 × Ascend 910B1、micro batch 12、global batch 96。保留模型、Muon 数学公式、学习率与调度；不降低归一化精度。
+测速取未进入 profiler 采集的第 31–110 步，用 step 110 与 step 30 的日志时间差除以 80：
+  第二轮默认基线：2.6500 s/update，36.2264 samples/s。
+  最终配置：      2.4625 s/update，38.9848 samples/s。
+  吞吐增加 7.6142%，每步时间减少 7.0755%。整数秒日志对应约 ±0.0125 s/update 量化误差。
+这是短程同条件实测，不是完整 epoch 速度或收敛保证；数据和外部权重只核对路径及数据清单，没有逐 batch 指纹。
+
+修改内容
+1. Muon：将同形状的本地 3D 专家矩阵合批进行 Newton–Schulz，逐专家独立归一化，逐参数保留 momentum_buffer；只对专家轴本地分片使用此路径，不改变原有 2D all-gather。每批输入最多 32 MiB，单个参数超过时单独执行。
+2. RMSNorm：使用当前安装的 torch_npu.npu_rms_norm FP32 前向/反向，在原模块内部融合，保留 AdaNorm 的 FiLM、模块类型、参数键和转换顺序；其他 dtype/device 走原算法。
+3. 位置元数据：整数数据集中传至 CPU 后执行索引逻辑，避免循环读取 NPU 标量；修复视觉缓存无效判定，网格值、batch 或设备改变时重算，训练中的可学习位置嵌入仍每步计算并保留梯度。
+4. video teacher：有界缓存 RGB 归一化常量和形状决定的整数序列边界；不缓存图像、teacher 输出或可学习张量。
+5. FSDP2：实现符合联合解码器 QKV/输出两阶段调用次序的显式预取，完成单独对照。开启 2.4500、关闭 2.4625 s/update，仅约 0.51% 差异，小于已观察到的短程波动，保持默认关闭，可选择开启。
+
+全卡 profiler（两组均为 Level1 / PipeUtilization，第 121–124 步）
+  kernel/card/update：42602.25 -> 36747.25，减少 13.7434%。
+  BatchMatMulV2 次数/update：2115 -> 840。
+  RmsNorm / RmsNormGrad 次数/update：各 0 -> 73。
+  Muon 主机范围：328.2 -> 224.4 ms；其中 Newton–Schulz 145.5 -> 55.2 ms。
+  video teacher 主机范围：212.3 -> 73.1 ms。
+  官方 Free 范围：988.6 -> 717.7 ms；未重叠通信范围：990.1 -> 1049.9 ms。
+主机范围有嵌套、异步提交及等待，不能相加推算端到端收益。基线 profiler 来自前一轮全面分析；速度基线是本轮另跑的无采集 120 步运行。
+必须从原始 CSV 统计所有 kernel 类型：仅取前 60 类会漏掉融合 RMSNorm。summarize_profile.py 已修正并校验总数。
+
+利用率与剩余限制
+相同测速窗口 npu-smi 的 8 卡 AI Core 采样均值约 20.04% -> 19.51%；没有证据表明利用率明显上升。采样不是 MFU，不能用它代替实际训练吞吐。
+剩余开销仍包括 FSDP 参数/梯度通信、teacher 几何恢复、CPU 调度与小算子。当前 EP=1，不存在专家 all-to-all；不能把通信瓶颈归结为 MoE 专家通信。
+除显式预取外未逐项做独立消融，因此不声称单项贡献等于上述主机范围下降。
+
+验证
+21 项 NPU 数值/梯度/状态检查通过；实际专家形状的独立与合批 NS 结果逐位相同。
+双卡 HCCL/DTensor Muon 四步对照通过，rank 0 最大参数误差 0；覆盖专家分片、2D gather、缺失梯度、旧状态恢复及两阶段 FSDP 预取前后向。
+44 项启动器检查通过。基线 120 步、修复后的候选 120 步、预取开启及关闭各 132 步均退出 0。
+早期候选因替换 RMSNorm 模块类型破坏 AdaNorm 转换而在加载时失败，已改为保留原类型、仅融合内部计算。失败运行 0 步，不计入结果。
+最终配置前 120 步相对基线：loss 最大绝对差 0.001708984375；梯度范数最大相对差 4.37998%。存在浮点舍入与优化轨迹偏差，完整收敛/机器人任务成功率仍需长程验证。
+无 profiler 候选的 rank 0 allocator 峰值 50.48 GiB，基线 50.61 GiB。不是全卡总显存上界。
+实验均在独立冻结源码上完成；最终默认只将已验证的预取关闭配置设为启动器默认，并澄清回退注释。没有保存模型检查点或上传数据。
+
+官方资料与采用情况
+采用：昇腾官方融合算子说明中的 RMSNorm，针对本机 FP32/梯度/状态再验证。
+https://github.com/Ascend/msprof-analyze/blob/master/docs/zh/fused_operator_api_replacement_example.md
+参考并实测：MindSpeed FSDP2 显式预取调优，按本模型两阶段结构改写，默认保持关闭。
+https://github.com/Ascend/MindSpeed-LLM/blob/master/docs/zh/pytorch/tuning/fsdp2_backend_performance_optimization.md
+调研但未安装：Triton-Ascend 与第三方 Triton Muon，当前 CANN 8.2 环境需先解决版本/形状验证；未复制第三方内核。
+https://github.com/Ascend/triton-ascend/blob/main/docs/en/installation_guide.md
+https://github.com/Hailey-Zh/triton-muon-npu
+本机 NpuFusedAdamW 的存储合并路径需要额外 DTensor 适配，本轮继续使用已验证的 AdamW foreach。未升级 torch_npu/CANN。

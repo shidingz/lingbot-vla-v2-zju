@@ -7,6 +7,8 @@
 #   - 多卡: ASCEND_RT_VISIBLE_DEVICES / NPROC_PER_NODE 控制 (默认 8)
 #   - 配置: configs/vla/robotwin/robotwin_npu.yaml（FP32 SDPA + 原生 GMM + sdpa teacher）
 #   - 第二轮默认：AdamW foreach、MoE 监控合批、关闭动作层梯度重计算
+#   - 第三轮默认：Muon 专家合批、CPU 位置元数据、FP32 RMSNorm 融合
+#   - 两阶段 FSDP 显式预取保留实验开关；消融收益不足 1%，默认关闭
 #   - 默认 1 epoch，结束后保存 OBS；/cache 暂存一份检查点，验证后清理
 #   - 小日志放仓库 logs/；默认从 OBS 最新完整检查点恢复
 #
@@ -19,7 +21,10 @@
 #   # 新实验请改 RUN_NAME：本地暂存、日志和 OBS 三个默认目录一起切换
 #   LR=5e-5 OPTIMIZER=adamw bash train_robotwin_npu.sh
 #   ENABLE_GRAD_CKPT=true bash train_robotwin_npu.sh # 保留第二轮优化，启用重计算以节省显存
-#   # 回退到第一轮 GMM 基线（学习率、batch 与 Muon 算法不变）：
+#   # 关闭第三轮可选优化（保留等价的 teacher 常量缓存和视觉缓存修复）：
+#   LINGBOT_MUON_LOCAL_BATCH=0 LINGBOT_HOST_METADATA=0 \
+#     LINGBOT_NPU_FUSED_RMSNORM=0 LINGBOT_FSDP_FORWARD_PREFETCH=0 bash train_robotwin_npu.sh
+#   # 关闭第二轮可选加速（保留第三轮默认优化；学习率、batch 与 Muon 算法不变）：
 #   LINGBOT_JOINT_ATTN_BACKEND=eager LINGBOT_MOE_MONITOR_BATCH_COUNTS=0 \
 #     LINGBOT_ADAMW_FOREACH_NPU=0 ENABLE_GRAD_CKPT=true bash train_robotwin_npu.sh
 #   bash train_robotwin_npu.sh --train.enable_resume true    # 末尾追加原始 CLI 参数（最灵活）
@@ -93,16 +98,26 @@ EMPTY_CACHE_STEPS="${EMPTY_CACHE_STEPS:-}"
 export LINGBOT_JOINT_ATTN_BACKEND="${LINGBOT_JOINT_ATTN_BACKEND-sdpa_fp32}"
 export LINGBOT_MOE_MONITOR_BATCH_COUNTS="${LINGBOT_MOE_MONITOR_BATCH_COUNTS:-1}"
 export LINGBOT_ADAMW_FOREACH_NPU="${LINGBOT_ADAMW_FOREACH_NPU:-1}"
+# 第三轮保持 Muon 公式和参数状态结构；批输入额外限制为 32 MiB。
+export LINGBOT_MUON_LOCAL_BATCH="${LINGBOT_MUON_LOCAL_BATCH:-8}"
+export LINGBOT_HOST_METADATA="${LINGBOT_HOST_METADATA:-1}"
+export LINGBOT_NPU_FUSED_RMSNORM="${LINGBOT_NPU_FUSED_RMSNORM:-1}"
+export LINGBOT_FSDP_FORWARD_PREFETCH="${LINGBOT_FSDP_FORWARD_PREFETCH:-0}"
 case "$LINGBOT_JOINT_ATTN_BACKEND" in
   ""|eager|sdpa_fp32) ;;
   *) echo "[错误] LINGBOT_JOINT_ATTN_BACKEND 必须为空、eager 或 sdpa_fp32。" >&2; exit 1 ;;
 esac
-for speed_switch in LINGBOT_MOE_MONITOR_BATCH_COUNTS LINGBOT_ADAMW_FOREACH_NPU; do
+for speed_switch in LINGBOT_MOE_MONITOR_BATCH_COUNTS LINGBOT_ADAMW_FOREACH_NPU \
+  LINGBOT_HOST_METADATA LINGBOT_NPU_FUSED_RMSNORM LINGBOT_FSDP_FORWARD_PREFETCH; do
   case "${!speed_switch}" in
     0|1) ;;
     *) echo "[错误] $speed_switch 必须为 0 或 1。" >&2; exit 1 ;;
   esac
 done
+if [[ ! "$LINGBOT_MUON_LOCAL_BATCH" =~ ^([0-9]|[12][0-9]|3[0-2])$ ]]; then
+  echo "[错误] LINGBOT_MUON_LOCAL_BATCH 必须为 0–32 的整数（0/1 关闭合批）。" >&2
+  exit 1
+fi
 # SDPA 省出的显存用于保留动作层激活，减少反向重计算；仍可用 env/CLI 覆盖。
 # 改回其他 attention 路径时，未指定的重计算策略继续遵循 YAML。
 if [[ -z "$ENABLE_GRAD_CKPT" && "$LINGBOT_JOINT_ATTN_BACKEND" == sdpa_fp32 ]]; then
@@ -313,6 +328,10 @@ cat <<EOF
  联合注意力  : ${LINGBOT_JOINT_ATTN_BACKEND:-配置原值}
  统计合批    : $LINGBOT_MOE_MONITOR_BATCH_COUNTS
  参数合批    : $LINGBOT_ADAMW_FOREACH_NPU（现有 AdamW 分支）
+ Muon 合批   : $LINGBOT_MUON_LOCAL_BATCH（每批输入最多 32 MiB，单个参数除外）
+ CPU 元数据  : $LINGBOT_HOST_METADATA
+ 融合 RMSNorm: $LINGBOT_NPU_FUSED_RMSNORM（FP32 归一化）
+ FSDP 预取   : $LINGBOT_FSDP_FORWARD_PREFETCH（按联合解码器两阶段顺序）
  重计算      : ${ENABLE_GRAD_CKPT:-配置文件}（用于节省显存，与保存训练进度不同）
  视频解码    : PyAV 每个解码器 $LINGBOT_VIDEO_DECODE_THREADS 线程，仅转换选中的帧
  学习率      : $LR → $LR_MIN，warmup ratio=$LR_WARMUP_RATIO
@@ -329,6 +348,9 @@ if [ "$DRY_RUN" = "1" ]; then
   printf 'export LINGBOT_JOINT_ATTN_BACKEND=%q\n' "$LINGBOT_JOINT_ATTN_BACKEND"
   printf 'export LINGBOT_MOE_MONITOR_BATCH_COUNTS=%q\n' "$LINGBOT_MOE_MONITOR_BATCH_COUNTS"
   printf 'export LINGBOT_ADAMW_FOREACH_NPU=%q\n' "$LINGBOT_ADAMW_FOREACH_NPU"
+  for speed_switch in LINGBOT_MUON_LOCAL_BATCH LINGBOT_HOST_METADATA LINGBOT_NPU_FUSED_RMSNORM LINGBOT_FSDP_FORWARD_PREFETCH; do
+    printf 'export %s=%q\n' "$speed_switch" "${!speed_switch}"
+  done
   printf '%q ' "${COMMAND[@]}"
   printf '\n'
   exit 0
@@ -383,6 +405,9 @@ printf '[NPU speed] moe=%s joint_attention=%s monitor_batch=%s adamw_foreach=%s 
   "$LINGBOT_NPU_MOE_IMPL" "${LINGBOT_JOINT_ATTN_BACKEND:-from_config}" \
   "$LINGBOT_MOE_MONITOR_BATCH_COUNTS" "$LINGBOT_ADAMW_FOREACH_NPU" \
   "${ENABLE_GRAD_CKPT:-from_config}" | tee -a "$LOG_DIR/train.log"
+printf '[NPU speed round3] muon_local_batch=%s host_metadata=%s fused_rmsnorm=%s fsdp_forward_prefetch=%s\n' \
+  "$LINGBOT_MUON_LOCAL_BATCH" "$LINGBOT_HOST_METADATA" "$LINGBOT_NPU_FUSED_RMSNORM" \
+  "$LINGBOT_FSDP_FORWARD_PREFETCH" | tee -a "$LOG_DIR/train.log"
 "${COMMAND[@]}" 2>&1 | tee -a "$LOG_DIR/train.log"
 
 echo "日志已保存: $LOG_DIR/train.log"

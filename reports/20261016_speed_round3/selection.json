@@ -1,0 +1,14 @@
+{
+  "case": "no_prefetch",
+  "default_fsdp_forward_prefetch": "0",
+  "prefetch_on_seconds": 2.45,
+  "prefetch_off_seconds": 2.4625,
+  "speed_window": [
+    31,
+    110
+  ],
+  "source_hashes_equal_for_ablation": true,
+  "reason": "Explicit prefetch improves this single measured window by only 0.51%, comparable to timestamp resolution and smaller than observed short-run variability. Keep it opt-in; retain the simpler default schedule.",
+  "final_launcher_change": "LINGBOT_FSDP_FORWARD_PREFETCH default changes from 1 to 0 plus help/rollback comments; tested no_prefetch run already exports 0. No training source changes after final run.",
+  "launcher_sha256": "7389b8f748105a84147c1b49134a334368c33dfae3e5c9a909dd415d5b414649"
+}

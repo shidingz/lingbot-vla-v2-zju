@@ -1,0 +1,11 @@
+{
+  "case": "default_profile",
+  "limitations": [
+    "Profiler timings include instrumentation overhead; wall throughput is measured outside capture.",
+    "Kernel duration sums are not critical-path elapsed time.",
+    "The model follows the same 121\u2013124 update window, but floating-point rounding may change routing decisions."
+  ],
+  "kernel_count_reduction_percent": 13.743405571301981
+}
+baseline 42602.25 {'Computing_s': 1.4388365486249906, 'Communication(Not Overlapped)_s': 0.990097523000081, 'Overlapped_s': 0.41606231087491896, 'Communication_s': 1.406159833875, 'Free_s': 0.988552354875325, 'Stage_s': 3.4181452421875, 'Bubble_s': 0.0, 'Communication(Not Overlapped and Exclude Receive)_s': 0.990097523000081, 'Preparing_s': 0.00884021875}
+optimized 36747.25 {'Computing_s': 1.3942330261250055, 'Communication(Not Overlapped)_s': 1.1275522415001025, 'Overlapped_s': 0.5324583962498978, 'Communication_s': 1.6600106377500001, 'Free_s': 0.7273206452501538, 'Stage_s': 3.2491515781249998, 'Bubble_s': 0.0, 'Communication(Not Overlapped and Exclude Receive)_s': 1.1275522415001025, 'Preparing_s': 0.0087505625}

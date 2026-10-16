@@ -2,6 +2,7 @@
 
 import logging
 from dataclasses import dataclass
+from functools import lru_cache
 from typing import Dict, List, Optional, Sequence, Tuple
 
 import torch
@@ -170,6 +171,18 @@ def _build_packed_rope(
     return torch.cat(sin_parts, dim=0), torch.cat(cos_parts, dim=0)
 
 
+def _packed_cu_seqlens(lengths, device):
+    return _cached_packed_cu_seqlens(tuple(lengths), device)
+
+
+@lru_cache(maxsize=16)
+def _cached_packed_cu_seqlens(lengths, device):
+    # These integer boundaries depend only on shapes, not on video contents.
+    cu = torch.zeros(len(lengths) + 1, dtype=torch.int32)
+    torch.cumsum(torch.tensor(lengths, dtype=torch.int32), dim=0, out=cu[1:])
+    return cu.to(device=device)
+
+
 class NaviTVideoViT(UnifiedVideoViT):
     """UnifiedVideoViT with a packed-sequence forward path."""
 
@@ -210,14 +223,7 @@ class NaviTVideoViT(UnifiedVideoViT):
 
         packed = torch.cat(per_crop_tokens, dim=0)  # (total_tokens, D)
         seq_lens = [t.shape[0] for t in per_crop_tokens]
-        cu_seqlens = torch.zeros(
-            len(seq_lens) + 1, dtype=torch.int32, device=packed.device
-        )
-        torch.cumsum(
-            torch.tensor(seq_lens, dtype=torch.int32, device=packed.device),
-            dim=0,
-            out=cu_seqlens[1:],
-        )
+        cu_seqlens = _packed_cu_seqlens(seq_lens, packed.device)
         max_seqlen = max(seq_lens)
 
         rope_sin, rope_cos = _build_packed_rope(
@@ -295,12 +301,7 @@ class NaviTVideoViT(UnifiedVideoViT):
         else:
             storage_flat = torch.empty(0, D, dtype=patches_normed.dtype, device=patches_normed.device)
 
-        patch_cu = torch.zeros(total_crops + 1, dtype=torch.int32, device=packed.device)
-        torch.cumsum(
-            torch.tensor(n_patches_per_crop, dtype=torch.int32, device=packed.device),
-            dim=0,
-            out=patch_cu[1:],
-        )
+        patch_cu = _packed_cu_seqlens(n_patches_per_crop, packed.device)
 
         return PackedOutput(
             cls_tokens=cls_normed,

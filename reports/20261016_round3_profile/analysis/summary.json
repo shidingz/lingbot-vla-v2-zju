@@ -1,0 +1,1412 @@
+{
+  "generated_at": "2026-10-16T12:14:15.413200+00:00",
+  "trace_root": "/cache/lingbot/profiling/round3_profile_20261016_195822/profile_132/trace",
+  "csv_only": true,
+  "algorithm": "Read ranks sequentially. Parse epoch microseconds exactly to integer ns; classify COMMUNICATION/HCCL or hcom/hccl names/types; merge per-step intervals, calculate overlap by set intersection. Official step CSV is reported independently. JSON trace is streamed.",
+  "limitations": [
+    "Inclusive host/operator durations are not additive elapsed wall time.",
+    "Rank means are not a sum across devices and do not measure arithmetic-unit MFU.",
+    "Official Free is neither recorded compute nor communication, not a causal classification of CPU/data/communication waits.",
+    "Raw kernel gap envelopes omit leading/trailing step gaps; official Stage/Free have different boundaries.",
+    "Kernel accelerator-core duration indicates task intervals, not fraction of arithmetic units executing instructions.",
+    "Profiler overhead must be compared against a no-trace run separately."
+  ],
+  "aggregate": {
+    "rank_count": 8,
+    "ranks": [
+      "rank0",
+      "rank1",
+      "rank2",
+      "rank3",
+      "rank4",
+      "rank5",
+      "rank6",
+      "rank7"
+    ],
+    "official_rank_statistics_s_per_step": {
+      "Bubble_s": {
+        "mean": 0.0,
+        "min_rank": 0.0,
+        "max_rank": 0.0
+      },
+      "Communication(Not Overlapped and Exclude Receive)_s": {
+        "mean": 0.990097523000081,
+        "min_rank": 0.7613089600000491,
+        "max_rank": 1.1768698765001115
+      },
+      "Communication(Not Overlapped)_s": {
+        "mean": 0.990097523000081,
+        "min_rank": 0.7613089600000491,
+        "max_rank": 1.1768698765001115
+      },
+      "Communication_s": {
+        "mean": 1.406159833875,
+        "min_rank": 1.08629376,
+        "max_rank": 1.6638001104999998
+      },
+      "Computing_s": {
+        "mean": 1.4388365486249906,
+        "min_rank": 1.4341618509999994,
+        "max_rank": 1.4424143549999848
+      },
+      "Free_s": {
+        "mean": 0.988552354875325,
+        "min_rank": 0.7971808185003155,
+        "max_rank": 1.2083860400003295
+      },
+      "Overlapped_s": {
+        "mean": 0.41606231087491896,
+        "min_rank": 0.32498479999995084,
+        "max_rank": 0.4869302339998883
+      },
+      "Preparing_s": {
+        "mean": 0.00884021875,
+        "min_rank": 0.007136625000000001,
+        "max_rank": 0.0107699375
+      },
+      "Stage_s": {
+        "mean": 3.4181452421875,
+        "min_rank": 3.4077023125,
+        "max_rank": 3.4802376875
+      }
+    },
+    "host_phase_rank_means": {},
+    "kernel_calls_per_rank_step_mean": 42602.25,
+    "collective_cross_rank_timing": {
+      "status": "sequence_alignment_inference",
+      "matching": "Normalize each rank-local HCOM sequence by its first captured value; require contiguous numbering and identical collective type/step at every position. Logical identity is inferred from sequence, not guaranteed by a native global operation identifier.",
+      "rejected_matching": "Exact kernel Name is invalid across ranks: their profiler-local sequence offsets differ. Same Name can refer to different tensor sizes and different logical collectives.",
+      "sequence_offsets": {
+        "rank0": 6,
+        "rank1": 7,
+        "rank2": 8,
+        "rank3": 6,
+        "rank4": 8,
+        "rank5": 6,
+        "rank6": 8,
+        "rank7": 8
+      },
+      "validation": {
+        "contiguous_sequence_per_rank": true,
+        "same_step_and_type_each_position": true,
+        "all_positions_on_all_ranks": true
+      },
+      "matched_collectives": 1016,
+      "incomplete_groups": 0,
+      "start_skew_ms": {
+        "median": 3.9542349999999997,
+        "p90": 11.81608,
+        "max": 283.27158
+      },
+      "end_skew_ms": {
+        "median": 0.293262,
+        "p90": 0.492899,
+        "max": 2.153506
+      },
+      "largest_start_skew": [
+        {
+          "step": "120",
+          "normalized_position": 0,
+          "rank_names": {
+            "rank0": "hcom_allGather__612_6_1",
+            "rank1": "hcom_allGather__612_7_1",
+            "rank2": "hcom_allGather__612_8_1",
+            "rank3": "hcom_allGather__612_6_1",
+            "rank4": "hcom_allGather__612_8_1",
+            "rank5": "hcom_allGather__612_6_1",
+            "rank6": "hcom_allGather__612_8_1",
+            "rank7": "hcom_allGather__612_8_1"
+          },
+          "type": "hcom_allGather_",
+          "start_skew_ms": 283.27158,
+          "end_skew_ms": 0.111144,
+          "envelope_ms": 296.100384,
+          "last_start_to_last_end_ms": 12.828804,
+          "latest_start_rank": "rank4",
+          "earliest_start_rank": "rank0",
+          "rank_durations_ms": {
+            "rank0": 295.98924,
+            "rank1": 59.1721,
+            "rank2": 39.72188,
+            "rank3": 29.644832,
+            "rank4": 12.7194,
+            "rank5": 42.404868,
+            "rank6": 69.48224,
+            "rank7": 61.678892
+          }
+        },
+        {
+          "step": "122",
+          "normalized_position": 758,
+          "rank_names": {
+            "rank0": "hcom_allReduce__612_764_1",
+            "rank1": "hcom_allReduce__612_765_1",
+            "rank2": "hcom_allReduce__612_766_1",
+            "rank3": "hcom_allReduce__612_764_1",
+            "rank4": "hcom_allReduce__612_766_1",
+            "rank5": "hcom_allReduce__612_764_1",
+            "rank6": "hcom_allReduce__612_766_1",
+            "rank7": "hcom_allReduce__612_766_1"
+          },
+          "type": "hcom_allReduce_",
+          "start_skew_ms": 126.072276,
+          "end_skew_ms": 0.290156,
+          "envelope_ms": 126.088816,
+          "last_start_to_last_end_ms": 0.01654,
+          "latest_start_rank": "rank5",
+          "earliest_start_rank": "rank6",
+          "rank_durations_ms": {
+            "rank0": 119.98148,
+            "rank1": 116.06982,
+            "rank2": 107.35738,
+            "rank3": 110.364704,
+            "rank4": 62.90836,
+            "rank5": 0.01654,
+            "rank6": 125.79922,
+            "rank7": 107.423624
+          }
+        },
+        {
+          "step": "121",
+          "normalized_position": 504,
+          "rank_names": {
+            "rank0": "hcom_allReduce__612_510_1",
+            "rank1": "hcom_allReduce__612_511_1",
+            "rank2": "hcom_allReduce__612_512_1",
+            "rank3": "hcom_allReduce__612_510_1",
+            "rank4": "hcom_allReduce__612_512_1",
+            "rank5": "hcom_allReduce__612_510_1",
+            "rank6": "hcom_allReduce__612_512_1",
+            "rank7": "hcom_allReduce__612_512_1"
+          },
+          "type": "hcom_allReduce_",
+          "start_skew_ms": 92.48261,
+          "end_skew_ms": 0.222304,
+          "envelope_ms": 92.706824,
+          "last_start_to_last_end_ms": 0.224214,
+          "latest_start_rank": "rank1",
+          "earliest_start_rank": "rank0",
+          "rank_durations_ms": {
+            "rank0": 92.49046,
+            "rank1": 0.01586,
+            "rank2": 1.36408,
+            "rank3": 48.076062,
+            "rank4": 75.9389,
+            "rank5": 81.397708,
+            "rank6": 53.0825,
+            "rank7": 66.674552
+          }
+        },
+        {
+          "step": "120",
+          "normalized_position": 250,
+          "rank_names": {
+            "rank0": "hcom_allReduce__612_256_1",
+            "rank1": "hcom_allReduce__612_257_1",
+            "rank2": "hcom_allReduce__612_258_1",
+            "rank3": "hcom_allReduce__612_256_1",
+            "rank4": "hcom_allReduce__612_258_1",
+            "rank5": "hcom_allReduce__612_256_1",
+            "rank6": "hcom_allReduce__612_258_1",
+            "rank7": "hcom_allReduce__612_258_1"
+          },
+          "type": "hcom_allReduce_",
+          "start_skew_ms": 58.37473,
+          "end_skew_ms": 0.153132,
+          "envelope_ms": 58.537252,
+          "last_start_to_last_end_ms": 0.162522,
+          "latest_start_rank": "rank2",
+          "earliest_start_rank": "rank6",
+          "rank_durations_ms": {
+            "rank0": 39.00196,
+            "rank1": 32.46338,
+            "rank2": 0.01596,
+            "rank3": 36.193762,
+            "rank4": 15.49184,
+            "rank5": 21.624912,
+            "rank6": 58.38476,
+            "rank7": 11.898638
+          }
+        },
+        {
+          "step": "123",
+          "normalized_position": 1012,
+          "rank_names": {
+            "rank0": "hcom_allReduce__612_1018_1",
+            "rank1": "hcom_allReduce__612_1019_1",
+            "rank2": "hcom_allReduce__612_1020_1",
+            "rank3": "hcom_allReduce__612_1018_1",
+            "rank4": "hcom_allReduce__612_1020_1",
+            "rank5": "hcom_allReduce__612_1018_1",
+            "rank6": "hcom_allReduce__612_1020_1",
+            "rank7": "hcom_allReduce__612_1020_1"
+          },
+          "type": "hcom_allReduce_",
+          "start_skew_ms": 50.36725,
+          "end_skew_ms": 0.356982,
+          "envelope_ms": 50.733442,
+          "last_start_to_last_end_ms": 0.366192,
+          "latest_start_rank": "rank2",
+          "earliest_start_rank": "rank6",
+          "rank_durations_ms": {
+            "rank0": 21.40836,
+            "rank1": 45.55306,
+            "rank2": 0.01634,
+            "rank3": 20.663054,
+            "rank4": 19.48726,
+            "rank5": 12.048482,
+            "rank6": 50.37712,
+            "rank7": 39.374706
+          }
+        },
+        {
+          "step": "123",
+          "normalized_position": 762,
+          "rank_names": {
+            "rank0": "hcom_allGather__612_768_1",
+            "rank1": "hcom_allGather__612_769_1",
+            "rank2": "hcom_allGather__612_770_1",
+            "rank3": "hcom_allGather__612_768_1",
+            "rank4": "hcom_allGather__612_770_1",
+            "rank5": "hcom_allGather__612_768_1",
+            "rank6": "hcom_allGather__612_770_1",
+            "rank7": "hcom_allGather__612_770_1"
+          },
+          "type": "hcom_allGather_",
+          "start_skew_ms": 36.84248,
+          "end_skew_ms": 0.300288,
+          "envelope_ms": 50.095268,
+          "last_start_to_last_end_ms": 13.252788,
+          "latest_start_rank": "rank4",
+          "earliest_start_rank": "rank6",
+          "rank_durations_ms": {
+            "rank0": 29.50654,
+            "rank1": 34.04148,
+            "rank2": 29.27634,
+            "rank3": 27.292804,
+            "rank4": 12.95408,
+            "rank5": 23.657372,
+            "rank6": 49.79498,
+            "rank7": 45.354484
+          }
+        },
+        {
+          "step": "122",
+          "normalized_position": 508,
+          "rank_names": {
+            "rank0": "hcom_allGather__612_514_1",
+            "rank1": "hcom_allGather__612_515_1",
+            "rank2": "hcom_allGather__612_516_1",
+            "rank3": "hcom_allGather__612_514_1",
+            "rank4": "hcom_allGather__612_516_1",
+            "rank5": "hcom_allGather__612_514_1",
+            "rank6": "hcom_allGather__612_516_1",
+            "rank7": "hcom_allGather__612_516_1"
+          },
+          "type": "hcom_allGather_",
+          "start_skew_ms": 35.77801,
+          "end_skew_ms": 0.23754,
+          "envelope_ms": 49.09495,
+          "last_start_to_last_end_ms": 13.31694,
+          "latest_start_rank": "rank0",
+          "earliest_start_rank": "rank2",
+          "rank_durations_ms": {
+            "rank0": 13.0809,
+            "rank1": 30.67836,
+            "rank2": 48.86572,
+            "rank3": 26.52755,
+            "rank4": 40.1253,
+            "rank5": 26.06576,
+            "rank6": 43.35176,
+            "rank7": 45.486528
+          }
+        },
+        {
+          "step": "120",
+          "normalized_position": 1,
+          "rank_names": {
+            "rank0": "hcom_allGather__612_7_1",
+            "rank1": "hcom_allGather__612_8_1",
+            "rank2": "hcom_allGather__612_9_1",
+            "rank3": "hcom_allGather__612_7_1",
+            "rank4": "hcom_allGather__612_9_1",
+            "rank5": "hcom_allGather__612_7_1",
+            "rank6": "hcom_allGather__612_9_1",
+            "rank7": "hcom_allGather__612_9_1"
+          },
+          "type": "hcom_allGather_",
+          "start_skew_ms": 33.972732,
+          "end_skew_ms": 0.110016,
+          "envelope_ms": 35.34376,
+          "last_start_to_last_end_ms": 1.371028,
+          "latest_start_rank": "rank5",
+          "earliest_start_rank": "rank7",
+          "rank_durations_ms": {
+            "rank0": 9.64694,
+            "rank1": 10.2914,
+            "rank2": 8.75842,
+            "rank3": 11.311426,
+            "rank4": 3.70902,
+            "rank5": 1.371028,
+            "rank6": 27.42748,
+            "rank7": 35.333428
+          }
+        },
+        {
+          "step": "120",
+          "normalized_position": 74,
+          "rank_names": {
+            "rank0": "hcom_reduceScatter__612_80_1",
+            "rank1": "hcom_reduceScatter__612_81_1",
+            "rank2": "hcom_reduceScatter__612_82_1",
+            "rank3": "hcom_reduceScatter__612_80_1",
+            "rank4": "hcom_reduceScatter__612_82_1",
+            "rank5": "hcom_reduceScatter__612_80_1",
+            "rank6": "hcom_reduceScatter__612_82_1",
+            "rank7": "hcom_reduceScatter__612_82_1"
+          },
+          "type": "hcom_reduceScatter_",
+          "start_skew_ms": 33.84819,
+          "end_skew_ms": 0.123224,
+          "envelope_ms": 33.983384,
+          "last_start_to_last_end_ms": 0.135194,
+          "latest_start_rank": "rank1",
+          "earliest_start_rank": "rank6",
+          "rank_durations_ms": {
+            "rank0": 20.27502,
+            "rank1": 0.03068,
+            "rank2": 17.94826,
+            "rank3": 27.860158,
+            "rank4": 17.9863,
+            "rank5": 3.111544,
+            "rank6": 33.86016,
+            "rank7": 31.04704
+          }
+        },
+        {
+          "step": "121",
+          "normalized_position": 328,
+          "rank_names": {
+            "rank0": "hcom_reduceScatter__612_334_1",
+            "rank1": "hcom_reduceScatter__612_335_1",
+            "rank2": "hcom_reduceScatter__612_336_1",
+            "rank3": "hcom_reduceScatter__612_334_1",
+            "rank4": "hcom_reduceScatter__612_336_1",
+            "rank5": "hcom_reduceScatter__612_334_1",
+            "rank6": "hcom_reduceScatter__612_336_1",
+            "rank7": "hcom_reduceScatter__612_336_1"
+          },
+          "type": "hcom_reduceScatter_",
+          "start_skew_ms": 32.97819,
+          "end_skew_ms": 0.187472,
+          "envelope_ms": 33.186572,
+          "last_start_to_last_end_ms": 0.208382,
+          "latest_start_rank": "rank2",
+          "earliest_start_rank": "rank0",
+          "rank_durations_ms": {
+            "rank0": 32.99982,
+            "rank1": 5.70714,
+            "rank2": 0.03056,
+            "rank3": 31.865436,
+            "rank4": 17.64358,
+            "rank5": 30.649132,
+            "rank6": 21.9352,
+            "rank7": 30.758754
+          }
+        },
+        {
+          "step": "122",
+          "normalized_position": 509,
+          "rank_names": {
+            "rank0": "hcom_allGather__612_515_1",
+            "rank1": "hcom_allGather__612_516_1",
+            "rank2": "hcom_allGather__612_517_1",
+            "rank3": "hcom_allGather__612_515_1",
+            "rank4": "hcom_allGather__612_517_1",
+            "rank5": "hcom_allGather__612_515_1",
+            "rank6": "hcom_allGather__612_517_1",
+            "rank7": "hcom_allGather__612_517_1"
+          },
+          "type": "hcom_allGather_",
+          "start_skew_ms": 24.204214,
+          "end_skew_ms": 0.254142,
+          "envelope_ms": 25.594422,
+          "last_start_to_last_end_ms": 1.390208,
+          "latest_start_rank": "rank5",
+          "earliest_start_rank": "rank1",
+          "rank_durations_ms": {
+            "rank0": 23.51776,
+            "rank1": 25.36036,
+            "rank2": 16.7472,
+            "rank3": 9.351368,
+            "rank4": 21.532,
+            "rank5": 1.390208,
+            "rank6": 19.53374,
+            "rank7": 21.97686
+          }
+        },
+        {
+          "step": "121",
+          "normalized_position": 255,
+          "rank_names": {
+            "rank0": "hcom_allGather__612_261_1",
+            "rank1": "hcom_allGather__612_262_1",
+            "rank2": "hcom_allGather__612_263_1",
+            "rank3": "hcom_allGather__612_261_1",
+            "rank4": "hcom_allGather__612_263_1",
+            "rank5": "hcom_allGather__612_261_1",
+            "rank6": "hcom_allGather__612_263_1",
+            "rank7": "hcom_allGather__612_263_1"
+          },
+          "type": "hcom_allGather_",
+          "start_skew_ms": 23.85948,
+          "end_skew_ms": 0.24761,
+          "envelope_ms": 25.29925,
+          "last_start_to_last_end_ms": 1.43977,
+          "latest_start_rank": "rank5",
+          "earliest_start_rank": "rank4",
+          "rank_durations_ms": {
+            "rank0": 18.65626,
+            "rank1": 17.63208,
+            "rank2": 11.03304,
+            "rank3": 17.95802,
+            "rank4": 25.05164,
+            "rank5": 1.43977,
+            "rank6": 9.7112,
+            "rank7": 23.09334
+          }
+        },
+        {
+          "step": "123",
+          "normalized_position": 836,
+          "rank_names": {
+            "rank0": "hcom_reduceScatter__612_842_1",
+            "rank1": "hcom_reduceScatter__612_843_1",
+            "rank2": "hcom_reduceScatter__612_844_1",
+            "rank3": "hcom_reduceScatter__612_842_1",
+            "rank4": "hcom_reduceScatter__612_844_1",
+            "rank5": "hcom_reduceScatter__612_842_1",
+            "rank6": "hcom_reduceScatter__612_844_1",
+            "rank7": "hcom_reduceScatter__612_844_1"
+          },
+          "type": "hcom_reduceScatter_",
+          "start_skew_ms": 20.27586,
+          "end_skew_ms": 0.329,
+          "envelope_ms": 20.3069,
+          "last_start_to_last_end_ms": 0.03104,
+          "latest_start_rank": "rank5",
+          "earliest_start_rank": "rank0",
+          "rank_durations_ms": {
+            "rank0": 19.9779,
+            "rank1": 17.98486,
+            "rank2": 5.0788,
+            "rank3": 19.49983,
+            "rank4": 9.94178,
+            "rank5": 0.03104,
+            "rank6": 19.9686,
+            "rank7": 19.857876
+          }
+        },
+        {
+          "step": "122",
+          "normalized_position": 730,
+          "rank_names": {
+            "rank0": "hcom_allGather__612_736_1",
+            "rank1": "hcom_allGather__612_737_1",
+            "rank2": "hcom_allGather__612_738_1",
+            "rank3": "hcom_allGather__612_736_1",
+            "rank4": "hcom_allGather__612_738_1",
+            "rank5": "hcom_allGather__612_736_1",
+            "rank6": "hcom_allGather__612_738_1",
+            "rank7": "hcom_allGather__612_738_1"
+          },
+          "type": "hcom_allGather_",
+          "start_skew_ms": 17.534292,
+          "end_skew_ms": 0.286754,
+          "envelope_ms": 17.594694,
+          "last_start_to_last_end_ms": 0.060402,
+          "latest_start_rank": "rank5",
+          "earliest_start_rank": "rank0",
+          "rank_durations_ms": {
+            "rank0": 17.30794,
+            "rank1": 10.73666,
+            "rank2": 10.35362,
+            "rank3": 14.476248,
+            "rank4": 5.80448,
+            "rank5": 0.060402,
+            "rank6": 13.3858,
+            "rank7": 12.99534
+          }
+        },
+        {
+          "step": "121",
+          "normalized_position": 254,
+          "rank_names": {
+            "rank0": "hcom_allGather__612_260_1",
+            "rank1": "hcom_allGather__612_261_1",
+            "rank2": "hcom_allGather__612_262_1",
+            "rank3": "hcom_allGather__612_260_1",
+            "rank4": "hcom_allGather__612_262_1",
+            "rank5": "hcom_allGather__612_260_1",
+            "rank6": "hcom_allGather__612_262_1",
+            "rank7": "hcom_allGather__612_262_1"
+          },
+          "type": "hcom_allGather_",
+          "start_skew_ms": 17.37411,
+          "end_skew_ms": 0.177552,
+          "envelope_ms": 30.475802,
+          "last_start_to_last_end_ms": 13.101692,
+          "latest_start_rank": "rank0",
+          "earliest_start_rank": "rank7",
+          "rank_durations_ms": {
+            "rank0": 12.92484,
+            "rank1": 27.8906,
+            "rank2": 26.97568,
+            "rank3": 22.070202,
+            "rank4": 28.0821,
+            "rank5": 22.658074,
+            "rank6": 19.3693,
+            "rank7": 30.46213
+          }
+        },
+        {
+          "step": "121",
+          "normalized_position": 325,
+          "rank_names": {
+            "rank0": "hcom_allGather__612_331_1",
+            "rank1": "hcom_allGather__612_332_1",
+            "rank2": "hcom_allGather__612_333_1",
+            "rank3": "hcom_allGather__612_331_1",
+            "rank4": "hcom_allGather__612_333_1",
+            "rank5": "hcom_allGather__612_331_1",
+            "rank6": "hcom_allGather__612_333_1",
+            "rank7": "hcom_allGather__612_333_1"
+          },
+          "type": "hcom_allGather_",
+          "start_skew_ms": 15.81394,
+          "end_skew_ms": 0.22959,
+          "envelope_ms": 17.46954,
+          "last_start_to_last_end_ms": 1.6556,
+          "latest_start_rank": "rank2",
+          "earliest_start_rank": "rank1",
+          "rank_durations_ms": {
+            "rank0": 17.16878,
+            "rank1": 17.2588,
+            "rank2": 1.4811,
+            "rank3": 17.183662,
+            "rank4": 17.18742,
+            "rank5": 17.194642,
+            "rank6": 14.50052,
+            "rank7": 17.174822
+          }
+        },
+        {
+          "step": "121",
+          "normalized_position": 283,
+          "rank_names": {
+            "rank0": "hcom_allGather__612_289_1",
+            "rank1": "hcom_allGather__612_290_1",
+            "rank2": "hcom_allGather__612_291_1",
+            "rank3": "hcom_allGather__612_289_1",
+            "rank4": "hcom_allGather__612_291_1",
+            "rank5": "hcom_allGather__612_289_1",
+            "rank6": "hcom_allGather__612_291_1",
+            "rank7": "hcom_allGather__612_291_1"
+          },
+          "type": "hcom_allGather_",
+          "start_skew_ms": 15.58123,
+          "end_skew_ms": 0.236896,
+          "envelope_ms": 17.272996,
+          "last_start_to_last_end_ms": 1.691766,
+          "latest_start_rank": "rank2",
+          "earliest_start_rank": "rank4",
+          "rank_durations_ms": {
+            "rank0": 16.99508,
+            "rank1": 16.99658,
+            "rank2": 1.46008,
+            "rank3": 17.03174,
+            "rank4": 17.09814,
+            "rank5": 17.07138,
+            "rank6": 13.32204,
+            "rank7": 16.98202
+          }
+        },
+        {
+          "step": "120",
+          "normalized_position": 83,
+          "rank_names": {
+            "rank0": "hcom_reduceScatter__612_89_1",
+            "rank1": "hcom_reduceScatter__612_90_1",
+            "rank2": "hcom_reduceScatter__612_91_1",
+            "rank3": "hcom_reduceScatter__612_89_1",
+            "rank4": "hcom_reduceScatter__612_91_1",
+            "rank5": "hcom_reduceScatter__612_89_1",
+            "rank6": "hcom_reduceScatter__612_91_1",
+            "rank7": "hcom_reduceScatter__612_91_1"
+          },
+          "type": "hcom_reduceScatter_",
+          "start_skew_ms": 15.46824,
+          "end_skew_ms": 0.727096,
+          "envelope_ms": 18.189446,
+          "last_start_to_last_end_ms": 2.721206,
+          "latest_start_rank": "rank1",
+          "earliest_start_rank": "rank2",
+          "rank_durations_ms": {
+            "rank0": 17.36014,
+            "rank1": 2.618,
+            "rank2": 17.98246,
+            "rank3": 17.975,
+            "rank4": 17.73022,
+            "rank5": 4.956958,
+            "rank6": 17.82912,
+            "rank7": 17.976598
+          }
+        },
+        {
+          "step": "123",
+          "normalized_position": 763,
+          "rank_names": {
+            "rank0": "hcom_allGather__612_769_1",
+            "rank1": "hcom_allGather__612_770_1",
+            "rank2": "hcom_allGather__612_771_1",
+            "rank3": "hcom_allGather__612_769_1",
+            "rank4": "hcom_allGather__612_771_1",
+            "rank5": "hcom_allGather__612_769_1",
+            "rank6": "hcom_allGather__612_771_1",
+            "rank7": "hcom_allGather__612_771_1"
+          },
+          "type": "hcom_allGather_",
+          "start_skew_ms": 15.464218,
+          "end_skew_ms": 0.29681,
+          "envelope_ms": 17.180698,
+          "last_start_to_last_end_ms": 1.71648,
+          "latest_start_rank": "rank2",
+          "earliest_start_rank": "rank7",
+          "rank_durations_ms": {
+            "rank0": 7.13528,
+            "rank1": 5.57594,
+            "rank2": 1.4872,
+            "rank3": 10.042202,
+            "rank4": 4.62972,
+            "rank5": 7.283726,
+            "rank6": 10.10302,
+            "rank7": 17.154482
+          }
+        },
+        {
+          "step": "120",
+          "normalized_position": 79,
+          "rank_names": {
+            "rank0": "hcom_reduceScatter__612_85_1",
+            "rank1": "hcom_reduceScatter__612_86_1",
+            "rank2": "hcom_reduceScatter__612_87_1",
+            "rank3": "hcom_reduceScatter__612_85_1",
+            "rank4": "hcom_reduceScatter__612_87_1",
+            "rank5": "hcom_reduceScatter__612_85_1",
+            "rank6": "hcom_reduceScatter__612_87_1",
+            "rank7": "hcom_reduceScatter__612_87_1"
+          },
+          "type": "hcom_reduceScatter_",
+          "start_skew_ms": 15.43987,
+          "end_skew_ms": 0.491076,
+          "envelope_ms": 18.068976,
+          "last_start_to_last_end_ms": 2.629106,
+          "latest_start_rank": "rank1",
+          "earliest_start_rank": "rank0",
+          "rank_durations_ms": {
+            "rank0": 17.5779,
+            "rank1": 2.51924,
+            "rank2": 17.90664,
+            "rank3": 17.853556,
+            "rank4": 17.82988,
+            "rank5": 5.275484,
+            "rank6": 17.90892,
+            "rank7": 17.939216
+          }
+        },
+        {
+          "step": "121",
+          "normalized_position": 275,
+          "rank_names": {
+            "rank0": "hcom_allGather__612_281_1",
+            "rank1": "hcom_allGather__612_282_1",
+            "rank2": "hcom_allGather__612_283_1",
+            "rank3": "hcom_allGather__612_281_1",
+            "rank4": "hcom_allGather__612_283_1",
+            "rank5": "hcom_allGather__612_281_1",
+            "rank6": "hcom_allGather__612_283_1",
+            "rank7": "hcom_allGather__612_283_1"
+          },
+          "type": "hcom_allGather_",
+          "start_skew_ms": 15.40219,
+          "end_skew_ms": 0.266708,
+          "envelope_ms": 17.123188,
+          "last_start_to_last_end_ms": 1.720998,
+          "latest_start_rank": "rank2",
+          "earliest_start_rank": "rank4",
+          "rank_durations_ms": {
+            "rank0": 14.9708,
+            "rank1": 16.8242,
+            "rank2": 1.4766,
+            "rank3": 14.749916,
+            "rank4": 16.94962,
+            "rank5": 16.963378,
+            "rank6": 11.78856,
+            "rank7": 16.901376
+          }
+        },
+        {
+          "step": "121",
+          "normalized_position": 285,
+          "rank_names": {
+            "rank0": "hcom_allGather__612_291_1",
+            "rank1": "hcom_allGather__612_292_1",
+            "rank2": "hcom_allGather__612_293_1",
+            "rank3": "hcom_allGather__612_291_1",
+            "rank4": "hcom_allGather__612_293_1",
+            "rank5": "hcom_allGather__612_291_1",
+            "rank6": "hcom_allGather__612_293_1",
+            "rank7": "hcom_allGather__612_293_1"
+          },
+          "type": "hcom_allGather_",
+          "start_skew_ms": 15.30227,
+          "end_skew_ms": 0.23242,
+          "envelope_ms": 16.97548,
+          "last_start_to_last_end_ms": 1.67321,
+          "latest_start_rank": "rank2",
+          "earliest_start_rank": "rank4",
+          "rank_durations_ms": {
+            "rank0": 16.75998,
+            "rank1": 16.7616,
+            "rank2": 1.47572,
+            "rank3": 16.694054,
+            "rank4": 16.74306,
+            "rank5": 16.829516,
+            "rank6": 12.69982,
+            "rank7": 16.860276
+          }
+        },
+        {
+          "step": "121",
+          "normalized_position": 291,
+          "rank_names": {
+            "rank0": "hcom_allGather__612_297_1",
+            "rank1": "hcom_allGather__612_298_1",
+            "rank2": "hcom_allGather__612_299_1",
+            "rank3": "hcom_allGather__612_297_1",
+            "rank4": "hcom_allGather__612_299_1",
+            "rank5": "hcom_allGather__612_297_1",
+            "rank6": "hcom_allGather__612_299_1",
+            "rank7": "hcom_allGather__612_299_1"
+          },
+          "type": "hcom_allGather_",
+          "start_skew_ms": 15.26971,
+          "end_skew_ms": 0.267744,
+          "envelope_ms": 16.950204,
+          "last_start_to_last_end_ms": 1.680494,
+          "latest_start_rank": "rank2",
+          "earliest_start_rank": "rank0",
+          "rank_durations_ms": {
+            "rank0": 16.732,
+            "rank1": 16.71436,
+            "rank2": 1.5158,
+            "rank3": 16.769836,
+            "rank4": 16.77046,
+            "rank5": 16.777316,
+            "rank6": 11.65904,
+            "rank7": 16.691554
+          }
+        },
+        {
+          "step": "121",
+          "normalized_position": 289,
+          "rank_names": {
+            "rank0": "hcom_allGather__612_295_1",
+            "rank1": "hcom_allGather__612_296_1",
+            "rank2": "hcom_allGather__612_297_1",
+            "rank3": "hcom_allGather__612_295_1",
+            "rank4": "hcom_allGather__612_297_1",
+            "rank5": "hcom_allGather__612_295_1",
+            "rank6": "hcom_allGather__612_297_1",
+            "rank7": "hcom_allGather__612_297_1"
+          },
+          "type": "hcom_allGather_",
+          "start_skew_ms": 15.17889,
+          "end_skew_ms": 0.245416,
+          "envelope_ms": 16.853236,
+          "last_start_to_last_end_ms": 1.674346,
+          "latest_start_rank": "rank2",
+          "earliest_start_rank": "rank0",
+          "rank_durations_ms": {
+            "rank0": 16.69014,
+            "rank1": 16.69024,
+            "rank2": 1.4737,
+            "rank3": 16.664814,
+            "rank4": 16.6297,
+            "rank5": 16.643012,
+            "rank6": 11.75262,
+            "rank7": 16.628092
+          }
+        },
+        {
+          "step": "121",
+          "normalized_position": 287,
+          "rank_names": {
+            "rank0": "hcom_allGather__612_293_1",
+            "rank1": "hcom_allGather__612_294_1",
+            "rank2": "hcom_allGather__612_295_1",
+            "rank3": "hcom_allGather__612_293_1",
+            "rank4": "hcom_allGather__612_295_1",
+            "rank5": "hcom_allGather__612_293_1",
+            "rank6": "hcom_allGather__612_295_1",
+            "rank7": "hcom_allGather__612_295_1"
+          },
+          "type": "hcom_allGather_",
+          "start_skew_ms": 15.16655,
+          "end_skew_ms": 0.294568,
+          "envelope_ms": 16.915628,
+          "last_start_to_last_end_ms": 1.749078,
+          "latest_start_rank": "rank2",
+          "earliest_start_rank": "rank4",
+          "rank_durations_ms": {
+            "rank0": 16.59664,
+            "rank1": 16.59822,
+            "rank2": 1.5817,
+            "rank3": 16.734276,
+            "rank4": 16.7369,
+            "rank5": 16.736574,
+            "rank6": 12.09978,
+            "rank7": 16.59303
+          }
+        },
+        {
+          "step": "121",
+          "normalized_position": 293,
+          "rank_names": {
+            "rank0": "hcom_allGather__612_299_1",
+            "rank1": "hcom_allGather__612_300_1",
+            "rank2": "hcom_allGather__612_301_1",
+            "rank3": "hcom_allGather__612_299_1",
+            "rank4": "hcom_allGather__612_301_1",
+            "rank5": "hcom_allGather__612_299_1",
+            "rank6": "hcom_allGather__612_301_1",
+            "rank7": "hcom_allGather__612_301_1"
+          },
+          "type": "hcom_allGather_",
+          "start_skew_ms": 15.09237,
+          "end_skew_ms": 0.207968,
+          "envelope_ms": 16.811808,
+          "last_start_to_last_end_ms": 1.719438,
+          "latest_start_rank": "rank2",
+          "earliest_start_rank": "rank4",
+          "rank_durations_ms": {
+            "rank0": 16.51742,
+            "rank1": 16.51786,
+            "rank2": 1.55258,
+            "rank3": 16.591032,
+            "rank4": 16.63396,
+            "rank5": 16.694334,
+            "rank6": 11.52138,
+            "rank7": 16.640572
+          }
+        },
+        {
+          "step": "121",
+          "normalized_position": 305,
+          "rank_names": {
+            "rank0": "hcom_allGather__612_311_1",
+            "rank1": "hcom_allGather__612_312_1",
+            "rank2": "hcom_allGather__612_313_1",
+            "rank3": "hcom_allGather__612_311_1",
+            "rank4": "hcom_allGather__612_313_1",
+            "rank5": "hcom_allGather__612_311_1",
+            "rank6": "hcom_allGather__612_313_1",
+            "rank7": "hcom_allGather__612_313_1"
+          },
+          "type": "hcom_allGather_",
+          "start_skew_ms": 15.06009,
+          "end_skew_ms": 0.222656,
+          "envelope_ms": 16.728546,
+          "last_start_to_last_end_ms": 1.668456,
+          "latest_start_rank": "rank2",
+          "earliest_start_rank": "rank4",
+          "rank_durations_ms": {
+            "rank0": 16.5247,
+            "rank1": 16.5256,
+            "rank2": 1.4458,
+            "rank3": 16.53805,
+            "rank4": 16.51316,
+            "rank5": 16.495468,
+            "rank6": 12.6872,
+            "rank7": 16.48297
+          }
+        },
+        {
+          "step": "121",
+          "normalized_position": 303,
+          "rank_names": {
+            "rank0": "hcom_allGather__612_309_1",
+            "rank1": "hcom_allGather__612_310_1",
+            "rank2": "hcom_allGather__612_311_1",
+            "rank3": "hcom_allGather__612_309_1",
+            "rank4": "hcom_allGather__612_311_1",
+            "rank5": "hcom_allGather__612_309_1",
+            "rank6": "hcom_allGather__612_311_1",
+            "rank7": "hcom_allGather__612_311_1"
+          },
+          "type": "hcom_allGather_",
+          "start_skew_ms": 15.05403,
+          "end_skew_ms": 0.180336,
+          "envelope_ms": 16.672576,
+          "last_start_to_last_end_ms": 1.618546,
+          "latest_start_rank": "rank2",
+          "earliest_start_rank": "rank0",
+          "rank_durations_ms": {
+            "rank0": 16.50476,
+            "rank1": 16.50424,
+            "rank2": 1.4492,
+            "rank3": 16.488788,
+            "rank4": 16.49012,
+            "rank5": 16.507868,
+            "rank6": 12.32688,
+            "rank7": 16.531048
+          }
+        },
+        {
+          "step": "121",
+          "normalized_position": 279,
+          "rank_names": {
+            "rank0": "hcom_allGather__612_285_1",
+            "rank1": "hcom_allGather__612_286_1",
+            "rank2": "hcom_allGather__612_287_1",
+            "rank3": "hcom_allGather__612_285_1",
+            "rank4": "hcom_allGather__612_287_1",
+            "rank5": "hcom_allGather__612_285_1",
+            "rank6": "hcom_allGather__612_287_1",
+            "rank7": "hcom_allGather__612_287_1"
+          },
+          "type": "hcom_allGather_",
+          "start_skew_ms": 15.0379,
+          "end_skew_ms": 0.27137,
+          "envelope_ms": 16.75699,
+          "last_start_to_last_end_ms": 1.71909,
+          "latest_start_rank": "rank2",
+          "earliest_start_rank": "rank1",
+          "rank_durations_ms": {
+            "rank0": 16.44906,
+            "rank1": 16.4947,
+            "rank2": 1.44772,
+            "rank3": 16.295244,
+            "rank4": 16.57814,
+            "rank5": 16.51791,
+            "rank6": 11.95706,
+            "rank7": 16.47729
+          }
+        },
+        {
+          "step": "121",
+          "normalized_position": 281,
+          "rank_names": {
+            "rank0": "hcom_allGather__612_287_1",
+            "rank1": "hcom_allGather__612_288_1",
+            "rank2": "hcom_allGather__612_289_1",
+            "rank3": "hcom_allGather__612_287_1",
+            "rank4": "hcom_allGather__612_289_1",
+            "rank5": "hcom_allGather__612_287_1",
+            "rank6": "hcom_allGather__612_289_1",
+            "rank7": "hcom_allGather__612_289_1"
+          },
+          "type": "hcom_allGather_",
+          "start_skew_ms": 14.98145,
+          "end_skew_ms": 0.24054,
+          "envelope_ms": 16.62608,
+          "last_start_to_last_end_ms": 1.64463,
+          "latest_start_rank": "rank2",
+          "earliest_start_rank": "rank4",
+          "rank_durations_ms": {
+            "rank0": 16.32824,
+            "rank1": 16.36086,
+            "rank2": 1.43732,
+            "rank3": 16.412188,
+            "rank4": 16.447,
+            "rank5": 16.456428,
+            "rank6": 12.20244,
+            "rank7": 16.426428
+          }
+        },
+        {
+          "step": "121",
+          "normalized_position": 307,
+          "rank_names": {
+            "rank0": "hcom_allGather__612_313_1",
+            "rank1": "hcom_allGather__612_314_1",
+            "rank2": "hcom_allGather__612_315_1",
+            "rank3": "hcom_allGather__612_313_1",
+            "rank4": "hcom_allGather__612_315_1",
+            "rank5": "hcom_allGather__612_313_1",
+            "rank6": "hcom_allGather__612_315_1",
+            "rank7": "hcom_allGather__612_315_1"
+          },
+          "type": "hcom_allGather_",
+          "start_skew_ms": 14.94629,
+          "end_skew_ms": 0.237058,
+          "envelope_ms": 16.615048,
+          "last_start_to_last_end_ms": 1.668758,
+          "latest_start_rank": "rank2",
+          "earliest_start_rank": "rank0",
+          "rank_durations_ms": {
+            "rank0": 16.38542,
+            "rank1": 16.34574,
+            "rank2": 1.4317,
+            "rank3": 16.313446,
+            "rank4": 16.30468,
+            "rank5": 16.371646,
+            "rank6": 12.49888,
+            "rank7": 16.400668
+          }
+        },
+        {
+          "step": "121",
+          "normalized_position": 277,
+          "rank_names": {
+            "rank0": "hcom_allGather__612_283_1",
+            "rank1": "hcom_allGather__612_284_1",
+            "rank2": "hcom_allGather__612_285_1",
+            "rank3": "hcom_allGather__612_283_1",
+            "rank4": "hcom_allGather__612_285_1",
+            "rank5": "hcom_allGather__612_283_1",
+            "rank6": "hcom_allGather__612_285_1",
+            "rank7": "hcom_allGather__612_285_1"
+          },
+          "type": "hcom_allGather_",
+          "start_skew_ms": 14.9454,
+          "end_skew_ms": 0.289852,
+          "envelope_ms": 16.639262,
+          "last_start_to_last_end_ms": 1.693862,
+          "latest_start_rank": "rank2",
+          "earliest_start_rank": "rank1",
+          "rank_durations_ms": {
+            "rank0": 15.82406,
+            "rank1": 16.4172,
+            "rank2": 1.4622,
+            "rank3": 15.161224,
+            "rank4": 16.4012,
+            "rank5": 16.416928,
+            "rank6": 11.44582,
+            "rank7": 16.403228
+          }
+        },
+        {
+          "step": "121",
+          "normalized_position": 295,
+          "rank_names": {
+            "rank0": "hcom_allGather__612_301_1",
+            "rank1": "hcom_allGather__612_302_1",
+            "rank2": "hcom_allGather__612_303_1",
+            "rank3": "hcom_allGather__612_301_1",
+            "rank4": "hcom_allGather__612_303_1",
+            "rank5": "hcom_allGather__612_301_1",
+            "rank6": "hcom_allGather__612_303_1",
+            "rank7": "hcom_allGather__612_303_1"
+          },
+          "type": "hcom_allGather_",
+          "start_skew_ms": 14.90351,
+          "end_skew_ms": 0.238498,
+          "envelope_ms": 16.528668,
+          "last_start_to_last_end_ms": 1.625158,
+          "latest_start_rank": "rank2",
+          "earliest_start_rank": "rank0",
+          "rank_durations_ms": {
+            "rank0": 16.34814,
+            "rank1": 16.27232,
+            "rank2": 1.45824,
+            "rank3": 16.233324,
+            "rank4": 16.23516,
+            "rank5": 16.308028,
+            "rank6": 11.62554,
+            "rank7": 16.312128
+          }
+        },
+        {
+          "step": "121",
+          "normalized_position": 301,
+          "rank_names": {
+            "rank0": "hcom_allGather__612_307_1",
+            "rank1": "hcom_allGather__612_308_1",
+            "rank2": "hcom_allGather__612_309_1",
+            "rank3": "hcom_allGather__612_307_1",
+            "rank4": "hcom_allGather__612_309_1",
+            "rank5": "hcom_allGather__612_307_1",
+            "rank6": "hcom_allGather__612_309_1",
+            "rank7": "hcom_allGather__612_309_1"
+          },
+          "type": "hcom_allGather_",
+          "start_skew_ms": 14.88554,
+          "end_skew_ms": 0.245782,
+          "envelope_ms": 16.531742,
+          "last_start_to_last_end_ms": 1.646202,
+          "latest_start_rank": "rank2",
+          "earliest_start_rank": "rank1",
+          "rank_durations_ms": {
+            "rank0": 16.2228,
+            "rank1": 16.28596,
+            "rank2": 1.47738,
+            "rank3": 16.284506,
+            "rank4": 16.2908,
+            "rank5": 16.303386,
+            "rank6": 11.9556,
+            "rank7": 16.257824
+          }
+        },
+        {
+          "step": "121",
+          "normalized_position": 299,
+          "rank_names": {
+            "rank0": "hcom_allGather__612_305_1",
+            "rank1": "hcom_allGather__612_306_1",
+            "rank2": "hcom_allGather__612_307_1",
+            "rank3": "hcom_allGather__612_305_1",
+            "rank4": "hcom_allGather__612_307_1",
+            "rank5": "hcom_allGather__612_305_1",
+            "rank6": "hcom_allGather__612_307_1",
+            "rank7": "hcom_allGather__612_307_1"
+          },
+          "type": "hcom_allGather_",
+          "start_skew_ms": 14.88415,
+          "end_skew_ms": 0.215578,
+          "envelope_ms": 16.536518,
+          "last_start_to_last_end_ms": 1.652368,
+          "latest_start_rank": "rank2",
+          "earliest_start_rank": "rank4",
+          "rank_durations_ms": {
+            "rank0": 16.3499,
+            "rank1": 16.32112,
+            "rank2": 1.44712,
+            "rank3": 16.322106,
+            "rank4": 16.32094,
+            "rank5": 16.322466,
+            "rank6": 11.8601,
+            "rank7": 16.338246
+          }
+        },
+        {
+          "step": "121",
+          "normalized_position": 309,
+          "rank_names": {
+            "rank0": "hcom_allGather__612_315_1",
+            "rank1": "hcom_allGather__612_316_1",
+            "rank2": "hcom_allGather__612_317_1",
+            "rank3": "hcom_allGather__612_315_1",
+            "rank4": "hcom_allGather__612_317_1",
+            "rank5": "hcom_allGather__612_315_1",
+            "rank6": "hcom_allGather__612_317_1",
+            "rank7": "hcom_allGather__612_317_1"
+          },
+          "type": "hcom_allGather_",
+          "start_skew_ms": 14.83605,
+          "end_skew_ms": 0.249172,
+          "envelope_ms": 16.483742,
+          "last_start_to_last_end_ms": 1.647692,
+          "latest_start_rank": "rank2",
+          "earliest_start_rank": "rank0",
+          "rank_durations_ms": {
+            "rank0": 16.24134,
+            "rank1": 16.23256,
+            "rank2": 1.43462,
+            "rank3": 16.266784,
+            "rank4": 16.27038,
+            "rank5": 16.285286,
+            "rank6": 12.64882,
+            "rank7": 16.301766
+          }
+        },
+        {
+          "step": "121",
+          "normalized_position": 323,
+          "rank_names": {
+            "rank0": "hcom_allGather__612_329_1",
+            "rank1": "hcom_allGather__612_330_1",
+            "rank2": "hcom_allGather__612_331_1",
+            "rank3": "hcom_allGather__612_329_1",
+            "rank4": "hcom_allGather__612_331_1",
+            "rank5": "hcom_allGather__612_329_1",
+            "rank6": "hcom_allGather__612_331_1",
+            "rank7": "hcom_allGather__612_331_1"
+          },
+          "type": "hcom_allGather_",
+          "start_skew_ms": 14.82757,
+          "end_skew_ms": 0.25468,
+          "envelope_ms": 16.48109,
+          "last_start_to_last_end_ms": 1.65352,
+          "latest_start_rank": "rank2",
+          "earliest_start_rank": "rank0",
+          "rank_durations_ms": {
+            "rank0": 16.2309,
+            "rank1": 16.2196,
+            "rank2": 1.4783,
+            "rank3": 16.166162,
+            "rank4": 16.16708,
+            "rank5": 16.218724,
+            "rank6": 12.93654,
+            "rank7": 16.237404
+          }
+        },
+        {
+          "step": "121",
+          "normalized_position": 321,
+          "rank_names": {
+            "rank0": "hcom_allGather__612_327_1",
+            "rank1": "hcom_allGather__612_328_1",
+            "rank2": "hcom_allGather__612_329_1",
+            "rank3": "hcom_allGather__612_327_1",
+            "rank4": "hcom_allGather__612_329_1",
+            "rank5": "hcom_allGather__612_327_1",
+            "rank6": "hcom_allGather__612_329_1",
+            "rank7": "hcom_allGather__612_329_1"
+          },
+          "type": "hcom_allGather_",
+          "start_skew_ms": 14.7735,
+          "end_skew_ms": 0.211494,
+          "envelope_ms": 16.393284,
+          "last_start_to_last_end_ms": 1.619784,
+          "latest_start_rank": "rank2",
+          "earliest_start_rank": "rank1",
+          "rank_durations_ms": {
+            "rank0": 16.156,
+            "rank1": 16.21058,
+            "rank2": 1.43558,
+            "rank3": 16.101882,
+            "rank4": 16.20938,
+            "rank5": 16.189562,
+            "rank6": 12.8707,
+            "rank7": 16.187722
+          }
+        },
+        {
+          "step": "121",
+          "normalized_position": 297,
+          "rank_names": {
+            "rank0": "hcom_allGather__612_303_1",
+            "rank1": "hcom_allGather__612_304_1",
+            "rank2": "hcom_allGather__612_305_1",
+            "rank3": "hcom_allGather__612_303_1",
+            "rank4": "hcom_allGather__612_305_1",
+            "rank5": "hcom_allGather__612_303_1",
+            "rank6": "hcom_allGather__612_305_1",
+            "rank7": "hcom_allGather__612_305_1"
+          },
+          "type": "hcom_allGather_",
+          "start_skew_ms": 14.75611,
+          "end_skew_ms": 0.236252,
+          "envelope_ms": 16.441232,
+          "last_start_to_last_end_ms": 1.685122,
+          "latest_start_rank": "rank2",
+          "earliest_start_rank": "rank4",
+          "rank_durations_ms": {
+            "rank0": 16.18832,
+            "rank1": 16.1892,
+            "rank2": 1.47656,
+            "rank3": 16.217984,
+            "rank4": 16.26332,
+            "rank5": 16.318388,
+            "rank6": 11.75546,
+            "rank7": 16.179262
+          }
+        },
+        {
+          "step": "121",
+          "normalized_position": 317,
+          "rank_names": {
+            "rank0": "hcom_allGather__612_323_1",
+            "rank1": "hcom_allGather__612_324_1",
+            "rank2": "hcom_allGather__612_325_1",
+            "rank3": "hcom_allGather__612_323_1",
+            "rank4": "hcom_allGather__612_325_1",
+            "rank5": "hcom_allGather__612_323_1",
+            "rank6": "hcom_allGather__612_325_1",
+            "rank7": "hcom_allGather__612_325_1"
+          },
+          "type": "hcom_allGather_",
+          "start_skew_ms": 14.71721,
+          "end_skew_ms": 0.20705,
+          "envelope_ms": 16.44773,
+          "last_start_to_last_end_ms": 1.73052,
+          "latest_start_rank": "rank2",
+          "earliest_start_rank": "rank0",
+          "rank_durations_ms": {
+            "rank0": 16.2793,
+            "rank1": 16.2699,
+            "rank2": 1.53442,
+            "rank3": 16.185182,
+            "rank4": 16.16054,
+            "rank5": 16.212064,
+            "rank6": 12.70344,
+            "rank7": 16.135302
+          }
+        }
+      ],
+      "by_type": {
+        "hcom_allGather_": {
+          "count": 696,
+          "mean_start_skew_ms": 4.837271077586207,
+          "mean_last_start_to_last_end_ms": 1.6653716264367817
+        },
+        "hcom_allReduce_": {
+          "count": 24,
+          "mean_start_skew_ms": 15.940395166666667,
+          "mean_last_start_to_last_end_ms": 0.12914083333333334
+        },
+        "hcom_reduceScatter_": {
+          "count": 296,
+          "mean_start_skew_ms": 6.986158560810811,
+          "mean_last_start_to_last_end_ms": 2.378406135135135
+        }
+      },
+      "limits": "Sequence identity is inferred and must be checked against communication group/payload before strong causal claims. Cross-device timestamps use profiler clock alignment. Arrival skew is not exact blocked time; transfer may overlap arrivals. Last-start-to-last-end includes communication execution/synchronization and is not pure wire time. Never sum per-collective envelopes as elapsed step time.",
+      "payload_validation": {
+        "all_sequence_types_steps_match": true,
+        "payload_counts": {
+          "same_group": 1016,
+          "same_hccs_payload_all8": 637,
+          "same_nonzero_payload_with_missing_zero": 378,
+          "different_nonzero_payload": 1
+        },
+        "different_nonzero_payload_examples": [
+          {
+            "index": 508,
+            "type": "hcom_allGather_",
+            "sizes": {
+              "rank0": 238.931982,
+              "rank1": 209.698816,
+              "rank2": 209.698816,
+              "rank3": 209.698816,
+              "rank4": 209.698816,
+              "rank5": 209.698816,
+              "rank6": 209.698816,
+              "rank7": 209.698816
+            }
+          }
+        ]
+      },
+      "exclude_first_capture_step": {
+        "count": 762,
+        "start_median_ms": 3.967794,
+        "start_p90_ms": 11.54815,
+        "start_max_ms": 126.072276,
+        "end_median_ms": 0.32845100000000005,
+        "end_max_ms": 2.153506
+      },
+      "detailed_artifact": "../cross_rank_sequence_diagnostic.json"
+    }
+  },
+  "per_rank_files": {
+    "rank0": "rank0.json",
+    "rank1": "rank1.json",
+    "rank2": "rank2.json",
+    "rank3": "rank3.json",
+    "rank4": "rank4.json",
+    "rank5": "rank5.json",
+    "rank6": "rank6.json",
+    "rank7": "rank7.json"
+  }
+}

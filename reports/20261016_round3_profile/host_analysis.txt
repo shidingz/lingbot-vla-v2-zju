@@ -1,0 +1,53 @@
+Low-rate Python host stack sampling (20 Hz, 30 seconds, ranks 0/4)
+Percentages below include idle/blocking time and are not NPU or CPU utilization.
+Excluded training steps: [50, 64]
+
+Rank 0: 460 main-thread samples (23.000s weighted)
+Collection quality: 139 failed cycles; 76.8% retained. Omission may be biased; this is not utilization.
+  train.backward: 31.09%
+  train.forward: 25.43%
+  train.teachers: 18.48%
+  train.optimizer: 13.48%
+  outside_named_train_stage: 5.00%
+  train.clip_grad: 3.48%
+  train.scalar_reads: 1.74%
+  unknown_empty_stack: 0.87%
+  train.post_step_sync: 0.43%
+Top leaves:
+  31.09% /home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/autograd/graph.py:823:_engine_run_backward
+  11.52% /home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch_npu/contrib/transfer_to_npu.py:161:decorated
+  2.39% /cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/MoGe/moge/utils/geometry_numpy.py:85:fn
+  1.74% /cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:969:main
+  1.74% /cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/muon.py:551:_step_megabatch_chunk
+  1.74% /cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1035:main
+  1.74% /home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/linear.py:125:forward
+  1.30% /home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/scipy/optimize/_lsq/least_squares.py:63:call_minpack
+  1.09% /home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/_ops.py:723:__call__
+  1.09% /cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/models/vla/vision_models/MoGe/moge/utils/geometry_numpy.py:86:fn
+  1.09% /cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/muon.py:119:batched_newton_schulz
+  1.09% /cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/muon.py:107:batched_newton_schulz
+
+Rank 4: 484 main-thread samples (24.200s weighted)
+Collection quality: 115 failed cycles; 80.8% retained. Omission may be biased; this is not utilization.
+  train.forward: 30.58%
+  train.backward: 27.89%
+  train.teachers: 18.39%
+  train.optimizer: 11.36%
+  outside_named_train_stage: 5.17%
+  train.clip_grad: 3.31%
+  train.scalar_reads: 1.86%
+  unknown_empty_stack: 1.24%
+  train.data_wait: 0.21%
+Top leaves:
+  27.89% /home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/autograd/graph.py:823:_engine_run_backward
+  10.74% /home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch_npu/contrib/transfer_to_npu.py:161:decorated
+  1.86% /cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:969:main
+  1.86% /home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/_ops.py:723:__call__
+  1.86% /home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/modules/linear.py:125:forward
+  1.65% /cache/lingbot/profiling/round3_profile_20261016_195822/source/tasks/vla/train_lingbotvla.py:1035:main
+  1.24% /cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/muon.py:488:_step_megabatch_chunk
+  1.24% /home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/_ops.py:1123:__call__
+  1.03% /home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/_tensor.py:1106:__floordiv__
+  1.03% /home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py:881:_deepstack_process
+  1.03% /cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/muon.py:107:batched_newton_schulz
+  1.03% /cache/lingbot/profiling/round3_profile_20261016_195822/source/lingbotvla/optim/muon.py:553:_step_megabatch_chunk

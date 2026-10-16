@@ -1,0 +1,863 @@
+{
+  "scope": "8 ranks x 4 captured steps; profiler IDs120–123 correspond to training updates121–124. Profiled timing, not unprofiled wall time.",
+  "official_mean_seconds": {
+    "Bubble_s": 0.0,
+    "Communication(Not Overlapped and Exclude Receive)_s": 0.990097523000081,
+    "Communication(Not Overlapped)_s": 0.990097523000081,
+    "Communication_s": 1.406159833875,
+    "Computing_s": 1.4388365486249906,
+    "Free_s": 0.988552354875325,
+    "Overlapped_s": 0.41606231087491896,
+    "Preparing_s": 0.00884021875,
+    "Stage_s": 3.4181452421875
+  },
+  "kernel_calls_per_rank_step": 42602.25,
+  "noncomm_kernel_under50us_fraction": 0.8803817158914476,
+  "noncomm_kernel_rank_median_duration_us_mean": 11.865,
+  "kernel_types": [
+    {
+      "name": "hcom_allGather_",
+      "rank_count": 8,
+      "calls_per_step_mean": 174.0,
+      "duration_sum_s_per_step_mean": 0.8067816936875
+    },
+    {
+      "name": "hcom_reduceScatter_",
+      "rank_count": 8,
+      "calls_per_step_mean": 74.0,
+      "duration_sum_s_per_step_mean": 0.5426350284375
+    },
+    {
+      "name": "MatMulV3",
+      "rank_count": 8,
+      "calls_per_step_mean": 884.0,
+      "duration_sum_s_per_step_mean": 0.24201938
+    },
+    {
+      "name": "BatchMatMulV2",
+      "rank_count": 8,
+      "calls_per_step_mean": 2115.0,
+      "duration_sum_s_per_step_mean": 0.1463424073125
+    },
+    {
+      "name": "Slice",
+      "rank_count": 8,
+      "calls_per_step_mean": 4022.0,
+      "duration_sum_s_per_step_mean": 0.111000963375
+    },
+    {
+      "name": "Mul",
+      "rank_count": 8,
+      "calls_per_step_mean": 5529.0,
+      "duration_sum_s_per_step_mean": 0.1037107244375
+    },
+    {
+      "name": "Cast",
+      "rank_count": 8,
+      "calls_per_step_mean": 6171.0,
+      "duration_sum_s_per_step_mean": 0.0819572741875
+    },
+    {
+      "name": "Add",
+      "rank_count": 8,
+      "calls_per_step_mean": 3072.0,
+      "duration_sum_s_per_step_mean": 0.07677311275
+    },
+    {
+      "name": "FlashAttentionScoreGrad",
+      "rank_count": 8,
+      "calls_per_step_mean": 36.0,
+      "duration_sum_s_per_step_mean": 0.071927123125
+    },
+    {
+      "name": "Transpose",
+      "rank_count": 8,
+      "calls_per_step_mean": 1403.0,
+      "duration_sum_s_per_step_mean": 0.0594644325625
+    },
+    {
+      "name": "hcom_allReduce_",
+      "rank_count": 8,
+      "calls_per_step_mean": 6.0,
+      "duration_sum_s_per_step_mean": 0.05674311175
+    },
+    {
+      "name": "FlashAttentionScore",
+      "rank_count": 8,
+      "calls_per_step_mean": 132.0,
+      "duration_sum_s_per_step_mean": 0.039507691375
+    },
+    {
+      "name": "MatMulV2",
+      "rank_count": 8,
+      "calls_per_step_mean": 1381.0,
+      "duration_sum_s_per_step_mean": 0.0392163200625
+    },
+    {
+      "name": "SelectV2",
+      "rank_count": 8,
+      "calls_per_step_mean": 134.0,
+      "duration_sum_s_per_step_mean": 0.036981021875
+    },
+    {
+      "name": "Pow",
+      "rank_count": 8,
+      "calls_per_step_mean": 257.0,
+      "duration_sum_s_per_step_mean": 0.03337119025
+    },
+    {
+      "name": "ViewCopy",
+      "rank_count": 8,
+      "calls_per_step_mean": 317.0,
+      "duration_sum_s_per_step_mean": 0.029538926125
+    },
+    {
+      "name": "ConcatD",
+      "rank_count": 8,
+      "calls_per_step_mean": 533.0,
+      "duration_sum_s_per_step_mean": 0.028995602875000002
+    },
+    {
+      "name": "ReduceSum",
+      "rank_count": 8,
+      "calls_per_step_mean": 1119.0,
+      "duration_sum_s_per_step_mean": 0.02808829825
+    },
+    {
+      "name": "SoftmaxV2",
+      "rank_count": 8,
+      "calls_per_step_mean": 64.0,
+      "duration_sum_s_per_step_mean": 0.0252268608125
+    },
+    {
+      "name": "MemSet",
+      "rank_count": 8,
+      "calls_per_step_mean": 1198.125,
+      "duration_sum_s_per_step_mean": 0.020443835625
+    },
+    {
+      "name": "LayerNormV3",
+      "rank_count": 8,
+      "calls_per_step_mean": 308.0,
+      "duration_sum_s_per_step_mean": 0.0162620123125
+    },
+    {
+      "name": "Lerp",
+      "rank_count": 8,
+      "calls_per_step_mean": 1166.0,
+      "duration_sum_s_per_step_mean": 0.0157441065625
+    },
+    {
+      "name": "Muls",
+      "rank_count": 8,
+      "calls_per_step_mean": 1376.0,
+      "duration_sum_s_per_step_mean": 0.0147784945
+    },
+    {
+      "name": "RealDiv",
+      "rank_count": 8,
+      "calls_per_step_mean": 828.0,
+      "duration_sum_s_per_step_mean": 0.0137923275
+    },
+    {
+      "name": "Axpy",
+      "rank_count": 8,
+      "calls_per_step_mean": 1263.0,
+      "duration_sum_s_per_step_mean": 0.0127342644375
+    },
+    {
+      "name": "IsNegInf",
+      "rank_count": 8,
+      "calls_per_step_mean": 24.0,
+      "duration_sum_s_per_step_mean": 0.012729777375000001
+    },
+    {
+      "name": "Gelu",
+      "rank_count": 8,
+      "calls_per_step_mean": 128.0,
+      "duration_sum_s_per_step_mean": 0.0123535605
+    },
+    {
+      "name": "ZerosLike",
+      "rank_count": 8,
+      "calls_per_step_mean": 620.0,
+      "duration_sum_s_per_step_mean": 0.0111743033125
+    },
+    {
+      "name": "Conv2D",
+      "rank_count": 8,
+      "calls_per_step_mean": 145.0,
+      "duration_sum_s_per_step_mean": 0.0094008108125
+    },
+    {
+      "name": "TensorMove",
+      "rank_count": 8,
+      "calls_per_step_mean": 538.0,
+      "duration_sum_s_per_step_mean": 0.009284860625
+    },
+    {
+      "name": "ForeachCopy",
+      "rank_count": 8,
+      "calls_per_step_mean": 154.0,
+      "duration_sum_s_per_step_mean": 0.00859875425
+    },
+    {
+      "name": "TransData",
+      "rank_count": 8,
+      "calls_per_step_mean": 419.0,
+      "duration_sum_s_per_step_mean": 0.00824053025
+    },
+    {
+      "name": "SiluGrad",
+      "rank_count": 8,
+      "calls_per_step_mean": 109.0,
+      "duration_sum_s_per_step_mean": 0.007947354125
+    },
+    {
+      "name": "ReduceMean",
+      "rank_count": 8,
+      "calls_per_step_mean": 464.0,
+      "duration_sum_s_per_step_mean": 0.00781586725
+    },
+    {
+      "name": "GroupedMatmulAdd",
+      "rank_count": 8,
+      "calls_per_step_mean": 108.0,
+      "duration_sum_s_per_step_mean": 0.0075355445
+    },
+    {
+      "name": "BroadcastTo",
+      "rank_count": 8,
+      "calls_per_step_mean": 638.0,
+      "duration_sum_s_per_step_mean": 0.0072520543125
+    },
+    {
+      "name": "Pows",
+      "rank_count": 8,
+      "calls_per_step_mean": 476.0,
+      "duration_sum_s_per_step_mean": 0.0068480206875
+    },
+    {
+      "name": "GroupedMatmul",
+      "rank_count": 8,
+      "calls_per_step_mean": 216.0,
+      "duration_sum_s_per_step_mean": 0.0064039866875
+    },
+    {
+      "name": "RepeatInterleave",
+      "rank_count": 8,
+      "calls_per_step_mean": 39.0,
+      "duration_sum_s_per_step_mean": 0.006032657625
+    },
+    {
+      "name": "FloorDiv",
+      "rank_count": 8,
+      "calls_per_step_mean": 181.0,
+      "duration_sum_s_per_step_mean": 0.0059385230625
+    },
+    {
+      "name": "PadV3",
+      "rank_count": 8,
+      "calls_per_step_mean": 90.125,
+      "duration_sum_s_per_step_mean": 0.005076353125
+    },
+    {
+      "name": "ResizeBilinearV2",
+      "rank_count": 8,
+      "calls_per_step_mean": 14.0,
+      "duration_sum_s_per_step_mean": 0.00505468425
+    },
+    {
+      "name": "AsStrided",
+      "rank_count": 8,
+      "calls_per_step_mean": 224.0,
+      "duration_sum_s_per_step_mean": 0.00499636075
+    },
+    {
+      "name": "ReduceAll",
+      "rank_count": 8,
+      "calls_per_step_mean": 25.0,
+      "duration_sum_s_per_step_mean": 0.00455072325
+    },
+    {
+      "name": "LayerNormV4",
+      "rank_count": 8,
+      "calls_per_step_mean": 56.0,
+      "duration_sum_s_per_step_mean": 0.0039914813125
+    },
+    {
+      "name": "LpNormV2",
+      "rank_count": 8,
+      "calls_per_step_mean": 145.0,
+      "duration_sum_s_per_step_mean": 0.0038560023125
+    },
+    {
+      "name": "Neg",
+      "rank_count": 8,
+      "calls_per_step_mean": 319.0,
+      "duration_sum_s_per_step_mean": 0.0036390948125
+    },
+    {
+      "name": "Swish",
+      "rank_count": 8,
+      "calls_per_step_mean": 109.0,
+      "duration_sum_s_per_step_mean": 0.0036304014375
+    },
+    {
+      "name": "Index",
+      "rank_count": 8,
+      "calls_per_step_mean": 109.0,
+      "duration_sum_s_per_step_mean": 0.0031980551875
+    },
+    {
+      "name": "NonZero",
+      "rank_count": 8,
+      "calls_per_step_mean": 66.0,
+      "duration_sum_s_per_step_mean": 0.0027996715625
+    },
+    {
+      "name": "IndexPutV2",
+      "rank_count": 8,
+      "calls_per_step_mean": 84.0,
+      "duration_sum_s_per_step_mean": 0.0025729216250000003
+    },
+    {
+      "name": "GatherElements",
+      "rank_count": 8,
+      "calls_per_step_mean": 73.0,
+      "duration_sum_s_per_step_mean": 0.0022114900625
+    },
+    {
+      "name": "Pack",
+      "rank_count": 8,
+      "calls_per_step_mean": 154.0,
+      "duration_sum_s_per_step_mean": 0.002084903125
+    },
+    {
+      "name": "TopKV2",
+      "rank_count": 8,
+      "calls_per_step_mean": 74.0,
+      "duration_sum_s_per_step_mean": 0.0020250234375
+    },
+    {
+      "name": "ForeachNorm",
+      "rank_count": 8,
+      "calls_per_step_mean": 40.0,
+      "duration_sum_s_per_step_mean": 0.001742700125
+    },
+    {
+      "name": "Conv2DTranspose",
+      "rank_count": 8,
+      "calls_per_step_mean": 24.0,
+      "duration_sum_s_per_step_mean": 0.0015758301875
+    },
+    {
+      "name": "IndexPut",
+      "rank_count": 8,
+      "calls_per_step_mean": 12.0,
+      "duration_sum_s_per_step_mean": 0.0015168831875
+    },
+    {
+      "name": "LayerNormGradV3",
+      "rank_count": 8,
+      "calls_per_step_mean": 16.0,
+      "duration_sum_s_per_step_mean": 0.001410025375
+    },
+    {
+      "name": "Cumsum",
+      "rank_count": 8,
+      "calls_per_step_mean": 42.0,
+      "duration_sum_s_per_step_mean": 0.00133286175
+    },
+    {
+      "name": "StridedSlice",
+      "rank_count": 8,
+      "calls_per_step_mean": 80.0,
+      "duration_sum_s_per_step_mean": 0.0011992172500000001
+    }
+  ],
+  "accelerator_cores": [
+    {
+      "name": "COMMUNICATION",
+      "calls_per_step_mean": 254.0,
+      "duration_sum_s_per_step_mean": 1.4061598338749999
+    },
+    {
+      "name": "AI_VECTOR_CORE",
+      "calls_per_step_mean": 34686.125,
+      "duration_sum_s_per_step_mean": 0.802387986125
+    },
+    {
+      "name": "AI_CORE",
+      "calls_per_step_mean": 4549.0,
+      "duration_sum_s_per_step_mean": 0.43855474837499997
+    },
+    {
+      "name": "MIX_AIC",
+      "calls_per_step_mean": 502.0,
+      "duration_sum_s_per_step_mean": 0.126780567
+    },
+    {
+      "name": "MIX_AIV",
+      "calls_per_step_mean": 2301.125,
+      "duration_sum_s_per_step_mean": 0.0546153394375
+    },
+    {
+      "name": "AI_CPU",
+      "calls_per_step_mean": 307.0,
+      "duration_sum_s_per_step_mean": 0.0295574518125
+    },
+    {
+      "name": "DSA_SQE",
+      "calls_per_step_mean": 3.0,
+      "duration_sum_s_per_step_mean": 6.419375e-06
+    }
+  ],
+  "kernel_local_pipe_counters": [
+    {
+      "name": "MatMulV3 / AI_CORE",
+      "calls_per_step_mean": 884.0,
+      "aic_mac_time_fraction": 0.8440737943821511,
+      "kernel_duration_weighted_cube_occupancy_percent": 91.68205921816259
+    },
+    {
+      "name": "BatchMatMulV2 / AI_CORE",
+      "calls_per_step_mean": 2115.0,
+      "aic_mac_time_fraction": 0.5218813006338566,
+      "kernel_duration_weighted_cube_occupancy_percent": 88.81780506691322
+    },
+    {
+      "name": "FlashAttentionScoreGrad / MIX_AIC",
+      "calls_per_step_mean": 36.0,
+      "aic_mac_time_fraction": 0.3545266123063071,
+      "kernel_duration_weighted_cube_occupancy_percent": 92.72372276203146
+    },
+    {
+      "name": "FlashAttentionScore / MIX_AIC",
+      "calls_per_step_mean": 132.0,
+      "aic_mac_time_fraction": 0.3380139117267338,
+      "kernel_duration_weighted_cube_occupancy_percent": 93.19137609455863
+    },
+    {
+      "name": "MatMulV2 / AI_CORE",
+      "calls_per_step_mean": 1381.0,
+      "aic_mac_time_fraction": 0.6004945561939635,
+      "kernel_duration_weighted_cube_occupancy_percent": 82.53803309839336
+    },
+    {
+      "name": "Conv2D / AI_CORE",
+      "calls_per_step_mean": 145.0,
+      "aic_mac_time_fraction": 0.5681966941250878,
+      "kernel_duration_weighted_cube_occupancy_percent": 89.90649834574438
+    },
+    {
+      "name": "GroupedMatmulAdd / MIX_AIC",
+      "calls_per_step_mean": 108.0,
+      "aic_mac_time_fraction": 0.09814464403803534,
+      "kernel_duration_weighted_cube_occupancy_percent": 88.95030290974663
+    },
+    {
+      "name": "GroupedMatmul / MIX_AIC",
+      "calls_per_step_mean": 216.0,
+      "aic_mac_time_fraction": 0.24434083048788055,
+      "kernel_duration_weighted_cube_occupancy_percent": 83.19145661420848
+    },
+    {
+      "name": "Conv2DTranspose / AI_CORE",
+      "calls_per_step_mean": 24.0,
+      "aic_mac_time_fraction": 0.6850250282172319,
+      "kernel_duration_weighted_cube_occupancy_percent": 92.65032164311965
+    },
+    {
+      "name": "UpsampleBicubic2d / MIX_AIC",
+      "calls_per_step_mean": 6.0,
+      "aic_mac_time_fraction": 0.01722202759901759,
+      "kernel_duration_weighted_cube_occupancy_percent": 92.80593049057642
+    },
+    {
+      "name": "UpsampleBilinear2dAA / MIX_AIC",
+      "calls_per_step_mean": 4.0,
+      "aic_mac_time_fraction": 0.06527174254453949,
+      "kernel_duration_weighted_cube_occupancy_percent": 90.07042668484482
+    }
+  ],
+  "gmm_device_kernel_sum_seconds_per_rank_step": 0.0139395311875,
+  "communication_time_info_zero_ops": 8128,
+  "communication_total_ops": 8128,
+  "communication_HCCS_rank_values": {
+    "rank0": {
+      "transit_MB_per_step": 3346.1130519999992,
+      "transit_subtask_sum_s_per_step": 0.2356923050000002,
+      "subtask_aggregate_GB_s": 14.196955017262852
+    },
+    "rank1": {
+      "transit_MB_per_step": 3479.369045499999,
+      "transit_subtask_sum_s_per_step": 0.2547180749999998,
+      "subtask_aggregate_GB_s": 13.659686480827878
+    },
+    "rank2": {
+      "transit_MB_per_step": 3479.369045499999,
+      "transit_subtask_sum_s_per_step": 0.25381968500000024,
+      "subtask_aggregate_GB_s": 13.708034684149876
+    },
+    "rank3": {
+      "transit_MB_per_step": 3479.369045499999,
+      "transit_subtask_sum_s_per_step": 0.250193335,
+      "subtask_aggregate_GB_s": 13.906721557950371
+    },
+    "rank4": {
+      "transit_MB_per_step": 3479.369045499999,
+      "transit_subtask_sum_s_per_step": 0.2544638550000002,
+      "subtask_aggregate_GB_s": 13.673333077108325
+    },
+    "rank5": {
+      "transit_MB_per_step": 3479.369045499999,
+      "transit_subtask_sum_s_per_step": 0.25671677950000016,
+      "subtask_aggregate_GB_s": 13.553337075498789
+    },
+    "rank6": {
+      "transit_MB_per_step": 3479.369045499999,
+      "transit_subtask_sum_s_per_step": 0.24197491000000002,
+      "subtask_aggregate_GB_s": 14.379048825764617
+    },
+    "rank7": {
+      "transit_MB_per_step": 3479.369045499999,
+      "transit_subtask_sum_s_per_step": 0.2557146970000001,
+      "subtask_aggregate_GB_s": 13.60644924331431
+    }
+  },
+  "cross_rank_alignment": {
+    "method": "Normalize each rank-local HCOM sequence by its first captured value; require contiguous numbering and identical collective type/step at every position. Logical identity is inferred from sequence, not guaranteed by a native global operation identifier.",
+    "validation": {
+      "all_sequence_types_steps_match": true,
+      "payload_counts": {
+        "same_group": 1016,
+        "same_hccs_payload_all8": 637,
+        "same_nonzero_payload_with_missing_zero": 378,
+        "different_nonzero_payload": 1
+      },
+      "different_nonzero_payload_examples": [
+        {
+          "index": 508,
+          "type": "hcom_allGather_",
+          "sizes": {
+            "rank0": 238.931982,
+            "rank1": 209.698816,
+            "rank2": 209.698816,
+            "rank3": 209.698816,
+            "rank4": 209.698816,
+            "rank5": 209.698816,
+            "rank6": 209.698816,
+            "rank7": 209.698816
+          }
+        }
+      ]
+    },
+    "post_first_capture_step": {
+      "count": 762,
+      "start_median_ms": 3.967794,
+      "start_p90_ms": 11.54815,
+      "start_max_ms": 126.072276,
+      "end_median_ms": 0.32845100000000005,
+      "end_max_ms": 2.153506
+    },
+    "representative_same_payload_examples": [
+      {
+        "index": 255,
+        "step": "121",
+        "type": "hcom_allGather_",
+        "startskew_ms": 23.85948,
+        "endskew_ms": 0.24761,
+        "laststart_to_lastend_ms": 1.43977,
+        "events": {
+          "rank0": {
+            "step": "121",
+            "name": "hcom_allGather__612_261_1",
+            "type": "hcom_allGather_",
+            "start_ns": 1792152528781700590,
+            "end_ns": 1792152528800356850,
+            "duration_ms": 18.65626
+          },
+          "rank1": {
+            "step": "121",
+            "name": "hcom_allGather__612_262_1",
+            "type": "hcom_allGather_",
+            "start_ns": 1792152528782685200,
+            "end_ns": 1792152528800317280,
+            "duration_ms": 17.63208
+          },
+          "rank2": {
+            "step": "121",
+            "name": "hcom_allGather__612_263_1",
+            "type": "hcom_allGather_",
+            "start_ns": 1792152528789330320,
+            "end_ns": 1792152528800363360,
+            "duration_ms": 11.03304
+          },
+          "rank3": {
+            "step": "121",
+            "name": "hcom_allGather__612_261_1",
+            "type": "hcom_allGather_",
+            "start_ns": 1792152528782505782,
+            "end_ns": 1792152528800463802,
+            "duration_ms": 17.95802
+          },
+          "rank4": {
+            "step": "121",
+            "name": "hcom_allGather__612_263_1",
+            "type": "hcom_allGather_",
+            "start_ns": 1792152528775216990,
+            "end_ns": 1792152528800268630,
+            "duration_ms": 25.05164
+          },
+          "rank5": {
+            "step": "121",
+            "name": "hcom_allGather__612_261_1",
+            "type": "hcom_allGather_",
+            "start_ns": 1792152528799076470,
+            "end_ns": 1792152528800516240,
+            "duration_ms": 1.43977
+          },
+          "rank6": {
+            "step": "121",
+            "name": "hcom_allGather__612_263_1",
+            "type": "hcom_allGather_",
+            "start_ns": 1792152528790559030,
+            "end_ns": 1792152528800270230,
+            "duration_ms": 9.7112
+          },
+          "rank7": {
+            "step": "121",
+            "name": "hcom_allGather__612_263_1",
+            "type": "hcom_allGather_",
+            "start_ns": 1792152528777375926,
+            "end_ns": 1792152528800469266,
+            "duration_ms": 23.09334
+          }
+        },
+        "group_ids": {
+          "rank0": "5862276093215481612",
+          "rank1": "5862276093215481612",
+          "rank2": "5862276093215481612",
+          "rank3": "5862276093215481612",
+          "rank4": "5862276093215481612",
+          "rank5": "5862276093215481612",
+          "rank6": "5862276093215481612",
+          "rank7": "5862276093215481612"
+        },
+        "hccs_transit_MB": {
+          "rank0": 25.232704,
+          "rank1": 25.232704,
+          "rank2": 25.232704,
+          "rank3": 25.232704,
+          "rank4": 25.232704,
+          "rank5": 25.232704,
+          "rank6": 25.232704,
+          "rank7": 25.232704
+        }
+      },
+      {
+        "index": 328,
+        "step": "121",
+        "type": "hcom_reduceScatter_",
+        "startskew_ms": 32.97819,
+        "endskew_ms": 0.187472,
+        "laststart_to_lastend_ms": 0.208382,
+        "events": {
+          "rank0": {
+            "step": "121",
+            "name": "hcom_reduceScatter__612_334_1",
+            "type": "hcom_reduceScatter_",
+            "start_ns": 1792152529715427490,
+            "end_ns": 1792152529748427310,
+            "duration_ms": 32.99982
+          },
+          "rank1": {
+            "step": "121",
+            "name": "hcom_reduceScatter__612_335_1",
+            "type": "hcom_reduceScatter_",
+            "start_ns": 1792152529742733860,
+            "end_ns": 1792152529748441000,
+            "duration_ms": 5.70714
+          },
+          "rank2": {
+            "step": "121",
+            "name": "hcom_reduceScatter__612_336_1",
+            "type": "hcom_reduceScatter_",
+            "start_ns": 1792152529748405680,
+            "end_ns": 1792152529748436240,
+            "duration_ms": 0.03056
+          },
+          "rank3": {
+            "step": "121",
+            "name": "hcom_reduceScatter__612_334_1",
+            "type": "hcom_reduceScatter_",
+            "start_ns": 1792152529716746770,
+            "end_ns": 1792152529748612206,
+            "duration_ms": 31.865436
+          },
+          "rank4": {
+            "step": "121",
+            "name": "hcom_reduceScatter__612_336_1",
+            "type": "hcom_reduceScatter_",
+            "start_ns": 1792152529730783010,
+            "end_ns": 1792152529748426590,
+            "duration_ms": 17.64358
+          },
+          "rank5": {
+            "step": "121",
+            "name": "hcom_reduceScatter__612_334_1",
+            "type": "hcom_reduceScatter_",
+            "start_ns": 1792152529717964930,
+            "end_ns": 1792152529748614062,
+            "duration_ms": 30.649132
+          },
+          "rank6": {
+            "step": "121",
+            "name": "hcom_reduceScatter__612_336_1",
+            "type": "hcom_reduceScatter_",
+            "start_ns": 1792152529726492750,
+            "end_ns": 1792152529748427950,
+            "duration_ms": 21.9352
+          },
+          "rank7": {
+            "step": "121",
+            "name": "hcom_reduceScatter__612_336_1",
+            "type": "hcom_reduceScatter_",
+            "start_ns": 1792152529717852716,
+            "end_ns": 1792152529748611470,
+            "duration_ms": 30.758754
+          }
+        },
+        "group_ids": {
+          "rank0": "5862276093215481612",
+          "rank1": "5862276093215481612",
+          "rank2": "5862276093215481612",
+          "rank3": "5862276093215481612",
+          "rank4": "5862276093215481612",
+          "rank5": "5862276093215481612",
+          "rank6": "5862276093215481612",
+          "rank7": "5862276093215481612"
+        },
+        "hccs_transit_MB": {
+          "rank0": 0.000768,
+          "rank1": 0.000768,
+          "rank2": 0.000768,
+          "rank3": 0.000768,
+          "rank4": 0.000768,
+          "rank5": 0.000768,
+          "rank6": 0.000768,
+          "rank7": 0.000768
+        }
+      },
+      {
+        "index": 762,
+        "step": "123",
+        "type": "hcom_allGather_",
+        "startskew_ms": 36.84248,
+        "endskew_ms": 0.300288,
+        "laststart_to_lastend_ms": 13.252788,
+        "events": {
+          "rank0": {
+            "step": "123",
+            "name": "hcom_allGather__612_768_1",
+            "type": "hcom_allGather_",
+            "start_ns": 1792152535367254790,
+            "end_ns": 1792152535396761330,
+            "duration_ms": 29.50654
+          },
+          "rank1": {
+            "step": "123",
+            "name": "hcom_allGather__612_769_1",
+            "type": "hcom_allGather_",
+            "start_ns": 1792152535362727520,
+            "end_ns": 1792152535396769000,
+            "duration_ms": 34.04148
+          },
+          "rank2": {
+            "step": "123",
+            "name": "hcom_allGather__612_770_1",
+            "type": "hcom_allGather_",
+            "start_ns": 1792152535367486660,
+            "end_ns": 1792152535396763000,
+            "duration_ms": 29.27634
+          },
+          "rank3": {
+            "step": "123",
+            "name": "hcom_allGather__612_768_1",
+            "type": "hcom_allGather_",
+            "start_ns": 1792152535369761138,
+            "end_ns": 1792152535397053942,
+            "duration_ms": 27.292804
+          },
+          "rank4": {
+            "step": "123",
+            "name": "hcom_allGather__612_770_1",
+            "type": "hcom_allGather_",
+            "start_ns": 1792152535383803010,
+            "end_ns": 1792152535396757090,
+            "duration_ms": 12.95408
+          },
+          "rank5": {
+            "step": "123",
+            "name": "hcom_allGather__612_768_1",
+            "type": "hcom_allGather_",
+            "start_ns": 1792152535373398426,
+            "end_ns": 1792152535397055798,
+            "duration_ms": 23.657372
+          },
+          "rank6": {
+            "step": "123",
+            "name": "hcom_allGather__612_770_1",
+            "type": "hcom_allGather_",
+            "start_ns": 1792152535346960530,
+            "end_ns": 1792152535396755510,
+            "duration_ms": 49.79498
+          },
+          "rank7": {
+            "step": "123",
+            "name": "hcom_allGather__612_770_1",
+            "type": "hcom_allGather_",
+            "start_ns": 1792152535351698462,
+            "end_ns": 1792152535397052946,
+            "duration_ms": 45.354484
+          }
+        },
+        "group_ids": {
+          "rank0": "5862276093215481612",
+          "rank1": "5862276093215481612",
+          "rank2": "5862276093215481612",
+          "rank3": "5862276093215481612",
+          "rank4": "5862276093215481612",
+          "rank5": "5862276093215481612",
+          "rank6": "5862276093215481612",
+          "rank7": "5862276093215481612"
+        },
+        "hccs_transit_MB": {
+          "rank0": 209.698816,
+          "rank1": 209.698816,
+          "rank2": 209.698816,
+          "rank3": 209.698816,
+          "rank4": 209.698816,
+          "rank5": 209.698816,
+          "rank6": 209.698816,
+          "rank7": 209.698816
+        }
+      }
+    ]
+  },
+  "union_audit": {
+    "compute_max_abs_delta_seconds": 3.241851231905457e-14,
+    "communication_max_abs_delta_seconds": 1.5543122344752192e-15,
+    "nonoverlapped_max_abs_delta_seconds": 0.003883497999899621,
+    "nonoverlap_delta_note": "Nonzero differences occur only at final captured profiler step123 for ranks1–7, up to3.8835ms; retain official CSV for headline timing. Other compute/communication unions match to floating output precision."
+  },
+  "limits": [
+    "Kernel duration sums, operator inclusive times and API sums are not elapsed critical-path wall time.",
+    "GMM kernel sum excludes MoE routing, host dispatch and synchronization, so it is not the full MoE cost.",
+    "Pipe counters are kernel-local; cube_utilization is core cycle occupancy, not MAC pipe efficiency or model MFU.",
+    "Same HCOM name does not mean same collective across ranks; normalize local sequence and verify group/type/payload, and treat logical identity as an inference.",
+    "Communication Time Info reports all Transit/Wait/Sync zero here despite positive HCCS traffic; these fields do not quantify waiting.",
+    "Reported HCCS traffic is subtask traffic, not necessarily logical tensor payload. HCCS and SDMA must not be added."
+  ]
+}

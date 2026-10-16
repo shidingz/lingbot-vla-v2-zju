@@ -1,0 +1,49 @@
+展示与结论（相对本目录）
+  report.html                         自包含两页 HTML，内嵌中文字体，无 CDN
+  report.pdf                          两页 A4 导出
+  analysis.txt                        修改、测量口径、验证与限制
+  completion.json                     最终性能摘要
+  selection.json                      显式预取消融与默认配置选择
+  report_validation.json              最终报告、文件与资源检查
+
+速度与正确性证据
+  comparison.json                     所有运行、配置、源码哈希、测速窗口与数值对照
+  comparison_summary.txt              简版运行/速度摘要
+  npu_tests_final.txt                  21 项 NPU 检查
+  distributed_test.json               双卡 DTensor / FSDP 检查
+  launcher_validation.json             44 项启动脚本检查及最终源码哈希
+  launcher_final.log                   最后一次启动器验证输出
+  final_npu_smi.txt                    完成后的全卡状态
+
+最终默认（预取关闭）的 profiler 证据
+  no_prefetch_profile/profile_comparison.json       与前一轮全面 profiling 对照
+  no_prefetch_profile/attribution_scope_summary.json 全卡主机范围统计
+  no_prefetch_profile/profile/rank*_csv.json         每卡 CSV 解析结果
+  no_prefetch_profile/attribution_rank*.json         每卡调用范围统计
+  no_prefetch_profile_analysis.log
+  no_prefetch_attribution.log
+
+预取开启的对照 profiler（不是最终默认）
+  profile_comparison.json
+  attribution_scope_summary.json
+  profile/rank*_csv.json
+
+原始运行目录
+  /cache/lingbot/profiling/speed_round3_20261016/baseline/run_case
+  /cache/lingbot/profiling/speed_round3_20261016/candidate/run_case         0 步失败，已排除
+  /cache/lingbot/profiling/speed_round3_20261016/candidate_v2/run_case      修复后 120 步
+  /cache/lingbot/profiling/speed_round3_20261016/default_profile/run_case  预取开启 132 步
+  /cache/lingbot/profiling/speed_round3_20261016/no_prefetch/run_case      最终配置 132 步
+  每个 run_case 内：console.log、logs/train.log、logs/loss.jsonl、logs/lingbotvla_cli.yaml、experiment_manifest.json、exit_code。
+  source 冻结目录位于 run_case 的同级目录；原始 trace 在相应 run_case/trace。
+  前一轮基线 trace：/cache/lingbot/profiling/round3_profile_20261016_195822/profile_132
+  前一轮基线解析：../20261016_round3_profile/analysis/ 与 attribution_scope_summary.json
+
+复现工具（运行训练前确认卡空闲；不要覆盖上述冻结目录）
+  run_case.py                         独立源码、短程训练、资源记录与 profiler
+  analyze.py                          配置/速度/数值/源码对照
+  summarize_profile.py                全类型 kernel 与官方 step 统计
+  build_report.py                     根据已完成证据生成报告
+  validate_launcher.py                不启动训练的 dry-run 检查
+  check_distributed.py                双卡硬件正确性检查
+  ../../tests/test_round3_optimizations.py  数值/状态/元数据/缓存检查
