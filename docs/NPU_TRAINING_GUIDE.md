@@ -1,8 +1,8 @@
 # 昇腾 NPU 训练与提速指南
 
-这份文档帮助接手者运行当前分支、理解已经改了什么，并继续做可复核的提速实验。当前主入口是 [train_robotwin_npu.sh](../train_robotwin_npu.sh)；[train_robotwin_npu_optimized.sh](../train_robotwin_npu_optimized.sh) 只是转交给主入口的兼容脚本。
+这份文档帮助接手者运行当前分支，并继续做可复核的提速实验。各轮方法、失败候选及原理集中在 [昇腾 8 卡训练加速实验学习笔记](NPU_ACCELERATION_STUDY.md)。当前主入口是 [train_robotwin_npu.sh](../train_robotwin_npu.sh)；[train_robotwin_npu_optimized.sh](../train_robotwin_npu_optimized.sh) 只是转交给主入口的兼容脚本。
 
-**当前证据：**在本机 8 × 昇腾 910B1、每卡 12 个样本的配置下，第二轮优化让每步时间从较快原代码复测的 **3.54 秒降到 2.60 秒**，吞吐约增加 **36%**。7 组 60 步对照和后续 160 步主入口复测已完成。它们支持当前配置的速度收益，不代表已经完成长期收敛、机器人任务成功率或新方案完整存档恢复验证。
+**当前证据：**在本机 8 × 昇腾 910B1、每卡 12 个样本的配置下，第四轮将第三轮默认方案的 **2.4625 秒/步降到 2.1750 秒/步**，吞吐 **38.98 → 44.14 样本/秒**，增加 **13.22%**。更早的第二轮从较快 GMM 基线复测 **3.54 → 2.60 秒/步**，第三轮从其独立基线 **2.65 → 2.46 秒/步**；各轮测量窗口不同，收益不可直接相加。短跑支持当前机器的速度结论，不代表长期收敛、机器人任务成功率或新方案完整存档恢复已经验证。
 
 ## 1. 先准备环境、模型和数据
 
@@ -48,6 +48,11 @@
 | `LINGBOT_MOE_MONITOR_BATCH_COUNTS` | `1` | 集中取回各层监控计数，减少 CPU 等待 |
 | `LINGBOT_ADAMW_FOREACH_NPU` | `1` | 现有 AdamW 分支批量更新参数；不更换 Muon 算法 |
 | `ENABLE_GRAD_CKPT` | 默认 SDPA 组合下为 `false` | 保留更多中间结果，减少动作层反向时的重复计算 |
+| `LINGBOT_MUON_LOCAL_BATCH` | `8` | 同形状的本地专家矩阵合批做 Newton–Schulz |
+| `LINGBOT_HOST_METADATA` | `1` | 整数位置元数据在 CPU 侧索引，减少 NPU 标量读取 |
+| `LINGBOT_NPU_FUSED_RMSNORM` | `1` | 原模块内调用 FP32 NPU 融合 RMSNorm |
+| `LINGBOT_FSDP_FORWARD_PREFETCH` | `0` | 显式预取保留实验开关，短跑收益不足以进入默认配置 |
+| `TASK_QUEUE_ENABLE` | `2` | 使用 torch_npu Level 2 任务队列；设为 `1` 回退旧默认 |
 | `MICRO_BATCH` / `GRAD_ACCUM` / 卡数 | `12` / `1` / `8` | 每次更新共使用 96 个样本 |
 | `TRAIN_EXPERT_ONLY` | `true` | 冻结 VLM，训练动作模块及相关 query、投影、head |
 | `NUM_TRAIN_EPOCHS` | `1` | 主入口默认仍是一轮；五轮需显式设置 |
@@ -77,7 +82,7 @@ export ENABLE_RESUME=false
 unset MAX_STEPS STOP_AFTER_STEPS LOAD_CHECKPOINT_PATH
 
 DRY_RUN=1 bash train_robotwin_npu.sh
-# 核对打印的路径、5 epoch、batch、学习率和四项性能设置后启动：
+# 核对打印的路径、5 epoch、batch、学习率和性能开关后启动：
 bash train_robotwin_npu.sh
 ```
 
@@ -103,7 +108,7 @@ bash train_robotwin_npu.sh
 
 恢复同一个实验时保留原配置、运行目录和总计划，启用 `ENABLE_RESUME=true`；需要指定本地存档时通过 `LOAD_CHECKPOINT_PATH` 传入完整存档路径。切换 AdamW foreach 执行策略时，加载后的处理会恢复本次开关，保留学习率、步数和动量状态；组件测试覆盖这一点，但不等同于真实大模型 DCP 端到端恢复已经验过。
 
-**当前限制：**第二轮 60 步和 160 步性能验证都关闭了真实保存/恢复。后续五轮任务最后记录到第 **147 步**，随后按用户要求停止，未到第一轮保存点，也没有生成训练检查点。不能宣称这次完成了五轮训练或新方案的完整 DCP 保存—加载验证；硬中断也不保证自动留下最新进度。见 [147 步停止摘要](../experiments/npu_20261016/stopped_5ep_147/summary.json) 与 [user_stop.json](../reports/launch_robotwin_5ep_optimized_20261016/user_stop.json)。
+**当前限制：**历轮性能短跑都关闭了真实保存/恢复。此前五轮任务最后记录到第 **147 步**，随后按用户要求停止，未到第一轮保存点，也没有生成训练检查点。不能宣称这次完成了五轮训练或当前方案的完整 DCP 保存—加载验证；硬中断也不保证自动留下最新进度。见 [147 步停止摘要](../experiments/npu_20261016/stopped_5ep_147/summary.json) 与 [user_stop.json](../reports/launch_robotwin_5ep_optimized_20261016/user_stop.json)。
 
 ## 5. 已测到多少收益
 
@@ -127,7 +132,7 @@ bash train_robotwin_npu.sh
 
 后续直接使用主入口默认值又完成 **160 步**：13–160 步约 **2.608 秒/步**；第 115–160 步已经越过一轮计划的学习率预热，仍约 **2.609 秒/步**，记录指标均有限，rank 0 峰值仍为 50.61 GiB。这是默认入口与短期稳定性复核，不能当成新增的历史 A/B 长窗口，见 [160 步完成记录](../reports/20261016_round2_default/completion.json) 和 [配置可比性审计](../reports/20261016_round2_default/config_audit.json)。
 
-此前单独的 MoE 合批 A/B 约 7.24 → 3.47 秒/步，属于另一轮实验；本轮已经包含 GMM，不能把跨轮数字差异继续算作新的单项收益。当前没有完成长期质量、满轮数据覆盖或机器人闭环成功率验证。
+此前单独的 MoE 合批 A/B 约 7.24 → 3.47 秒/步，属于另一轮实验；本轮已经包含 GMM，不能把跨轮数字差异继续算作新的单项收益。后续 [第三轮](../reports/20261016_speed_round3/analysis.txt) 独立对照 **2.6500 → 2.4625 秒/步**，[第四轮](../reports/20261016_comm_round4/analysis.txt) 独立对照 **2.4625 → 2.1750 秒/步**。当前没有完成长期质量、满轮数据覆盖或机器人闭环成功率验证。
 
 ## 6. 改代码时，先知道必须保留什么
 
@@ -136,6 +141,8 @@ bash train_robotwin_npu.sh
 | [npu_moe.py](../lingbotvla/ops/npu_moe.py) | 原生 grouped GEMM 与显式反向；要覆盖空专家、不同路由分布和梯度 |
 | [joint_attention.py](../lingbotvla/ops/joint_attention.py) | 保留 FP32 QKV 接口、GQA 共享和 mask 方向；整行不可见时显式保留原实现的 value 均值及梯度行为 |
 | [optimizer.py](../lingbotvla/optim/optimizer.py) | foreach 只改变既有 AdamW 执行方式；混合普通 Tensor/DTensor 组有兼容保护，Muon 算法不变 |
+| [muon.py](../lingbotvla/optim/muon.py) | 同形状本地 3D 专家合批，保持逐矩阵归一化和每个参数的动量状态 |
+| [rms_norm.py](../lingbotvla/ops/rms_norm.py) | 在原模块中融合 FP32 RMSNorm，不替换 AdaNorm 类型或参数名 |
 | [test_moe_monitor_batch.py](../tests/test_moe_monitor_batch.py) | 监控集中取数后的正常、空计数和缺失状态边界 |
 | [training_profiler.py](../lingbotvla/utils/training_profiler.py) | 把前向、反向、teacher、优化器、通信等阶段放进时间线，找真正耗时的位置 |
 
@@ -159,12 +166,17 @@ bash train_robotwin_npu.sh \
   --train.enable_profiling true --train.profile_only true --train.profile_ranks ''
 ```
 
-例如测试关闭重计算的单项影响，应保持其余开关不变，再用**另一个输出/日志目录**运行 `ENABLE_GRAD_CKPT=true` 的对照。回到第二轮开始前的 GMM 基准，才同时使用下列整套回退开关：
+例如测试关闭重计算的单项影响，应保持其余开关不变，再用**另一个输出/日志目录**运行 `ENABLE_GRAD_CKPT=true` 的对照。下面只回退第二、三、四轮有开关的性能路径；第三轮无开关的缓存修复仍在源码中。精确复现历史 GMM 基准应使用当时的源码快照，并使用独立目录和同一初始化：
 
 ```bash
 LINGBOT_JOINT_ATTN_BACKEND=eager \
 LINGBOT_MOE_MONITOR_BATCH_COUNTS=0 \
 LINGBOT_ADAMW_FOREACH_NPU=0 \
+LINGBOT_MUON_LOCAL_BATCH=0 \
+LINGBOT_HOST_METADATA=0 \
+LINGBOT_NPU_FUSED_RMSNORM=0 \
+LINGBOT_FSDP_FORWARD_PREFETCH=0 \
+TASK_QUEUE_ENABLE=1 \
 ENABLE_GRAD_CKPT=true \
 DRY_RUN=1 bash train_robotwin_npu.sh
 ```
@@ -178,9 +190,9 @@ DRY_RUN=1 bash train_robotwin_npu.sh
 ## 8. 下一步优先做什么
 
 1. **补齐新方案真实保存—恢复验证，再开展长跑质量评测。**在可控短任务中生成真实 DCP 存档、重启恢复并核对步数、学习率与状态；这解决的是可持续训练能力，不能由 CPU mock 测试替代。
-2. **重新采集当前最终方案的时间线。**早期 MoE 已被优化，旧瓶颈排序不能直接沿用。先量化优化器、teacher、数据等待和通信在当前一步中的占比。
-3. **继续检查 Muon 内部的小矩阵与逐参数调度。**尝试按兼容形状合批前，先验证数学语义、状态与 FSDP 分片行为；不要把换优化算法当作纯速度优化。
-4. **根据时间线优化 teacher/数据和通信。**只有确认对应阶段占比明显，才分别尝试减少重复预处理、调整 worker/预取，或检查 FSDP/HCCL 等待与重叠。每项保留独立对照。
+2. **重新采集第四轮默认方案的时间线。**第三轮已减少 Muon 与 teacher 的细碎任务，第四轮改善了队列下发和通信重叠；旧 profile 的瓶颈比例不能直接沿用。先看新的未重叠通信、Free、teacher 几何与主机下发。
+3. **针对剩余热点做单项实验。**可分别研究 teacher 几何批处理、FSDP 通信到达不齐和算子融合；每项先验证数值与状态，再做无 profiler 的整模型 A/B。第三轮的 Muon 专家合批已经进入默认方案，显式 FSDP 前向预取仅有约 0.51% 的短跑差异，暂不应当作确定收益。
+4. **谨慎评估新的通信布局。**此前 2×4 HSDP 实跑明显变慢，合并动作层 FSDP 单元在真实模型有前后向次序警告；详见 [第四轮分析](../reports/20261016_comm_round4/analysis.txt)。新方案必须同时检查通信次数、等待、显存和真实模型正确性。
 5. **更大的 batch、选择性重计算、编译与低精度作为独立实验。**每卡 16 曾 OOM；当前 12 的余量不能推广到更长输入或解冻 VLM。BF16、编译或新软件版本需重新验证数值、首次启动成本与长期质量。
 
 每次提交最好带上：改动目的、代码版本与有效配置、独立对照、有效样本/秒、显存指标的具体含义、数值检查及未验证事项。保留上游版权与 [LICENSE](../LICENSE)，把模型权重、原始数据、检查点、密钥和大体积 profiler trace 放在仓库之外。
