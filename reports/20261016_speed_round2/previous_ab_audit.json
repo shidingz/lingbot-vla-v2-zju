@@ -1,0 +1,401 @@
+{
+  "audit_date_local": "2026-10-16",
+  "scope": "Read-only independent verification; no NPU operation and no training code edits.",
+  "raw_root": "/cache/lingbot/profiling/moe_optimization_20261016/ab",
+  "cases": {
+    "torch": {
+      "steps": 40,
+      "consecutive_steps": true,
+      "exit_code": 2,
+      "all_losses_gradients_finite": true,
+      "ranges": {
+        "5-12": {
+          "mean_s": 7.251535534858704,
+          "median_s": 7.226255655288696
+        },
+        "13-29": {
+          "mean_s": 7.214398327995749,
+          "median_s": 7.197879076004028
+        },
+        "36-40": {
+          "mean_s": 7.187930631637573,
+          "median_s": 7.180443048477173
+        }
+      },
+      "wall_s_per_step_13_29": 7.235294117647059,
+      "stop_step_40_logged": true,
+      "async_hf_summary_logged": true,
+      "console_sha256": "2786f0bf6d9aaacb6705b38c30cbd407aeff7da8779c64a2df0c7cd9717c06de",
+      "loss_jsonl_sha256": "1cdb5be53af1a94d5c865cd6917d15a650c8e10f889e8df58850178ccf6e41a6"
+    },
+    "gmm": {
+      "steps": 40,
+      "consecutive_steps": true,
+      "exit_code": 0,
+      "all_losses_gradients_finite": true,
+      "ranges": {
+        "5-12": {
+          "mean_s": 3.4125222265720367,
+          "median_s": 3.4098364114761353
+        },
+        "13-29": {
+          "mean_s": 3.4515524471507355,
+          "median_s": 3.4564929008483887
+        },
+        "36-40": {
+          "mean_s": 3.513119697570801,
+          "median_s": 3.5194969177246094
+        }
+      },
+      "wall_s_per_step_13_29": 3.4705882352941178,
+      "stop_step_40_logged": true,
+      "async_hf_summary_logged": true,
+      "console_sha256": "08b6db4a43d1569414e8147c96ad75606552d370f446a685c47c61e91fc0f990",
+      "loss_jsonl_sha256": "faada01367b1395706130c78cc7468c8bfab15506831bc6a27a9733340f9cee6"
+    }
+  },
+  "logged_mean_speedup_13_29": 2.0901893969339076,
+  "wall_speedup_13_29": 2.084745762711864,
+  "config_differences": [
+    {
+      "section": "train",
+      "field": "logging_dir",
+      "torch": "/cache/lingbot/profiling/moe_optimization_20261016/ab/torch/logs",
+      "gmm": "/cache/lingbot/profiling/moe_optimization_20261016/ab/gmm/logs"
+    },
+    {
+      "section": "train",
+      "field": "output_dir",
+      "torch": "/cache/lingbot/profiling/moe_optimization_20261016/ab/torch/run",
+      "gmm": "/cache/lingbot/profiling/moe_optimization_20261016/ab/gmm/run"
+    },
+    {
+      "section": "train",
+      "field": "profile_end_step",
+      "torch": 17,
+      "gmm": 33
+    },
+    {
+      "section": "train",
+      "field": "profile_ranks",
+      "torch": "",
+      "gmm": "0"
+    },
+    {
+      "section": "train",
+      "field": "profile_start_step",
+      "torch": 13,
+      "gmm": 31
+    },
+    {
+      "section": "train",
+      "field": "profile_trace_dir",
+      "torch": "/cache/lingbot/profiling/moe_optimization_20261016/ab/torch/trace",
+      "gmm": "/cache/lingbot/profiling/moe_optimization_20261016/ab/gmm/trace"
+    }
+  ],
+  "paired_numerics": {
+    "loss": {
+      "max_abs_diff": {
+        "step": 28,
+        "abs_diff": 0.001220703125,
+        "relative_to_baseline": 0.003837298541826554
+      },
+      "mean_abs_diff": 0.000421142578125,
+      "max_relative_diff": {
+        "step": 28,
+        "abs_diff": 0.001220703125,
+        "relative_to_baseline": 0.003837298541826554
+      }
+    },
+    "vla_loss": {
+      "max_abs_diff": {
+        "step": 28,
+        "abs_diff": 0.001220703125,
+        "relative_to_baseline": 0.00422654268808115
+      },
+      "mean_abs_diff": 0.0004150390625,
+      "max_relative_diff": {
+        "step": 28,
+        "abs_diff": 0.001220703125,
+        "relative_to_baseline": 0.00422654268808115
+      }
+    },
+    "depth_loss": {
+      "max_abs_diff": {
+        "step": 20,
+        "abs_diff": 0.0019073486328125,
+        "relative_to_baseline": 0.0005743825387708214
+      },
+      "mean_abs_diff": 0.00019073486328125,
+      "max_relative_diff": {
+        "step": 36,
+        "abs_diff": 0.0019073486328125,
+        "relative_to_baseline": 0.0006337135614702154
+      }
+    },
+    "future_depth_loss": {
+      "max_abs_diff": {
+        "step": 22,
+        "abs_diff": 0.0019073486328125,
+        "relative_to_baseline": 0.0005959475566150178
+      },
+      "mean_abs_diff": 0.00019073486328125,
+      "max_relative_diff": {
+        "step": 38,
+        "abs_diff": 0.0019073486328125,
+        "relative_to_baseline": 0.0006489292667099286
+      }
+    },
+    "future_video_loss": {
+      "max_abs_diff": {
+        "step": 7,
+        "abs_diff": 0.000476837158203125,
+        "relative_to_baseline": 0.0006361323155216285
+      },
+      "mean_abs_diff": 4.76837158203125e-05,
+      "max_relative_diff": {
+        "step": 32,
+        "abs_diff": 0.000476837158203125,
+        "relative_to_baseline": 0.0007127583749109052
+      }
+    },
+    "grad_norm": {
+      "max_abs_diff": {
+        "step": 30,
+        "abs_diff": 0.03573983907699585,
+        "relative_to_baseline": 0.03891179994176355
+      },
+      "mean_abs_diff": 0.007053345441818237,
+      "max_relative_diff": {
+        "step": 30,
+        "abs_diff": 0.03573983907699585,
+        "relative_to_baseline": 0.03891179994176355
+      }
+    },
+    "lr": {
+      "max_abs_diff": {
+        "step": 1,
+        "abs_diff": 0.0,
+        "relative_to_baseline": 0.0
+      },
+      "mean_abs_diff": 0.0,
+      "max_relative_diff": {
+        "step": 1,
+        "abs_diff": 0.0,
+        "relative_to_baseline": 0.0
+      }
+    },
+    "expert_lr": {
+      "max_abs_diff": {
+        "step": 1,
+        "abs_diff": 0.0,
+        "relative_to_baseline": 0.0
+      },
+      "mean_abs_diff": 0.0,
+      "max_relative_diff": {
+        "step": 1,
+        "abs_diff": 0.0,
+        "relative_to_baseline": 0.0
+      }
+    }
+  },
+  "data_and_initialization": {
+    "same_effective_seed": true,
+    "seed": 42,
+    "same_model_path": true,
+    "model_path": "/home/ma-user/work/modelscope/models/Robbyant--lingbot-vla-v2-6b/snapshots/master",
+    "same_data_source_metadata": true,
+    "same_dataset_list": true,
+    "video_boundary_warning_sample_multisets_identical": true,
+    "warning_count_per_run": 146,
+    "resume_disabled_both": true,
+    "limitation": "Same paths, configuration, RNG seed and matching warning sample sets support the comparison. No per-batch data fingerprints or initial full-weight hashes were captured, so bitwise identity is not independently proven."
+  },
+  "source_provenance": {
+    "current_hashes_match_existing_manifest": {
+      "lingbotvla/ops/npu_moe.py": true,
+      "lingbotvla/ops/fused_moe.py": true,
+      "train_robotwin_npu.sh": true,
+      "configs/vla/robotwin/robotwin_npu.yaml": true,
+      "tools/bench_robotwin_npu_moe.sh": true,
+      "tests/test_npu_moe.py": true,
+      "tools/profile_robotwin_npu.sh": true,
+      "tools/check_npu_moe_fsdp.py": true,
+      "tools/analyze_robotwin_moe_ab.py": true
+    },
+    "gmm_launcher_snapshot_present": true,
+    "baseline_launcher_snapshot_present": false,
+    "limitation": "Manifest hashes describe post-run artifacts, not immutable per-run Python source snapshots. Baseline shell was changed during execution; EOF error after completed training is visible, but exact byte-offset cause is documented explanation rather than independently reconstructed."
+  },
+  "profile_audit": {
+    "raw_path": "/cache/lingbot/profiling/moe_optimization_20261016/ab/gmm/trace/rank0/notebook-1412a60d-0f41-4869-980d-933b2766338c_2694870_20261016082734660_ascend_pt/ASCEND_PROFILER_OUTPUT",
+    "step_trace_rows_seconds": [
+      {
+        "Device_id": 0,
+        "Step": 30,
+        "Computing": 1.6351351799999936,
+        "Communication(Not Overlapped)": 0.3453942399999961,
+        "Overlapped": 0.07933666000000388,
+        "Communication": 0.42473089999999997,
+        "Free": 2.208404220000421,
+        "Stage": 4.1889335,
+        "Bubble": 0.0,
+        "Communication(Not Overlapped and Exclude Receive)": 0.3453942399999961,
+        "Preparing": 0.00668725
+      },
+      {
+        "Device_id": 0,
+        "Step": 31,
+        "Computing": 1.633283159999974,
+        "Communication(Not Overlapped)": 5.464947179999894,
+        "Overlapped": 0.09891126000010315,
+        "Communication": 5.563858439999997,
+        "Free": 2.2549857000003897,
+        "Stage": 9.353216,
+        "Bubble": 0.0,
+        "Communication(Not Overlapped and Exclude Receive)": 5.464947179999894,
+        "Preparing": 0.00861125
+      }
+    ],
+    "top_collectives": {
+      "step30": [
+        {
+          "name": "Total Op Info",
+          "Elapse Time(ms)": 424.7309,
+          "Transit Time(ms)": 0.0,
+          "Wait Time(ms)": 0.0,
+          "Synchronization Time(ms)": 0.0,
+          "Idle Time(ms)": 424.7309,
+          "Wait Time Ratio": 0,
+          "Synchronization Time Ratio": 0
+        },
+        {
+          "name": "hcom_reduceScatter__612_246_1@5862276093215481612",
+          "Start Timestamp(us)": 1792139261503720.8,
+          "Elapse Time(ms)": 42.96904,
+          "Transit Time(ms)": 0,
+          "Wait Time(ms)": 0,
+          "Synchronization Time(ms)": 0,
+          "Idle Time(ms)": 42.96904,
+          "Wait Time Ratio": 0,
+          "Synchronization Time Ratio": 0
+        },
+        {
+          "name": "hcom_allGather__612_27_1@5862276093215481612",
+          "Start Timestamp(us)": 1792139258861219.0,
+          "Elapse Time(ms)": 12.73548,
+          "Transit Time(ms)": 0,
+          "Wait Time(ms)": 0,
+          "Synchronization Time(ms)": 0,
+          "Idle Time(ms)": 12.73548,
+          "Wait Time Ratio": 0,
+          "Synchronization Time Ratio": 0
+        },
+        {
+          "name": "hcom_allReduce__612_247_1@5862276093215481612",
+          "Start Timestamp(us)": 1792139261615433.5,
+          "Elapse Time(ms)": 11.62668,
+          "Transit Time(ms)": 0,
+          "Wait Time(ms)": 0,
+          "Synchronization Time(ms)": 0,
+          "Idle Time(ms)": 11.62668,
+          "Wait Time Ratio": 0,
+          "Synchronization Time Ratio": 0
+        }
+      ],
+      "step31": [
+        {
+          "name": "Total Op Info",
+          "Elapse Time(ms)": 5563.858440000001,
+          "Transit Time(ms)": 0.0,
+          "Wait Time(ms)": 0.0,
+          "Synchronization Time(ms)": 0.0,
+          "Idle Time(ms)": 5563.858440000001,
+          "Wait Time Ratio": 0,
+          "Synchronization Time Ratio": 0
+        },
+        {
+          "name": "hcom_allGather__612_486_1@5862276093215481612",
+          "Start Timestamp(us)": 1792139268095466.0,
+          "Elapse Time(ms)": 2593.06454,
+          "Transit Time(ms)": 0,
+          "Wait Time(ms)": 0,
+          "Synchronization Time(ms)": 0,
+          "Idle Time(ms)": 2593.06454,
+          "Wait Time Ratio": 0,
+          "Synchronization Time Ratio": 0
+        },
+        {
+          "name": "hcom_allGather__612_485_1@5862276093215481612",
+          "Start Timestamp(us)": 1792139265530628.2,
+          "Elapse Time(ms)": 2564.11012,
+          "Transit Time(ms)": 0,
+          "Wait Time(ms)": 0,
+          "Synchronization Time(ms)": 0,
+          "Idle Time(ms)": 2564.11012,
+          "Wait Time Ratio": 0,
+          "Synchronization Time Ratio": 0
+        },
+        {
+          "name": "hcom_reduceScatter__612_500_1@5862276093215481612",
+          "Start Timestamp(us)": 1792139270810122.2,
+          "Elapse Time(ms)": 43.25326,
+          "Transit Time(ms)": 0,
+          "Wait Time(ms)": 0,
+          "Synchronization Time(ms)": 0,
+          "Idle Time(ms)": 43.25326,
+          "Wait Time Ratio": 0,
+          "Synchronization Time Ratio": 0
+        }
+      ]
+    },
+    "phase_host_seconds_by_record": {
+      "train.data_wait": [
+        0.0010748399999999999,
+        0.0010516500000000001
+      ],
+      "train.teachers": [
+        0.54387296,
+        0.5332300999999999
+      ],
+      "train.forward": [
+        1.24445542,
+        1.19555323
+      ],
+      "train.backward": [
+        1.42469412,
+        6.60276113
+      ],
+      "train.optimizer": [
+        0.82795443,
+        0.8848615400000001
+      ]
+    },
+    "longest_index_put": {
+      "Name": "aten::_index_put_impl_",
+      "Input Shapes": "",
+      "Call Stack": "",
+      "Host Self Duration(us)": "5125445.5",
+      "Host Total Duration(us)": "5125525.01",
+      "Device Self Duration(us)": "0",
+      "Device Total Duration(us)": "63.800000000000004",
+      "Device Self Duration With AICore(us)": "0",
+      "Device Total Duration With AICore(us)": "0"
+    },
+    "conclusions": [
+      "Reported compute_union_s_per_step=4.5389 and communication_union=0 are wrong classification: hcom events were counted as compute; step_trace_time.csv remains the usable device summary.",
+      "The two recorded step durations differ strongly (4.189s versus 9.353s); 2.905s mean unoverlapped communication is dominated by two isolated allGather events lasting 2.564s and 2.593s.",
+      "One index_put host call lasts 5.126s while its attached device work is only 63.8 microseconds; this is waiting/host delay evidence rather than a slow arithmetic kernel.",
+      "Single-rank profiling and the outlier prevent using this window to rank normal multi-card bandwidth or index_put as the main bottleneck.",
+      "Even the shorter profiled step is approximately 21% slower than unprofiled GMM; phase totals are asynchronous host ranges and should not be equated to exclusive device time.",
+      "Data wait remains around 1ms, while teacher host range around 0.54s and optimizer host range around 0.86s are candidates for follow-up measurement."
+    ]
+  },
+  "assessment": {
+    "speedup_supported": true,
+    "claim_scope": "Approximately 2.09x steady training-loop throughput in a 40-update full-model controlled comparison; not a full-epoch result.",
+    "numerical_scope": "40 updates have finite loss and gradients; max loss relative difference 0.384%, max gradient norm relative difference 3.891%. This is short-run consistency evidence, not proof of long-term training quality.",
+    "next_experiment_recommendation": "Use immutable source snapshots, profiler disabled for both timing cases, matched seed/data/LR horizon; repeat current GMM reference then change one feature at a time. Record batch fingerprints or same starting-state hashes where practical."
+  }
+}

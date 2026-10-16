@@ -114,15 +114,7 @@ assert_torch_stack
 python -m pip install numpydantic==1.9.0 --no-deps
 assert_torch_stack
 
-if [[ -n "${FLASH_ATTN_WHEEL}" ]]; then
-  if [[ ! -f "${FLASH_ATTN_WHEEL}" ]]; then
-    echo "flash-attn wheel not found: ${FLASH_ATTN_WHEEL}" >&2
-    exit 1
-  fi
-  python -m pip install --no-deps "${FLASH_ATTN_WHEEL}"
-else
-  python -m pip install --no-build-isolation flash-attn==2.8.3
-fi
+
 assert_torch_stack
 python - <<PY
 import flash_attn
@@ -158,7 +150,7 @@ pth.write_text("${REPO_ROOT}/lingbotvla/models/vla/vision_models/morgbd_clean/3r
 print("wrote", pth)
 PY
 python -m pip install -e "${REPO_ROOT}/lingbotvla/models/vla/vision_models/lingbot-depth" --no-deps
-python -m pip install -e "${REPO_ROOT}/lingbotvla/models/vla/vision_models/MoGe"
+python -m pip install -e "${REPO_ROOT}/lingbotvla/models/vla/vision_models/MoGe" --no-deps
 assert_torch_stack
 
 python - <<'PY'

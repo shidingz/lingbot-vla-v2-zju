@@ -1,0 +1,45 @@
+{
+  "started_at": "2026-10-16T16:10:06.799482+08:00",
+  "comparison_root": "/cache/lingbot/profiling/moe_optimization_20261016/ab",
+  "backend_order": [
+    "torch",
+    "gmm"
+  ],
+  "steps_per_case": 40,
+  "steady_comparison_steps_inclusive": [
+    13,
+    29
+  ],
+  "gmm_profile_steps_inclusive": [
+    31,
+    32
+  ],
+  "micro_batch": 12,
+  "global_batch": 96,
+  "lr_horizon_steps": 5717,
+  "checkpoints_and_obs": false,
+  "numerical_test_count": 10,
+  "numerical_test_status": "passed",
+  "source_sha256": {
+    "lingbotvla/ops/npu_moe.py": "77ee243440df21d4eb62b19d88894573ac676339750dccbac14919dd7ca96c81",
+    "lingbotvla/ops/fused_moe.py": "1bc8be3252cb6d9d043a2939b7cfd8c69822e79be59cf30866f94b163afbc8b5",
+    "train_robotwin_npu.sh": "c1cc67d7615c0baaf5dd547d8a1b12db8379b0e8178f8647bae7d21a271d3635",
+    "configs/vla/robotwin/robotwin_npu.yaml": "c24df7637cc59e8082b158f52cd04e9aefc5d40761289de06f22364060238782",
+    "tools/bench_robotwin_npu_moe.sh": "95a9bccd4b8f48a7519a33e94a103bbc9ee05a59a371bbe78acd40e9d1dbaf0b",
+    "tests/test_npu_moe.py": "e03533c417a3f4486bd29a1091fc0d8f3d804eff8effb237572e304200f55f54",
+    "tools/profile_robotwin_npu.sh": "27d3bffe8f6d1eef51a3c74d96128fadd320c67112eac75351e7c8ff594182e3",
+    "tools/check_npu_moe_fsdp.py": "b95a90c02af50b0abab3d5bc587cd49e1ad5c240757fbd5fdc9cba3595b93a1b",
+    "tools/analyze_robotwin_moe_ab.py": "5e3ba04e12ac1160f170529cdc745e0499e43947501bd159039ca6a9893f42a0"
+  },
+  "note": "GMM profiler warmup is step 30; exclude it and subsequent collection/export from speed comparison.",
+  "baseline_launcher_note": "baseline_launcher_note.json",
+  "baseline_completed_updates": 40,
+  "baseline_launch_exit_code": 2,
+  "optimized_launcher_uses_immutable_source_snapshot": true,
+  "status": "validated",
+  "gmm_completed_updates": 40,
+  "gmm_launcher_exit_code": 0,
+  "fsdp_gradient_check_world_size": 8,
+  "fsdp_gradient_check_passed": true,
+  "end_to_end_speedup": 2.084745762711864
+}

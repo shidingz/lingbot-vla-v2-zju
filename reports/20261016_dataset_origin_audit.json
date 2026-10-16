@@ -1,0 +1,464 @@
+{
+  "checked_at": "2026-10-16T15:29:50.996057+08:00",
+  "repo": "TianxingChen/RoboTwin2.0",
+  "revision": "3dc3b798668feb99ac61cc9086d84cbcc3d79186",
+  "zip_path": "lerobot_dataset/RoboTwin_lerobot_v30.zip",
+  "zip_size": 4100134542,
+  "zip_lfs_sha256": "ed5948c2bb693e098e0edc9c693614f8621948b3fc5953748932b34ee5bf0419",
+  "local_root": "/cache/lingbot/robotwin_data/RoboTwin_lerobot_v30",
+  "files": [
+    {
+      "path": "data/chunk-000/file-000.parquet",
+      "expected_size": 707685,
+      "expected_crc32": "21a4868f",
+      "local_size": 707685,
+      "local_crc32": "21a4868f",
+      "matches": true
+    },
+    {
+      "path": "data/chunk-000/file-001.parquet",
+      "expected_size": 1737291,
+      "expected_crc32": "a576dcec",
+      "local_size": 1737291,
+      "local_crc32": "a576dcec",
+      "matches": true
+    },
+    {
+      "path": "data/chunk-000/file-002.parquet",
+      "expected_size": 1371338,
+      "expected_crc32": "4584ff40",
+      "local_size": 1371338,
+      "local_crc32": "4584ff40",
+      "matches": true
+    },
+    {
+      "path": "data/chunk-000/file-003.parquet",
+      "expected_size": 778513,
+      "expected_crc32": "44256592",
+      "local_size": 778513,
+      "local_crc32": "44256592",
+      "matches": true
+    },
+    {
+      "path": "data/chunk-000/file-004.parquet",
+      "expected_size": 1623612,
+      "expected_crc32": "570b2ed9",
+      "local_size": 1623612,
+      "local_crc32": "570b2ed9",
+      "matches": true
+    },
+    {
+      "path": "data/chunk-000/file-005.parquet",
+      "expected_size": 1269566,
+      "expected_crc32": "bd06cd5d",
+      "local_size": 1269566,
+      "local_crc32": "bd06cd5d",
+      "matches": true
+    },
+    {
+      "path": "data/chunk-000/file-006.parquet",
+      "expected_size": 1008898,
+      "expected_crc32": "4141e619",
+      "local_size": 1008898,
+      "local_crc32": "4141e619",
+      "matches": true
+    },
+    {
+      "path": "data/chunk-000/file-007.parquet",
+      "expected_size": 1915722,
+      "expected_crc32": "9806c4dd",
+      "local_size": 1915722,
+      "local_crc32": "9806c4dd",
+      "matches": true
+    },
+    {
+      "path": "data/chunk-000/file-008.parquet",
+      "expected_size": 907575,
+      "expected_crc32": "bd3ea454",
+      "local_size": 907575,
+      "local_crc32": "bd3ea454",
+      "matches": true
+    },
+    {
+      "path": "data/chunk-000/file-009.parquet",
+      "expected_size": 2676809,
+      "expected_crc32": "fce91659",
+      "local_size": 2676809,
+      "local_crc32": "fce91659",
+      "matches": true
+    },
+    {
+      "path": "data/chunk-001/file-000.parquet",
+      "expected_size": 2287301,
+      "expected_crc32": "bb429c0a",
+      "local_size": 2287301,
+      "local_crc32": "bb429c0a",
+      "matches": true
+    },
+    {
+      "path": "data/chunk-001/file-001.parquet",
+      "expected_size": 1402017,
+      "expected_crc32": "b8aff4f1",
+      "local_size": 1402017,
+      "local_crc32": "b8aff4f1",
+      "matches": true
+    },
+    {
+      "path": "data/chunk-001/file-002.parquet",
+      "expected_size": 1495828,
+      "expected_crc32": "33525c9a",
+      "local_size": 1495828,
+      "local_crc32": "33525c9a",
+      "matches": true
+    },
+    {
+      "path": "data/chunk-001/file-003.parquet",
+      "expected_size": 1208491,
+      "expected_crc32": "2cb777d5",
+      "local_size": 1208491,
+      "local_crc32": "2cb777d5",
+      "matches": true
+    },
+    {
+      "path": "data/chunk-001/file-004.parquet",
+      "expected_size": 2065743,
+      "expected_crc32": "5e82a57b",
+      "local_size": 2065743,
+      "local_crc32": "5e82a57b",
+      "matches": true
+    },
+    {
+      "path": "data/chunk-001/file-005.parquet",
+      "expected_size": 2621907,
+      "expected_crc32": "d3f0c5e7",
+      "local_size": 2621907,
+      "local_crc32": "d3f0c5e7",
+      "matches": true
+    },
+    {
+      "path": "data/chunk-001/file-006.parquet",
+      "expected_size": 1278040,
+      "expected_crc32": "71d4bf0b",
+      "local_size": 1278040,
+      "local_crc32": "71d4bf0b",
+      "matches": true
+    },
+    {
+      "path": "data/chunk-001/file-007.parquet",
+      "expected_size": 2207527,
+      "expected_crc32": "b483b19a",
+      "local_size": 2207527,
+      "local_crc32": "b483b19a",
+      "matches": true
+    },
+    {
+      "path": "data/chunk-001/file-008.parquet",
+      "expected_size": 2739390,
+      "expected_crc32": "d726df36",
+      "local_size": 2739390,
+      "local_crc32": "d726df36",
+      "matches": true
+    },
+    {
+      "path": "data/chunk-001/file-009.parquet",
+      "expected_size": 1527188,
+      "expected_crc32": "ba048ddc",
+      "local_size": 1527188,
+      "local_crc32": "ba048ddc",
+      "matches": true
+    },
+    {
+      "path": "data/chunk-002/file-000.parquet",
+      "expected_size": 943654,
+      "expected_crc32": "9657dbef",
+      "local_size": 943654,
+      "local_crc32": "9657dbef",
+      "matches": true
+    },
+    {
+      "path": "data/chunk-002/file-001.parquet",
+      "expected_size": 1170649,
+      "expected_crc32": "27e996cc",
+      "local_size": 1170649,
+      "local_crc32": "27e996cc",
+      "matches": true
+    },
+    {
+      "path": "data/chunk-002/file-002.parquet",
+      "expected_size": 1732851,
+      "expected_crc32": "6fc080b0",
+      "local_size": 1732851,
+      "local_crc32": "6fc080b0",
+      "matches": true
+    },
+    {
+      "path": "data/chunk-002/file-003.parquet",
+      "expected_size": 1328563,
+      "expected_crc32": "25e7761e",
+      "local_size": 1328563,
+      "local_crc32": "25e7761e",
+      "matches": true
+    },
+    {
+      "path": "data/chunk-002/file-004.parquet",
+      "expected_size": 1971557,
+      "expected_crc32": "be6adb3d",
+      "local_size": 1971557,
+      "local_crc32": "be6adb3d",
+      "matches": true
+    },
+    {
+      "path": "meta/episodes/chunk-000/file-000.parquet",
+      "expected_size": 2124463,
+      "expected_crc32": "23bdfe3d",
+      "local_size": 2124463,
+      "local_crc32": "23bdfe3d",
+      "matches": true
+    },
+    {
+      "path": "meta/episodes/chunk-001/file-000.parquet",
+      "expected_size": 2288766,
+      "expected_crc32": "320cd221",
+      "local_size": 2288766,
+      "local_crc32": "320cd221",
+      "matches": true
+    },
+    {
+      "path": "meta/episodes/chunk-002/file-000.parquet",
+      "expected_size": 1160887,
+      "expected_crc32": "b1da3134",
+      "local_size": 1160887,
+      "local_crc32": "b1da3134",
+      "matches": true
+    },
+    {
+      "path": "meta/info.json",
+      "expected_size": 4577,
+      "expected_crc32": "370c87ea",
+      "local_size": 4577,
+      "local_crc32": "370c87ea",
+      "matches": true
+    },
+    {
+      "path": "meta/stats.json",
+      "expected_size": 20828,
+      "expected_crc32": "5f1428e9",
+      "local_size": 20828,
+      "local_crc32": "5f1428e9",
+      "matches": true
+    },
+    {
+      "path": "meta/tasks.parquet",
+      "expected_size": 98249,
+      "expected_crc32": "fc3fc9aa",
+      "local_size": 98249,
+      "local_crc32": "fc3fc9aa",
+      "matches": true
+    },
+    {
+      "path": "videos/observation.images.cam_high/chunk-000/file-000.mp4",
+      "expected_size": 209182611,
+      "expected_crc32": "c5cd410a",
+      "local_size": 209182611,
+      "local_crc32": "c5cd410a",
+      "matches": true
+    },
+    {
+      "path": "videos/observation.images.cam_high/chunk-000/file-001.mp4",
+      "expected_size": 136943364,
+      "expected_crc32": "fde633aa",
+      "local_size": 136943364,
+      "local_crc32": "fde633aa",
+      "matches": true
+    },
+    {
+      "path": "videos/observation.images.cam_high/chunk-000/file-002.mp4",
+      "expected_size": 209186756,
+      "expected_crc32": "e50987f0",
+      "local_size": 209186756,
+      "local_crc32": "e50987f0",
+      "matches": true
+    },
+    {
+      "path": "videos/observation.images.cam_high/chunk-000/file-003.mp4",
+      "expected_size": 185866212,
+      "expected_crc32": "3ba44803",
+      "local_size": 185866212,
+      "local_crc32": "3ba44803",
+      "matches": true
+    },
+    {
+      "path": "videos/observation.images.cam_high/chunk-000/file-004.mp4",
+      "expected_size": 208695327,
+      "expected_crc32": "a2f0b2f4",
+      "local_size": 208695327,
+      "local_crc32": "a2f0b2f4",
+      "matches": true
+    },
+    {
+      "path": "videos/observation.images.cam_high/chunk-000/file-005.mp4",
+      "expected_size": 208995148,
+      "expected_crc32": "da53b7aa",
+      "local_size": 208995148,
+      "local_crc32": "da53b7aa",
+      "matches": true
+    },
+    {
+      "path": "videos/observation.images.cam_high/chunk-000/file-006.mp4",
+      "expected_size": 39092191,
+      "expected_crc32": "ae1c8ea2",
+      "local_size": 39092191,
+      "local_crc32": "ae1c8ea2",
+      "matches": true
+    },
+    {
+      "path": "videos/observation.images.cam_high/chunk-000/file-007.mp4",
+      "expected_size": 209359022,
+      "expected_crc32": "ed11cc6f",
+      "local_size": 209359022,
+      "local_crc32": "ed11cc6f",
+      "matches": true
+    },
+    {
+      "path": "videos/observation.images.cam_high/chunk-000/file-008.mp4",
+      "expected_size": 207883722,
+      "expected_crc32": "0b99be5a",
+      "local_size": 207883722,
+      "local_crc32": "0b99be5a",
+      "matches": true
+    },
+    {
+      "path": "videos/observation.images.cam_high/chunk-000/file-009.mp4",
+      "expected_size": 86653555,
+      "expected_crc32": "983bece1",
+      "local_size": 86653555,
+      "local_crc32": "983bece1",
+      "matches": true
+    },
+    {
+      "path": "videos/observation.images.cam_high/chunk-000/file-010.mp4",
+      "expected_size": 209192550,
+      "expected_crc32": "c2488098",
+      "local_size": 209192550,
+      "local_crc32": "c2488098",
+      "matches": true
+    },
+    {
+      "path": "videos/observation.images.cam_high/chunk-000/file-011.mp4",
+      "expected_size": 165206251,
+      "expected_crc32": "d0ff55ac",
+      "local_size": 165206251,
+      "local_crc32": "d0ff55ac",
+      "matches": true
+    },
+    {
+      "path": "videos/observation.images.cam_left_wrist/chunk-000/file-000.mp4",
+      "expected_size": 152294530,
+      "expected_crc32": "62f553cc",
+      "local_size": 152294530,
+      "local_crc32": "62f553cc",
+      "matches": true
+    },
+    {
+      "path": "videos/observation.images.cam_left_wrist/chunk-000/file-001.mp4",
+      "expected_size": 160639635,
+      "expected_crc32": "3d83b553",
+      "local_size": 160639635,
+      "local_crc32": "3d83b553",
+      "matches": true
+    },
+    {
+      "path": "videos/observation.images.cam_left_wrist/chunk-000/file-002.mp4",
+      "expected_size": 199029929,
+      "expected_crc32": "9d65e2e8",
+      "local_size": 199029929,
+      "local_crc32": "9d65e2e8",
+      "matches": true
+    },
+    {
+      "path": "videos/observation.images.cam_left_wrist/chunk-000/file-003.mp4",
+      "expected_size": 208376616,
+      "expected_crc32": "20e0d5a2",
+      "local_size": 208376616,
+      "local_crc32": "20e0d5a2",
+      "matches": true
+    },
+    {
+      "path": "videos/observation.images.cam_left_wrist/chunk-000/file-004.mp4",
+      "expected_size": 28381441,
+      "expected_crc32": "d6f147ef",
+      "local_size": 28381441,
+      "local_crc32": "d6f147ef",
+      "matches": true
+    },
+    {
+      "path": "videos/observation.images.cam_left_wrist/chunk-000/file-005.mp4",
+      "expected_size": 159205636,
+      "expected_crc32": "1ce5cab9",
+      "local_size": 159205636,
+      "local_crc32": "1ce5cab9",
+      "matches": true
+    },
+    {
+      "path": "videos/observation.images.cam_right_wrist/chunk-000/file-000.mp4",
+      "expected_size": 160839817,
+      "expected_crc32": "0ad300dd",
+      "local_size": 160839817,
+      "local_crc32": "0ad300dd",
+      "matches": true
+    },
+    {
+      "path": "videos/observation.images.cam_right_wrist/chunk-000/file-001.mp4",
+      "expected_size": 208965290,
+      "expected_crc32": "8aa9c911",
+      "local_size": 208965290,
+      "local_crc32": "8aa9c911",
+      "matches": true
+    },
+    {
+      "path": "videos/observation.images.cam_right_wrist/chunk-000/file-002.mp4",
+      "expected_size": 25929064,
+      "expected_crc32": "f1ae0025",
+      "local_size": 25929064,
+      "local_crc32": "f1ae0025",
+      "matches": true
+    },
+    {
+      "path": "videos/observation.images.cam_right_wrist/chunk-000/file-003.mp4",
+      "expected_size": 197665788,
+      "expected_crc32": "5c528868",
+      "local_size": 197665788,
+      "local_crc32": "5c528868",
+      "matches": true
+    },
+    {
+      "path": "videos/observation.images.cam_right_wrist/chunk-000/file-004.mp4",
+      "expected_size": 208497507,
+      "expected_crc32": "3bd4e2e9",
+      "local_size": 208497507,
+      "local_crc32": "3bd4e2e9",
+      "matches": true
+    },
+    {
+      "path": "videos/observation.images.cam_right_wrist/chunk-000/file-005.mp4",
+      "expected_size": 66834193,
+      "expected_crc32": "75fe4d5a",
+      "local_size": 66834193,
+      "local_crc32": "75fe4d5a",
+      "matches": true
+    },
+    {
+      "path": "videos/observation.images.cam_right_wrist/chunk-000/file-006.mp4",
+      "expected_size": 201551923,
+      "expected_crc32": "5c2da821",
+      "local_size": 201551923,
+      "local_crc32": "5c2da821",
+      "matches": true
+    }
+  ],
+  "extra_local_files": [],
+  "all_files_match": true,
+  "downloaded_bytes": 65557,
+  "verification": "Local full-file CRC32 and size versus official ZIP central directory; ZIP object itself was not fully downloaded or SHA256-rehashed.",
+  "elapsed_seconds": 10.29
+}

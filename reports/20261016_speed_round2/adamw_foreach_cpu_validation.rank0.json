@@ -1,0 +1,211 @@
+{
+  "device": "cpu",
+  "rank": 0,
+  "world_size": 1,
+  "torch": "2.6.0+cpu",
+  "cases": [
+    {
+      "layout": "local",
+      "mixed_fp32_bf16": false,
+      "steps": 20,
+      "parameters": 376,
+      "checked_tensors": 29756,
+      "checkpoint_state_dict_roundtrip": true,
+      "maxima": {
+        "float32": {
+          "parameter": {
+            "max_abs": 0.0,
+            "max_relative_to_global_max": 0.0,
+            "unequal_elements": 0,
+            "elements_checked": 485060
+          },
+          "step": {
+            "max_abs": 0.0,
+            "max_relative_to_global_max": 0.0,
+            "unequal_elements": 0,
+            "elements_checked": 7412
+          },
+          "exp_avg": {
+            "max_abs": 0.0,
+            "max_relative_to_global_max": 0.0,
+            "unequal_elements": 0,
+            "elements_checked": 478112
+          },
+          "exp_avg_sq": {
+            "max_abs": 0.0,
+            "max_relative_to_global_max": 0.0,
+            "unequal_elements": 0,
+            "elements_checked": 478112
+          }
+        },
+        "bfloat16": {}
+      },
+      "passed": true,
+      "failures": []
+    },
+    {
+      "layout": "local",
+      "mixed_fp32_bf16": true,
+      "steps": 20,
+      "parameters": 376,
+      "checked_tensors": 29756,
+      "checkpoint_state_dict_roundtrip": true,
+      "maxima": {
+        "float32": {
+          "parameter": {
+            "max_abs": 0.0,
+            "max_relative_to_global_max": 0.0,
+            "unequal_elements": 0,
+            "elements_checked": 202840
+          },
+          "step": {
+            "max_abs": 0.0,
+            "max_relative_to_global_max": 0.0,
+            "unequal_elements": 0,
+            "elements_checked": 7412
+          },
+          "exp_avg": {
+            "max_abs": 0.0,
+            "max_relative_to_global_max": 0.0,
+            "unequal_elements": 0,
+            "elements_checked": 199942
+          },
+          "exp_avg_sq": {
+            "max_abs": 0.0,
+            "max_relative_to_global_max": 0.0,
+            "unequal_elements": 0,
+            "elements_checked": 199942
+          }
+        },
+        "bfloat16": {
+          "parameter": {
+            "max_abs": 0.001953125,
+            "max_relative_to_global_max": 0.0010593220358714461,
+            "unequal_elements": 887,
+            "elements_checked": 282220
+          },
+          "exp_avg": {
+            "max_abs": 0.0,
+            "max_relative_to_global_max": 0.0,
+            "unequal_elements": 0,
+            "elements_checked": 278170
+          },
+          "exp_avg_sq": {
+            "max_abs": 0.00146484375,
+            "max_relative_to_global_max": 0.02142857201397419,
+            "unequal_elements": 129311,
+            "elements_checked": 278170
+          }
+        }
+      },
+      "passed": true,
+      "failures": []
+    },
+    {
+      "layout": "dtensor",
+      "mixed_fp32_bf16": false,
+      "steps": 20,
+      "parameters": 376,
+      "checked_tensors": 29756,
+      "checkpoint_state_dict_roundtrip": true,
+      "maxima": {
+        "float32": {
+          "parameter": {
+            "max_abs": 0.0,
+            "max_relative_to_global_max": 0.0,
+            "unequal_elements": 0,
+            "elements_checked": 485060
+          },
+          "step": {
+            "max_abs": 0.0,
+            "max_relative_to_global_max": 0.0,
+            "unequal_elements": 0,
+            "elements_checked": 7412
+          },
+          "exp_avg": {
+            "max_abs": 0.0,
+            "max_relative_to_global_max": 0.0,
+            "unequal_elements": 0,
+            "elements_checked": 478112
+          },
+          "exp_avg_sq": {
+            "max_abs": 0.0,
+            "max_relative_to_global_max": 0.0,
+            "unequal_elements": 0,
+            "elements_checked": 478112
+          }
+        },
+        "bfloat16": {}
+      },
+      "passed": true,
+      "failures": []
+    },
+    {
+      "layout": "dtensor",
+      "mixed_fp32_bf16": true,
+      "steps": 20,
+      "parameters": 376,
+      "checked_tensors": 29756,
+      "checkpoint_state_dict_roundtrip": true,
+      "maxima": {
+        "float32": {
+          "parameter": {
+            "max_abs": 0.0,
+            "max_relative_to_global_max": 0.0,
+            "unequal_elements": 0,
+            "elements_checked": 202840
+          },
+          "step": {
+            "max_abs": 0.0,
+            "max_relative_to_global_max": 0.0,
+            "unequal_elements": 0,
+            "elements_checked": 7412
+          },
+          "exp_avg": {
+            "max_abs": 0.0,
+            "max_relative_to_global_max": 0.0,
+            "unequal_elements": 0,
+            "elements_checked": 199942
+          },
+          "exp_avg_sq": {
+            "max_abs": 0.0,
+            "max_relative_to_global_max": 0.0,
+            "unequal_elements": 0,
+            "elements_checked": 199942
+          }
+        },
+        "bfloat16": {
+          "parameter": {
+            "max_abs": 0.001953125,
+            "max_relative_to_global_max": 0.0010593220358714461,
+            "unequal_elements": 887,
+            "elements_checked": 282220
+          },
+          "exp_avg": {
+            "max_abs": 0.0,
+            "max_relative_to_global_max": 0.0,
+            "unequal_elements": 0,
+            "elements_checked": 278170
+          },
+          "exp_avg_sq": {
+            "max_abs": 0.00146484375,
+            "max_relative_to_global_max": 0.02142857201397419,
+            "unequal_elements": 129311,
+            "elements_checked": 278170
+          }
+        }
+      },
+      "passed": true,
+      "failures": []
+    }
+  ],
+  "tolerances": {
+    "fp32_rtol": 2e-05,
+    "fp32_atol": 2e-07,
+    "bf16_rtol": 0.02,
+    "bf16_atol": 0.002
+  },
+  "timing_scope": "Correctness test with explicit synchronizations; not a performance benchmark.",
+  "builder_switch": "actual builder expression passed CPU/NPU x off/on truth table",
+  "passed": true
+}

@@ -1,0 +1,49 @@
+2026-10-16 LingBot-VLA 默认 8 卡 NPU profiling 结果
+
+结论：最大阶段开销是反向传播（含重计算和等待）。优先优化 NPU MoE 的逐专家循环、细碎算子调度及其反向路径。数据加载不是本次窗口中的主要瓶颈。
+
+方法：使用原始预训练权重、原数据集和训练配置，8×12=96，Muon、FP32/BF16 设置和梯度检查点不变。独立短跑 20 步，第 13–16 步在全部 8 个 rank 采集 torch_npu.profiler Level1 CPU/NPU/HCCL。关闭 OBS 上传与检查点输出。
+无采集的第 2–11 步均值 7.1105 秒，采集第 13–16 步均值 9.2560 秒，额外开销 30.2%。以下阶段数字是采集窗口内的测量值，不是无 profiler 的原始耗时。
+
+8 个 rank × 4 步的阶段均值：
+  反向: 5.196532 秒/步，占 56.372%
+  前向: 2.420603 秒/步，占 26.259%
+  优化器: 0.868594 秒/步，占 9.422%
+  teacher: 0.545416 秒/步，占 5.917%
+  梯度裁剪: 0.083171 秒/步，占 0.902%
+  数据等待: 0.000912 秒/步，占 0.010%
+  H2D 下发: 0.001064 秒/步，占 0.012%
+  统计量归约: 0.001127 秒/步，占 0.012%
+
+MoE 专家范围每步调用 72 次（36 层正常前向 + 36 层检查点重计算），合计 2.4803 秒/步。该数字是前向和反向的子集，不能再与上表相加；实际 MoE 梯度计算未全部包含在该范围内。
+设备时间线均值：计算执行 1.9223 秒/步，未被计算覆盖的通信 1.2370 秒/步，Free 6.0568 秒/步。通信包含同步和等待，不能直接等同链路传输；Free 也不能直接等同某一种 CPU 开销。
+rank 0 的 4 步有 339528 个计算 kernel；62248 次 MatMulV2 平均仅 8.624 微秒。主机 aclnnMatmulGetWorkspaceSize 合计 4.0928 秒，MatMulV2_Tiling 合计 1.7364 秒，launch 合计 3.3339 秒。这些主机项可嵌套或位于不同线程，不可直接相加。
+rank 0 的 aten::matmul_backward 为 15661 次，Host Total 3.5343 秒；aten::_local_scalar_dense 为 18432 次，Host Total 2.1566 秒；empty_tensor 为 240502 次。细碎调度、标量读取和分配是具体优化线索，不应将整段 backward 都解释成大矩阵计算。
+
+解决方案实验（仅隔离单层 MoE；32 专家、top4、612 tokens、D=768、H=512、FP32 主权重转 BF16）：
+  baseline: 前向 10.738 ms，反向 22.875 ms，合计 33.486 ms；最大相对 L2 误差 0
+  unbind_weights: 前向 9.832 ms，反向 19.384 ms，合计 29.180 ms；最大相对 L2 误差 0
+  unbind_weights_and_cat: 前向 6.904 ms，反向 15.404 ms，合计 22.308 ms；最大相对 L2 误差 0
+  native_gmm_explicit_backward: 前向 1.380 ms，反向 1.502 ms，合计 2.894 ms；最大相对 L2 误差 1.08e-05
+
+原生 npu_grouped_matmul 在当前 torch_npu 2.6 环境中直接调用不会产生 x/weight 梯度（能力探针已验证），因此不能直接替换训练代码。研究原型用显式 autograd backward：输入梯度走 grouped GEMM，权重梯度走 npu_grouped_matmul_add_ 的 FP32 累加，再转回原计算 dtype。
+原型在 NPU 内完成专家计数与分组，避免 counts.tolist()；0..31 的专家 ID 转成精确 FP32 值排序，避免整数 ArgSort 回退 AICPU。
+额外验证了变化随机路由、仅 4 个活跃专家且头尾/中间均有空组的情形。所有输出和梯度有限；三个 GMM 用例的最大相对 L2 误差小于 2e-4。详细时序和误差见对应 JSON。
+固定路由时单层 GMM 前后向约 2.89 ms，相比原实现约 33.49 ms，加速约 11.6 倍。变化路由测试是探索性微基准，候选按固定顺序运行，存在 tiling 缓存及主机状态影响；不能用其倍率预测训练吞吐。
+
+实施优先级：
+1. 优先将原生 grouped GEMM + 显式 backward 作为 NPU 专用候选后端；保留现有 stacked 专家权重和 checkpoint 格式。先验证 FSDP2 的 DTensor 梯度传递、梯度检查点重计算、路由/损失、峰值 HBM 与恢复，再以无 profiler 的固定数据短跑对比端到端吞吐。
+2. 若要分阶段推进，unbind + cat 是已有数值对照的较小改动，但其收益随活跃专家数变化，稀疏用例不保证加速。
+3. MoE 优化后再采集剩余 FSDP 通信和 Muon 热点，研究通信重叠与选择性重计算；FP32 eager attention 的融合作为独立候选，需保留 mask 语义并做数值/任务成功率验证。
+
+本轮完成的是 profiling、归因与隔离原型研究；默认训练计算后端仍使用原实现。原型单层加速不能换算为整轮训练加速，未进行完整训练或 RoboTwin 成功率评测。
+
+复现采集：bash tools/profile_robotwin_npu.sh
+汇总：python3 tools/analyze_npu_profile.py /cache/lingbot/profiling/robotwin_20261016_1530 --output reports/20261016_npu_profile
+微基准：OMP_NUM_THREADS=1 python3 tools/bench_npu_moe_candidates.py --native-gmm --output /cache/moe_benchmark.json
+原始 trace、日志和资源采样：/cache/lingbot/profiling/robotwin_20261016_1530（约 22 GiB）
+
+官方研究参考：
+https://github.com/Ascend/MindSpeed/blob/master/mindspeed/ops/gmm.py
+https://github.com/Ascend/MindSpeed/blob/master/docs/zh/ops/gmm.md
+https://www.hiascend.com/doc_center/source/zh/CANNCommunityEdition/82RC1alpha002/devaids/Profiling/atlasprofiling_16_0033.html

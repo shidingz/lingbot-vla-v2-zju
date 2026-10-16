@@ -1,0 +1,26 @@
+第二轮优化已接入默认训练入口
+
+主入口：bash train_robotwin_npu.sh
+兼容入口：bash train_robotwin_npu_optimized.sh（委托主入口，默认值统一维护）
+默认：GMM + FP32 SDPA + MoE监控合批 + AdamW foreach + 关闭动作层梯度重计算。
+默认实验名：robotwin_1ep_optimized；旧 robotwin_1ep_fast 的产物保留。
+单独使用 YAML 时仍保留 eager + 重计算；主脚本在 SDPA 组合下覆盖为关闭重计算。
+
+集成验收：8卡，global batch96，连续160步，exit0，所有日志数值有限。
+学习率总步数5717；跨过第114步预热；32项启动检查通过。
+rank0峰值已分配显存：50.61 GiB。
+
+第13-60步：实际间隔 2.6042 s/update；吞吐 36.8640 samples/s；日志均值 2.5852 s/update。
+第13-160步：实际间隔 2.6081 s/update；吞吐 36.8083 samples/s；日志均值 2.5851 s/update。
+第115-160步：实际间隔 2.6087 s/update；吞吐 36.8000 samples/s；日志均值 2.5832 s/update。
+
+已有同条件60步A/B：3.5417 → 2.6042秒/步，耗时降低26.47%，吞吐提高36%。
+本次是默认入口的更长集成验证，没有把历史对照直接当成新的同场A/B。
+
+低显存模式：ENABLE_GRAD_CKPT=true bash train_robotwin_npu.sh
+回退第一轮：LINGBOT_JOINT_ATTN_BACKEND=eager LINGBOT_MOE_MONITOR_BATCH_COUNTS=0 LINGBOT_ADAMW_FOREACH_NPU=0 ENABLE_GRAD_CKPT=true bash train_robotwin_npu.sh
+恢复旧实验：RUN_NAME=robotwin_1ep_fast bash train_robotwin_npu.sh（默认enable_resume=true）。
+
+限制：尚未用新默认跑完整epoch或闭环评测；本次没有执行完整大小的DCP保存/恢复。
+原始日志：/cache/lingbot/profiling/round2_default_20261016_185821/default_160
+数值/硬件正确性证据：../20261016_speed_round2/

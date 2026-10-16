@@ -1,0 +1,76 @@
+{
+  "checked_at": "2026-10-16T01:14:35.926795+08:00",
+  "method": "40s py-spy nonblocking 20Hz on ranks 0 and 4; Python samples include waits, not accelerator kernel times; 88/84 stack-read errors; 20 npu-smi usages readings per card over43s",
+  "profiles": {
+    "rank0": {
+      "valid_main_thread_samples": 711,
+      "weighted_seconds": 35.55000000000012,
+      "main_forward_pct": 26.019690576652504,
+      "backward_call_pct": 56.68073136427591,
+      "optimizer_call_pct": 6.610407876230638,
+      "teacher_calls_pct": 6.891701828410667,
+      "moe_fallback_within_main_thread_pct": 14.767932489451399,
+      "note": "MoE percentage is a subset of forward, not additive. Backward includes recomputation, native kernels, scheduling and communication waits."
+    },
+    "rank4": {
+      "valid_main_thread_samples": 715,
+      "weighted_seconds": 35.75000000000011,
+      "main_forward_pct": 24.895104895104797,
+      "backward_call_pct": 59.16083916083945,
+      "optimizer_call_pct": 6.293706293706275,
+      "teacher_calls_pct": 5.174825174825159,
+      "moe_fallback_within_main_thread_pct": 14.405594405594332,
+      "note": "MoE percentage is a subset of forward, not additive. Backward includes recomputation, native kernels, scheduling and communication waits."
+    }
+  },
+  "npu_metrics": {
+    "0": {
+      "Aicore Usage Rate(%)": 7.85,
+      "Aivector Usage Rate(%)": 9.95,
+      "HBM Bandwidth Usage Rate(%)": 9.3,
+      "Aicpu Usage Rate(%)": 0.1
+    },
+    "4": {
+      "Aicore Usage Rate(%)": 6.55,
+      "Aivector Usage Rate(%)": 11.15,
+      "HBM Bandwidth Usage Rate(%)": 10.4,
+      "Aicpu Usage Rate(%)": 0.1
+    }
+  },
+  "recent_training": {
+    "last_log": [
+      "10/16/2026 01:14:33",
+      "258"
+    ],
+    "recent100_wall_seconds_per_step": 7.56,
+    "recent100_step_time_seconds": 7.531005346775055,
+    "outside_timed_region_seconds_per_step": 0.028994653224944322,
+    "latest_loss": {
+      "step": 258,
+      "epoch": 1,
+      "loss": 0.11669921875,
+      "vla_loss": 0.10577392578125,
+      "depth_loss": 1.1105537414550781,
+      "future_depth_loss": 1.1196136474609375,
+      "future_video_loss": 0.20015239715576172,
+      "grad_norm": 0.31239184737205505,
+      "lr": 4.993484503137523e-05,
+      "expert_lr": 0.00014123707015673923,
+      "step_time": 7.6951820850372314
+    }
+  },
+  "conclusions": {
+    "strongest_candidate": "NPU MoE uses per-expert torch fallback, many small GEMMs and host synchronization; observed in both forward and checkpoint recompute samples",
+    "additional_candidates": [
+      "explicit FP32 eager joint attention",
+      "MoGe depth target CPU scipy fits and NPU-to-CPU tensor copies",
+      "checkpoint recomputation, FSDP communication and metrics synchronization"
+    ],
+    "not_supported_as_primary": "rank0 loader starvation; current measured outside-StepTime overhead is tiny",
+    "limitations": [
+      "No operator-level NPU timeline; cannot assign exact kernel time percentages or speedup promise.",
+      "PROFILING_MODE is unset; documented msprof dynamic attach requires enablement before job launch.",
+      "No change to training code, configuration or running experiment."
+    ]
+  }
+}

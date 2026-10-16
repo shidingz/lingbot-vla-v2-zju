@@ -1,0 +1,46 @@
+LingBot-VLA 2.0 训练产物索引
+实验 robotwin_1ep_fast；1 epoch / 5717 steps；2026-10-16正常完成；exit_code=0
+
+推理 / 评测完整模型
+obs://yw-2030-extern/Partner_Qin/robot_1014/robotwin_1ep_fast/checkpoints/global_step_5717/hf_ckpt/
+17个文件，6个权重分片，23.77 GiB；包含完整模型，不仅是动作专家增量。
+
+DCP 模型状态
+obs://yw-2030-extern/Partner_Qin/robot_1014/robotwin_1ep_fast/checkpoints/global_step_5717/model/
+23.77 GiB；与 optimizer、extra_state 配套用于恢复。
+
+优化器状态
+obs://yw-2030-extern/Partner_Qin/robot_1014/robotwin_1ep_fast/checkpoints/global_step_5717/optimizer/
+7.24 GiB。
+
+附加训练状态
+obs://yw-2030-extern/Partner_Qin/robot_1014/robotwin_1ep_fast/checkpoints/global_step_5717/extra_state/
+8个rank的训练进度、调度等状态。
+
+模型绑定的实验快照
+obs://yw-2030-extern/Partner_Qin/robot_1014/robotwin_1ep_fast/checkpoints/global_step_5717/_run_assets/
+训练配置、归一化与原始保存时日志；保留不改。
+
+最新检查点指针
+obs://yw-2030-extern/Partner_Qin/robot_1014/robotwin_1ep_fast/latest.json
+指向 epoch1 / step5717。
+
+最终云端日志
+obs://yw-2030-extern/Partner_Qin/robot_1014/robotwin_1ep_fast/logs/
+train.log、loss.jsonl、exit_code、obs_checkpoints.jsonl及TensorBoard。归档凭据见archive_receipt.json。
+
+云端复盘资料
+obs://yw-2030-extern/Partner_Qin/robot_1014/robotwin_1ep_fast/analysis/
+本报告、曲线、统计CSV/JSON和核验记录。
+
+本地原始日志
+/home/ma-user/work/lingbot-vla-v2/logs/robotwin_1ep_fast
+小日志仍保留本地。
+
+本地复盘资料
+/home/ma-user/work/lingbot-vla-v2/reports/20261016_completed_analysis
+report.html、training_overview.png/pdf、training_summary.json、metrics.csv。
+
+重要：hf_ckpt用于推理与评测；model+optimizer+extra_state用于完整恢复。
+本地大checkpoint已在OBS校验后清理。后续下载到/cache，不要写入50GB工作盘。
+当前尚无闭环评测结果；eval_failed=1为状态统计误报。

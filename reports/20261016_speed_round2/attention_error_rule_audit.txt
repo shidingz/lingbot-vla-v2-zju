@@ -1,0 +1,38 @@
+注意力验证器的零参考梯度修正（独立复核，2026-10-16）
+
+原始硬件报告保持原样：attention_npu_checks.json
+SHA256: 07f92486ab188220ffba602d029353c97f69cd16b05a74a36a64fb125cb4359b
+其 passed=false 是真实的原始验证结果，未覆盖或改写。
+
+发现
+唯一失败用例 one_key 每个查询只允许看一个key，注意力比例恒为1，因此理想Q/K梯度均为0。
+NPU计算中dq最大绝对误差5.3734e-7、dk最大绝对误差1.3265e-6，均小于原绝对阈值1e-4。
+原验证器仍将误差L2除以 max(参考L2,1e-12)，并要求该比值小于1e-4。参考为0时，微小误差被人为分母放大成约394万；相对零的百分比没有定义。
+
+修正
+仅当参考张量每个元素严格等于0时，以原有绝对阈值判断，relative_l2记为null，并报告reference_is_zero与reference_l2。
+非零参考仍必须同时满足原有最大绝对误差与relative_l2门槛。
+FP32两项阈值仍为1e-4，未增加阈值；BF16门槛也未改变。
+所有情况下都要求actual和reference有限。未更改注意力实现。
+
+为什么没有直接改为通用atol+rtol
+标准逐元素 |actual-reference| <= atol + rtol*|reference| 同样能处理零参考，本次选取更小的规则修正，使所有非零参考的既有判定保持不变，减少事后更改实验标准的范围。
+
+验证规则自身的CPU用例
+1. 全零参考+约1e-6扰动：接受。
+2. 全零参考+2e-4扰动：拒绝。
+3. 全零参考+NaN：拒绝。
+4. 非零参考，绝对误差虽小但相对误差1%：仍拒绝。
+5. 非零参考，相对误差虽小但绝对误差超限：仍拒绝。
+6. 非零参考+约1e-6扰动：接受。
+六项全部通过，同时原8项FP32注意力输出及Q/K/V梯度CPU对照全部通过。
+结果：attention_cpu_checks_v2.json。
+
+下一步硬件重跑（由主线安排，未占用NPU）
+PYTHONDONTWRITEBYTECODE=1 /home/ma-user/anaconda3/envs/PyTorch-2.6.0/bin/python reports/20261016_speed_round2/test_attention_candidate.py --device npu:0 --actual-shape --benchmark --iterations 5 --warmup 2 --output reports/20261016_speed_round2/attention_npu_checks_v2.json
+若生产候选已应用，可追加 --candidate lingbotvla/ops/joint_attention.py。
+新报告与旧报告分开保存，硬件复测后才确认修正规则下的通过情况。
+
+原始性能记录仅供后续复测比较
+单层真实形状前向+反向median：eager8.0464ms，SDPA4.3162ms。
+这些是孤立注意力速度，不能用1.86倍直接表述整模型训练提速。

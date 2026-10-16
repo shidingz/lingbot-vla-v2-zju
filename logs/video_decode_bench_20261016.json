@@ -1,0 +1,41 @@
+{
+  "scope": "single CPU worker; three real cameras; warm-cache/order effects and host contention apply",
+  "reference": "old torchvision PyAV RGB-every-frame path, explicitly constrained to the same decoder threads",
+  "root": "/cache/lingbot/robotwin_data/RoboTwin_lerobot_v30",
+  "episode": 1273,
+  "repeats": 1,
+  "results": [
+    {
+      "threads": 1,
+      "requests_per_implementation": 3,
+      "reference_seconds": 4.685749307274818,
+      "optimized_seconds": 0.5669064745306969,
+      "reference_median_seconds": 2.063318081200123,
+      "optimized_median_seconds": 0.1712999902665615,
+      "pixels_identical": true,
+      "measured_speedup": 8.265471498017076
+    },
+    {
+      "threads": 2,
+      "requests_per_implementation": 3,
+      "reference_seconds": 5.936821382492781,
+      "optimized_seconds": 0.5333671607077122,
+      "reference_median_seconds": 1.9822215624153614,
+      "optimized_median_seconds": 0.16916341334581375,
+      "pixels_identical": true,
+      "measured_speedup": 11.130834104250727
+    },
+    {
+      "threads": 4,
+      "requests_per_implementation": 3,
+      "reference_seconds": 6.023219577968121,
+      "optimized_seconds": 0.49216673895716667,
+      "reference_median_seconds": 2.0121214501559734,
+      "optimized_median_seconds": 0.16295157000422478,
+      "pixels_identical": true,
+      "measured_speedup": 12.238168696101836
+    }
+  ],
+  "torch_threads": 1,
+  "torch_npu_imported": false
+}

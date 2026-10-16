@@ -1,0 +1,135 @@
+{
+  "audited_at": "2026-10-16T19:01:43.580001+08:00",
+  "scope": "Read-only comparison of saved effective configuration and launch provenance while integration run may still be active; no NPU operations.",
+  "baseline": "/cache/lingbot/profiling/speed_round2_20261016/combined_no_checkpoint",
+  "candidate": "/cache/lingbot/profiling/round2_default_20261016_185821/default_160",
+  "passed": true,
+  "effective_yaml_differences": [
+    {
+      "field": "train.logging_dir",
+      "baseline": "/cache/lingbot/profiling/speed_round2_20261016/combined_no_checkpoint/logs",
+      "candidate": "/cache/lingbot/profiling/round2_default_20261016_185821/default_160/logs",
+      "classification": "isolated_destination",
+      "impact": "Only output/log/trace destination differs."
+    },
+    {
+      "field": "train.output_dir",
+      "baseline": "/cache/lingbot/profiling/speed_round2_20261016/combined_no_checkpoint/run",
+      "candidate": "/cache/lingbot/profiling/round2_default_20261016_185821/default_160/run",
+      "classification": "isolated_destination",
+      "impact": "Only output/log/trace destination differs."
+    },
+    {
+      "field": "train.profile_profile_memory",
+      "baseline": false,
+      "candidate": true,
+      "classification": "inactive_profiler_option",
+      "impact": "Both runs have profile_ranks=''; TrainingProfiler.selected=False for every rank, so this option is unused."
+    },
+    {
+      "field": "train.profile_record_shapes",
+      "baseline": false,
+      "candidate": true,
+      "classification": "inactive_profiler_option",
+      "impact": "Both runs have profile_ranks=''; TrainingProfiler.selected=False for every rank, so this option is unused."
+    },
+    {
+      "field": "train.profile_trace_dir",
+      "baseline": "/cache/lingbot/profiling/speed_round2_20261016/combined_no_checkpoint/trace",
+      "candidate": "/cache/lingbot/profiling/round2_default_20261016_185821/default_160/trace",
+      "classification": "isolated_destination",
+      "impact": "Only output/log/trace destination differs."
+    },
+    {
+      "field": "train.profile_with_stack",
+      "baseline": false,
+      "candidate": true,
+      "classification": "inactive_profiler_option",
+      "impact": "Both runs have profile_ranks=''; TrainingProfiler.selected=False for every rank, so this option is unused."
+    },
+    {
+      "field": "train.stop_after_steps",
+      "baseline": 60,
+      "candidate": 160,
+      "classification": "bounded_run_duration",
+      "impact": "160 updates instead of 60; max_steps remains null and the full-epoch LR schedule is retained. Compare common steps 13-60 for speed; steps 115-160 are a separate post-warmup stability window."
+    }
+  ],
+  "no_model_data_optimizer_precision_batch_loss_difference": true,
+  "prefetch": {
+    "historical": 4,
+    "current": 4,
+    "difference": 0,
+    "historical_source": "profile_robotwin_npu.sh exports PREFETCH_FACTOR=4",
+    "current_source": "main launcher leaves PREFETCH_FACTOR unset; DataArguments.prefetch_factor default=4",
+    "num_workers_historical": 8,
+    "num_workers_current": 8,
+    "pin_memory_historical": true,
+    "pin_memory_current": true
+  },
+  "main_default_provenance_checks": {
+    "command_executes_snapshot_main_script": true,
+    "command_does_not_supply_training_or_speed_overrides": true,
+    "performance_keys_absent_from_environment_overrides": true,
+    "runner_clears_launcher_override_keys": true,
+    "dry_run_confirms_exported_defaults": true,
+    "dry_run_confirms_checkpoint_false": true,
+    "actual_launcher_log_confirms_defaults": true,
+    "saved_yaml_confirms_checkpoint_false": true,
+    "main_script_hash_matches_prelaunch_manifest": true,
+    "all_rank_profiling_disabled": true
+  },
+  "performance_effective_values": {
+    "LINGBOT_NPU_MOE_IMPL": "gmm",
+    "LINGBOT_JOINT_ATTN_BACKEND": "sdpa_fp32",
+    "LINGBOT_MOE_MONITOR_BATCH_COUNTS": "1",
+    "LINGBOT_ADAMW_FOREACH_NPU": "1",
+    "ENABLE_GRAD_CKPT": false
+  },
+  "yaml_attention_note": "train.attention_implementation remains eager in YAML; LINGBOT_JOINT_ATTN_BACKEND=sdpa_fp32 overrides the joint attention implementation at runtime and is recorded in the launcher log.",
+  "source_comparison": {
+    "changed_common_manifest_files": [
+      "configs/vla/robotwin/robotwin_npu.yaml",
+      "tools/check_joint_attention.py",
+      "train_robotwin_npu.sh"
+    ],
+    "common_training_python_files": 261,
+    "training_python_changed": [],
+    "yaml_source_semantically_equal": true,
+    "other_source_change_note": "tools/check_joint_attention.py is a validation tool, not imported by the training entrypoint."
+  },
+  "data_list": {
+    "historical_sha256": "aef479efd1f2b7ecf12812351c446b722090f313179205cc7ac323f100611beb",
+    "current_sha256": "aef479efd1f2b7ecf12812351c446b722090f313179205cc7ac323f100611beb",
+    "equal": true
+  },
+  "lr_schedule": {
+    "max_steps_historical": null,
+    "max_steps_current": null,
+    "epochs": 1,
+    "lr": 5e-05,
+    "lr_min": 1e-05,
+    "lr_warmup_ratio": 0.02,
+    "expected_full_epoch_updates": 5717,
+    "expected_warmup_updates": 114,
+    "runtime_schedule_check": "Check final train.log Schedule: line after model/data initialization finishes; not asserted by this pre-completion audit."
+  },
+  "speed_comparison_boundaries": [
+    "Use matched steps 13-60 against the historical 60-step run; compare wall intervals using timestamp[60]-timestamp[12], divided by 48.",
+    "Report steps 13-160 and 115-160 separately as new-run stability/throughput measurements; there is no historical combined_no_checkpoint data beyond step 60.",
+    "The native profiler is inactive on every rank in both runs, despite enable_profiling=true needed for profile_only.",
+    "Historical and current prefetch_factor are both 4; there is no prefetch confound in this comparison.",
+    "Sequential short runs can drift with host/cache state; unchanged saved configuration is not a repeated randomized A/B experiment.",
+    "Dataset list hashes and model/data paths match; full external model and data contents and every imported dependency are not independently hashed.",
+    "This configuration audit does not assert training completion, finite metrics after warmup, all-rank peak memory, convergence, or robot-task success."
+  ],
+  "evidence": {
+    "historical_yaml": "/cache/lingbot/profiling/speed_round2_20261016/combined_no_checkpoint/logs/lingbotvla_cli.yaml",
+    "current_yaml": "/cache/lingbot/profiling/round2_default_20261016_185821/default_160/logs/lingbotvla_cli.yaml",
+    "current_manifest": "/cache/lingbot/profiling/round2_default_20261016_185821/default_160/experiment_manifest.json",
+    "dry_run": "/cache/lingbot/profiling/round2_default_20261016_185821/default_160/default_dry_run.log",
+    "train_log": "/cache/lingbot/profiling/round2_default_20261016_185821/default_160/logs/train.log",
+    "runner": "/home/ma-user/work/lingbot-vla-v2/reports/20261016_round2_default/validate_training.py",
+    "training_profiler": "/cache/lingbot/profiling/round2_default_20261016_185821/source/lingbotvla/utils/training_profiler.py"
+  }
+}

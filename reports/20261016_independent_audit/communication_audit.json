@@ -1,0 +1,840 @@
+{
+  "audited_at": "2026-10-16T16:17:15.739823+08:00",
+  "scope": "Existing 2026-10-16 15:30 isolated profiler capture only; no new training or accelerator operations.",
+  "algorithm": "Classify core COMMUNICATION/HCCL and names/types hcom or hccl as communication. Parse timestamp and duration microseconds to integer nanoseconds, merge intervals per rank, divide by four captured steps. Overlap = compute_union + communication_union - combined_union. Exclusive communication = combined_union - compute_union. No sums across devices are interpreted as wall time.",
+  "existing_script_bug": {
+    "file": "tools/analyze_npu_profile.py",
+    "line": 65,
+    "existing_rule": "core == 'HCCL' or 'hccl' in Name.lower()",
+    "actual_schema": "core='COMMUNICATION', Name='hcom_allGather__...'",
+    "impact": "All communication was counted as compute in auxiliary union fields; communication_union_s_per_step=0 was incorrect. Existing findings based on official step_trace_time.csv remain valid."
+  },
+  "mean_corrected_union_s_per_step": {
+    "compute": 1.922296395,
+    "communication": 1.732031712,
+    "overlapped": 0.4949373576875001,
+    "communication_not_overlapped": 1.2370943543125,
+    "compute_or_communication": 3.1593907493124997
+  },
+  "mean_official_step_trace_s_per_step": {
+    "Computing": 1.9222963949999985,
+    "Communication(Not Overlapped)": 1.2369728548126224,
+    "Overlapped": 0.4950588571873776,
+    "Communication": 1.732031712,
+    "Free": 6.056781242934345,
+    "Stage": 9.2161719609375,
+    "Bubble": 0.0,
+    "Communication(Not Overlapped and Exclude Receive)": 1.2369728548126224,
+    "Preparing": 0.0090628359375
+  },
+  "semantics_and_limits": [
+    "Computing includes intervals overlapping communication. Communication(Not Overlapped) is exclusive of compute; Free is neither recorded compute nor communication. These are device timeline categories, not host-cause attribution or arithmetic units utilization.",
+    "The capture has about 30.17 percent overhead and only four steps per rank. Do not extrapolate absolute profiled times to the complete epoch.",
+    "All 1016 operations per rank have zero Transit/Wait/Synchronization in Communication Time Info and Idle equal to elapsed. Positive HCCS bandwidth subrecords show actual transfer. This breakdown cannot establish zero wait, zero transfer, all idle, or a network bandwidth bottleneck.",
+    "Installed CANN parser selects master-plane events for time analysis and all planes for bandwidth analysis; master-plane subtask coverage/semantics needs further inspection to explain the zero breakdown.",
+    "SDMA is an aggregate including HCCS, PCIe and SIO. HCCS and SDMA quantities must not be added. Bandwidth subtask sums are not elapsed critical-path transmission time or peak physical-link utilization.",
+    "The old float-epoch union implementation adds submillisecond rounding error; integer nanoseconds avoid that error. Official step CSV and exact raw union may still differ from range selection or source representation."
+  ],
+  "definition_sources": [
+    "https://www.hiascend.com/document/detail/zh/mindstudio/80RC1/GUI_baseddevelopmenttool/msascendinsightug/Insight_userguide_0038.html",
+    "https://www.hiascend.com/doc_center/source/en/CANNCommunityEdition/910/devaids/Profiling/atlasprofiling_16_0066.html",
+    "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch_npu/profiler/analysis/prof_view/_trace_step_time_parser.py:151",
+    "/usr/local/Ascend/ascend-toolkit/latest/tools/profiler/profiler_tool/analysis/msparser/cluster/communication_parser.py:175",
+    "/usr/local/Ascend/ascend-toolkit/latest/tools/profiler/profiler_tool/analysis/msparser/cluster/communication_parser.py:220",
+    "/usr/local/Ascend/ascend-toolkit/latest/tools/profiler/profiler_tool/analysis/msparser/cluster/meta_parser.py:157"
+  ],
+  "ranks": [
+    {
+      "rank": "rank0",
+      "source_directory": "/cache/lingbot/profiling/robotwin_20261016_1530/trace/rank0/notebook-1412a60d-0f41-4869-980d-933b2766338c_1452191_20261016073540818_ascend_pt/ASCEND_PROFILER_OUTPUT",
+      "recorded_steps": 4,
+      "profiler_step_ids": [
+        "12",
+        "13",
+        "14",
+        "15"
+      ],
+      "raw_compute_rows": 339528,
+      "raw_communication_rows": 1016,
+      "core_counts": {
+        "AI_VECTOR_CORE": 251148,
+        "MIX_AIC": 424,
+        "AI_CORE": 75784,
+        "MIX_AIV": 10356,
+        "COMMUNICATION": 1016,
+        "DSA_SQE": 12,
+        "AI_CPU": 1804
+      },
+      "first_hcom_evidence": {
+        "line": 6224,
+        "Name": "hcom_allGather__612_4_1",
+        "Type": "hcom_allGather_",
+        "Accelerator Core": "COMMUNICATION"
+      },
+      "corrected_union_s_per_step": {
+        "compute": 1.92560787,
+        "communication": 1.92036222,
+        "overlapped": 0.551716495,
+        "communication_not_overlapped": 1.3686457249999997,
+        "compute_or_communication": 3.294253595
+      },
+      "official_step_trace_s_per_step": {
+        "Computing": 1.9256078700000028,
+        "Communication(Not Overlapped)": 1.3686457250001458,
+        "Overlapped": 0.5517164949998544,
+        "Communication": 1.9203622200000001,
+        "Free": 5.985765984996836,
+        "Stage": 9.280019625,
+        "Bubble": 0.0,
+        "Communication(Not Overlapped and Exclude Receive)": 1.3686457250001458,
+        "Preparing": 0.0090111875
+      },
+      "corrected_minus_official_s": {
+        "compute": -2.6645352591003757e-15,
+        "communication": -2.220446049250313e-16,
+        "communication_not_overlapped": -1.461053500406706e-13
+      },
+      "collective_calls_per_step": {
+        "hcom_allGather_": 174.0,
+        "hcom_reduceScatter_": 74.0,
+        "hcom_allReduce_": 6.0
+      },
+      "collective_duration_sum_s_per_step": {
+        "hcom_allGather_": 0.98678394,
+        "hcom_reduceScatter_": 0.88318473,
+        "hcom_allReduce_": 0.05039355
+      },
+      "communication_time_info": {
+        "ops": 1016,
+        "all_transit_wait_sync_zero_ops": 1016,
+        "sums_s_per_step": {
+          "Elapse Time(ms)": 1.9203622199999968,
+          "Transit Time(ms)": 0.0,
+          "Wait Time(ms)": 0.0,
+          "Synchronization Time(ms)": 0.0,
+          "Idle Time(ms)": 1.9203622199999968
+        }
+      },
+      "communication_bandwidth_info": {
+        "RDMA": {
+          "transit_MB_per_step": 0.0,
+          "transit_sum_s_per_step": 0.0,
+          "aggregate_GB_s": 0
+        },
+        "HCCS": {
+          "transit_MB_per_step": 3346.1130519999992,
+          "transit_sum_s_per_step": 0.23325399000000002,
+          "aggregate_GB_s": 14.345362546638533
+        },
+        "PCIE": {
+          "transit_MB_per_step": 0.0,
+          "transit_sum_s_per_step": 0.0,
+          "aggregate_GB_s": 0
+        },
+        "SDMA": {
+          "transit_MB_per_step": 3346.1130519999992,
+          "transit_sum_s_per_step": 0.23325399000000002,
+          "aggregate_GB_s": 14.345362546638533
+        },
+        "SIO": {
+          "transit_MB_per_step": 0.0,
+          "transit_sum_s_per_step": 0.0,
+          "aggregate_GB_s": 0
+        }
+      }
+    },
+    {
+      "rank": "rank1",
+      "source_directory": "/cache/lingbot/profiling/robotwin_20261016_1530/trace/rank1/notebook-1412a60d-0f41-4869-980d-933b2766338c_1452192_20261016073540803_ascend_pt/ASCEND_PROFILER_OUTPUT",
+      "recorded_steps": 4,
+      "profiler_step_ids": [
+        "12",
+        "13",
+        "14",
+        "15"
+      ],
+      "raw_compute_rows": 339395,
+      "raw_communication_rows": 1016,
+      "core_counts": {
+        "AI_VECTOR_CORE": 251015,
+        "MIX_AIC": 424,
+        "AI_CORE": 75784,
+        "MIX_AIV": 10356,
+        "COMMUNICATION": 1016,
+        "DSA_SQE": 12,
+        "AI_CPU": 1804
+      },
+      "first_hcom_evidence": {
+        "line": 6224,
+        "Name": "hcom_allGather__612_4_1",
+        "Type": "hcom_allGather_",
+        "Accelerator Core": "COMMUNICATION"
+      },
+      "corrected_union_s_per_step": {
+        "compute": 1.92022358,
+        "communication": 1.70901593,
+        "overlapped": 0.48724403000000027,
+        "communication_not_overlapped": 1.2217718999999998,
+        "compute_or_communication": 3.14199548
+      },
+      "official_step_trace_s_per_step": {
+        "Computing": 1.9202235799999674,
+        "Communication(Not Overlapped)": 1.221771900000117,
+        "Overlapped": 0.4872440299998828,
+        "Communication": 1.7090159299999996,
+        "Free": 6.064774949997012,
+        "Stage": 9.2067704375,
+        "Bubble": 0.0,
+        "Communication(Not Overlapped and Exclude Receive)": 1.221771900000117,
+        "Preparing": 0.012593125
+      },
+      "corrected_minus_official_s": {
+        "compute": 3.26405569239796e-14,
+        "communication": 4.440892098500626e-16,
+        "communication_not_overlapped": -1.1723955140041653e-13
+      },
+      "collective_calls_per_step": {
+        "hcom_allGather_": 174.0,
+        "hcom_reduceScatter_": 74.0,
+        "hcom_allReduce_": 6.0
+      },
+      "collective_duration_sum_s_per_step": {
+        "hcom_allGather_": 0.85253923,
+        "hcom_reduceScatter_": 0.802099275,
+        "hcom_allReduce_": 0.054377425
+      },
+      "communication_time_info": {
+        "ops": 1016,
+        "all_transit_wait_sync_zero_ops": 1016,
+        "sums_s_per_step": {
+          "Elapse Time(ms)": 1.706835035000001,
+          "Transit Time(ms)": 0.0,
+          "Wait Time(ms)": 0.0,
+          "Synchronization Time(ms)": 0.0,
+          "Idle Time(ms)": 1.706835035000001
+        }
+      },
+      "communication_bandwidth_info": {
+        "RDMA": {
+          "transit_MB_per_step": 0.0,
+          "transit_sum_s_per_step": 0.0,
+          "aggregate_GB_s": 0
+        },
+        "HCCS": {
+          "transit_MB_per_step": 3479.369045499999,
+          "transit_sum_s_per_step": 0.2566849749999999,
+          "aggregate_GB_s": 13.555016398992578
+        },
+        "PCIE": {
+          "transit_MB_per_step": 0.0,
+          "transit_sum_s_per_step": 0.0,
+          "aggregate_GB_s": 0
+        },
+        "SDMA": {
+          "transit_MB_per_step": 3479.369045499999,
+          "transit_sum_s_per_step": 0.2566849749999999,
+          "aggregate_GB_s": 13.555016398992578
+        },
+        "SIO": {
+          "transit_MB_per_step": 0.0,
+          "transit_sum_s_per_step": 0.0,
+          "aggregate_GB_s": 0
+        }
+      }
+    },
+    {
+      "rank": "rank2",
+      "source_directory": "/cache/lingbot/profiling/robotwin_20261016_1530/trace/rank2/notebook-1412a60d-0f41-4869-980d-933b2766338c_1452193_20261016073540803_ascend_pt/ASCEND_PROFILER_OUTPUT",
+      "recorded_steps": 4,
+      "profiler_step_ids": [
+        "12",
+        "13",
+        "14",
+        "15"
+      ],
+      "raw_compute_rows": 339423,
+      "raw_communication_rows": 1016,
+      "core_counts": {
+        "AI_VECTOR_CORE": 251031,
+        "MIX_AIC": 424,
+        "AI_CORE": 75796,
+        "MIX_AIV": 10356,
+        "COMMUNICATION": 1016,
+        "DSA_SQE": 12,
+        "AI_CPU": 1804
+      },
+      "first_hcom_evidence": {
+        "line": 6224,
+        "Name": "hcom_allGather__612_4_1",
+        "Type": "hcom_allGather_",
+        "Accelerator Core": "COMMUNICATION"
+      },
+      "corrected_union_s_per_step": {
+        "compute": 1.919154505,
+        "communication": 1.624880025,
+        "overlapped": 0.4905263750000004,
+        "communication_not_overlapped": 1.1343536499999998,
+        "compute_or_communication": 3.053508155
+      },
+      "official_step_trace_s_per_step": {
+        "Computing": 1.9191545049999938,
+        "Communication(Not Overlapped)": 1.1341257050001066,
+        "Overlapped": 0.490754319999893,
+        "Communication": 1.6248800249999995,
+        "Free": 6.153373249996886,
+        "Stage": 9.206881375,
+        "Bubble": 0.0,
+        "Communication(Not Overlapped and Exclude Receive)": 1.1341257050001066,
+        "Preparing": 0.008686625
+      },
+      "corrected_minus_official_s": {
+        "compute": 6.217248937900877e-15,
+        "communication": 4.440892098500626e-16,
+        "communication_not_overlapped": 0.00022794499989320371
+      },
+      "collective_calls_per_step": {
+        "hcom_allGather_": 174.0,
+        "hcom_reduceScatter_": 74.0,
+        "hcom_allReduce_": 6.0
+      },
+      "collective_duration_sum_s_per_step": {
+        "hcom_allGather_": 0.763970645,
+        "hcom_reduceScatter_": 0.811748325,
+        "hcom_allReduce_": 0.049161055
+      },
+      "communication_time_info": {
+        "ops": 1016,
+        "all_transit_wait_sync_zero_ops": 1016,
+        "sums_s_per_step": {
+          "Elapse Time(ms)": 1.614966195000001,
+          "Transit Time(ms)": 0.0,
+          "Wait Time(ms)": 0.0,
+          "Synchronization Time(ms)": 0.0,
+          "Idle Time(ms)": 1.614966195000001
+        }
+      },
+      "communication_bandwidth_info": {
+        "RDMA": {
+          "transit_MB_per_step": 0.0,
+          "transit_sum_s_per_step": 0.0,
+          "aggregate_GB_s": 0
+        },
+        "HCCS": {
+          "transit_MB_per_step": 3479.369045499999,
+          "transit_sum_s_per_step": 0.25635652999999986,
+          "aggregate_GB_s": 13.572383139606396
+        },
+        "PCIE": {
+          "transit_MB_per_step": 0.0,
+          "transit_sum_s_per_step": 0.0,
+          "aggregate_GB_s": 0
+        },
+        "SDMA": {
+          "transit_MB_per_step": 3479.369045499999,
+          "transit_sum_s_per_step": 0.25635652999999986,
+          "aggregate_GB_s": 13.572383139606396
+        },
+        "SIO": {
+          "transit_MB_per_step": 0.0,
+          "transit_sum_s_per_step": 0.0,
+          "aggregate_GB_s": 0
+        }
+      }
+    },
+    {
+      "rank": "rank3",
+      "source_directory": "/cache/lingbot/profiling/robotwin_20261016_1530/trace/rank3/notebook-1412a60d-0f41-4869-980d-933b2766338c_1452194_20261016073540803_ascend_pt/ASCEND_PROFILER_OUTPUT",
+      "recorded_steps": 4,
+      "profiler_step_ids": [
+        "12",
+        "13",
+        "14",
+        "15"
+      ],
+      "raw_compute_rows": 339423,
+      "raw_communication_rows": 1016,
+      "core_counts": {
+        "AI_VECTOR_CORE": 251031,
+        "MIX_AIC": 424,
+        "AI_CORE": 75796,
+        "MIX_AIV": 10356,
+        "COMMUNICATION": 1016,
+        "DSA_SQE": 12,
+        "AI_CPU": 1804
+      },
+      "first_hcom_evidence": {
+        "line": 6224,
+        "Name": "hcom_allGather__612_4_1",
+        "Type": "hcom_allGather_",
+        "Accelerator Core": "COMMUNICATION"
+      },
+      "corrected_union_s_per_step": {
+        "compute": 1.927127208,
+        "communication": 1.0173758215,
+        "overlapped": 0.269279209,
+        "communication_not_overlapped": 0.7480966124999999,
+        "compute_or_communication": 2.6752238205
+      },
+      "official_step_trace_s_per_step": {
+        "Computing": 1.9271272080000004,
+        "Communication(Not Overlapped)": 0.7479332240000524,
+        "Overlapped": 0.26944259749994814,
+        "Communication": 1.0173758215000004,
+        "Free": 6.532373521996676,
+        "Stage": 9.207597375,
+        "Bubble": 0.0,
+        "Communication(Not Overlapped and Exclude Receive)": 0.7479332240000524,
+        "Preparing": 0.0083688125
+      },
+      "corrected_minus_official_s": {
+        "compute": -4.440892098500626e-16,
+        "communication": -4.440892098500626e-16,
+        "communication_not_overlapped": 0.00016338849994756988
+      },
+      "collective_calls_per_step": {
+        "hcom_allGather_": 174.0,
+        "hcom_reduceScatter_": 74.0,
+        "hcom_allReduce_": 6.0
+      },
+      "collective_duration_sum_s_per_step": {
+        "hcom_allGather_": 0.600735568,
+        "hcom_reduceScatter_": 0.3823826865,
+        "hcom_allReduce_": 0.034257567
+      },
+      "communication_time_info": {
+        "ops": 1016,
+        "all_transit_wait_sync_zero_ops": 1016,
+        "sums_s_per_step": {
+          "Elapse Time(ms)": 1.0162736604999996,
+          "Transit Time(ms)": 0.0,
+          "Wait Time(ms)": 0.0,
+          "Synchronization Time(ms)": 0.0,
+          "Idle Time(ms)": 1.0162736604999996
+        }
+      },
+      "communication_bandwidth_info": {
+        "RDMA": {
+          "transit_MB_per_step": 0.0,
+          "transit_sum_s_per_step": 0.0,
+          "aggregate_GB_s": 0
+        },
+        "HCCS": {
+          "transit_MB_per_step": 3479.369045499999,
+          "transit_sum_s_per_step": 0.24603828799999997,
+          "aggregate_GB_s": 14.14157558070799
+        },
+        "PCIE": {
+          "transit_MB_per_step": 0.0,
+          "transit_sum_s_per_step": 0.0,
+          "aggregate_GB_s": 0
+        },
+        "SDMA": {
+          "transit_MB_per_step": 3479.369045499999,
+          "transit_sum_s_per_step": 0.24603828799999997,
+          "aggregate_GB_s": 14.14157558070799
+        },
+        "SIO": {
+          "transit_MB_per_step": 0.0,
+          "transit_sum_s_per_step": 0.0,
+          "aggregate_GB_s": 0
+        }
+      }
+    },
+    {
+      "rank": "rank4",
+      "source_directory": "/cache/lingbot/profiling/robotwin_20261016_1530/trace/rank4/notebook-1412a60d-0f41-4869-980d-933b2766338c_1452195_20261016073540803_ascend_pt/ASCEND_PROFILER_OUTPUT",
+      "recorded_steps": 4,
+      "profiler_step_ids": [
+        "12",
+        "13",
+        "14",
+        "15"
+      ],
+      "raw_compute_rows": 339413,
+      "raw_communication_rows": 1016,
+      "core_counts": {
+        "AI_VECTOR_CORE": 251021,
+        "MIX_AIC": 424,
+        "AI_CORE": 75796,
+        "MIX_AIV": 10356,
+        "COMMUNICATION": 1016,
+        "DSA_SQE": 12,
+        "AI_CPU": 1804
+      },
+      "first_hcom_evidence": {
+        "line": 6224,
+        "Name": "hcom_allGather__612_4_1",
+        "Type": "hcom_allGather_",
+        "Accelerator Core": "COMMUNICATION"
+      },
+      "corrected_union_s_per_step": {
+        "compute": 1.91942451,
+        "communication": 1.779447115,
+        "overlapped": 0.5180796749999996,
+        "communication_not_overlapped": 1.2613674400000001,
+        "compute_or_communication": 3.18079195
+      },
+      "official_step_trace_s_per_step": {
+        "Computing": 1.9194245099999905,
+        "Communication(Not Overlapped)": 1.2613264150001284,
+        "Overlapped": 0.5181206999998716,
+        "Communication": 1.779447115,
+        "Free": 6.02600961499691,
+        "Stage": 9.2068015625,
+        "Bubble": 0.0,
+        "Communication(Not Overlapped and Exclude Receive)": 1.2613264150001284,
+        "Preparing": 0.0083710625
+      },
+      "corrected_minus_official_s": {
+        "compute": 9.547918011776346e-15,
+        "communication": 0.0,
+        "communication_not_overlapped": 4.102499987168606e-05
+      },
+      "collective_calls_per_step": {
+        "hcom_allGather_": 174.0,
+        "hcom_reduceScatter_": 74.0,
+        "hcom_allReduce_": 6.0
+      },
+      "collective_duration_sum_s_per_step": {
+        "hcom_allGather_": 0.906051295,
+        "hcom_reduceScatter_": 0.8250683,
+        "hcom_allReduce_": 0.04832752
+      },
+      "communication_time_info": {
+        "ops": 1016,
+        "all_transit_wait_sync_zero_ops": 1016,
+        "sums_s_per_step": {
+          "Elapse Time(ms)": 1.7745483349999993,
+          "Transit Time(ms)": 0.0,
+          "Wait Time(ms)": 0.0,
+          "Synchronization Time(ms)": 0.0,
+          "Idle Time(ms)": 1.7745483349999993
+        }
+      },
+      "communication_bandwidth_info": {
+        "RDMA": {
+          "transit_MB_per_step": 0.0,
+          "transit_sum_s_per_step": 0.0,
+          "aggregate_GB_s": 0
+        },
+        "HCCS": {
+          "transit_MB_per_step": 3479.369045499999,
+          "transit_sum_s_per_step": 0.2581522500000001,
+          "aggregate_GB_s": 13.477972961692172
+        },
+        "PCIE": {
+          "transit_MB_per_step": 0.0,
+          "transit_sum_s_per_step": 0.0,
+          "aggregate_GB_s": 0
+        },
+        "SDMA": {
+          "transit_MB_per_step": 3479.369045499999,
+          "transit_sum_s_per_step": 0.2581522500000001,
+          "aggregate_GB_s": 13.477972961692172
+        },
+        "SIO": {
+          "transit_MB_per_step": 0.0,
+          "transit_sum_s_per_step": 0.0,
+          "aggregate_GB_s": 0
+        }
+      }
+    },
+    {
+      "rank": "rank5",
+      "source_directory": "/cache/lingbot/profiling/robotwin_20261016_1530/trace/rank5/notebook-1412a60d-0f41-4869-980d-933b2766338c_1452196_20261016073540803_ascend_pt/ASCEND_PROFILER_OUTPUT",
+      "recorded_steps": 4,
+      "profiler_step_ids": [
+        "12",
+        "13",
+        "14",
+        "15"
+      ],
+      "raw_compute_rows": 339390,
+      "raw_communication_rows": 1016,
+      "core_counts": {
+        "AI_VECTOR_CORE": 251010,
+        "MIX_AIC": 424,
+        "AI_CORE": 75784,
+        "MIX_AIV": 10356,
+        "COMMUNICATION": 1016,
+        "DSA_SQE": 12,
+        "AI_CPU": 1804
+      },
+      "first_hcom_evidence": {
+        "line": 6224,
+        "Name": "hcom_allGather__612_4_1",
+        "Type": "hcom_allGather_",
+        "Accelerator Core": "COMMUNICATION"
+      },
+      "corrected_union_s_per_step": {
+        "compute": 1.9187412005,
+        "communication": 1.914757873,
+        "overlapped": 0.5502506545000001,
+        "communication_not_overlapped": 1.3645072185,
+        "compute_or_communication": 3.283248419
+      },
+      "official_step_trace_s_per_step": {
+        "Computing": 1.9187412005000162,
+        "Communication(Not Overlapped)": 1.3643190500001474,
+        "Overlapped": 0.5504388229998527,
+        "Communication": 1.914757873,
+        "Free": 5.923701585496758,
+        "Stage": 9.206949875,
+        "Bubble": 0.0,
+        "Communication(Not Overlapped and Exclude Receive)": 1.3643190500001474,
+        "Preparing": 0.0087358125
+      },
+      "corrected_minus_official_s": {
+        "compute": -1.6209256159527285e-14,
+        "communication": 0.0,
+        "communication_not_overlapped": 0.00018816849985259232
+      },
+      "collective_calls_per_step": {
+        "hcom_allGather_": 174.0,
+        "hcom_reduceScatter_": 74.0,
+        "hcom_allReduce_": 6.0
+      },
+      "collective_duration_sum_s_per_step": {
+        "hcom_allGather_": 0.988094367,
+        "hcom_reduceScatter_": 0.8785311845,
+        "hcom_allReduce_": 0.0481323215
+      },
+      "communication_time_info": {
+        "ops": 1016,
+        "all_transit_wait_sync_zero_ops": 1016,
+        "sums_s_per_step": {
+          "Elapse Time(ms)": 1.9054950285000034,
+          "Transit Time(ms)": 0.0,
+          "Wait Time(ms)": 0.0,
+          "Synchronization Time(ms)": 0.0,
+          "Idle Time(ms)": 1.9054950285000034
+        }
+      },
+      "communication_bandwidth_info": {
+        "RDMA": {
+          "transit_MB_per_step": 0.0,
+          "transit_sum_s_per_step": 0.0,
+          "aggregate_GB_s": 0
+        },
+        "HCCS": {
+          "transit_MB_per_step": 3479.369045499999,
+          "transit_sum_s_per_step": 0.2622925894999999,
+          "aggregate_GB_s": 13.265220539141463
+        },
+        "PCIE": {
+          "transit_MB_per_step": 0.0,
+          "transit_sum_s_per_step": 0.0,
+          "aggregate_GB_s": 0
+        },
+        "SDMA": {
+          "transit_MB_per_step": 3479.369045499999,
+          "transit_sum_s_per_step": 0.2622925894999999,
+          "aggregate_GB_s": 13.265220539141463
+        },
+        "SIO": {
+          "transit_MB_per_step": 0.0,
+          "transit_sum_s_per_step": 0.0,
+          "aggregate_GB_s": 0
+        }
+      }
+    },
+    {
+      "rank": "rank6",
+      "source_directory": "/cache/lingbot/profiling/robotwin_20261016_1530/trace/rank6/notebook-1412a60d-0f41-4869-980d-933b2766338c_1452197_20261016073540803_ascend_pt/ASCEND_PROFILER_OUTPUT",
+      "recorded_steps": 4,
+      "profiler_step_ids": [
+        "12",
+        "13",
+        "14",
+        "15"
+      ],
+      "raw_compute_rows": 339423,
+      "raw_communication_rows": 1016,
+      "core_counts": {
+        "AI_VECTOR_CORE": 251031,
+        "MIX_AIC": 424,
+        "AI_CORE": 75796,
+        "MIX_AIV": 10356,
+        "COMMUNICATION": 1016,
+        "DSA_SQE": 12,
+        "AI_CPU": 1804
+      },
+      "first_hcom_evidence": {
+        "line": 6224,
+        "Name": "hcom_allGather__612_4_1",
+        "Type": "hcom_allGather_",
+        "Accelerator Core": "COMMUNICATION"
+      },
+      "corrected_union_s_per_step": {
+        "compute": 1.922730405,
+        "communication": 1.79545496,
+        "overlapped": 0.5262782750000001,
+        "communication_not_overlapped": 1.269176685,
+        "compute_or_communication": 3.19190709
+      },
+      "official_step_trace_s_per_step": {
+        "Computing": 1.9227304049999983,
+        "Communication(Not Overlapped)": 1.2690141200001284,
+        "Overlapped": 0.5264408399998719,
+        "Communication": 1.7954549600000005,
+        "Free": 6.015200574996922,
+        "Stage": 9.207107625,
+        "Bubble": 0.0,
+        "Communication(Not Overlapped and Exclude Receive)": 1.2690141200001284,
+        "Preparing": 0.0080065
+      },
+      "corrected_minus_official_s": {
+        "compute": 1.7763568394002505e-15,
+        "communication": -4.440892098500626e-16,
+        "communication_not_overlapped": 0.0001625649998715506
+      },
+      "collective_calls_per_step": {
+        "hcom_allGather_": 174.0,
+        "hcom_reduceScatter_": 74.0,
+        "hcom_allReduce_": 6.0
+      },
+      "collective_duration_sum_s_per_step": {
+        "hcom_allGather_": 0.905533125,
+        "hcom_reduceScatter_": 0.844506155,
+        "hcom_allReduce_": 0.04541568
+      },
+      "communication_time_info": {
+        "ops": 1016,
+        "all_transit_wait_sync_zero_ops": 1016,
+        "sums_s_per_step": {
+          "Elapse Time(ms)": 1.7919487100000004,
+          "Transit Time(ms)": 0.0,
+          "Wait Time(ms)": 0.0,
+          "Synchronization Time(ms)": 0.0,
+          "Idle Time(ms)": 1.7919487100000004
+        }
+      },
+      "communication_bandwidth_info": {
+        "RDMA": {
+          "transit_MB_per_step": 0.0,
+          "transit_sum_s_per_step": 0.0,
+          "aggregate_GB_s": 0
+        },
+        "HCCS": {
+          "transit_MB_per_step": 3479.369045499999,
+          "transit_sum_s_per_step": 0.24320206499999997,
+          "aggregate_GB_s": 14.306494665248831
+        },
+        "PCIE": {
+          "transit_MB_per_step": 0.0,
+          "transit_sum_s_per_step": 0.0,
+          "aggregate_GB_s": 0
+        },
+        "SDMA": {
+          "transit_MB_per_step": 3479.369045499999,
+          "transit_sum_s_per_step": 0.24320206499999997,
+          "aggregate_GB_s": 14.306494665248831
+        },
+        "SIO": {
+          "transit_MB_per_step": 0.0,
+          "transit_sum_s_per_step": 0.0,
+          "aggregate_GB_s": 0
+        }
+      }
+    },
+    {
+      "rank": "rank7",
+      "source_directory": "/cache/lingbot/profiling/robotwin_20261016_1530/trace/rank7/notebook-1412a60d-0f41-4869-980d-933b2766338c_1452198_20261016073540803_ascend_pt/ASCEND_PROFILER_OUTPUT",
+      "recorded_steps": 4,
+      "profiler_step_ids": [
+        "12",
+        "13",
+        "14",
+        "15"
+      ],
+      "raw_compute_rows": 339436,
+      "raw_communication_rows": 1016,
+      "core_counts": {
+        "AI_VECTOR_CORE": 251040,
+        "MIX_AIC": 424,
+        "AI_CORE": 75796,
+        "MIX_AIV": 10360,
+        "COMMUNICATION": 1016,
+        "DSA_SQE": 12,
+        "AI_CPU": 1804
+      },
+      "first_hcom_evidence": {
+        "line": 6224,
+        "Name": "hcom_allGather__612_4_1",
+        "Type": "hcom_allGather_",
+        "Accelerator Core": "COMMUNICATION"
+      },
+      "corrected_union_s_per_step": {
+        "compute": 1.9253618815,
+        "communication": 2.0949597515,
+        "overlapped": 0.5661241480000001,
+        "communication_not_overlapped": 1.5288356035,
+        "compute_or_communication": 3.454197485
+      },
+      "official_step_trace_s_per_step": {
+        "Computing": 1.9253618815000182,
+        "Communication(Not Overlapped)": 1.5286466995001537,
+        "Overlapped": 0.566313051999846,
+        "Communication": 2.0949597515,
+        "Free": 5.75305046099676,
+        "Stage": 9.2072478125,
+        "Bubble": 0.0,
+        "Communication(Not Overlapped and Exclude Receive)": 1.5286466995001537,
+        "Preparing": 0.0087295625
+      },
+      "corrected_minus_official_s": {
+        "compute": -1.8207657603852567e-14,
+        "communication": 0.0,
+        "communication_not_overlapped": 0.00018890399984616835
+      },
+      "collective_calls_per_step": {
+        "hcom_allGather_": 174.0,
+        "hcom_reduceScatter_": 74.0,
+        "hcom_allReduce_": 6.0
+      },
+      "collective_duration_sum_s_per_step": {
+        "hcom_allGather_": 1.0399006915,
+        "hcom_reduceScatter_": 0.9630341725,
+        "hcom_allReduce_": 0.0920248875
+      },
+      "communication_time_info": {
+        "ops": 1016,
+        "all_transit_wait_sync_zero_ops": 1016,
+        "sums_s_per_step": {
+          "Elapse Time(ms)": 2.086026619,
+          "Transit Time(ms)": 0.0,
+          "Wait Time(ms)": 0.0,
+          "Synchronization Time(ms)": 0.0,
+          "Idle Time(ms)": 2.086026619
+        }
+      },
+      "communication_bandwidth_info": {
+        "RDMA": {
+          "transit_MB_per_step": 0.0,
+          "transit_sum_s_per_step": 0.0,
+          "aggregate_GB_s": 0
+        },
+        "HCCS": {
+          "transit_MB_per_step": 3479.369045499999,
+          "transit_sum_s_per_step": 0.2576765625000002,
+          "aggregate_GB_s": 13.502854166257345
+        },
+        "PCIE": {
+          "transit_MB_per_step": 0.0,
+          "transit_sum_s_per_step": 0.0,
+          "aggregate_GB_s": 0
+        },
+        "SDMA": {
+          "transit_MB_per_step": 3479.369045499999,
+          "transit_sum_s_per_step": 0.2576765625000002,
+          "aggregate_GB_s": 13.502854166257345
+        },
+        "SIO": {
+          "transit_MB_per_step": 0.0,
+          "transit_sum_s_per_step": 0.0,
+          "aggregate_GB_s": 0
+        }
+      }
+    }
+  ]
+}

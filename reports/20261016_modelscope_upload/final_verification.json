@@ -1,0 +1,186 @@
+{
+  "repo": "shidingz/lingbot-vla-v2-robotwin-1ep-npu",
+  "visibility": "private",
+  "uploaded_file_count": 30,
+  "hf_file_count": 17,
+  "supplement_file_count": 13,
+  "total_bytes": 25531511412,
+  "all_remote_sizes_and_sha256_match": true,
+  "small_file_download_readback": [
+    "config.json",
+    "model.safetensors.index.json",
+    "inference_assets/assets/norm_stats/robotwin.json"
+  ],
+  "preexisting_files_unchanged": true,
+  "revision": "master",
+  "remote_revision": "master",
+  "files": [
+    {
+      "crc64": "12485583159907135375",
+      "path": "added_tokens.json",
+      "sha256": "c0284b582e14987fbd3d5a2cb2bd139084371ed9acbae488829a1c900833c680",
+      "size": 707
+    },
+    {
+      "crc64": "12697527199840723890",
+      "path": "chat_template.jinja",
+      "sha256": "3636d0f0bd6bef02654cdffdc447b79cb2cef8ab02cc75267345946291a489e4",
+      "size": 5292
+    },
+    {
+      "crc64": "5460098641097220640",
+      "path": "config.json",
+      "sha256": "9129eaba66ccf13c9d3f4e76cd9f3f8d57cb2116dc81567b133b2a2e0b5049e3",
+      "size": 4557
+    },
+    {
+      "crc64": "1235647317748264446",
+      "path": "merges.txt",
+      "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+      "size": 1671853
+    },
+    {
+      "crc64": "4938760857272902376",
+      "path": "model-00001-of-00006.safetensors",
+      "sha256": "30c194fee71e069fbe0e534df3e616cd4fb472b132f19e6a5593180ccd35aeef",
+      "size": 4947507248
+    },
+    {
+      "crc64": "5077506109471875506",
+      "path": "model-00002-of-00006.safetensors",
+      "sha256": "d606ead2c55d6e8812f710786172fb39a47ebfdc470820d8789b1ba2263ea587",
+      "size": 4944315304
+    },
+    {
+      "crc64": "9705148078363289233",
+      "path": "model-00003-of-00006.safetensors",
+      "sha256": "28b4487902accef2cfbd72c997c6b5aca63a55e7abe74163117bf5529c5dbef9",
+      "size": 4944315360
+    },
+    {
+      "crc64": "17544923117570563703",
+      "path": "model-00004-of-00006.safetensors",
+      "sha256": "9b6ba6efe7be427346f4c3b28331af4dbd881c24c73a08ef841c6e76b7149197",
+      "size": 4992858968
+    },
+    {
+      "crc64": "1472272607574933692",
+      "path": "model-00005-of-00006.safetensors",
+      "sha256": "c3547fa01b28f167a2c6772a55646a79fecc75c2e76cb33abc36c0e3586dead6",
+      "size": 4963062048
+    },
+    {
+      "crc64": "16143057806335044437",
+      "path": "model-00006-of-00006.safetensors",
+      "sha256": "3403b5b30b36d7841a8aeeff0f0e7c11c8b79bf64fdb66413f89526a4e4df431",
+      "size": 711830844
+    },
+    {
+      "crc64": "1795276083023782582",
+      "path": "model.safetensors.index.json",
+      "sha256": "661b9d29dc14b73adfe233d2d989517f92e561f77424a7d2097a5d735c90b57f",
+      "size": 207389
+    },
+    {
+      "crc64": "12645315237782600319",
+      "path": "preprocessor_config.json",
+      "sha256": "93585062a80db5e8ca038efc7726a3e6411d9db948472d81d63c6303993be8c5",
+      "size": 782
+    },
+    {
+      "crc64": "4214924390605665513",
+      "path": "special_tokens_map.json",
+      "sha256": "76862e765266b85aa9459767e33cbaf13970f327a0e88d1c65846c2ddd3a1ecd",
+      "size": 613
+    },
+    {
+      "crc64": "17522048366518589208",
+      "path": "tokenizer.json",
+      "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+      "size": 11422654
+    },
+    {
+      "crc64": "217379128208035402",
+      "path": "tokenizer_config.json",
+      "sha256": "cf43a5bf1a49ee69ecced02f419b169e72559034dcf15af47cf775bd253830f0",
+      "size": 5472
+    },
+    {
+      "crc64": "1629351611680240134",
+      "path": "video_preprocessor_config.json",
+      "sha256": "59c5c9eb52182eb14c06ffb10ca9effd29adce5f238a95de23ca14a38dbd2cb1",
+      "size": 817
+    },
+    {
+      "crc64": "18184097807486840860",
+      "path": "vocab.json",
+      "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+      "size": 2776833
+    },
+    {
+      "path": "EVALUATION.txt",
+      "size": 8288,
+      "sha256": "b1e12acfeb76a84905b3328dd81cf5c7cd6e2e06ed2915698e81e1c0ef5c0d40"
+    },
+    {
+      "path": "inference_assets/Qwen3-VL-4B-Instruct/chat_template.json",
+      "size": 5502,
+      "sha256": "6f8a6a55027e3da5160105556cda5dd69f6423f1c32645f6730d32de7773d0c4"
+    },
+    {
+      "path": "inference_assets/Qwen3-VL-4B-Instruct/config.json",
+      "size": 1505,
+      "sha256": "edac7703329133edfc53e46ac0081835144c99d7eebf28b71c732694d435224d"
+    },
+    {
+      "path": "inference_assets/Qwen3-VL-4B-Instruct/merges.txt",
+      "size": 1671839,
+      "sha256": "599bab54075088774b1733fde865d5bd747cbcc7a547c5bc12610e874e26f5e3"
+    },
+    {
+      "path": "inference_assets/Qwen3-VL-4B-Instruct/preprocessor_config.json",
+      "size": 390,
+      "sha256": "27225450ac9c6529872ee1924fcb0962ff5634834f817040f444118116f4e516"
+    },
+    {
+      "path": "inference_assets/Qwen3-VL-4B-Instruct/tokenizer.json",
+      "size": 7032403,
+      "sha256": "a5d85b6dcc535e6b93115a9ef287e6132fdbf30270da6218194ba742261173c7"
+    },
+    {
+      "path": "inference_assets/Qwen3-VL-4B-Instruct/tokenizer_config.json",
+      "size": 10868,
+      "sha256": "c2da771801886ad9ae98181793ffd3dfb7f1af30f6f7c6a4e15d7dbba52e2399"
+    },
+    {
+      "path": "inference_assets/Qwen3-VL-4B-Instruct/video_preprocessor_config.json",
+      "size": 385,
+      "sha256": "7768af27c1fafa9cc9011c1dc20067e03f8915e03b63504550e11d5066986d13"
+    },
+    {
+      "path": "inference_assets/Qwen3-VL-4B-Instruct/vocab.json",
+      "size": 2776833,
+      "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+    },
+    {
+      "path": "inference_assets/assets/norm_stats/robotwin.json",
+      "size": 5460,
+      "sha256": "488ec6569c30dd69419358241efdb2e6c3488117768e7028a1e891be83e10db8"
+    },
+    {
+      "path": "inference_assets/configs/robot_configs/robotwin.yaml",
+      "size": 1159,
+      "sha256": "2c2a26509fc9662a8ada64adaa7fa959627dd6dadc6b48b680c4285da2d8ffd8"
+    },
+    {
+      "path": "inference_assets/lingbotvla_cli.yaml",
+      "size": 7105,
+      "sha256": "9fe398e7365e75da9ea259d3e3fe6b7e55d80086ea8625173d93627b1ffaccb2"
+    },
+    {
+      "path": "CHECKSUMS.sha256",
+      "size": 2934,
+      "sha256": "20c2c8623e635000ec09f9d03e96917ffdde7ec57beb3c63bfc000e437486b70"
+    }
+  ]
+}

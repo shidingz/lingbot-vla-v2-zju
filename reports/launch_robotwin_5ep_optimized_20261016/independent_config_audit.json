@@ -1,0 +1,229 @@
+{
+  "audited_at": "2026-10-16T19:43:18.122575+08:00",
+  "scope": "Independent read-only audit of main-launched 5-epoch job. No process launch, NPU access, code change, or remote request by this child.",
+  "passed": true,
+  "run_name": "robotwin_5ep_optimized_20261016",
+  "tmux_session": "lingbot_5ep_optimized",
+  "saved_effective_yaml": "/home/ma-user/work/lingbot-vla-v2/logs/robotwin_5ep_optimized_20261016/lingbotvla_cli.yaml",
+  "saved_yaml_sha256": "a97875cb3151064ad1d113762ea2b370854c6eb607bbfd79792d95c49d31302d",
+  "verified_effective_values": {
+    "num_train_epochs": 5,
+    "micro_batch_size": 12,
+    "gradient_accumulation_steps": 1,
+    "global_batch_size": 96,
+    "lr": 5e-05,
+    "lr_min": 1e-05,
+    "lr_warmup_ratio": 0.02,
+    "lr_decay_style": "cosine",
+    "optimizer": "muon",
+    "train_expert_only": true,
+    "enable_fp32": true,
+    "enable_mixed_precision": true,
+    "enable_gradient_checkpointing": false,
+    "save_epochs": 1,
+    "save_steps": 0,
+    "save_hf_weights": true,
+    "enable_resume": true,
+    "load_checkpoint_path": null,
+    "max_steps": null,
+    "stop_after_steps": 0
+  },
+  "model": {
+    "adanorm_time": true,
+    "attn_implementation": "flash_attention_2",
+    "basic_modules": [],
+    "config_key": "LingbotVLAV2Config",
+    "config_path": "/home/ma-user/work/modelscope/models/Robbyant--lingbot-vla-v2-6b/snapshots/master",
+    "decoders": {},
+    "encode_target": false,
+    "encoders": {},
+    "final_norm_adanorm": false,
+    "force_use_huggingface": false,
+    "incremental_training": false,
+    "input_encoder": "encoder",
+    "model_path": "/home/ma-user/work/modelscope/models/Robbyant--lingbot-vla-v2-6b/snapshots/master",
+    "moe_implementation": "fused",
+    "output_encoder": "decoder",
+    "post_training": true,
+    "tokenizer_path": "/home/ma-user/work/modelscope/models/Qwen--Qwen3-VL-4B-Instruct/snapshots/master",
+    "use_lm_head": false,
+    "vit_attn_implementation": "flash_attention_2",
+    "vlm_repo_id": null,
+    "vocab_size": 0
+  },
+  "new_output_paths": {
+    "output_dir": "/cache/lingbot/robotwin_train/robotwin_5ep_optimized_20261016",
+    "logging_dir": "/home/ma-user/work/lingbot-vla-v2/logs/robotwin_5ep_optimized_20261016",
+    "obs_output_dir": "obs://yw-2030-extern/Partner_Qin/robot_1014/robotwin_5ep_optimized_20261016"
+  },
+  "historical_reference": "/cache/lingbot/profiling/round2_default_20261016_185821/default_160/logs/lingbotvla_cli.yaml",
+  "all_effective_yaml_differences": [
+    {
+      "field": "data.obs_dataset_uri",
+      "baseline": "",
+      "candidate": "obs://yw-2030-extern/Partner_Qin/robot_1014/datasets/RoboTwin_lerobot_v30/"
+    },
+    {
+      "field": "data.train_path",
+      "baseline": "/cache/lingbot/robotwin_data/train_robotwin_clean.txt",
+      "candidate": "/cache/lingbot/robotwin_train/robotwin_5ep_optimized_20261016/train_robotwin.txt"
+    },
+    {
+      "field": "train.enable_profiling",
+      "baseline": true,
+      "candidate": false
+    },
+    {
+      "field": "train.enable_resume",
+      "baseline": false,
+      "candidate": true
+    },
+    {
+      "field": "train.logging_dir",
+      "baseline": "/cache/lingbot/profiling/round2_default_20261016_185821/default_160/logs",
+      "candidate": "/home/ma-user/work/lingbot-vla-v2/logs/robotwin_5ep_optimized_20261016"
+    },
+    {
+      "field": "train.num_train_epochs",
+      "baseline": 1,
+      "candidate": 5
+    },
+    {
+      "field": "train.obs_output_dir",
+      "baseline": "",
+      "candidate": "obs://yw-2030-extern/Partner_Qin/robot_1014/robotwin_5ep_optimized_20261016"
+    },
+    {
+      "field": "train.output_dir",
+      "baseline": "/cache/lingbot/profiling/round2_default_20261016_185821/default_160/run",
+      "candidate": "/cache/lingbot/robotwin_train/robotwin_5ep_optimized_20261016"
+    },
+    {
+      "field": "train.profile_end_step",
+      "baseline": 17,
+      "candidate": 2
+    },
+    {
+      "field": "train.profile_only",
+      "baseline": true,
+      "candidate": false
+    },
+    {
+      "field": "train.profile_ranks",
+      "baseline": "",
+      "candidate": "0"
+    },
+    {
+      "field": "train.profile_start_step",
+      "baseline": 13,
+      "candidate": 1
+    },
+    {
+      "field": "train.profile_trace_dir",
+      "baseline": "/cache/lingbot/profiling/round2_default_20261016_185821/default_160/trace",
+      "candidate": "./trace"
+    },
+    {
+      "field": "train.save_epochs",
+      "baseline": 0,
+      "candidate": 1
+    },
+    {
+      "field": "train.save_hf_weights",
+      "baseline": false,
+      "candidate": true
+    },
+    {
+      "field": "train.stop_after_steps",
+      "baseline": 160,
+      "candidate": 0
+    }
+  ],
+  "unexpected_training_core_differences": [],
+  "data_list": {
+    "current_path": "/cache/lingbot/robotwin_train/robotwin_5ep_optimized_20261016/train_robotwin.txt",
+    "historical_path": "/cache/lingbot/robotwin_data/train_robotwin_clean.txt",
+    "current_sha256": "aef479efd1f2b7ecf12812351c446b722090f313179205cc7ac323f100611beb",
+    "historical_sha256": "aef479efd1f2b7ecf12812351c446b722090f313179205cc7ac323f100611beb",
+    "identical": true,
+    "contents": "robotwin /cache/lingbot/robotwin_data/RoboTwin_lerobot_v30",
+    "note": "OBS准备流程在新run目录生成同内容清单；实际数据根与历史验证相同。"
+  },
+  "runtime_schedule": {
+    "log_lines": [
+      "10/16/2026 19:38:43 - INFO - __main__ - Schedule: 28585 optimizer steps; stop at 28585; 5717 steps/epoch"
+    ],
+    "updates_per_epoch": 5717,
+    "num_epochs": 5,
+    "total_updates": 28585,
+    "warmup_ratio": 0.02,
+    "warmup_updates": 571,
+    "first_update_lr": 8.756567425569177e-08,
+    "expected_first_update_lr": 8.756567425569177e-08,
+    "meaning": "保留相同LR峰值/最低值、cosine算法和2%预热比例。总轮数增加使总调度长度和预热绝对步数增加；前571步采用新5epoch调度，不复用旧1epoch调度。"
+  },
+  "fresh_start": {
+    "log_lines": [
+      "10/16/2026 19:38:41 - INFO - __main__ - No checkpoints in /cache/lingbot/robotwin_train/robotwin_5ep_optimized_20261016 now!",
+      "10/16/2026 19:38:41 - INFO - __main__ - Starting training from scratch."
+    ],
+    "prelaunch_remote_check_by_root": {
+      "checked_at": "2026-10-16T19:33:50.569867+08:00",
+      "remote_new_run_prefix_available": true,
+      "checkpoint_downloaded": false,
+      "read_only": true
+    },
+    "load_checkpoint_path": null,
+    "enable_resume": true,
+    "confirmed": true,
+    "meaning": "新命名空间无旧存档，实际日志确认从原预训练模型开始。enable_resume=true保留用于本5epoch实验未来重启，并未加载旧fast已完成1epoch存档。"
+  },
+  "optimization_evidence": {
+    "launcher_lines": [
+      "[NPU speed] moe=gmm joint_attention=sdpa_fp32 monitor_batch=1 adamw_foreach=1 gradient_checkpointing=false"
+    ],
+    "sdpa_initialization_log_count": 8,
+    "gradient_checkpointing": false,
+    "configuration_unchanged_except_schedule_and_production_io": true
+  },
+  "initial_metrics_observed": {
+    "updates_at_audit": 82,
+    "last_step": 82,
+    "all_observed_loss_grad_lr_step_time_finite": true,
+    "first": {
+      "step": 1,
+      "epoch": 1,
+      "loss": 0.35546875,
+      "vla_loss": 0.32421875,
+      "depth_loss": 3.3931732177734375,
+      "future_depth_loss": 3.3283233642578125,
+      "future_video_loss": 0.7529258728027344,
+      "grad_norm": 1.0304235219955444,
+      "lr": 8.756567425569177e-08,
+      "expert_lr": 2.4767312826148776e-07,
+      "step_time": 57.51552939414978
+    },
+    "last": {
+      "step": 82,
+      "epoch": 1,
+      "loss": 0.339111328125,
+      "vla_loss": 0.311767578125,
+      "depth_loss": 2.956390380859375,
+      "future_depth_loss": 2.9697418212890625,
+      "future_video_loss": 0.6432533264160156,
+      "grad_norm": 0.9216274619102478,
+      "lr": 7.1803852889667245e-06,
+      "expert_lr": 2.0309196517441993e-05,
+      "step_time": 2.5920770168304443
+    }
+  },
+  "root_startup_verification_reference": {
+    "path": "/home/ma-user/work/lingbot-vla-v2/reports/launch_robotwin_5ep_optimized_20261016/startup_verified.json",
+    "exists": true
+  },
+  "limits": [
+    "本审计确认启动参数与最初训练指标；5epochs尚在运行，不表示完整训练已结束。",
+    "每epoch保存和OBS上传由真实正式运行配置启用；未在本次启动阶段重新执行完整DCP保存/恢复测试。",
+    "模型与数据路径/清单一致，但没有重算外部大模型权重或完整数据内容的哈希。"
+  ]
+}

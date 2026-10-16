@@ -1,0 +1,11 @@
+{
+  "session": "lingbot_5ep",
+  "window": "train",
+  "started_at_utc": "2026-10-15T14:13:27.511991+00:00",
+  "gpus_or_npus": 8,
+  "epochs": 5,
+  "peak_lr": 5e-05,
+  "log": "/home/ma-user/work/lingbot-vla-v2/logs/robotwin_5ep_lr5e5/train.log",
+  "wrapper": "/home/ma-user/work/lingbot-vla-v2/logs/robotwin_5ep_lr5e5/launch_tmux.sh",
+  "obs_output_dir": "obs://yw-2030-extern/Partner_Qin/robot_1014/robotwin_5ep_lr5e5"
+}

@@ -1,0 +1,73 @@
+{
+  "source": "obs://yw-2030-extern/Partner_Qin/robot_1014/robotwin_1ep_fast/checkpoints/global_step_5717/hf_ckpt/",
+  "dtype_stats": {
+    "F32": {
+      "tensors": 1708,
+      "elements": 6375907511,
+      "bytes": 25503630044
+    }
+  },
+  "total_elements": 6375907511,
+  "total_tensor_bytes": 25503630044,
+  "hf_folder_bytes": 25519986741,
+  "total_header_bytes": 259728,
+  "groups": {
+    "model.qwenvl_with_expert.qwenvl": 4437815808,
+    "model.qwenvl_with_expert.qwen_expert": 1786670976,
+    "model.current_video_align_head.projector": 30170112,
+    "model.depth_align_head.projector": 30170112,
+    "model.future_depth_align_head.projector": 30170112,
+    "model.future_video_align_head.projector": 30170112,
+    "model.current_shared_task_proj.weight": 13107200,
+    "model.future_shared_task_proj.weight": 13107200,
+    "model.action_time_mlp_in.weight": 1179648,
+    "model.current_video_align_embs": 655360,
+    "model.depth_align_embs": 655360,
+    "model.future_depth_align_embs": 655360,
+    "model.future_video_align_embs": 655360,
+    "model.action_time_mlp_out.weight": 589824,
+    "model.action_in_proj.weight": 42240,
+    "model.action_out_proj.weight": 42240,
+    "model.state_proj.weight": 42240,
+    "model.current_shared_task_proj.bias": 2560,
+    "model.future_shared_task_proj.bias": 2560,
+    "model.action_in_proj.bias": 768,
+    "model.action_time_mlp_in.bias": 768,
+    "model.action_time_mlp_out.bias": 768,
+    "model.state_proj.bias": 768,
+    "model.action_out_proj.bias": 55
+  },
+  "headers": [
+    {
+      "file": "model-00001-of-00006.safetensors",
+      "header_bytes": 54320,
+      "tensor_count": 370
+    },
+    {
+      "file": "model-00002-of-00006.safetensors",
+      "header_bytes": 21416,
+      "tensor_count": 133
+    },
+    {
+      "file": "model-00003-of-00006.safetensors",
+      "header_bytes": 21472,
+      "tensor_count": 133
+    },
+    {
+      "file": "model-00004-of-00006.safetensors",
+      "header_bytes": 51032,
+      "tensor_count": 330
+    },
+    {
+      "file": "model-00005-of-00006.safetensors",
+      "header_bytes": 92448,
+      "tensor_count": 600
+    },
+    {
+      "file": "model-00006-of-00006.safetensors",
+      "header_bytes": 19040,
+      "tensor_count": 142
+    }
+  ],
+  "verification": "Read only safetensors headers from all six OBS shards; no tensor data downloaded."
+}

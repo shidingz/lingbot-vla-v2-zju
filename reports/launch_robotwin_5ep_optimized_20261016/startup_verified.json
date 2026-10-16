@@ -1,0 +1,29 @@
+{
+  "checked_at": "2026-10-16T19:40:16.213449+08:00",
+  "tmux_session": "lingbot_5ep_optimized",
+  "running": true,
+  "completed_steps_at_check": 12,
+  "epochs": 5,
+  "total_steps": 28585,
+  "all_recorded_metrics_finite": true,
+  "card_health": {
+    "0": "OK",
+    "1": "OK",
+    "2": "OK",
+    "3": "OK",
+    "4": "OK",
+    "5": "OK",
+    "6": "OK",
+    "7": "OK"
+  },
+  "recent_logged_step_seconds": [
+    2.551173448562622,
+    2.5499377250671387,
+    2.557070732116699,
+    2.5612692832946777,
+    2.5867433547973633
+  ],
+  "latest_loss": 0.345703125,
+  "log_file": "/home/ma-user/work/lingbot-vla-v2/logs/robotwin_5ep_optimized_20261016/train.log",
+  "fresh_start_confirmed": true
+}

@@ -1,0 +1,119 @@
+{
+  "integrated_at": "2026-10-16T17:27:51.470578+08:00",
+  "scope": "Three individually validated opt-in changes; launch defaults not changed yet",
+  "source_snapshot": "/home/ma-user/work/lingbot-speed-round2/combined",
+  "files": [
+    {
+      "file": "lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py",
+      "before_sha256": "9b3c9a2ad6823f9d58da51b732477785a1e4db0d29db80e030e094c7b605e40c",
+      "candidate_sha256": "1c550b6313220e35767d297e45a29a52fba7161aa47c193b601b69006b10e463",
+      "after_sha256": "1c550b6313220e35767d297e45a29a52fba7161aa47c193b601b69006b10e463"
+    },
+    {
+      "file": "lingbotvla/ops/joint_attention.py",
+      "before_sha256": null,
+      "candidate_sha256": "6068a8a203cf00559635628b06a06799a1a691857d4a4245bd873fec781e07c5",
+      "after_sha256": "6068a8a203cf00559635628b06a06799a1a691857d4a4245bd873fec781e07c5"
+    },
+    {
+      "file": "lingbotvla/optim/optimizer.py",
+      "before_sha256": "88886197cc7aa2c3470ac4ba139c5ad5cc40f483c7dc61e3333611b0f577f733",
+      "candidate_sha256": "fd332ec3328fecd8558d6f07950587f5b1cccddeb03910a4dc4e02d25a2ce473",
+      "after_sha256": "fd332ec3328fecd8558d6f07950587f5b1cccddeb03910a4dc4e02d25a2ce473"
+    },
+    {
+      "file": "tests/test_moe_monitor_batch.py",
+      "before_sha256": null,
+      "candidate_sha256": "c69b722862a09a5a9a8708a2d6937d97507e314393e128c5e1c7c676b0d92fa9",
+      "after_sha256": "c69b722862a09a5a9a8708a2d6937d97507e314393e128c5e1c7c676b0d92fa9"
+    },
+    {
+      "file": "tools/check_adamw_foreach.py",
+      "before_sha256": null,
+      "candidate_sha256": "25bfb305fc464885e5cf378964b4d7470a778d553804b84c33dc6b8a7166026d",
+      "after_sha256": "25bfb305fc464885e5cf378964b4d7470a778d553804b84c33dc6b8a7166026d"
+    },
+    {
+      "file": "tools/check_adamw_resume.py",
+      "before_sha256": null,
+      "candidate_sha256": "a53726e0cb11450b0a619b7eb99259f747f64b0d27eff37b097fe0d090bca80a",
+      "after_sha256": "a53726e0cb11450b0a619b7eb99259f747f64b0d27eff37b097fe0d090bca80a"
+    },
+    {
+      "file": "tools/check_joint_attention.py",
+      "before_sha256": null,
+      "candidate_sha256": "8339d0fdfbba91414bf33bdd4c98413c962e5e0215d287a80e906d7d7f9683eb",
+      "after_sha256": "8339d0fdfbba91414bf33bdd4c98413c962e5e0215d287a80e906d7d7f9683eb"
+    }
+  ],
+  "finalized_at": "2026-10-16T18:07:07.818405+08:00",
+  "final_scope": "Three opt-in execution changes plus documented optimized launcher: gmm + sdpa_fp32 + monitor=1 + AdamW foreach=1 + gradient checkpointing=false; original launcher defaults preserved.",
+  "final_files": [
+    {
+      "file": "lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py",
+      "before_sha256": "9b3c9a2ad6823f9d58da51b732477785a1e4db0d29db80e030e094c7b605e40c",
+      "final_sha256": "1c550b6313220e35767d297e45a29a52fba7161aa47c193b601b69006b10e463",
+      "combined_snapshot_sha256": "1c550b6313220e35767d297e45a29a52fba7161aa47c193b601b69006b10e463"
+    },
+    {
+      "file": "lingbotvla/ops/joint_attention.py",
+      "before_sha256": null,
+      "final_sha256": "6068a8a203cf00559635628b06a06799a1a691857d4a4245bd873fec781e07c5",
+      "combined_snapshot_sha256": "6068a8a203cf00559635628b06a06799a1a691857d4a4245bd873fec781e07c5"
+    },
+    {
+      "file": "lingbotvla/optim/optimizer.py",
+      "before_sha256": "88886197cc7aa2c3470ac4ba139c5ad5cc40f483c7dc61e3333611b0f577f733",
+      "final_sha256": "fd332ec3328fecd8558d6f07950587f5b1cccddeb03910a4dc4e02d25a2ce473",
+      "combined_snapshot_sha256": "fd332ec3328fecd8558d6f07950587f5b1cccddeb03910a4dc4e02d25a2ce473"
+    },
+    {
+      "file": "tests/test_moe_monitor_batch.py",
+      "before_sha256": null,
+      "final_sha256": "e4ca9e57340925e99fbf5bbabbb41b735625f318b048ccf2a10a7b35279926f7",
+      "combined_snapshot_sha256": "c69b722862a09a5a9a8708a2d6937d97507e314393e128c5e1c7c676b0d92fa9"
+    },
+    {
+      "file": "tools/check_adamw_foreach.py",
+      "before_sha256": null,
+      "final_sha256": "25bfb305fc464885e5cf378964b4d7470a778d553804b84c33dc6b8a7166026d",
+      "combined_snapshot_sha256": "25bfb305fc464885e5cf378964b4d7470a778d553804b84c33dc6b8a7166026d"
+    },
+    {
+      "file": "tools/check_adamw_resume.py",
+      "before_sha256": null,
+      "final_sha256": "a53726e0cb11450b0a619b7eb99259f747f64b0d27eff37b097fe0d090bca80a",
+      "combined_snapshot_sha256": "a53726e0cb11450b0a619b7eb99259f747f64b0d27eff37b097fe0d090bca80a"
+    },
+    {
+      "file": "tools/check_joint_attention.py",
+      "before_sha256": null,
+      "final_sha256": "149f2d354f8f47c7e2f83dca832748507b0867cf7ec63324f270b9a7c6a32897",
+      "combined_snapshot_sha256": "8339d0fdfbba91414bf33bdd4c98413c962e5e0215d287a80e906d7d7f9683eb"
+    },
+    {
+      "file": "train_robotwin_npu.sh",
+      "before_sha256": "c1cc67d7615c0baaf5dd547d8a1b12db8379b0e8178f8647bae7d21a271d3635",
+      "final_sha256": "7d0cddbc3d9d23513fa7dd8e8f527848a271a1979b0ebe2db33a203ff04c6a5c",
+      "combined_snapshot_sha256": "c1cc67d7615c0baaf5dd547d8a1b12db8379b0e8178f8647bae7d21a271d3635"
+    },
+    {
+      "file": "train_robotwin_npu_optimized.sh",
+      "before_sha256": null,
+      "final_sha256": "362c085cdf8b0c3ffb264a2afb4cb211443657007ff4dd1e72f46be1ba5b3b46",
+      "combined_snapshot_sha256": null
+    }
+  ],
+  "final_training_matches_tested_snapshot": true,
+  "validation": [
+    "main_monitor_checks.log",
+    "main_attention_cpu.json",
+    "main_adamw_cpu.rank0.json",
+    "main_resume_cpu.json",
+    "final_launcher_validation.json",
+    "final_code_review.json",
+    "final_experiment_audit.json"
+  ],
+  "full_epoch_started": false,
+  "patch_base": "Before-integration backups, preserving all preexisting repository modifications; not git HEAD."
+}

@@ -1,0 +1,7 @@
+{
+  "attempt": "gmm_baseline",
+  "status": "failed before model loading or training",
+  "reason": "snapshot omitted assets/norm_stats/robotwin.json",
+  "fix": "copy read-only input assets into snapshot; retry with fresh run directory gmm_baseline_v2",
+  "original_data_modified": false
+}

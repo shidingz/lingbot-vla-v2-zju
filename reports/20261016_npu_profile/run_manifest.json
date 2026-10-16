@@ -1,0 +1,39 @@
+{
+  "started_at": "2026-10-16T15:29:29.056025+08:00",
+  "profile_root": "/cache/lingbot/profiling/robotwin_20261016_1530",
+  "ranks": "all",
+  "micro_batch": 12,
+  "global_batch": 96,
+  "stop_step": 20,
+  "record_steps_inclusive": [
+    13,
+    16
+  ],
+  "shapes_memory_stack": false,
+  "checkpoints_and_obs_publication": false,
+  "source_sha256": {
+    "train_robotwin_npu.sh": "e8514772d0630d847702e0b31a0c891e1512d347c325b565587c68c7b69f4de2",
+    "configs/vla/robotwin/robotwin_npu.yaml": "9b532eb54ca02023e7154307ecff562a2b971cc8880d151e2367f8663dafec60",
+    "tasks/vla/train_lingbotvla.py": "9a059bc9a475549d059581ea2f04113d6dcbb500c1784687a614dc2f9d45abc9",
+    "lingbotvla/utils/training_profiler.py": "1e231f736b228f4c06577973139055d0ab7a434e90b34cdc6a764334eb05e5f7",
+    "lingbotvla/ops/fused_moe.py": "f6df0dcb958c18f5c5ae288a75b626abea0d686a9072dcc07a8acb1cdb3e569c",
+    "lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py": "9b3c9a2ad6823f9d58da51b732477785a1e4db0d29db80e030e094c7b605e40c",
+    "lingbotvla/models/vla/lingbot_vla/utils.py": "aa8d55137c17a1efa78d3a8124a131ddacf8166b56a2d8802f68bc04b434e747",
+    "tools/profile_robotwin_npu.sh": "afd374e6094044d8e1b4a8bc4c9370458cc7f68bdf0629ac2f7c445130c93da3",
+    "tools/analyze_npu_profile.py": "2f67fb2f2259307ad0b7ed862044f38eb1ac0026768383390d5ca33dda626188",
+    "tools/bench_npu_moe_candidates.py": "55c379b06a97529bf0fde4327d5d8d88d195fa9ff08006c8a5ec44d36d002023"
+  },
+  "native_profiler_smoke": {
+    "success": true,
+    "trace_root": "/cache/lingbot/profiling/smoke_20261016",
+    "device_kernel_rows": 4,
+    "recorded_steps": 2
+  },
+  "exit_code": 0,
+  "completed_steps": 20,
+  "all_ranks_captured": 8,
+  "captured_steps_per_rank": 4,
+  "checkpoints_written": 0,
+  "finite_loss_and_gradients": true,
+  "research_only_prototype": "tools/bench_npu_moe_candidates.py"
+}

@@ -1,0 +1,6 @@
+{
+  "reference_kernels_per_update": 84882.0,
+  "gmm_kernels_per_update": 48159.0,
+  "reduction_pct": 43.2635894535944,
+  "limitation": "Count comparison only. Reference captured four steps on all ranks; GMM captured two later steps on rank 0. Profile durations have different overhead and are not directly compared."
+}

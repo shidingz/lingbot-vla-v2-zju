@@ -183,7 +183,11 @@ if __name__ == "__main__":
     # Distributed initialization: reuse train.sh + torchrun; RANK/WORLD_SIZE/LOCAL_RANK are already injected via env vars
     if args.train.world_size > 1 and not dist.is_initialized():
         torch.cuda.set_device(f"cuda:{args.train.local_rank}")
-        dist.init_process_group(backend="nccl", timeout=timedelta(hours=2))
+        from lingbotvla.utils.import_utils import is_torch_npu_available
+
+        dist.init_process_group(
+            backend="hccl" if is_torch_npu_available() else "nccl", timeout=timedelta(hours=2)
+        )
     rank = args.train.global_rank
     world_size = args.train.world_size
 

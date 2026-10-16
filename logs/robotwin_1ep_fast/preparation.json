@@ -1,0 +1,33 @@
+{
+  "status": "running_verified",
+  "prepared_at": "2026-10-16T00:32:50.082780+08:00",
+  "previous_run": "robotwin_5ep_lr5e5",
+  "new_run": "robotwin_1ep_fast",
+  "start_from": "specified pretrained weights; no old epoch checkpoint exists",
+  "epochs": 1,
+  "steps_per_epoch": 5717,
+  "total_steps": 5717,
+  "peak_base_lr": 5e-05,
+  "min_base_lr": 1e-05,
+  "warmup_ratio": 0.02,
+  "warmup_steps": 114,
+  "micro_batch_size": 12,
+  "gradient_accumulation_steps": 1,
+  "world_size": 8,
+  "global_batch_size": 96,
+  "gradient_checkpointing": true,
+  "train_expert_only": true,
+  "auxiliary_losses_preserved": true,
+  "pyav_decode_threads": 1,
+  "data_workers_per_rank": 8,
+  "prefetch_factor": 4,
+  "raw_dataset_modified": false,
+  "changes": [
+    "limit each PyAV codec context to one decode thread",
+    "convert only selected video frames to RGB",
+    "one epoch cosine schedule; new run directory"
+  ],
+  "obs_output_dir": "obs://yw-2030-extern/Partner_Qin/robot_1014/robotwin_1ep_fast",
+  "obs_dataset_uri": "obs://yw-2030-extern/Partner_Qin/robot_1014/datasets/RoboTwin_lerobot_v30/",
+  "verified_at": "2026-10-16T00:47:35.234211+08:00"
+}

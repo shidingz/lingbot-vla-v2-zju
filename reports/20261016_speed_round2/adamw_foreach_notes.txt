@@ -1,0 +1,102 @@
+AdamW foreach candidate — 2026-10-16
+
+Scope
+This changes only the existing AdamW fallback in build_muon_optimizer.
+Muon itself and its parameter split/LR/betas/decay/eps/fused=False are unchanged.
+Default behavior is unchanged. Opt in: LINGBOT_ADAMW_FOREACH_NPU=1.
+Apply adamw_foreach_candidate.patch to an isolated experiment snapshot.
+
+Evidence and why this candidate precedes further Muon batching
+Old GMM rank0 profiler has optimizer host scopes 0.828/0.885s.
+DistributedMuon accounts for 0.304/0.313s; existing AdamW for 0.519/0.567s.
+Attached device-operator summed duration for AdamW is only about 5.33ms.
+The host intervals are asynchronous and are not exclusive accelerator timing.
+The original 376 AdamW parameters use per-parameter DTensor pointwise dispatch.
+A repeated outer+inner aten event is nesting, not two actual device kernels.
+This supports testing batched dispatch; it does not predict an exact speedup.
+
+Muon already batches same-shape 2D parameters, maximum 32 per chunk. Trace
+confirms 28 all-gathers and 136 NS calls = 28 two-dimensional chunks + 108
+three-dimensional expert parameters. Each 3D parameter already batches its
+local experts, but different layers/parameters are not combined. Later candidate:
+bucket same-shaped local 3D tensors across a few layers, keeping each trailing
+matrix independent and applying its original adjusted LR. Bound additional
+stack/Gram/output buffers; test for BF16 rounding changes and checkpoint parity.
+Do not flatten the expert/layer batch into the matrix dimensions.
+
+Scalar reads are not the main measured host cost in this window: Muon has
+619 _local_scalar_dense calls totaling <0.9ms, AdamW 1880 totaling <3ms. No
+explicit .item/.cpu/synchronize occurs in the Muon step source; many observed
+reads are scalar handling inside native dispatch. AdamW step counters are
+intentionally CPU tensors when fused=False and capturable=False.
+
+Installed-stack source inspection
+- torch/distributed/tensor/__init__.py:65-71 registers DTensor as foreach
+  optimizer-compatible.
+- torch/distributed/tensor/_ops/_pointwise_ops.py:541-665 registers list
+  strategies for AdamW's foreach pointwise operations.
+- torch_npu/csrc/aten/npu_native_functions_by_codegen.yaml registers native
+  op_api foreach lerp/mul/addcmul/sqrt/div/addcdiv entry points.
+- Original foreach=False on NPU dates to repository initial commit 99370ae.
+  There is no adjacent explanation and no intermediate git history proving a
+  specific compatibility failure. Native registrations are not hardware tests.
+
+Validation completed without NPU
+376 parameters, 20 updates, local and DTensor(world_size=1), pure FP32 and
+mixed FP32/BF16 within each group, distinct LR/weight decay, skipped and zero
+gradients, and an optimizer-state roundtrip. All four cases passed.
+Checks cover every parameter, exp_avg, exp_avg_sq and step at every update,
+finite values, state types/dtypes/devices and DTensor shape/placements.
+The script also evaluates the actual candidate builder's flag expression for
+CPU/NPU x enabled/disabled.
+FP32 comparisons are exact in this CPU run. BF16 has small rounding differences;
+full measured maximum errors are in adamw_foreach_cpu_validation.rank0.json.
+Numerical thresholds: FP32 rtol=2e-5/atol=2e-7; BF16 rtol=0.02/atol=0.002.
+These are screening tolerances, not a promise of identical long training.
+The test synchronizes to inspect values and must NOT be used for speed timing.
+
+Known unsupported combination found by extra CPU test
+A single optimizer foreach bucket that mixes ordinary Tensor and DTensor fails
+in PyTorch2.6 with: got mixed torch.Tensor and DTensor. The optional hybrid test
+reproduces this. Inspect actual AdamW parameter groups before full-model trial.
+Pure DTensor groups (with varying Shard/Replicate placements) and pure local
+Tensor groups passed. The current ignore_norm flag defaults False, but this is
+not proof every production group is homogeneous. The final candidate now logs the Tensor/DTensor counts once at construction
+and leaves a mixed group foreach=False, with the reason in the log; groups
+and parameter order are unchanged. The standalone optional hybrid test still
+exercises the unsupported native path to retain a reproducible failure.
+
+Hardware validation command (run only once current 8-card experiment finishes)
+TORCH_DEVICE_BACKEND_AUTOLOAD=0 torchrun --standalone --nproc_per_node=8 \
+  /home/ma-user/work/lingbot-vla-v2/reports/20261016_speed_round2/check_adamw_foreach.py \
+  --device npu --steps 20 --parameter-count 24 \
+  --optimizer-source /PATH/TO/EXPERIMENT/lingbotvla/optim/optimizer.py \
+  --output /PATH/TO/RESULTS/adamw_foreach_npu_validation.json
+
+The script imports torch_npu and transfer_to_npu only for --device npu, matching
+the project; uses HCCL under torchrun; plain python supports world_size=1.
+It includes uneven and empty DTensor shards as compatibility stress cases.
+Per-rank JSON is always written. Keep reference and foreach paths on the same
+initial parameters and the same explicitly assigned gradients. After the
+hardware numerical checks, full-model single-change timing should compare
+the flag off/on at matched seed, data order, LR horizon and warmup exclusion.
+
+Final guarded patch verification
+Actual build_muon_optimizer source was loaded by AST with a no-op Muon stub.
+Six combinations (switch off/on x local/DTensor/mixed group) preserve parameter
+objects/grouping, learning rate, decay and fused=False, and set foreach as
+intended. Final 24-parameter x 20-step CPU tests passed again after this guard
+was added: adamw_foreach_cpu_final24.rank0.json. All prior 376-parameter CPU
+results and the native mixed-type failure report are retained.
+
+Checkpoint policy correction
+Checkpoint param_groups replace constructor options during load. The final
+candidate captures the runtime foreach choice and applies it at construction
+and with register_load_state_dict_post_hook on the inner AdamW. DCP restores
+inner optimizers directly, so only modifying CombinedOptimizer would miss the
+real resume path. The hook recalculates mixed Tensor/DTensor protection from
+current group params and writes only foreach, preserving checkpoint LR/betas/
+decay/eps/step/moments and parameter ordering.
+check_adamw_resume.py passed 12 cases: Tensor/DTensor/hybrid, checkpoint False
+to runtime True and reverse, both inner.load_state_dict and Combined load.
+All hyperparameters and state tensors are preserved exactly.

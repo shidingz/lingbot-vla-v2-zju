@@ -1,0 +1,21 @@
+{
+  "at": "2026-10-16T20:03:23.981811+08:00",
+  "command": "python -m pytest -q --tb=short tests --ignore=tests/test_npu_moe.py",
+  "exit_code": 0,
+  "passed": 64,
+  "skipped": 3,
+  "log": "cpu_tests_fixed.log",
+  "initial_attempt": {
+    "exit_code": 1,
+    "log": "cpu_tests.log",
+    "at": "2026-10-16T19:59:09.206316+08:00",
+    "reason": "Test isolation: transfer_to_npu replaced torch.profiler.profile during collection; CPU monitor test now counts real scalar-read operators via TorchDispatchMode."
+  },
+  "production_code_changed_for_test_fix": false,
+  "hardware_tests_reused_from_existing_reports": true,
+  "new_training_started": false,
+  "independent_monitor_test": {
+    "passed": 12,
+    "exit_code": 0
+  }
+}

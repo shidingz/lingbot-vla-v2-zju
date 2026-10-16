@@ -1,0 +1,12 @@
+{
+  "requested_at": "2026-10-16T00:36:15.369024+08:00",
+  "reason": "user requested optimized fresh one-epoch experiment",
+  "replacement_run": "robotwin_1ep_fast",
+  "last_observed_step": 658,
+  "last_observed_at": "2026-10-16T00:36:08+08:00",
+  "last500_wall_seconds_per_step": 12.272,
+  "epoch_hours_at_baseline": 19.48861777777778,
+  "checkpoint_available": false,
+  "weights_preserved": false,
+  "logs_preserved": true
+}

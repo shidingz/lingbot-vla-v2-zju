@@ -1,0 +1,30 @@
+{
+  "uri": "obs://yw-2030-extern/Partner_Qin/robot_1014/robotwin_1ep_fast",
+  "files": [
+    {
+      "path": "data_source.json",
+      "size": 671,
+      "sha256": "4cd5964387d81eaa9f6bd0836c82c413912477fa8abf62be35ecd79e51afed66"
+    },
+    {
+      "path": "lingbotvla_cli.yaml",
+      "size": 7105,
+      "sha256": "9fe398e7365e75da9ea259d3e3fe6b7e55d80086ea8625173d93627b1ffaccb2"
+    },
+    {
+      "path": "previous_run_baseline.json",
+      "size": 426,
+      "sha256": "e9af60d9c6d1345a74a55ab7085a0b05bd55043d542814f8ca679f67e01d3ce4"
+    },
+    {
+      "path": "tmux_launch.json",
+      "size": 489,
+      "sha256": "ce5ecf9fb2bfcd45862dd86a1e403a752853b21b4ff544ff1045e001d3526eef"
+    },
+    {
+      "path": "validation.json",
+      "size": 1283,
+      "sha256": "4b75fa1602b36b3980024dc823c4346d62d23d47851b5e20289b8e9cdf037a5f"
+    }
+  ]
+}

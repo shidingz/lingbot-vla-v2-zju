@@ -1,0 +1,17 @@
+{
+  "training_completed": true,
+  "optimizer_updates": 40,
+  "launcher_exit_code": 2,
+  "post_training_launcher_error": "Source script was edited while Bash was blocked in torchrun; after training completed, the shell resumed at an invalid byte offset and reported unexpected EOF.",
+  "evidence": [
+    "40 consecutive loss.jsonl updates",
+    "Reached stop step 40",
+    "Profiling run: skip checkpoint at step 40",
+    "Final async_hf summary; no checkpoint operations",
+    "No Torchrun/Python failure before shell EOF error"
+  ],
+  "measurement_steps": [
+    13,
+    29
+  ]
+}

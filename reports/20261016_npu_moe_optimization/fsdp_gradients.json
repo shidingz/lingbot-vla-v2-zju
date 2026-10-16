@@ -1,0 +1,24 @@
+{
+  "world_size": 8,
+  "non_reentrant_checkpoint": true,
+  "strict_load_of_reference_weights": true,
+  "parameters": {
+    "block.gate": {
+      "relative_l2_error": 7.69013936974261e-08,
+      "gradient_norm": 0.00035464935353957117
+    },
+    "block.gate_proj": {
+      "relative_l2_error": 9.781322418689342e-10,
+      "gradient_norm": 0.005150902550667524
+    },
+    "block.up_proj": {
+      "relative_l2_error": 7.320058448279099e-10,
+      "gradient_norm": 0.005160362459719181
+    },
+    "block.down_proj": {
+      "relative_l2_error": 4.6003800768801284e-10,
+      "gradient_norm": 0.00504037830978632
+    }
+  },
+  "optimizer_state_entries": 4
+}

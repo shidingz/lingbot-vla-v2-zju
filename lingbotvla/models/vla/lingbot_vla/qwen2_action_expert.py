@@ -77,6 +77,7 @@ from transformers.models.qwen2.modeling_qwen2 import (
     Qwen2ForCausalLM as _Qwen2ForCausalLM,
 )
 from lingbotvla.ops.robby_moe import robby_moe_forward
+from lingbotvla.utils.import_utils import is_torch_npu_available
 # from transformers.models.mistral.modeling_mistral import MistralMLP
 
 # Modified from transformers.models.mistral.modeling_mistral.MistralMLP with Mistral->Qwen2Moe
@@ -307,6 +308,7 @@ class Qwen2TokenMoeBlock(nn.Module):
                 and hidden_flat.is_cuda
                 and not self.training
                 and not torch.is_grad_enabled()
+                and not is_torch_npu_available()
             )
             if use_robby_moe:
                 try:

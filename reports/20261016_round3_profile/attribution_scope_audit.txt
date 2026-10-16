@@ -1,0 +1,41 @@
+本轮细分归因设计（只读审查与快照插桩）
+
+范围：当前第二轮优化后的默认 8 卡配置。此文件记录方法，不包含旧配置的性能数字。
+
+已有覆盖
+- train.data_wait / h2d / teachers / forward / backward / clip_grad / optimizer / metrics_reduce。
+- teacher.current_depth / future_depth / video。
+- model.moe_experts 覆盖专家 forward，自动算子与 autograd range 覆盖 grouped GEMM backward。
+- torch_npu Level1 可记录 NPU kernel、运行时与 HCCL；PipeUtilization 记录硬件流水线指标。
+
+缺口与最小快照补充
+- teacher.geometry_recover：MoGe recover_focal_shift，包含降采样、设备回读、CPU 拟合与结果回传。
+- teacher.geometry_scipy：solve_optimal_focal_shift，分离几何拟合本身的 CPU 时间。
+- teacher.rgb_normalize：_rgb_to_unit_float，包含用于范围判断的 amin/amax host scalar reads。
+- optimizer.muon_newton_schulz：batched_newton_schulz，区分 Muon 正交化与优化器其余操作。
+- train.scalar_reads：现有 loss.item() 等汇总读取。
+- train.pre_step_sync / post_step_sync：仅给已有 synchronize() 加 range。
+
+instrument_snapshot.py 的 apply(snapshot) 只修改独立快照中的 training_profiler.py 与
+train_lingbotvla.py，并返回修改前后 SHA256 和统一 diff。生产 checkout 拒绝写入。
+所有 wrapper 只安装一次；查找实际已加载模块并替换同一函数的导入别名（包括 moge.model.v2）。
+采样窗口以外直接调用原函数，不创建额外 record_function。未增加同步、张量计算或改变模型算法。
+
+解释规则
+1. record_function 是 host 提交/等待区间，不是同名计算在 NPU 上的完成区间。
+2. .item() 或 synchronize() 的等待常在排空此前已提交的 backward/optimizer 工作；它不是可与
+   此前计算耗时直接相加的独立成本。报告使用区间 union，消除嵌套重复。
+3. 同步期间 NPU 正在执行的 kernel 只说明时间重叠，不自动说明因果归属或可消除上限。
+4. teacher.geometry_recover 包含 D2H 等待，不能全部称为 SciPy CPU 计算；geometry_scipy 才是
+   当前添加的拟合函数范围。
+5. MoE 层使用本卡 grouped GEMM 时，不能把全部 HCCL 归因于专家 all-to-all。必须结合当前
+   EP 配置、FSDP/Muon 训练阶段及具体 collective 类型。
+6. operator_details 的 Device Total Duration 为相关设备任务的包含式求和，跨流可能重叠；
+   它用于识别工作来源，不能当成不重叠 walltime 百分比。
+7. AscendCL runtime 在 trace 中使用合成 pid，但 tid 保留真实 OS 线程号；仅按 pid+tid
+   匹配会把许多同步错误标为未归因。分析器对这些 runtime 按 tid 回退匹配。
+8. record_shapes/profile_memory/with_stack 全部关闭以限制观测开销。8 卡同时采集保证
+   rank 之间可比较；采集与导出步不能用于生产吞吐结论，速度以同一 run 的无采集窗口为准。
+
+attribution_scope_analysis.py 输出每 rank 的 host phase、host sync union、对应期间设备活动
+的交集，并保留所有口径限制。通信时间、device active union 与空洞归因由独立分析脚本交叉核对。

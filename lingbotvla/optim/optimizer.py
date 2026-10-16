@@ -16,12 +16,15 @@
 # limitations under the License.
 
 
+import logging
+import os
 import re
 from typing import Any, Dict, List, Optional, Sequence, Tuple
 
 import torch
 import torch.nn as nn
 from torch.optim import AdamW
+from torch.distributed.tensor import DTensor
 from torch.optim.optimizer import Optimizer
 
 from ..utils.import_utils import is_torch_npu_available
@@ -315,7 +318,23 @@ def build_muon_optimizer(
 
     inner_opts: List[Optimizer] = [muon_opt]
     if adamw_groups:
-        foreach = not is_torch_npu_available()
+        # Capture this process's execution policy. Checkpoints may contain the
+        # opposite foreach value, so apply it both before training and on load.
+        foreach = not is_torch_npu_available() or os.getenv("LINGBOT_ADAMW_FOREACH_NPU", "0") == "1"
+
+        def apply_adamw_foreach_policy(optimizer):
+            for group_index, group in enumerate(optimizer.param_groups):
+                dtensor_count = sum(isinstance(p, DTensor) for p in group["params"])
+                tensor_count = len(group["params"]) - dtensor_count
+                # PyTorch 2.6 foreach cannot dispatch mixed Tensor/DTensor lists.
+                # Do not reorder groups or override any resumed hyperparameter.
+                group["foreach"] = foreach and not (dtensor_count and tensor_count)
+                logging.getLogger(__name__).info(
+                    "AdamW foreach policy group=%d DTensor=%d Tensor=%d foreach=%s%s",
+                    group_index, dtensor_count, tensor_count, group["foreach"],
+                    " (disabled: mixed Tensor/DTensor group)" if dtensor_count and tensor_count else "",
+                )
+
         adamw_opt = AdamW(
             adamw_groups,
             lr=lr,
@@ -325,6 +344,9 @@ def build_muon_optimizer(
             fused=False,
             foreach=foreach,
         )
+        apply_adamw_foreach_policy(adamw_opt)
+        # DCP restores inner optimizers directly, bypassing CombinedOptimizer.
+        adamw_opt.register_load_state_dict_post_hook(apply_adamw_foreach_policy)
         inner_opts.append(adamw_opt)
 
     return CombinedOptimizer(inner_opts)

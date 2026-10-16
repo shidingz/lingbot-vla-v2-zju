@@ -1,0 +1,58 @@
+{
+  "run_name": "robotwin_5ep_optimized_20261016",
+  "status": "stopped_at_user_request",
+  "last_complete_update": 147,
+  "last_logged_epoch": 1,
+  "planned_epochs": 5,
+  "planned_total_updates": 28585,
+  "last_logged_at": "2026-10-16 19:46:06 Asia/Shanghai",
+  "last_metrics": {
+    "step": 147,
+    "epoch": 1,
+    "loss": 0.275634765625,
+    "vla_loss": 0.25537109375,
+    "depth_loss": 2.17437744140625,
+    "future_depth_loss": 2.0999908447265625,
+    "future_video_loss": 0.5197525024414062,
+    "grad_norm": 0.6106483936309814,
+    "lr": 1.287215411558669e-05,
+    "expert_lr": 3.64079498544387e-05,
+    "step_time": 2.589306116104126
+  },
+  "checkpoint_status": "No training checkpoint saved in this run. Local checkpoints directory was empty and no save/publication record was found.",
+  "checkpoint_directory_original": "/cache/lingbot/robotwin_train/robotwin_5ep_optimized_20261016/checkpoints",
+  "checkpoint_directory_entries_at_audit": [],
+  "stop_requested_at": "2026-10-16T19:47:58.914197+08:00",
+  "stop_verified_at": "2026-10-16T19:48:11.349434+08:00",
+  "remaining_identified_processes": [],
+  "npu_cards_without_processes_reported": 8,
+  "evidence": [
+    {
+      "repository_relative_path": "logs/robotwin_5ep_optimized_20261016/train.log",
+      "sha256": "f6ed50421aae7467970db7d3604c32778feadf21d8b074fab16371290226d86c",
+      "bytes": 261137
+    },
+    {
+      "repository_relative_path": "logs/robotwin_5ep_optimized_20261016/loss.jsonl",
+      "sha256": "38a39b699c9b1de7d9ea3c5da1f3827f1a3ff85f976bc0359f0652972a39adb7",
+      "bytes": 47067
+    },
+    {
+      "repository_relative_path": "logs/robotwin_5ep_optimized_20261016/lingbotvla_cli.yaml",
+      "sha256": "a97875cb3151064ad1d113762ea2b370854c6eb607bbfd79792d95c49d31302d",
+      "bytes": 7204
+    },
+    {
+      "repository_relative_path": "reports/launch_robotwin_5ep_optimized_20261016/user_stop.json",
+      "sha256": "3ee1e06d0f7eabb2524119f8a3bf1db9584131dd126b41a04f1b8e93013e0c80",
+      "bytes": 2530
+    },
+    {
+      "repository_relative_path": "reports/launch_robotwin_5ep_optimized_20261016/independent_config_audit.json",
+      "sha256": "346a85f462f4467a97550adf814b736884b2151bb68a315a533f526d6c49c0f0",
+      "bytes": 8530
+    }
+  ],
+  "terminology_note": "No saved training checkpoint here is unrelated to the combined_no_checkpoint experiment name, which means activation recomputation was disabled.",
+  "limits": "Last logged completed update is 147; this does not prove an interrupted next update completed or provide recoverable optimizer/model state."
+}

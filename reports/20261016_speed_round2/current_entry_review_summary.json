@@ -1,0 +1,70 @@
+{
+  "reviewed_at": "2026-10-16T19:21:30.290247+08:00",
+  "conclusion": "Current main-launcher defaults match the previously tested optimized combination; recommended to run current version before further performance changes.",
+  "all_current_key_files_match_completed_160_step_run": true,
+  "key_file_checks": {
+    "train_robotwin_npu.sh": true,
+    "train_robotwin_npu_optimized.sh": true,
+    "configs/vla/robotwin/robotwin_npu.yaml": true,
+    "lingbotvla/ops/npu_moe.py": true,
+    "lingbotvla/ops/joint_attention.py": true,
+    "lingbotvla/optim/optimizer.py": true,
+    "lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py": true
+  },
+  "default_command": "bash train_robotwin_npu.sh",
+  "performance": {
+    "step_seconds_13_160": 2.608108108108108,
+    "step_seconds_115_160": 2.608695652173913,
+    "samples_per_second_13_160": 36.80829015544042,
+    "peak_rank0_allocated_gib": 50.61,
+    "verified_steps": 160,
+    "warmup_steps": 114,
+    "completed_exit_code": 0
+  },
+  "source_differences": "Training Python unchanged versus combined; default performance flags moved into main launcher; optimized entry delegates to main; YAML comments changed.",
+  "default_run": "robotwin_1ep_optimized; OBS latest absent and new-run prefix check passed. Historical robotwin_1ep_fast has global_step_5717 epoch_1.",
+  "review_fix": {
+    "file": "tests/test_training_obs_flow.py",
+    "scope": "Update two stale default-run path expectations and add missing no-op profiler/profile_only=False to the existing save-boundary test fixture. Preserve all boundary assertions. No training source changes.",
+    "validation": "python -m pytest -q tests/test_training_obs_flow.py: 15 passed in 1.14s",
+    "sha256": "b4604c67838dc0f65f3fcfae01821ab5dd59bdb28b0104f369351fe0f8a297ea"
+  },
+  "further_optimization": [
+    {
+      "candidate": "Muon batching / local compilation",
+      "benefit": "Not measured for current 2.61 s baseline; requires fresh profile and numerical A/B. Existing 2D same-shape parameters already batch.",
+      "risk": "Custom operators, graph breaks, floating-point operation order, distributed state."
+    },
+    {
+      "candidate": "Communication overlap / FSDP prefetch",
+      "benefit": "Unquantified until fresh current-version device timeline.",
+      "risk": "Extra memory; device HBM already around 91–92% in sampled training."
+    },
+    {
+      "candidate": "Frozen teacher target caching",
+      "benefit": "Potentially amortizes over many epochs; one epoch may merely move compute before training.",
+      "risk": "Must preserve input identity, frame choice, augmentation, normalization, teacher settings."
+    },
+    {
+      "candidate": "Larger batch or lower attention precision",
+      "benefit": "Not recommended for current run.",
+      "risk": "Changes training behavior or memory needs; earlier BF16 attention did not meet chosen numeric tolerance."
+    }
+  ],
+  "cost_example": {
+    "pure_loop_hours_at_measured_rate": 4.14182057057057,
+    "hypothetical_10_percent_time_reduction_minutes": 24.850923423423424,
+    "note": "Illustrative only: not a measured new optimization; excludes startup, saving, export and upload."
+  },
+  "limits": [
+    "160 steps passed warmup but is not full-epoch convergence or robotics task-success validation.",
+    "No full-size eight-rank DCP save/resume was performed in these short performance tests.",
+    "Scalar loss/grad checks do not prove full-gradient bitwise equality."
+  ],
+  "official_background_sources": [
+    "https://github.com/pytorch/pytorch/blob/v2.6.0/docs/source/torch.compiler_troubleshooting.rst",
+    "https://docs.pytorch.org/tutorials/intermediate/FSDP_tutorial.html",
+    "https://github.com/Ascend/torchair"
+  ],
+  "full_training_started_during_review": false
+}

@@ -1,0 +1,12 @@
+{
+  "synthetic_two_rank_csv_and_pipe_test": "passed",
+  "interval_arithmetic_test": "passed",
+  "streaming_json_chunk_and_dict_schema_test": "passed",
+  "old_trace_exact_union_check": {
+    "source_directory": "/cache/lingbot/profiling/robotwin_20261016_1530/trace/rank0/notebook-1412a60d-0f41-4869-980d-933b2766338c_1452191_20261016073540818_ascend_pt/ASCEND_PROFILER_OUTPUT",
+    "rank": "rank0",
+    "steps": 4,
+    "max_absolute_difference_from_official_seconds": 1.7319479184152442e-13
+  },
+  "note": "Only parser validation; synthetic values are not new experimental results."
+}

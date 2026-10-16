@@ -1,0 +1,81 @@
+{
+  "checked_at": "2026-10-16T13:48:26.699641+08:00",
+  "run_uri": "obs://yw-2030-extern/Partner_Qin/robot_1014/robotwin_1ep_fast",
+  "checkpoint_uri": "obs://yw-2030-extern/Partner_Qin/robot_1014/robotwin_1ep_fast/checkpoints/global_step_5717",
+  "latest": {
+    "checkpoint_path": "checkpoints/global_step_5717",
+    "epoch": 1,
+    "format_version": 1,
+    "global_step": 5717,
+    "manifest_sha256": "4f7b1c5f73696f16b5670d43e6610cb1c5c6c7f27fda464702d1d350f327f503"
+  },
+  "completion_marker_verified": true,
+  "manifest_sha256": "4f7b1c5f73696f16b5670d43e6610cb1c5c6c7f27fda464702d1d350f327f503",
+  "latest_manifest_matches": true,
+  "local_manifest_matches": true,
+  "checkpoint_files": 283,
+  "run_assets": 30,
+  "remote_recursive_list_count": 315,
+  "expected_objects": 315,
+  "missing_objects": [],
+  "extra_listing_entries": [],
+  "all_object_size_matches": true,
+  "all_object_crc64_matches": true,
+  "mismatches": [],
+  "checkpoint_groups": {
+    "extra_state": {
+      "file_count": 8,
+      "bytes": 140496,
+      "gib": 0.000131
+    },
+    "hf_ckpt": {
+      "file_count": 17,
+      "bytes": 25519986741,
+      "gib": 23.76734
+    },
+    "model": {
+      "file_count": 129,
+      "bytes": 25522891294,
+      "gib": 23.770045
+    },
+    "optimizer": {
+      "file_count": 129,
+      "bytes": 7770586464,
+      "gib": 7.236923
+    }
+  },
+  "checkpoint_total_bytes": 58813604995,
+  "hf_index_metadata": {
+    "total_size": 25503630044
+  },
+  "hf_shards": [
+    "model-00001-of-00006.safetensors",
+    "model-00002-of-00006.safetensors",
+    "model-00003-of-00006.safetensors",
+    "model-00004-of-00006.safetensors",
+    "model-00005-of-00006.safetensors",
+    "model-00006-of-00006.safetensors"
+  ],
+  "local_checkpoint_exists": false,
+  "logs": {
+    "loss.jsonl": {
+      "remote_bytes": 1893617,
+      "local_bytes": 1893617,
+      "local_sha256": "1b692236cbf5e3c9095ee10fcc39f38b630491f98cbeab8e6d3450e64465aef8",
+      "snapshot_sha256": "1b692236cbf5e3c9095ee10fcc39f38b630491f98cbeab8e6d3450e64465aef8",
+      "local_identical_to_snapshot": true,
+      "remote_crc64_matches_snapshot": true,
+      "last_modified": "Fri, 16 Oct 2026 04:51:19 GMT"
+    },
+    "train.log": {
+      "remote_bytes": 2686667,
+      "local_bytes": 2687083,
+      "local_sha256": "84f61d06cf4615b054a1e5a4193a8d4ba7a8bcfad611a544bfd57054bde99d6c",
+      "snapshot_sha256": "582961c2591ffe0cd73c951bc9d0c069b2663e70aa2b6e26e707f494d1d9397d",
+      "local_identical_to_snapshot": false,
+      "remote_crc64_matches_snapshot": true,
+      "last_modified": "Fri, 16 Oct 2026 04:51:19 GMT"
+    }
+  },
+  "verification_scope": "Read-only: completion marker + manifest SHA256 + all object sizes and stored CRC64 metadata. No large tensor downloads or full remote content rehash. Original uploader verified content CRC64 at upload."
+}

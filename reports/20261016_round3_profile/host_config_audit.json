@@ -1,0 +1,118 @@
+{
+  "audited_at": "2026-10-16T20:00:20.025129+08:00",
+  "baseline": "/cache/lingbot/profiling/round2_default_20261016_185821/default_160",
+  "candidate": "/cache/lingbot/profiling/round3_profile_20261016_195822/profile_132",
+  "effective_yaml_differences": [
+    {
+      "field": "train.logging_dir",
+      "baseline": "/cache/lingbot/profiling/round2_default_20261016_185821/default_160/logs",
+      "current": "/cache/lingbot/profiling/round3_profile_20261016_195822/profile_132/logs",
+      "classification": "isolated_output_destination"
+    },
+    {
+      "field": "train.output_dir",
+      "baseline": "/cache/lingbot/profiling/round2_default_20261016_185821/default_160/run",
+      "current": "/cache/lingbot/profiling/round3_profile_20261016_195822/profile_132/run",
+      "classification": "isolated_output_destination"
+    },
+    {
+      "field": "train.profile_end_step",
+      "baseline": 17,
+      "current": 125,
+      "classification": "profiling_configuration"
+    },
+    {
+      "field": "train.profile_profile_memory",
+      "baseline": true,
+      "current": false,
+      "classification": "profiling_configuration"
+    },
+    {
+      "field": "train.profile_ranks",
+      "baseline": "",
+      "current": "all",
+      "classification": "profiling_configuration"
+    },
+    {
+      "field": "train.profile_record_shapes",
+      "baseline": true,
+      "current": false,
+      "classification": "profiling_configuration"
+    },
+    {
+      "field": "train.profile_start_step",
+      "baseline": 13,
+      "current": 121,
+      "classification": "profiling_configuration"
+    },
+    {
+      "field": "train.profile_trace_dir",
+      "baseline": "/cache/lingbot/profiling/round2_default_20261016_185821/default_160/trace",
+      "current": "/cache/lingbot/profiling/round3_profile_20261016_195822/profile_132/trace",
+      "classification": "isolated_output_destination"
+    },
+    {
+      "field": "train.profile_with_stack",
+      "baseline": true,
+      "current": false,
+      "classification": "profiling_configuration"
+    },
+    {
+      "field": "train.stop_after_steps",
+      "baseline": 160,
+      "current": 132,
+      "classification": "bounded_experiment_length"
+    }
+  ],
+  "config_passed": true,
+  "checks": {
+    "no_training_config_difference": true,
+    "optimization_switches_match": true,
+    "checkpoint_disabled": true,
+    "dataset_list_hash_equal": true,
+    "source_changes_only_reviewed_instrumentation": true,
+    "instrumentation_hashes_match": true,
+    "no_added_synchronization": true
+  },
+  "actual_launcher_switch_checks": {
+    "LINGBOT_NPU_MOE_IMPL": true,
+    "LINGBOT_JOINT_ATTN_BACKEND": true,
+    "LINGBOT_MOE_MONITOR_BATCH_COUNTS": true,
+    "LINGBOT_ADAMW_FOREACH_NPU": true
+  },
+  "optimization_flags": {
+    "LINGBOT_NPU_MOE_IMPL": "gmm",
+    "LINGBOT_JOINT_ATTN_BACKEND": "sdpa_fp32",
+    "LINGBOT_MOE_MONITOR_BATCH_COUNTS": "1",
+    "LINGBOT_ADAMW_FOREACH_NPU": "1"
+  },
+  "source_files_compared": 261,
+  "changed_training_python_files": [
+    "lingbotvla/utils/training_profiler.py",
+    "tasks/vla/train_lingbotvla.py"
+  ],
+  "source_review_note": "Reviewed instrumentation.json diffs: training changes wrap existing sync/scalar-read blocks in record_function ranges; profiler changes wrap four existing functions and aliases with capture-window-gated ranges. No tensor mathematics, optimizer policy, data transformation, or explicit synchronization added. Timing annotations can still perturb performance and profiled steps must be excluded.",
+  "effective_data_config": {
+    "data.num_workers": 8,
+    "data.pin_memory": true,
+    "data.prefetch_factor": 4,
+    "train.enable_forward_prefetch": true,
+    "train.global_batch_size": 96,
+    "train.micro_batch_size": 12
+  },
+  "actual_profile_config": {
+    "train.enable_profiling": true,
+    "train.profile_end_step": 125,
+    "train.profile_only": true,
+    "train.profile_profile_memory": false,
+    "train.profile_ranks": "all",
+    "train.profile_record_shapes": false,
+    "train.profile_start_step": 121,
+    "train.profile_trace_dir": "/cache/lingbot/profiling/round3_profile_20261016_195822/profile_132/trace",
+    "train.profile_with_stack": false
+  },
+  "limitations": [
+    "Full external data/model contents and imported dependencies are not rehashed.",
+    "Profiling and CPU stack sampled windows cannot be used as unprofiled throughput."
+  ]
+}

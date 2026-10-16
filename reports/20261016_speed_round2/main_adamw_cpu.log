@@ -1,0 +1,9 @@
+/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/distributed/tensor/_random.py:44: UserWarning: DTensor random operators may not have complete support on cpu device mesh
+  warnings.warn(
+rank=0: checking local mixed=False
+rank=0: checking local mixed=True
+rank=0: checking dtensor mixed=False
+/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/distributed/tensor/_random.py:44: UserWarning: DTensor random operators may not have complete support on cpu device mesh
+  warnings.warn(
+rank=0: checking dtensor mixed=True
+rank=0: saved reports/20261016_speed_round2/main_adamw_cpu.rank0.json; passed=True

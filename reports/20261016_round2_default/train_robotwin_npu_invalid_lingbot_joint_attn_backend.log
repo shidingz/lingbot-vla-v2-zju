@@ -1,0 +1,1 @@
+[错误] LINGBOT_JOINT_ATTN_BACKEND 必须为空、eager 或 sdpa_fp32。

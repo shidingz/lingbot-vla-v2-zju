@@ -1,0 +1,44 @@
+--- a/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py
++++ b/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py
+@@ -1,4 +1,5 @@
+ import einops
++import os
+ import torch
+ from torch import Tensor, nn
+ import torch.nn.functional as F
+@@ -1116,6 +1117,23 @@
+             tok_bias = []  # per-layer max(|e_score_correction_bias|) (loss-free); >1 -> bias dominates sigmoid score
+             any_dead = None  # OR-accumulated bool: any token-MoE layer with a 0-count expert
+             with torch.no_grad():
++                # Preserve every monitoring value, but fetch all buffer-ready
++                # flags together. A Python condition on a device scalar waits
++                # for that device; doing it per layer serializes host dispatch.
++                # Keep the original path available for controlled A/B testing.
++                batch_monitor_counts = os.getenv("LINGBOT_MOE_MONITOR_BATCH_COUNTS", "0") == "1"
++                cached_counts, nonempty_counts = {}, {}
++                if batch_monitor_counts:
++                    for i in range(len(router_logits_list)):
++                        layer_id = all_moe_indices[i] if i < len(all_moe_indices) else i
++                        moe_block = self.qwenvl_with_expert.qwen_expert.model.layers[layer_id].mlp
++                        if hasattr(moe_block, "last_tokens_per_expert"):
++                            cached_counts[i] = moe_block.last_tokens_per_expert.clone()
++                    if cached_counts:
++                        # One device-to-host transfer, including the all-zero
++                        # startup/resume case; no per-layer scalar reads.
++                        ready = torch.stack([counts.sum().ne(0) for counts in cached_counts.values()]).cpu().tolist()
++                        nonempty_counts = dict(zip(cached_counts, ready))
+                 for i, logits in enumerate(router_logits_list):
+                     layer_id = all_moe_indices[i] if i < len(all_moe_indices) else i
+                     num_experts = logits.shape[-1]
+@@ -1123,8 +1141,9 @@
+                     moe_block = self.qwenvl_with_expert.qwen_expert.model.layers[layer_id].mlp
+                     if hasattr(moe_block, "last_tokens_per_expert"):
+                         # Global (all-reduced), biased, true top-k load from the load-balance hook.
+-                        counts = moe_block.last_tokens_per_expert.clone()
+-                        if counts.sum() == 0:
++                        counts = cached_counts[i] if batch_monitor_counts else moe_block.last_tokens_per_expert.clone()
++                        is_empty = not nonempty_counts[i] if batch_monitor_counts else counts.sum() == 0
++                        if is_empty:
+                             # Buffer not yet populated by the load-balance hook (first step
+                             # after run start / resume) -> skip this layer to avoid a spurious
+                             # has_dead_expert / min_load_ratio spike on the very first viz.

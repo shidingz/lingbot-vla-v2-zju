@@ -1,0 +1,113 @@
+{
+  "review_date_local": "2026-10-16",
+  "scope": "Read-only final review of the three integrated production files; no source changes, no newly executed CPU tests or NPU operations.",
+  "verdict": "no_blocking_findings",
+  "blocking_findings": [],
+  "files": [
+    {
+      "path": "lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py",
+      "main_sha256": "1c550b6313220e35767d297e45a29a52fba7161aa47c193b601b69006b10e463",
+      "combined_sha256": "1c550b6313220e35767d297e45a29a52fba7161aa47c193b601b69006b10e463",
+      "before_sha256": "9b3c9a2ad6823f9d58da51b732477785a1e4db0d29db80e030e094c7b605e40c",
+      "matches_tested_combined": true,
+      "syntax_valid": true
+    },
+    {
+      "path": "lingbotvla/ops/joint_attention.py",
+      "main_sha256": "6068a8a203cf00559635628b06a06799a1a691857d4a4245bd873fec781e07c5",
+      "combined_sha256": "6068a8a203cf00559635628b06a06799a1a691857d4a4245bd873fec781e07c5",
+      "before_sha256": null,
+      "matches_tested_combined": true,
+      "syntax_valid": true
+    },
+    {
+      "path": "lingbotvla/optim/optimizer.py",
+      "main_sha256": "fd332ec3328fecd8558d6f07950587f5b1cccddeb03910a4dc4e02d25a2ce473",
+      "combined_sha256": "fd332ec3328fecd8558d6f07950587f5b1cccddeb03910a4dc4e02d25a2ce473",
+      "before_sha256": "88886197cc7aa2c3470ac4ba139c5ad5cc40f483c7dc61e3333611b0f577f733",
+      "matches_tested_combined": true,
+      "syntax_valid": true
+    }
+  ],
+  "semantic_checks": [
+    {
+      "area": "MoE monitoring",
+      "location": "modeling_lingbot_vla_v2.py:1136",
+      "result": "pass",
+      "details": "Only readiness flags are batched. Count snapshots remain cloned, the zero-sum startup/resume skip is identical, layers without a buffer retain top-1 fallback, statistics and histogram keys remain unchanged. Auxiliary losses and their differentiable graph are outside the modified no_grad monitoring logic."
+    },
+    {
+      "area": "Monitoring timing and consistency",
+      "result": "pass_for_current_dataparallel_model",
+      "details": "All count buffers are read on the rank-local device before the same monitoring loop; optimizer load-balance updates run later. No buffer is mutated. Different expert-count lengths are supported because only scalar readiness results are stacked."
+    },
+    {
+      "area": "Attention routing",
+      "location": "modeling_lingbot_vla_v2.py:417",
+      "result": "pass",
+      "details": "Unset backend preserves eager/flex/flex_cached routing. Explicit sdpa_fp32 requires eager configuration, preventing the flex_cached special branch from silently bypassing the override. One os import is present."
+    },
+    {
+      "area": "Attention semantics",
+      "location": "ops/joint_attention.py:7",
+      "result": "pass_with_existing_numerical_tolerances",
+      "details": "FP32 Q/K/V conversion, RoPE, KV cache handling and final output layout remain in the original caller. Boolean True-visible mask is expanded to [B,1,Lq,Lk]. GQA repeats match the original head ordering. Dropout stays zero, default SDPA scaling matches D**-0.5. All-masked rows use mean(V), with zero Q/K influence and uniform V contribution, retaining legacy finite-negative-mask behavior."
+    },
+    {
+      "area": "AdamW execution and type guard",
+      "location": "optim/optimizer.py:321",
+      "result": "pass",
+      "details": "Existing Muon parameter assignment, algorithm, LR scaling and the AdamW algorithm remain unchanged. Constructor captures runtime foreach policy and applies it before any optimizer step, including DCP lazy state initialization. A mixed ordinary Tensor/DTensor group falls back to foreach=False without reordering or splitting groups."
+    },
+    {
+      "area": "Checkpoint policy restoration",
+      "location": "optim/optimizer.py:349",
+      "result": "pass",
+      "details": "The post-load hook belongs to inner AdamW. Project checkpointer expands CombinedOptimizer before set_optimizer_state_dict; installed PyTorch DCP ultimately calls inner load_state_dict. PyTorch invokes post-hooks after replacing param_groups, so the hook restores the current process policy after checkpoint override. The callback recomputes the type guard using current group.params and writes only foreach."
+    },
+    {
+      "area": "Resumed hyperparameters and optimizer state",
+      "result": "pass",
+      "details": "LR, betas, weight_decay, eps, parameter order, steps, exp_avg and exp_avg_sq are not assigned by the callback. Both False-to-True and True-to-False policies are covered by retained state-dict tests. Captured policy is stable if environment variables change later."
+    },
+    {
+      "area": "Default compatibility",
+      "result": "pass_for_existing_npu_workflow",
+      "details": "Monitoring defaults to 0, attention backend to empty, and NPU AdamW foreach to False. A resumed foreach value is intentionally overridden by the runtime policy even when the flag is unset, so reverting to the original execution path is effective. The existing package-availability test for platform policy is preserved."
+    }
+  ],
+  "reviewed_existing_validation": [
+    {
+      "artifact": "combined_cpu_validation.json",
+      "summary": "Monitor 12, attention 8 plus 6 error-rule checks, AdamW 4 x 20-step cases plus builder guard 6, resume 12 all passed."
+    },
+    {
+      "artifact": "main_resume_cpu.json",
+      "summary": "12 main-source state-dict restore cases passed; hyperparameters and moments exact."
+    },
+    {
+      "artifact": "main_adamw_cpu.rank0.json",
+      "summary": "All four main-source local/DTensor and FP32/mixed dtype cases plus builder guards passed."
+    },
+    {
+      "artifact": "main_attention_cpu.json",
+      "summary": "Eight main-source output and Q/K/V gradient checks passed."
+    },
+    {
+      "artifact": "attention_npu_checks_v2.json",
+      "summary": "Nine existing NPU attention output/gradient cases passed; no new NPU run in this review."
+    },
+    {
+      "artifact": "adamw_foreach_npu_validation.rank0.json through rank7.json",
+      "summary": "Existing eight-rank AdamW correctness reports reviewed for pass status; no new NPU run."
+    }
+  ],
+  "non_blocking_notes": [
+    "SDPA is validated within the established floating-point error budget; no bitwise identity or long-run task-quality equivalence is claimed.",
+    "The checkpoint tests exercise inner and Combined state_dict loading and static inspection confirms the real DCP path. This review did not run a fresh eight-rank end-to-end DCP save/resume.",
+    "The monitoring batching assumption is rank-local buffers on a single device, matching current eight-rank data-parallel/FSDP usage; pipeline-parallel layers distributed over devices are outside this candidate scope.",
+    "No-checkpoint configuration and seven-run throughput/memory conclusions are outside these three production code changes and are covered by separate experiment audits."
+  ],
+  "source_files_modified_by_review": false,
+  "npu_executed_by_review": false
+}

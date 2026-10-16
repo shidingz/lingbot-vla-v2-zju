@@ -1,0 +1,842 @@
+{
+  "captured_at": "2026-10-16T00:58:14+08:00",
+  "training": {
+    "latest_loss": {
+      "step": 128,
+      "epoch": 1,
+      "loss": 0.198974609375,
+      "vla_loss": 0.1846923828125,
+      "depth_loss": 1.4715194702148438,
+      "future_depth_loss": 1.461029052734375,
+      "future_video_loss": 0.3521442413330078,
+      "grad_norm": 0.4519822299480438,
+      "lr": 4.999938381326931e-05,
+      "expert_lr": 0.0001414196133980465,
+      "step_time": 7.423372030258179
+    },
+    "latest_log_step": [
+      "10/16/2026 00:58:13",
+      "128"
+    ],
+    "recent_window_updates": 100,
+    "recent_seconds_per_step": 7.53,
+    "estimated_epoch_hours": 11.958058333333334,
+    "remaining_hours": 11.690325,
+    "total_steps": 5717,
+    "baseline": {
+      "requested_at": "2026-10-16T00:36:15.369024+08:00",
+      "reason": "user requested optimized fresh one-epoch experiment",
+      "replacement_run": "robotwin_1ep_fast",
+      "last_observed_step": 658,
+      "last_observed_at": "2026-10-16T00:36:08+08:00",
+      "last500_wall_seconds_per_step": 12.272,
+      "epoch_hours_at_baseline": 19.48861777777778,
+      "checkpoint_available": false,
+      "weights_preserved": false,
+      "logs_preserved": true
+    },
+    "recent_errors": []
+  },
+  "npu": {
+    "sample_start": "2026-10-16T00:57:38+08:00",
+    "sample_end": "2026-10-16T00:58:14+08:00",
+    "sample_count": 8,
+    "cards": [
+      {
+        "id": 0,
+        "aicore_mean": 9,
+        "aicore_min": 2,
+        "aicore_max": 37,
+        "hbm_used_gib": 62.044921875,
+        "hbm_total_gib": 64.0,
+        "power_w_mean": 152.675,
+        "temp_c_min": 51,
+        "temp_c_max": 53,
+        "health": [
+          "OK"
+        ]
+      },
+      {
+        "id": 1,
+        "aicore_mean": 7.25,
+        "aicore_min": 1,
+        "aicore_max": 18,
+        "hbm_used_gib": 61.5927734375,
+        "hbm_total_gib": 64.0,
+        "power_w_mean": 157.05,
+        "temp_c_min": 50,
+        "temp_c_max": 51,
+        "health": [
+          "OK"
+        ]
+      },
+      {
+        "id": 2,
+        "aicore_mean": 7,
+        "aicore_min": 1,
+        "aicore_max": 31,
+        "hbm_used_gib": 61.5927734375,
+        "hbm_total_gib": 64.0,
+        "power_w_mean": 154.875,
+        "temp_c_min": 52,
+        "temp_c_max": 54,
+        "health": [
+          "OK"
+        ]
+      },
+      {
+        "id": 3,
+        "aicore_mean": 9.625,
+        "aicore_min": 1,
+        "aicore_max": 32,
+        "hbm_used_gib": 61.5927734375,
+        "hbm_total_gib": 64.0,
+        "power_w_mean": 165.5625,
+        "temp_c_min": 53,
+        "temp_c_max": 57,
+        "health": [
+          "OK"
+        ]
+      },
+      {
+        "id": 4,
+        "aicore_mean": 6.75,
+        "aicore_min": 1,
+        "aicore_max": 32,
+        "hbm_used_gib": 61.59375,
+        "hbm_total_gib": 64.0,
+        "power_w_mean": 158.725,
+        "temp_c_min": 53,
+        "temp_c_max": 56,
+        "health": [
+          "OK"
+        ]
+      },
+      {
+        "id": 5,
+        "aicore_mean": 4.25,
+        "aicore_min": 0,
+        "aicore_max": 10,
+        "hbm_used_gib": 61.5927734375,
+        "hbm_total_gib": 64.0,
+        "power_w_mean": 147.6,
+        "temp_c_min": 51,
+        "temp_c_max": 52,
+        "health": [
+          "OK"
+        ]
+      },
+      {
+        "id": 6,
+        "aicore_mean": 6,
+        "aicore_min": 1,
+        "aicore_max": 14,
+        "hbm_used_gib": 61.5947265625,
+        "hbm_total_gib": 64.0,
+        "power_w_mean": 153.5875,
+        "temp_c_min": 51,
+        "temp_c_max": 53,
+        "health": [
+          "OK"
+        ]
+      },
+      {
+        "id": 7,
+        "aicore_mean": 4.875,
+        "aicore_min": 1,
+        "aicore_max": 10,
+        "hbm_used_gib": 61.5927734375,
+        "hbm_total_gib": 64.0,
+        "power_w_mean": 156.8,
+        "temp_c_min": 53,
+        "temp_c_max": 55,
+        "health": [
+          "OK"
+        ]
+      }
+    ],
+    "overall_aicore_mean": 6.84375
+  },
+  "samples": [
+    {
+      "at": "2026-10-16T00:57:38+08:00",
+      "cards": [
+        {
+          "id": 0,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 141.3,
+          "temp_c": 51,
+          "aicore": 6,
+          "hbm_used_mib": 63534,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 1,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 132.8,
+          "temp_c": 51,
+          "aicore": 1,
+          "hbm_used_mib": 63071,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 2,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 142.1,
+          "temp_c": 53,
+          "aicore": 7,
+          "hbm_used_mib": 63072,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 3,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 133.3,
+          "temp_c": 55,
+          "aicore": 1,
+          "hbm_used_mib": 63071,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 4,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 137.2,
+          "temp_c": 53,
+          "aicore": 1,
+          "hbm_used_mib": 63072,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 5,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 141.6,
+          "temp_c": 51,
+          "aicore": 6,
+          "hbm_used_mib": 63071,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 6,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 135.1,
+          "temp_c": 52,
+          "aicore": 1,
+          "hbm_used_mib": 63073,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 7,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 150.8,
+          "temp_c": 54,
+          "aicore": 7,
+          "hbm_used_mib": 63071,
+          "hbm_total_mib": 65536
+        }
+      ]
+    },
+    {
+      "at": "2026-10-16T00:57:43+08:00",
+      "cards": [
+        {
+          "id": 0,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 191.7,
+          "temp_c": 53,
+          "aicore": 37,
+          "hbm_used_mib": 63534,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 1,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 182.1,
+          "temp_c": 51,
+          "aicore": 11,
+          "hbm_used_mib": 63071,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 2,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 228.4,
+          "temp_c": 54,
+          "aicore": 31,
+          "hbm_used_mib": 63072,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 3,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 257.7,
+          "temp_c": 57,
+          "aicore": 32,
+          "hbm_used_mib": 63071,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 4,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 264.8,
+          "temp_c": 56,
+          "aicore": 32,
+          "hbm_used_mib": 63072,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 5,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 187.1,
+          "temp_c": 52,
+          "aicore": 0,
+          "hbm_used_mib": 63071,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 6,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 193.9,
+          "temp_c": 53,
+          "aicore": 14,
+          "hbm_used_mib": 63073,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 7,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 194.8,
+          "temp_c": 55,
+          "aicore": 8,
+          "hbm_used_mib": 63071,
+          "hbm_total_mib": 65536
+        }
+      ]
+    },
+    {
+      "at": "2026-10-16T00:57:48+08:00",
+      "cards": [
+        {
+          "id": 0,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 135.4,
+          "temp_c": 53,
+          "aicore": 3,
+          "hbm_used_mib": 63534,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 1,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 147.1,
+          "temp_c": 51,
+          "aicore": 7,
+          "hbm_used_mib": 63071,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 2,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 136.5,
+          "temp_c": 53,
+          "aicore": 1,
+          "hbm_used_mib": 63072,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 3,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 148.2,
+          "temp_c": 55,
+          "aicore": 7,
+          "hbm_used_mib": 63071,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 4,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 131.3,
+          "temp_c": 54,
+          "aicore": 1,
+          "hbm_used_mib": 63072,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 5,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 133.9,
+          "temp_c": 51,
+          "aicore": 1,
+          "hbm_used_mib": 63071,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 6,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 146.4,
+          "temp_c": 51,
+          "aicore": 7,
+          "hbm_used_mib": 63073,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 7,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 148.6,
+          "temp_c": 53,
+          "aicore": 4,
+          "hbm_used_mib": 63071,
+          "hbm_total_mib": 65536
+        }
+      ]
+    },
+    {
+      "at": "2026-10-16T00:57:53+08:00",
+      "cards": [
+        {
+          "id": 0,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 145.7,
+          "temp_c": 53,
+          "aicore": 8,
+          "hbm_used_mib": 63534,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 1,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 131.7,
+          "temp_c": 51,
+          "aicore": 1,
+          "hbm_used_mib": 63071,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 2,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 139.9,
+          "temp_c": 54,
+          "aicore": 3,
+          "hbm_used_mib": 63071,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 3,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 155.6,
+          "temp_c": 54,
+          "aicore": 7,
+          "hbm_used_mib": 63070,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 4,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 133.1,
+          "temp_c": 54,
+          "aicore": 1,
+          "hbm_used_mib": 63071,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 5,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 136.1,
+          "temp_c": 52,
+          "aicore": 8,
+          "hbm_used_mib": 63071,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 6,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 156.5,
+          "temp_c": 52,
+          "aicore": 7,
+          "hbm_used_mib": 63073,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 7,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 145.3,
+          "temp_c": 54,
+          "aicore": 1,
+          "hbm_used_mib": 63071,
+          "hbm_total_mib": 65536
+        }
+      ]
+    },
+    {
+      "at": "2026-10-16T00:57:59+08:00",
+      "cards": [
+        {
+          "id": 0,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 158.0,
+          "temp_c": 52,
+          "aicore": 5,
+          "hbm_used_mib": 63534,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 1,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 195.6,
+          "temp_c": 51,
+          "aicore": 18,
+          "hbm_used_mib": 63071,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 2,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 166.3,
+          "temp_c": 54,
+          "aicore": 5,
+          "hbm_used_mib": 63072,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 3,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 170.6,
+          "temp_c": 55,
+          "aicore": 8,
+          "hbm_used_mib": 63071,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 4,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 154.4,
+          "temp_c": 53,
+          "aicore": 5,
+          "hbm_used_mib": 63072,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 5,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 151.3,
+          "temp_c": 51,
+          "aicore": 10,
+          "hbm_used_mib": 63071,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 6,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 162.5,
+          "temp_c": 51,
+          "aicore": 6,
+          "hbm_used_mib": 63073,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 7,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 161.8,
+          "temp_c": 55,
+          "aicore": 10,
+          "hbm_used_mib": 63071,
+          "hbm_total_mib": 65536
+        }
+      ]
+    },
+    {
+      "at": "2026-10-16T00:58:04+08:00",
+      "cards": [
+        {
+          "id": 0,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 133.8,
+          "temp_c": 52,
+          "aicore": 2,
+          "hbm_used_mib": 63534,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 1,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 142.8,
+          "temp_c": 51,
+          "aicore": 7,
+          "hbm_used_mib": 63071,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 2,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 135.0,
+          "temp_c": 52,
+          "aicore": 1,
+          "hbm_used_mib": 63071,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 3,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 142.9,
+          "temp_c": 53,
+          "aicore": 3,
+          "hbm_used_mib": 63070,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 4,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 145.1,
+          "temp_c": 53,
+          "aicore": 7,
+          "hbm_used_mib": 63071,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 5,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 132.3,
+          "temp_c": 51,
+          "aicore": 2,
+          "hbm_used_mib": 63071,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 6,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 132.7,
+          "temp_c": 51,
+          "aicore": 1,
+          "hbm_used_mib": 63072,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 7,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 143.7,
+          "temp_c": 53,
+          "aicore": 1,
+          "hbm_used_mib": 63071,
+          "hbm_total_mib": 65536
+        }
+      ]
+    },
+    {
+      "at": "2026-10-16T00:58:09+08:00",
+      "cards": [
+        {
+          "id": 0,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 143.0,
+          "temp_c": 53,
+          "aicore": 8,
+          "hbm_used_mib": 63533,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 1,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 146.2,
+          "temp_c": 50,
+          "aicore": 3,
+          "hbm_used_mib": 63071,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 2,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 136.7,
+          "temp_c": 52,
+          "aicore": 3,
+          "hbm_used_mib": 63072,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 3,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 148.2,
+          "temp_c": 54,
+          "aicore": 8,
+          "hbm_used_mib": 63071,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 4,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 144.2,
+          "temp_c": 54,
+          "aicore": 1,
+          "hbm_used_mib": 63072,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 5,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 144.9,
+          "temp_c": 52,
+          "aicore": 1,
+          "hbm_used_mib": 63071,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 6,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 133.8,
+          "temp_c": 51,
+          "aicore": 1,
+          "hbm_used_mib": 63073,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 7,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 147.0,
+          "temp_c": 54,
+          "aicore": 2,
+          "hbm_used_mib": 63071,
+          "hbm_total_mib": 65536
+        }
+      ]
+    },
+    {
+      "at": "2026-10-16T00:58:14+08:00",
+      "cards": [
+        {
+          "id": 0,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 172.5,
+          "temp_c": 53,
+          "aicore": 3,
+          "hbm_used_mib": 63534,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 1,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 178.1,
+          "temp_c": 51,
+          "aicore": 10,
+          "hbm_used_mib": 63071,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 2,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 154.1,
+          "temp_c": 53,
+          "aicore": 5,
+          "hbm_used_mib": 63071,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 3,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 168.0,
+          "temp_c": 54,
+          "aicore": 11,
+          "hbm_used_mib": 63071,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 4,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 159.7,
+          "temp_c": 53,
+          "aicore": 6,
+          "hbm_used_mib": 63072,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 5,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 153.6,
+          "temp_c": 51,
+          "aicore": 6,
+          "hbm_used_mib": 63071,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 6,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 167.8,
+          "temp_c": 52,
+          "aicore": 11,
+          "hbm_used_mib": 63073,
+          "hbm_total_mib": 65536
+        },
+        {
+          "id": 7,
+          "model": "910B1",
+          "health": "OK",
+          "power_w": 162.4,
+          "temp_c": 54,
+          "aicore": 6,
+          "hbm_used_mib": 63071,
+          "hbm_total_mib": 65536
+        }
+      ]
+    }
+  ]
+}

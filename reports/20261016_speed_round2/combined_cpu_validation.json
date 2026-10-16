@@ -1,0 +1,28 @@
+{
+  "device": "CPU only, no NPU initialized",
+  "monitor": {
+    "passed": true,
+    "cases": 12,
+    "log": "/home/ma-user/work/lingbot-vla-v2/reports/20261016_speed_round2/combined_monitor_cpu.log"
+  },
+  "attention": {
+    "passed": true,
+    "cases": 8,
+    "error_rule_self_checks": 6
+  },
+  "adamw_postload": {
+    "passed": true,
+    "cases": 4,
+    "builder_guard_cases": 6,
+    "steps": 20,
+    "parameter_count": 24
+  },
+  "adamw_resume": {
+    "passed": true,
+    "cases": 12
+  },
+  "all_source_hashes_unchanged_after_tests": true,
+  "optimizer_matches_adamw_snapshot": true,
+  "changed_python_syntax_valid": true,
+  "passed": true
+}

@@ -1,0 +1,67 @@
+[
+  {
+    "path": "EVALUATION.txt",
+    "size": 8288,
+    "sha256": "b1e12acfeb76a84905b3328dd81cf5c7cd6e2e06ed2915698e81e1c0ef5c0d40"
+  },
+  {
+    "path": "inference_assets/Qwen3-VL-4B-Instruct/chat_template.json",
+    "size": 5502,
+    "sha256": "6f8a6a55027e3da5160105556cda5dd69f6423f1c32645f6730d32de7773d0c4"
+  },
+  {
+    "path": "inference_assets/Qwen3-VL-4B-Instruct/config.json",
+    "size": 1505,
+    "sha256": "edac7703329133edfc53e46ac0081835144c99d7eebf28b71c732694d435224d"
+  },
+  {
+    "path": "inference_assets/Qwen3-VL-4B-Instruct/merges.txt",
+    "size": 1671839,
+    "sha256": "599bab54075088774b1733fde865d5bd747cbcc7a547c5bc12610e874e26f5e3"
+  },
+  {
+    "path": "inference_assets/Qwen3-VL-4B-Instruct/preprocessor_config.json",
+    "size": 390,
+    "sha256": "27225450ac9c6529872ee1924fcb0962ff5634834f817040f444118116f4e516"
+  },
+  {
+    "path": "inference_assets/Qwen3-VL-4B-Instruct/tokenizer.json",
+    "size": 7032403,
+    "sha256": "a5d85b6dcc535e6b93115a9ef287e6132fdbf30270da6218194ba742261173c7"
+  },
+  {
+    "path": "inference_assets/Qwen3-VL-4B-Instruct/tokenizer_config.json",
+    "size": 10868,
+    "sha256": "c2da771801886ad9ae98181793ffd3dfb7f1af30f6f7c6a4e15d7dbba52e2399"
+  },
+  {
+    "path": "inference_assets/Qwen3-VL-4B-Instruct/video_preprocessor_config.json",
+    "size": 385,
+    "sha256": "7768af27c1fafa9cc9011c1dc20067e03f8915e03b63504550e11d5066986d13"
+  },
+  {
+    "path": "inference_assets/Qwen3-VL-4B-Instruct/vocab.json",
+    "size": 2776833,
+    "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+  },
+  {
+    "path": "inference_assets/assets/norm_stats/robotwin.json",
+    "size": 5460,
+    "sha256": "488ec6569c30dd69419358241efdb2e6c3488117768e7028a1e891be83e10db8"
+  },
+  {
+    "path": "inference_assets/configs/robot_configs/robotwin.yaml",
+    "size": 1159,
+    "sha256": "2c2a26509fc9662a8ada64adaa7fa959627dd6dadc6b48b680c4285da2d8ffd8"
+  },
+  {
+    "path": "inference_assets/lingbotvla_cli.yaml",
+    "size": 7105,
+    "sha256": "9fe398e7365e75da9ea259d3e3fe6b7e55d80086ea8625173d93627b1ffaccb2"
+  },
+  {
+    "path": "CHECKSUMS.sha256",
+    "size": 2934,
+    "sha256": "20c2c8623e635000ec09f9d03e96917ffdde7ec57beb3c63bfc000e437486b70"
+  }
+]

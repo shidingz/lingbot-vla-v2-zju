@@ -1,0 +1,79 @@
+{
+  "comparison": "Steps 13–60, 48 updates, same 8 cards and global batch 96; faster baseline repeat used for conservative comparison.",
+  "results": [
+    {
+      "case": "gmm_baseline_v2",
+      "wall_s": 3.6458333333333335,
+      "logged_s": 3.622587814927101,
+      "samples_s": 26.33142857142857,
+      "peak_allocated_rank0_gib": 53.31,
+      "time_reduction_vs_repeat_pct": -2.941176470588247,
+      "eligible": true,
+      "exit": 0
+    },
+    {
+      "case": "baseline_repeat",
+      "wall_s": 3.5416666666666665,
+      "logged_s": 3.5303621838490167,
+      "samples_s": 27.105882352941176,
+      "peak_allocated_rank0_gib": 53.31,
+      "time_reduction_vs_repeat_pct": 0.0,
+      "eligible": true,
+      "exit": 0
+    },
+    {
+      "case": "monitor",
+      "wall_s": 3.4791666666666665,
+      "logged_s": 3.4554521590471268,
+      "samples_s": 27.592814371257486,
+      "peak_allocated_rank0_gib": 53.31,
+      "time_reduction_vs_repeat_pct": 1.764705882352946,
+      "eligible": true,
+      "exit": 0
+    },
+    {
+      "case": "attention",
+      "wall_s": 3.5,
+      "logged_s": 3.4955742955207825,
+      "samples_s": 27.428571428571427,
+      "peak_allocated_rank0_gib": 46.68,
+      "time_reduction_vs_repeat_pct": 1.17647058823529,
+      "eligible": true,
+      "exit": 0
+    },
+    {
+      "case": "adamw_foreach",
+      "wall_s": 3.1041666666666665,
+      "logged_s": 3.0763965845108032,
+      "samples_s": 30.926174496644297,
+      "peak_allocated_rank0_gib": 53.31,
+      "time_reduction_vs_repeat_pct": 12.352941176470589,
+      "eligible": true,
+      "exit": 0
+    },
+    {
+      "case": "combined",
+      "wall_s": 3.0625,
+      "logged_s": 3.0509207298358283,
+      "samples_s": 31.346938775510203,
+      "peak_allocated_rank0_gib": 46.68,
+      "time_reduction_vs_repeat_pct": 13.529411764705879,
+      "eligible": true,
+      "exit": 0
+    },
+    {
+      "case": "combined_no_checkpoint",
+      "wall_s": 2.6041666666666665,
+      "logged_s": 2.596568693717321,
+      "samples_s": 36.864,
+      "peak_allocated_rank0_gib": 50.61,
+      "time_reduction_vs_repeat_pct": 26.470588235294123,
+      "eligible": true,
+      "exit": 0
+    }
+  ],
+  "baseline_repeat_speed_drift_pct": 2.857142857142869,
+  "throughput_gain_vs_repeat_pct": 36.00000000000001,
+  "short_run_only": true,
+  "full_training_started": false
+}

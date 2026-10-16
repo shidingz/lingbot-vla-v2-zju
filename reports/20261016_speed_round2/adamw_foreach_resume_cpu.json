@@ -1,0 +1,105 @@
+{
+  "device": "cpu",
+  "world_size": 1,
+  "source": "reports/20261016_speed_round2/adamw_foreach_candidate.py",
+  "checks": [
+    {
+      "kind": "local",
+      "checkpoint_foreach": false,
+      "runtime_flag": true,
+      "route": "inner_direct_dcp_path",
+      "loaded_foreach": true,
+      "hyperparameters_and_moments_exact": true
+    },
+    {
+      "kind": "local",
+      "checkpoint_foreach": false,
+      "runtime_flag": true,
+      "route": "combined",
+      "loaded_foreach": true,
+      "hyperparameters_and_moments_exact": true
+    },
+    {
+      "kind": "local",
+      "checkpoint_foreach": true,
+      "runtime_flag": false,
+      "route": "inner_direct_dcp_path",
+      "loaded_foreach": false,
+      "hyperparameters_and_moments_exact": true
+    },
+    {
+      "kind": "local",
+      "checkpoint_foreach": true,
+      "runtime_flag": false,
+      "route": "combined",
+      "loaded_foreach": false,
+      "hyperparameters_and_moments_exact": true
+    },
+    {
+      "kind": "dtensor",
+      "checkpoint_foreach": false,
+      "runtime_flag": true,
+      "route": "inner_direct_dcp_path",
+      "loaded_foreach": true,
+      "hyperparameters_and_moments_exact": true
+    },
+    {
+      "kind": "dtensor",
+      "checkpoint_foreach": false,
+      "runtime_flag": true,
+      "route": "combined",
+      "loaded_foreach": true,
+      "hyperparameters_and_moments_exact": true
+    },
+    {
+      "kind": "dtensor",
+      "checkpoint_foreach": true,
+      "runtime_flag": false,
+      "route": "inner_direct_dcp_path",
+      "loaded_foreach": false,
+      "hyperparameters_and_moments_exact": true
+    },
+    {
+      "kind": "dtensor",
+      "checkpoint_foreach": true,
+      "runtime_flag": false,
+      "route": "combined",
+      "loaded_foreach": false,
+      "hyperparameters_and_moments_exact": true
+    },
+    {
+      "kind": "hybrid",
+      "checkpoint_foreach": false,
+      "runtime_flag": true,
+      "route": "inner_direct_dcp_path",
+      "loaded_foreach": false,
+      "hyperparameters_and_moments_exact": true
+    },
+    {
+      "kind": "hybrid",
+      "checkpoint_foreach": false,
+      "runtime_flag": true,
+      "route": "combined",
+      "loaded_foreach": false,
+      "hyperparameters_and_moments_exact": true
+    },
+    {
+      "kind": "hybrid",
+      "checkpoint_foreach": true,
+      "runtime_flag": false,
+      "route": "inner_direct_dcp_path",
+      "loaded_foreach": false,
+      "hyperparameters_and_moments_exact": true
+    },
+    {
+      "kind": "hybrid",
+      "checkpoint_foreach": true,
+      "runtime_flag": false,
+      "route": "combined",
+      "loaded_foreach": false,
+      "hyperparameters_and_moments_exact": true
+    }
+  ],
+  "passed": true,
+  "scope": "Only foreach restored from captured runtime policy; LR/betas/decay/eps/state preserved."
+}

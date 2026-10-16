@@ -1,0 +1,32 @@
+{
+  "checked_at": "2026-10-16T00:47:35.234211+08:00",
+  "cutoff": "2026-10-16T00:47:32+08:00",
+  "step": 43,
+  "epoch": 1,
+  "epoch_steps": 5717,
+  "training_continues": true,
+  "session": "lingbot_1ep",
+  "new_measurement_step_range": [
+    2,
+    43
+  ],
+  "wall_seconds_per_step": 7.5,
+  "median_step_time_seconds": 7.45321261882782,
+  "max_postfirst_step_time_seconds": 7.956725120544434,
+  "previous_last500_wall_seconds_per_step": 12.272,
+  "observed_throughput_ratio": 1.6362666666666668,
+  "observed_time_reduction_fraction": 0.3888526727509779,
+  "estimated_epoch_compute_hours": 11.910416666666666,
+  "estimated_remaining_compute_hours": 11.820833333333333,
+  "estimated_compute_finish_at": "2026-10-16T12:36:47+08:00",
+  "estimate_excludes": [
+    "checkpoint export",
+    "OBS upload",
+    "interruptions",
+    "evaluation"
+  ],
+  "finite_loss_and_gradients": true,
+  "fatal_log_match": false,
+  "current_loss": 0.357177734375,
+  "comparison_limits": "short post-initialization window; host background load also changed; not a controlled attribution of all improvement to decoder changes"
+}

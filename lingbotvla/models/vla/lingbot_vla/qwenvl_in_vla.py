@@ -29,9 +29,16 @@ from transformers.processing_utils import Unpack
 import torch.distributed._tensor as dt
 
 if is_flash_attn_available():
-    from flash_attn.layers.rotary import apply_rotary_emb
-    from flash_attn.flash_attn_interface import flash_attn_varlen_func
-    from transformers.modeling_flash_attention_utils import _flash_attention_forward
+    try:
+        from flash_attn.layers.rotary import apply_rotary_emb
+        from flash_attn.flash_attn_interface import flash_attn_varlen_func
+        from transformers.modeling_flash_attention_utils import _flash_attention_forward
+    except ImportError:
+        # transformers>=4.57 reports is_flash_attn_available()==True on torch_npu
+        # environments, but the CUDA flash_attn python package is not installed.
+        apply_rotary_emb = None
+        flash_attn_varlen_func = None
+        _flash_attention_forward = None
 import transformers.models.qwen2_5_vl.modeling_qwen2_5_vl as hf_qwen25vl 
 from transformers.models.qwen2_5_vl.modeling_qwen2_5_vl import (
     Qwen2RMSNorm,

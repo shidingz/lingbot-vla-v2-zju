@@ -1,0 +1,56 @@
+# Python/build caches (training logs and experiment evidence are intentionally kept).
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+
+# Local editor/agent settings and credentials.
+.claude/
+.codex/
+.agents/
+.vscode/
+.idea/
+.env
+.env.*
+!.env.example
+*.local.env
+*.pem
+*.key
+.ssh/
+.aws/
+.obsutilconfig
+
+# Ascend-generated compiler caches; regenerate on the target device.
+kernel_meta/
+fusion_result.json
+*.om
+
+# Model weights, datasets, and checkpoints belong in external storage.
+*.safetensors
+*.pt
+*.pth
+*.ckpt
+checkpoints/
+modelscope/
+datasets/
+wandb/
+
+# Historical model-upload payloads duplicate upstream tokenizer/model assets.
+# Keep the upload summary/manifests; leave the payload itself on the local machine.
+/reports/20261016_modelscope_upload/supplement/
+
+# Large native profiler captures are indexed, not copied into Git history.
+/export_only_prof_dir/
+PROF_*/
+ASCEND_PROFILER_OUTPUT/
+trace_view.json
+
+# OS/editor scratch files.
+.DS_Store
+*.swp
+*.swo
+*~

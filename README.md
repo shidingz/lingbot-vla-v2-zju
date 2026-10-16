@@ -8,6 +8,12 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache--2.0-green"></a>
 </p>
 
+## 昇腾 NPU 训练分支
+
+本仓库在上游 LingBot-VLA 2.0 基础上整理了 **8 × 昇腾 910B1** 的训练兼容与提速改动。当前主入口是 [`train_robotwin_npu.sh`](train_robotwin_npu.sh)，默认启用原生 MoE GMM、FP32 接口融合注意力、监控计数合批、原 AdamW 分支的批量更新，并关闭动作层重计算。受控短跑约 **3.54 → 2.60 秒/步**；已完成 160 步主入口复测，长期质量及新方案完整存档恢复仍待验证。
+
+请先读 **[中文 NPU 训练与提速指南](docs/NPU_TRAINING_GUIDE.md)**：环境版本、模型/数据路径配置、5 epoch 命令、保存恢复、实验结果和下一步优化。模型权重、数据集及访问凭据需自行准备；下方保留上游说明，其中 CUDA 安装流程不等同于本分支的 NPU 环境。
+
 ## Overview
 
 **LingBot-VLA 2.0** is a practical Vision-Language-Action foundation model designed to move from large-scale pre-training toward reliable real-world robot applications.

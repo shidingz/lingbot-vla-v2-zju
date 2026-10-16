@@ -1,0 +1,48 @@
+{
+  "cases": {
+    "torch": {
+      "root": "/cache/lingbot/profiling/moe_optimization_20261016/ab/torch",
+      "steps": 40,
+      "steady_range_inclusive": [
+        13,
+        29
+      ],
+      "launcher_exit_code": 2,
+      "post_training_launcher_note": "Source script was edited while Bash was blocked in torchrun; after training completed, the shell resumed at an invalid byte offset and reported unexpected EOF.",
+      "steady_step_time_mean_s": 7.214398327995749,
+      "steady_step_time_median_s": 7.197879076004028,
+      "steady_step_time_p95_s": 7.308955907821655,
+      "steady_wall_seconds_per_update": 7.235294117647059,
+      "global_samples_per_second": 13.268292682926829,
+      "peak_allocated_gib": 53.31,
+      "finite_loss_and_gradients": true,
+      "first_loss": 0.355224609375,
+      "last_loss": 0.376953125
+    },
+    "gmm": {
+      "root": "/cache/lingbot/profiling/moe_optimization_20261016/ab/gmm",
+      "steps": 40,
+      "steady_range_inclusive": [
+        13,
+        29
+      ],
+      "launcher_exit_code": 0,
+      "post_training_launcher_note": null,
+      "steady_step_time_mean_s": 3.4515524471507355,
+      "steady_step_time_median_s": 3.4564929008483887,
+      "steady_step_time_p95_s": 3.5303648471832276,
+      "steady_wall_seconds_per_update": 3.4705882352941178,
+      "global_samples_per_second": 27.661016949152543,
+      "peak_allocated_gib": 53.31,
+      "finite_loss_and_gradients": true,
+      "first_loss": 0.35546875,
+      "last_loss": 0.376708984375
+    }
+  },
+  "speedup_wall": 2.084745762711864,
+  "step_time_reduction_pct": 52.032520325203244,
+  "max_loss_abs_diff": 0.001220703125,
+  "max_grad_norm_abs_diff": 0.03573983907699585
+}
+rank0 steps 2 host_step_s 6.775453025
+ANALYSIS_FINISHED

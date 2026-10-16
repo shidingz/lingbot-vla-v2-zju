@@ -57,7 +57,12 @@ try:
     import triton
     import triton.language as tl
 
-    _HAS_TRITON = True
+    from ..utils.import_utils import is_torch_npu_available
+
+    # On Ascend NPU, triton-ascend imports fine but bishengir-compile fails to
+    # lower these kernels ([ConvertLinalgRToBinary] MLIR errors), so force the
+    # vectorized torch fallbacks there.
+    _HAS_TRITON = not is_torch_npu_available()
 
     # ── Kernel 1: per-segment topK counting (for sequence_wise_balance_loss) ──
     @triton.jit

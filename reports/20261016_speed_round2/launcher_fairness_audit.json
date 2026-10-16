@@ -1,0 +1,48 @@
+{
+  "audited_at": "2026-10-16T17:02:52.093152+08:00",
+  "cases": [
+    "gmm_baseline_v2",
+    "monitor"
+  ],
+  "fairness": {
+    "effective_configs_equal_except_destinations": true,
+    "non_destination_config_differences": [],
+    "lr_horizons_match": true,
+    "dataset_list_hashes_match": true,
+    "data_source_metadata_equal_except_repository": true,
+    "source_manifest_differences": [
+      {
+        "file": "lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py",
+        "baseline": "9b3c9a2ad6823f9d58da51b732477785a1e4db0d29db80e030e094c7b605e40c",
+        "candidate": "398916a884ff46081ffc52fd0ac7ab14f57e9ec2d9a2adca5c59180864525db7",
+        "runtime_metadata": false
+      },
+      {
+        "file": "tests/test_moe_monitor_batch.py",
+        "baseline": null,
+        "candidate": "c69b722862a09a5a9a8708a2d6937d97507e314393e128c5e1c7c676b0d92fa9",
+        "runtime_metadata": false
+      }
+    ],
+    "interpretation": "Review settings and source differences before attributing speed changes to a single feature. Completion and finite metrics are prerequisite checks; numerical equivalence has no automatic tolerance-based verdict here."
+  },
+  "launcher_sha256": "676124f253fb3f2b792a78f3d24f75b9316a9492d9c2b87eaf16735a4814aaed",
+  "launch_audit": [
+    "Fresh experiment directory required; no accidental mixing of runs.",
+    "Source cwd and PYTHONPATH point to case snapshot; only selected source difference plus its unit test observed.",
+    "8 visible devices, batch12x8, accumulation1, learning rate and precision flags set explicitly.",
+    "Profile wrapper forces no resume/checkpoints/uploads and trailing profile_ranks empty is reflected in both effective configurations.",
+    "External data and model references are identical; hashes and per-batch fingerprints absent.",
+    "Selected manifest setting names differ (baseline joint_attention versus later attention; baseline monitor original versus later 1) but runtime source/config review resolves the intent.",
+    "Snapshot hash list includes volatile kernel_meta/buildPidInfo.json, which changes during compilation; do not confuse it with edited training source.",
+    "No library/package version inventory or complete effective environment allowlist is captured; avoid claiming fully reproducible bitwise execution."
+  ],
+  "analysis_updates": [
+    "Added source manifest differences and current snapshot integrity checks.",
+    "Added effective config and dataset metadata equality flags.",
+    "Added exact equality counts for paired scalar loss/grad metrics.",
+    "Added explicit descriptive-only numerical verdict; finite does not imply equivalent convergence."
+  ],
+  "validation": "passed: paired equality counts, current config/data/horizon parity, intended source-only difference; original timing-window tests remain unchanged.",
+  "no_npu_operations": true
+}

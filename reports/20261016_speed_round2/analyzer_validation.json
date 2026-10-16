@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "checks": [
+    "percentile interpolation",
+    "exit-zero and min60 eligibility",
+    "failed and pending cases excluded even with60 rows",
+    "13-60 wall interval uses step12 to60 and divides by48",
+    "2x logged and wall speedup",
+    "paired loss difference",
+    "resource last_step boundary selection includes12/59 excludes11/60",
+    "peak allocated memory parse"
+  ],
+  "no_npu_operations": true
+}

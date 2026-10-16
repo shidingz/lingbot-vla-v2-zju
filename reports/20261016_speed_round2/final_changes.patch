@@ -1,0 +1,1025 @@
+--- a/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py
++++ b/lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py
+@@ -1,4 +1,5 @@
+ import einops
++import os
+ import torch
+ from torch import Tensor, nn
+ import torch.nn.functional as F
+@@ -414,6 +415,17 @@
+         return outputs_embeds, past_key_values, router_logits_list
+ 
+     def get_attention_interface(self):
++        # Experimental opt-in; all existing configs retain their current path.
++        override = os.environ.get("LINGBOT_JOINT_ATTN_BACKEND", "").strip().lower()
++        if override:
++            if self.config.attention_implementation != "eager":
++                raise ValueError("LINGBOT_JOINT_ATTN_BACKEND requires configured eager attention")
++            if override == "sdpa_fp32":
++                from lingbotvla.ops.joint_attention import our_sdpa_attention_forward
++                print("=====Using SDPA joint attention (FP32, native GQA)=====")
++                return our_sdpa_attention_forward
++            if override != "eager":
++                raise ValueError(f"Invalid LINGBOT_JOINT_ATTN_BACKEND: {override}")
+         if self.config.attention_implementation == "flex":
+             print("=====Using Flex Attn=====")
+             return flex_attention_forward
+@@ -1116,6 +1128,23 @@
+             tok_bias = []  # per-layer max(|e_score_correction_bias|) (loss-free); >1 -> bias dominates sigmoid score
+             any_dead = None  # OR-accumulated bool: any token-MoE layer with a 0-count expert
+             with torch.no_grad():
++                # Preserve every monitoring value, but fetch all buffer-ready
++                # flags together. A Python condition on a device scalar waits
++                # for that device; doing it per layer serializes host dispatch.
++                # Keep the original path available for controlled A/B testing.
++                batch_monitor_counts = os.getenv("LINGBOT_MOE_MONITOR_BATCH_COUNTS", "0") == "1"
++                cached_counts, nonempty_counts = {}, {}
++                if batch_monitor_counts:
++                    for i in range(len(router_logits_list)):
++                        layer_id = all_moe_indices[i] if i < len(all_moe_indices) else i
++                        moe_block = self.qwenvl_with_expert.qwen_expert.model.layers[layer_id].mlp
++                        if hasattr(moe_block, "last_tokens_per_expert"):
++                            cached_counts[i] = moe_block.last_tokens_per_expert.clone()
++                    if cached_counts:
++                        # One device-to-host transfer, including the all-zero
++                        # startup/resume case; no per-layer scalar reads.
++                        ready = torch.stack([counts.sum().ne(0) for counts in cached_counts.values()]).cpu().tolist()
++                        nonempty_counts = dict(zip(cached_counts, ready))
+                 for i, logits in enumerate(router_logits_list):
+                     layer_id = all_moe_indices[i] if i < len(all_moe_indices) else i
+                     num_experts = logits.shape[-1]
+@@ -1123,8 +1152,9 @@
+                     moe_block = self.qwenvl_with_expert.qwen_expert.model.layers[layer_id].mlp
+                     if hasattr(moe_block, "last_tokens_per_expert"):
+                         # Global (all-reduced), biased, true top-k load from the load-balance hook.
+-                        counts = moe_block.last_tokens_per_expert.clone()
+-                        if counts.sum() == 0:
++                        counts = cached_counts[i] if batch_monitor_counts else moe_block.last_tokens_per_expert.clone()
++                        is_empty = not nonempty_counts[i] if batch_monitor_counts else counts.sum() == 0
++                        if is_empty:
+                             # Buffer not yet populated by the load-balance hook (first step
+                             # after run start / resume) -> skip this layer to avoid a spurious
+                             # has_dead_expert / min_load_ratio spike on the very first viz.
+--- /dev/null
++++ b/lingbotvla/ops/joint_attention.py
+@@ -0,0 +1,39 @@
++"""Opt-in joint SDPA attention with legacy empty-row behavior."""
++
++import torch
++import torch.nn.functional as F
++
++
++def our_sdpa_attention_forward(query_states, key_states, value_states, attention_mask):
++    """SDPA with native GQA and the existing eager mask/empty-row semantics.
++
++    Q/K/V: [B, L, H, D], bool mask: [B, Lq, Lk], True means visible.
++    The caller keeps its FP32 Q/K/V + RoPE for the first controlled experiment.
++    No device scalar is read back by Python.
++    """
++    if attention_mask.dtype != torch.bool or attention_mask.ndim != 3:
++        raise ValueError("Joint attention requires bool [B, Lq, Lk] allowed mask")
++    batch, length, heads, head_dim = query_states.shape
++    kv_heads = key_states.shape[2]
++    if heads % kv_heads or value_states.shape[2] != kv_heads:
++        raise ValueError("Query heads must be a multiple of matching K/V heads")
++
++    # Old eager replaces every forbidden score with the same finite constant.
++    # An entirely forbidden query therefore receives the mean of V, with zero
++    # Q/K gradients. First make those SDPA rows safe, then restore that result.
++    has_visible_key = attention_mask.any(dim=-1, keepdim=True)
++    safe_mask = (attention_mask | ~has_visible_key).unsqueeze(1)
++    result = F.scaled_dot_product_attention(
++        query_states.transpose(1, 2),
++        key_states.transpose(1, 2),
++        value_states.transpose(1, 2),
++        attn_mask=safe_mask,
++        dropout_p=0.0,
++        is_causal=False,
++        enable_gqa=heads != kv_heads,
++    ).transpose(1, 2)
++    empty_row_result = value_states.mean(dim=1, keepdim=True)
++    empty_row_result = empty_row_result.repeat_interleave(heads // kv_heads, dim=2)
++    result = torch.where(has_visible_key.unsqueeze(-1), result, empty_row_result)
++    return result.reshape(batch, length, heads * head_dim)
++
+--- a/lingbotvla/optim/optimizer.py
++++ b/lingbotvla/optim/optimizer.py
+@@ -16,12 +16,15 @@
+ # limitations under the License.
+ 
+ 
++import logging
++import os
+ import re
+ from typing import Any, Dict, List, Optional, Sequence, Tuple
+ 
+ import torch
+ import torch.nn as nn
+ from torch.optim import AdamW
++from torch.distributed.tensor import DTensor
+ from torch.optim.optimizer import Optimizer
+ 
+ from ..utils.import_utils import is_torch_npu_available
+@@ -315,7 +318,23 @@
+ 
+     inner_opts: List[Optimizer] = [muon_opt]
+     if adamw_groups:
+-        foreach = not is_torch_npu_available()
++        # Capture this process's execution policy. Checkpoints may contain the
++        # opposite foreach value, so apply it both before training and on load.
++        foreach = not is_torch_npu_available() or os.getenv("LINGBOT_ADAMW_FOREACH_NPU", "0") == "1"
++
++        def apply_adamw_foreach_policy(optimizer):
++            for group_index, group in enumerate(optimizer.param_groups):
++                dtensor_count = sum(isinstance(p, DTensor) for p in group["params"])
++                tensor_count = len(group["params"]) - dtensor_count
++                # PyTorch 2.6 foreach cannot dispatch mixed Tensor/DTensor lists.
++                # Do not reorder groups or override any resumed hyperparameter.
++                group["foreach"] = foreach and not (dtensor_count and tensor_count)
++                logging.getLogger(__name__).info(
++                    "AdamW foreach policy group=%d DTensor=%d Tensor=%d foreach=%s%s",
++                    group_index, dtensor_count, tensor_count, group["foreach"],
++                    " (disabled: mixed Tensor/DTensor group)" if dtensor_count and tensor_count else "",
++                )
++
+         adamw_opt = AdamW(
+             adamw_groups,
+             lr=lr,
+@@ -325,6 +344,9 @@
+             fused=False,
+             foreach=foreach,
+         )
++        apply_adamw_foreach_policy(adamw_opt)
++        # DCP restores inner optimizers directly, bypassing CombinedOptimizer.
++        adamw_opt.register_load_state_dict_post_hook(apply_adamw_foreach_policy)
+         inner_opts.append(adamw_opt)
+ 
+     return CombinedOptimizer(inner_opts)
+--- /dev/null
++++ b/tests/test_moe_monitor_batch.py
+@@ -0,0 +1,175 @@
++"""CPU-only equivalence checks on actual project monitor source.
++
++By default this checks that the environment switch preserves the original
++(disabled) source branch.
++For independent baseline validation, set LINGBOT_MONITOR_BASELINE_SOURCE to the
++unmodified model file in the baseline snapshot. LINGBOT_MONITOR_SOURCE may also
++override the candidate source, useful before installing the patch.
++
++No model imports or accelerators are initialized. The actual sequence-wise loss
++function declarations are loaded from the repository with Triton disabled.
++"""
++import ast
++import copy
++import json
++import os
++from pathlib import Path
++from types import SimpleNamespace
++from typing import List, Optional, Tuple, Union
++from unittest.mock import patch
++
++import pytest
++import torch
++import torch.nn.functional as F
++
++torch.set_num_threads(1)
++HERE = Path(__file__).resolve().parent
++ROOT = next(parent for parent in HERE.parents if (parent / 'lingbotvla/ops/triton_moe_loss.py').is_file())
++ACTUAL_SOURCE = Path(os.environ.get('LINGBOT_MONITOR_SOURCE', str(ROOT / 'lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py')))
++BASELINE_SOURCE = Path(os.environ.get('LINGBOT_MONITOR_BASELINE_SOURCE', str(ACTUAL_SOURCE)))
++namespace = {
++    'torch': torch, 'F': F, 'os': os,
++    'List': List, 'Optional': Optional, 'Tuple': Tuple, 'Union': Union,
++    '_HAS_TRITON': False,
++}
++loss_source = ROOT / 'lingbotvla/ops/triton_moe_loss.py'
++loss_ast = ast.parse(loss_source.read_text())
++loss_functions = [n for n in loss_ast.body if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef))]
++exec(compile(ast.Module(body=loss_functions, type_ignores=[]), str(loss_source), 'exec'), namespace)
++
++
++def load_method(name):
++    source = Path(name)
++    module = ast.parse(source.read_text())
++    method = next(n for n in ast.walk(module) if isinstance(n, ast.FunctionDef) and n.name == '_moe_losses_and_metrics')
++    scope = dict(namespace)
++    exec(compile(ast.Module(body=[method], type_ignores=[]), str(source), 'exec'), scope)
++    return scope['_moe_losses_and_metrics']
++
++
++original = load_method(BASELINE_SOURCE)
++candidate = load_method(ACTUAL_SOURCE)
++
++
++def nested_equal(left, right, label='result'):
++    if torch.is_tensor(left):
++        torch.testing.assert_close(left, right, rtol=0, atol=0, msg=label)
++        assert left.requires_grad == right.requires_grad, label
++        assert left.dtype == right.dtype, label
++    elif isinstance(left, dict):
++        assert list(left) == list(right), f'{label}: changed metric keys/order'
++        for key in left:
++            nested_equal(left[key], right[key], label + '.' + key)
++    elif isinstance(left, (tuple, list)):
++        assert type(left) is type(right) and len(left) == len(right), label
++        for i, (a, b) in enumerate(zip(left, right)):
++            nested_equal(a, b, f'{label}[{i}]')
++    else:
++        assert left == right, label
++
++
++def make_inputs(kind, n=4, aux=True, remap=False):
++    torch.manual_seed(20261016)
++    indices = [2 * i + 1 for i in range(n)] if remap else list(range(n))
++    blocks = [SimpleNamespace() for _ in range((max(indices) + 1) if indices else 0)]
++    logits = [torch.randn(12, 8, requires_grad=True) for _ in range(n)]
++    for i, layer_id in enumerate(indices):
++        block = blocks[layer_id]
++        block.avg_topk_sigmoid_score = torch.rand(1)
++        block.e_score_correction_bias = torch.randn(8)
++        if kind != 'no_buffers' and not (kind == 'mixed_missing' and i % 3 == 0):
++            counts = torch.randint(1, 30, (8,)).float()
++            if kind == 'all_zero' or (kind in ('mixed', 'mixed_missing') and i % 2 == 0):
++                counts.zero_()
++            elif kind == 'dead_expert':
++                counts[0] = 0
++            block.last_tokens_per_expert = counts
++    self = SimpleNamespace(
++        config=SimpleNamespace(
++            token_moe_layers=indices,
++            router_z_loss_coeff=0.003 if aux else 0,
++            sequence_wise_loss_coeff=0.0001 if aux else 0,
++            sequence_wise_mode='per_sequence', router_activation='sigmoid', token_top_k=4,
++        ),
++        qwenvl_with_expert=SimpleNamespace(qwen_expert=SimpleNamespace(model=SimpleNamespace(
++            layers=[SimpleNamespace(mlp=block) for block in blocks]
++        ))),
++    )
++    return self, logits, torch.rand(3, 4)
++
++
++def run_equivalence(kind, n=4, aux=True, remap=False):
++    ref_inputs = make_inputs(kind, n=n, aux=aux, remap=remap)
++    test_inputs = copy.deepcopy(ref_inputs)
++    before = copy.deepcopy(test_inputs[0])
++    with patch.dict(os.environ, {'LINGBOT_MOE_MONITOR_BATCH_COUNTS': '0'}):
++        ref_output = original(*ref_inputs)
++    with patch.dict(os.environ, {'LINGBOT_MOE_MONITOR_BATCH_COUNTS': '1'}):
++        test_output = candidate(*test_inputs)
++    nested_equal(ref_output, test_output)
++    if aux and n:
++        (ref_output[0] + ref_output[1]).backward()
++        (test_output[0] + test_output[1]).backward()
++        for ref_logits, test_logits in zip(ref_inputs[1], test_inputs[1]):
++            torch.testing.assert_close(ref_logits.grad, test_logits.grad, rtol=0, atol=0)
++    for old_layer, new_layer in zip(before.qwenvl_with_expert.qwen_expert.model.layers,
++                                    test_inputs[0].qwenvl_with_expert.qwen_expert.model.layers):
++        nested_equal(vars(old_layer.mlp), vars(new_layer.mlp), label='unchanged buffers')
++    # Counts exported to the caller must remain snapshots after optimizer updates.
++    exported = test_output[2].get('_token_moe_expert_counts', [])
++    frozen = [(i, c.clone()) for i, c in exported]
++    for layer in test_inputs[0].qwenvl_with_expert.qwen_expert.model.layers:
++        if hasattr(layer.mlp, 'last_tokens_per_expert'):
++            layer.mlp.last_tokens_per_expert.fill_(999)
++    nested_equal(exported, frozen, label='snapshot stability')
++    # Disabled switch must retain the baseline path/results.
++    with patch.dict(os.environ, {'LINGBOT_MOE_MONITOR_BATCH_COUNTS': '0'}):
++        disabled = candidate(*copy.deepcopy(ref_inputs))
++    nested_equal(ref_output, disabled, label='disabled path')
++    return {'case': kind, 'layers': n, 'auxiliary_losses': aux, 'remapped_layers': remap,
++            'metric_keys': len(test_output[2]), 'exact_outputs_and_gradients': True}
++
++
++
++@pytest.mark.parametrize('kind,n,aux,remap', [
++    ('populated', 4, True, False),
++    ('all_zero', 4, True, False),
++    ('mixed', 4, True, False),
++    ('mixed_missing', 4, True, False),
++    ('no_buffers', 4, True, False),
++    ('dead_expert', 4, True, False),
++    ('mixed', 36, True, True),
++    ('populated', 36, False, False),
++    ('populated', 0, False, False),
++])
++def test_monitor_outputs_buffers_and_auxiliary_gradients(kind, n, aux, remap):
++    run_equivalence(kind, n=n, aux=aux, remap=remap)
++
++
++@pytest.mark.parametrize('kind,expected_scalar_reads,expected_transfer_shapes', [
++    ('populated', 36, [(36,)]),
++    ('all_zero', 36, [(36,)]),
++    ('no_buffers', None, []),
++])
++def test_monitor_batches_device_reads(kind, expected_scalar_reads, expected_transfer_shapes):
++    inputs = make_inputs(kind, n=36, aux=False)
++    audit = {}
++    real_cpu = torch.Tensor.cpu
++    for name, function, enabled in [('original', original, '0'), ('candidate', candidate, '1')]:
++        cpu_calls = []
++        def tracked_cpu(tensor, *args, **kwargs):
++            cpu_calls.append(tuple(tensor.shape))
++            return real_cpu(tensor, *args, **kwargs)
++        with patch.dict(os.environ, {'LINGBOT_MOE_MONITOR_BATCH_COUNTS': enabled}), patch.object(torch.Tensor, 'cpu', tracked_cpu):
++            with torch.profiler.profile(activities=[torch.profiler.ProfilerActivity.CPU]) as prof:
++                function(*copy.deepcopy(inputs))
++        scalar_reads = sum(event.count for event in prof.key_averages() if event.key == 'aten::_local_scalar_dense')
++        audit[name] = {'local_scalar_dense_calls': scalar_reads, 'explicit_cpu_transfer_shapes': cpu_calls}
++    if expected_scalar_reads is None:
++        # one_hot fallback may internally read scalars, depending on PyTorch.
++        # No load buffers exist here, so this patch must preserve that path.
++        assert audit['candidate']['local_scalar_dense_calls'] == audit['original']['local_scalar_dense_calls'], audit
++    else:
++        assert audit['original']['local_scalar_dense_calls'] == expected_scalar_reads, audit
++        assert audit['candidate']['local_scalar_dense_calls'] == 0, audit
++    assert audit['candidate']['explicit_cpu_transfer_shapes'] == expected_transfer_shapes, audit
+--- /dev/null
++++ b/tools/check_adamw_foreach.py
+@@ -0,0 +1,246 @@
++"""Compare existing AdamW foreach=False/True on CPU or NPU, local or DTensor.
++
++NPU is touched only when --device npu is explicitly provided. NPU mode enables
++transfer_to_npu, matching the project. Run via torchrun for multi-rank DTensor;
++plain python automatically creates a one-rank process group for DTensor cases.
++"""
++import argparse
++import ast
++import copy
++import json
++import os
++import re
++import logging
++from types import SimpleNamespace
++from typing import Any, Dict, List, Optional, Sequence, Tuple
++from pathlib import Path
++import tempfile
++import time
++from unittest.mock import patch
++
++import torch
++import torch.distributed as dist
++from torch.distributed.device_mesh import init_device_mesh
++from torch.distributed.tensor import DTensor, Shard, Replicate, distribute_tensor
++
++
++def local(t):
++    return t.to_local() if isinstance(t, DTensor) else t
++
++
++def check_switch(source):
++    tree = ast.parse(Path(source).read_text())
++    fn = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == 'build_muon_optimizer')
++    expr = next(n.value for n in ast.walk(fn) if isinstance(n, ast.Assign) and any(isinstance(t, ast.Name) and t.id == 'foreach' for t in n.targets))
++    code = compile(ast.Expression(expr), str(source), 'eval')
++    for npu in (False, True):
++        for enabled in ('0', '1'):
++            with patch.dict(os.environ, {'LINGBOT_ADAMW_FOREACH_NPU': enabled}):
++                value = eval(code, {'os': os, 'is_torch_npu_available': lambda: npu})
++            assert value == ((not npu) or enabled == '1'), (npu, enabled, value)
++    return 'actual builder expression passed CPU/NPU x off/on truth table'
++
++
++def check_builder_guard(source, device, mesh):
++    tree = ast.parse(Path(source).read_text())
++    selected = [n for n in tree.body if isinstance(n, (ast.ClassDef, ast.FunctionDef))
++                and n.name in {'CombinedOptimizer', '_split_param_groups_by_scaled_lr', 'build_muon_optimizer'}]
++    class DummyMuon:
++        def __init__(self, groups, **kwargs):
++            self.param_groups = groups
++            self.kwargs = kwargs
++    scope = dict(torch=torch, nn=torch.nn, os=os, re=re, logging=logging,
++                 DTensor=DTensor, AdamW=torch.optim.AdamW, Optimizer=torch.optim.Optimizer,
++                 DistributedMuon=DummyMuon, is_torch_npu_available=lambda: True,
++                 Any=Any, Dict=Dict, List=List, Optional=Optional, Sequence=Sequence, Tuple=Tuple)
++    exec(compile(ast.Module(body=selected, type_ignores=[]), str(source), 'exec'), scope)
++    local_param = torch.nn.Parameter(torch.ones(8, device=device))
++    cases = [('local', [local_param], True)]
++    if mesh is not None:
++        dist_param = torch.nn.Parameter(distribute_tensor(torch.ones(8, device=device), mesh, [Shard(0)]))
++        cases += [('dtensor', [dist_param], True), ('hybrid', [local_param, dist_param], False)]
++    records = []
++    for name, params, enabled_expected in cases:
++        matrix = torch.nn.Parameter(torch.ones(2, 2))
++        scope['split_muon_adamw_params'] = lambda *a, **kw: ([matrix], params, ['matrix.weight'], [f'norm{i}.weight' for i in range(len(params))])
++        for enabled in ('0', '1'):
++            with patch.dict(os.environ, {'LINGBOT_ADAMW_FOREACH_NPU': enabled}):
++                opt = scope['build_muon_optimizer'](None, SimpleNamespace(), lr=5e-5, weight_decay=0.001)
++            adamw = opt.optimizers[1]
++            expected = enabled_expected if enabled == '1' else False
++            assert adamw.param_groups[0]['foreach'] is expected
++            assert all(x is y for x, y in zip(adamw.param_groups[0]['params'], params))
++            assert adamw.param_groups[0]['fused'] is False
++            assert adamw.param_groups[0]['weight_decay'] == 0.001
++            assert adamw.param_groups[0]['lr'] == 5e-5
++            records.append({'group_kind': name, 'switch': enabled, 'foreach': expected})
++    return records
++
++
++def grad_for(shape, step, index):
++    gen = torch.Generator(device='cpu').manual_seed(20261016 + step * 1009 + index * 37)
++    if step % 6 == 0:
++        return torch.zeros(shape)
++    return torch.randn(shape, generator=gen) * (0.3 if step % 3 else 0.001)
++
++
++def run_case(args, device, mesh, layout, mixed):
++    shapes = [(32,), (17,), (8, 16), (16, 9), (1,), (64,)]
++    specs = [(shapes[i % len(shapes)], torch.bfloat16 if mixed and i % 2 else torch.float32)
++             for i in range(args.parameter_count)]
++    def place(t, index):
++        t = t.to(device)
++        if layout == 'dtensor' or (layout == 'hybrid' and index % 3 != 0):
++            # Alternate replicated/sharded tensors, including uneven and empty
++            # shards at world_size=8. This checks placement-aware list handling.
++            placement = Replicate() if index % 4 == 0 else Shard(0)
++            t = distribute_tensor(t, mesh, [placement])
++        return t
++    refs, candidates = [], []
++    for i, (shape, dtype) in enumerate(specs):
++        gen = torch.Generator(device='cpu').manual_seed(10000 + i)
++        tensor = torch.randn(shape, generator=gen).to(dtype)
++        refs.append(torch.nn.Parameter(place(tensor.clone(), i)))
++        candidates.append(torch.nn.Parameter(place(tensor.clone(), i)))
++    def make_opt(params, foreach):
++        # Distinct groups cover independent LR/decay/betas and skipped gradients.
++        split = max(1, len(params) // 2)
++        groups = [dict(params=params[:split], lr=5e-4, weight_decay=0.001),
++                  dict(params=params[split:], lr=1.4e-3, weight_decay=0.03)]
++        return torch.optim.AdamW(groups, lr=5e-4, betas=(0.9, 0.95), eps=1e-8,
++                                 foreach=foreach, fused=False, capturable=False)
++    ref_opt = make_opt(refs, False)
++    test_opt = make_opt(candidates, True)
++    maxima = {'float32': {}, 'bfloat16': {}}
++    failures = []
++    checked = 0
++    checkpoint_roundtrip = False
++    for step in range(1, args.steps + 1):
++        for i, ((shape, dtype), a, b) in enumerate(zip(specs, refs, candidates)):
++            # Keep some parameters absent initially, and skip other steps later.
++            skip = (i % 7 == 0 and step <= 2) or (i % 5 == 0 and step % 4 == 0)
++            grad = None if skip else place(grad_for(shape, step, i).to(dtype), i)
++            a.grad = None if grad is None else grad.clone()
++            b.grad = None if grad is None else grad.clone()
++        ref_opt.step()
++        test_opt.step()
++        if device.type == 'npu':
++            torch.npu.synchronize()
++        for i, (a, b) in enumerate(zip(refs, candidates)):
++            state_a, state_b = ref_opt.state[a], test_opt.state[b]
++            if set(state_a) != set(state_b):
++                raise AssertionError(f'state keys differ at step={step}, param={i}')
++            pairs = [('parameter', a, b)] + [(key, state_a[key], state_b[key]) for key in state_a]
++            for field, x, y in pairs:
++                # Preserve DTensor state layout and scalar-step CPU residency.
++                assert type(x) == type(y), (field, type(x), type(y))
++                if isinstance(x, DTensor):
++                    assert x.placements == y.placements and x.shape == y.shape
++                assert x.dtype == y.dtype and x.device == y.device
++                xx, yy = local(x).detach().float().cpu(), local(y).detach().float().cpu()
++                if xx.numel() == 0:
++                    continue
++                assert torch.isfinite(xx).all() and torch.isfinite(yy).all()
++                err = (xx - yy).abs()
++                key = 'bfloat16' if x.dtype == torch.bfloat16 else 'float32'
++                stat = maxima[key].setdefault(field, {'max_abs': 0.0, 'max_relative_to_global_max': 0.0, 'unequal_elements': 0, 'elements_checked': 0})
++                stat['max_abs'] = max(stat['max_abs'], float(err.max()))
++                stat['max_relative_to_global_max'] = max(stat['max_relative_to_global_max'], float(err.max() / xx.abs().max().clamp(min=1e-20)))
++                stat['unequal_elements'] += int((xx != yy).sum())
++                stat['elements_checked'] += xx.numel()
++                if field == 'step':
++                    rtol, atol = 0, 0
++                elif x.dtype == torch.bfloat16:
++                    rtol, atol = args.bf16_rtol, args.bf16_atol
++                else:
++                    rtol, atol = args.fp32_rtol, args.fp32_atol
++                close = err <= atol + rtol * xx.abs()
++                if not bool(close.all()) and len(failures) < 20:
++                    failures.append({'step': step, 'parameter': i, 'field': field,
++                                     'dtype': str(x.dtype), 'max_abs': float(err.max()),
++                                     'mismatches': int((~close).sum()), 'rtol': rtol, 'atol': atol})
++                checked += 1
++        if step == max(1, args.steps // 2):
++            # Reload each path's own state; check repeated-step/skip counters and
++            # placement survive. Native AdamW retains its standard state schema.
++            ref_opt.load_state_dict(copy.deepcopy(ref_opt.state_dict()))
++            test_opt.load_state_dict(copy.deepcopy(test_opt.state_dict()))
++            checkpoint_roundtrip = True
++    return {'layout': layout, 'mixed_fp32_bf16': mixed, 'steps': args.steps,
++            'parameters': len(specs), 'checked_tensors': checked,
++            'checkpoint_state_dict_roundtrip': checkpoint_roundtrip,
++            'maxima': maxima, 'passed': not failures, 'failures': failures}
++
++
++def main():
++    p = argparse.ArgumentParser()
++    p.add_argument('--device', choices=['cpu', 'npu'], default='cpu')
++    p.add_argument('--layouts', default='local,dtensor')
++    p.add_argument('--steps', type=int, default=20)
++    p.add_argument('--parameter-count', type=int, default=24)
++    p.add_argument('--output', type=Path, required=True)
++    p.add_argument('--optimizer-source', type=Path)
++    p.add_argument('--fp32-rtol', type=float, default=2e-5)
++    p.add_argument('--fp32-atol', type=float, default=2e-7)
++    p.add_argument('--bf16-rtol', type=float, default=0.02)
++    p.add_argument('--bf16-atol', type=float, default=0.002)
++    args = p.parse_args()
++    torch.set_num_threads(1)
++    local_rank = int(os.getenv('LOCAL_RANK', '0'))
++    if args.device == 'npu':
++        import torch_npu
++        import torch_npu.contrib.transfer_to_npu
++        torch.npu.set_device(local_rank)
++        device = torch.device('npu', local_rank)
++    else:
++        device = torch.device('cpu')
++    layouts = args.layouts.split(',')
++    assert set(layouts) <= {'local', 'dtensor', 'hybrid'}
++    group_created = False
++    temp = None
++    if any(x != 'local' for x in layouts):
++        if 'RANK' in os.environ:
++            dist.init_process_group('hccl' if args.device == 'npu' else 'gloo')
++        else:
++            temp = tempfile.TemporaryDirectory(prefix='adamw_foreach_')
++            dist.init_process_group('hccl' if args.device == 'npu' else 'gloo',
++                                    init_method='file://' + str(Path(temp.name) / 'init'), rank=0, world_size=1)
++        group_created = True
++        mesh = init_device_mesh(args.device, (dist.get_world_size(),))
++    else:
++        mesh = None
++    rank = dist.get_rank() if dist.is_initialized() else 0
++    report = {'device': str(device), 'rank': rank,
++              'world_size': dist.get_world_size() if dist.is_initialized() else 1,
++              'torch': torch.__version__, 'cases': [], 'tolerances': {
++                  'fp32_rtol': args.fp32_rtol, 'fp32_atol': args.fp32_atol,
++                  'bf16_rtol': args.bf16_rtol, 'bf16_atol': args.bf16_atol},
++              'timing_scope': 'Correctness test with explicit synchronizations; not a performance benchmark.'}
++    try:
++        if args.optimizer_source:
++            report['builder_switch'] = check_switch(args.optimizer_source)
++            report['builder_guard'] = check_builder_guard(args.optimizer_source, device, mesh)
++        for layout in layouts:
++            for mixed in (False, True):
++                print(f'rank={rank}: checking {layout} mixed={mixed}', flush=True)
++                report['cases'].append(run_case(args, device, mesh, layout, mixed))
++        report['passed'] = all(c['passed'] for c in report['cases'])
++    except Exception as exc:
++        report['passed'] = False
++        report['error'] = repr(exc)
++        raise
++    finally:
++        args.output.parent.mkdir(parents=True, exist_ok=True)
++        target = args.output.with_name(args.output.stem + f'.rank{rank}' + args.output.suffix)
++        target.write_text(json.dumps(report, indent=2) + '\n')
++        print(f'rank={rank}: saved {target}; passed={report.get("passed")}', flush=True)
++        if group_created:
++            dist.destroy_process_group()
++        if temp:
++            temp.cleanup()
++    if not report['passed']:
++        raise SystemExit(1)
++
++
++if __name__ == '__main__':
++    main()
+--- /dev/null
++++ b/tools/check_adamw_resume.py
+@@ -0,0 +1,108 @@
++"""CPU-only checkpoint execution-policy tests against actual builder source."""
++import argparse
++import ast
++import copy
++import json
++import logging
++import os
++from pathlib import Path
++import re
++import tempfile
++from types import SimpleNamespace
++from typing import Any, Dict, List, Optional, Sequence, Tuple
++from unittest.mock import patch
++
++import torch
++import torch.distributed as dist
++from torch.distributed.device_mesh import init_device_mesh
++from torch.distributed.tensor import DTensor, Shard, distribute_tensor
++
++
++def main():
++    parser = argparse.ArgumentParser()
++    parser.add_argument('--source', type=Path, required=True)
++    parser.add_argument('--output', type=Path, required=True)
++    args = parser.parse_args()
++    torch.set_num_threads(1)
++    tree = ast.parse(args.source.read_text())
++    selected = [n for n in tree.body if isinstance(n, (ast.ClassDef, ast.FunctionDef))
++                and n.name in {'CombinedOptimizer', '_split_param_groups_by_scaled_lr', 'build_muon_optimizer'}]
++    class StubMuon(torch.optim.SGD):
++        def __init__(self, groups, **kwargs):
++            super().__init__(groups, lr=kwargs['lr'])
++    scope = dict(torch=torch, nn=torch.nn, os=os, re=re, logging=logging,
++                 DTensor=DTensor, AdamW=torch.optim.AdamW, Optimizer=torch.optim.Optimizer,
++                 DistributedMuon=StubMuon, is_torch_npu_available=lambda: True,
++                 Any=Any, Dict=Dict, List=List, Optional=Optional, Sequence=Sequence, Tuple=Tuple)
++    exec(compile(ast.Module(body=selected, type_ignores=[]), str(args.source), 'exec'), scope)
++    rows = []
++    with tempfile.TemporaryDirectory(prefix='adamw_resume_') as tmp:
++        dist.init_process_group('gloo', init_method='file://' + str(Path(tmp) / 'init'), rank=0, world_size=1)
++        mesh = init_device_mesh('cpu', (1,))
++        def params_for(kind):
++            local = torch.nn.Parameter(torch.linspace(-0.7, 1.0, 8))
++            sharded = torch.nn.Parameter(distribute_tensor(torch.linspace(-0.9, 0.4, 8), mesh, [Shard(0)]))
++            return [local] if kind == 'local' else [sharded] if kind == 'dtensor' else [local, sharded]
++        def build(kind, enabled):
++            params = params_for(kind)
++            matrix = torch.nn.Parameter(torch.ones(2, 2))
++            scope['split_muon_adamw_params'] = lambda *a, **kw: ([matrix], params, ['matrix.weight'], [f'norm{i}.weight' for i in range(len(params))])
++            with patch.dict(os.environ, {'LINGBOT_ADAMW_FOREACH_NPU': '1' if enabled else '0'}):
++                opt = scope['build_muon_optimizer'](None, SimpleNamespace(), lr=5e-5, weight_decay=0.001)
++            return opt, params
++        try:
++            for kind in ('local', 'dtensor', 'hybrid'):
++                for source_flag, target_flag in ((False, True), (True, False)):
++                    for route in ('inner_direct_dcp_path', 'combined'):
++                        src, src_params = build(kind, source_flag)
++                        adam = src.optimizers[1]
++                        for _ in range(3):
++                            for p in src_params:
++                                p.grad = torch.ones_like(p) * 0.2
++                            adam.step()
++                        # Distinct restored settings expose accidental resets.
++                        adam.param_groups[0].update(lr=0.00071, weight_decay=0.025,
++                                                   betas=(0.8, 0.88), eps=3e-7)
++                        saved = copy.deepcopy(src.state_dict())
++                        saved_adam = saved['optimizers'][1]
++                        # Also emulate a foreign checkpoint with foreach=True
++                        # for a mixed group; runtime guard must override it.
++                        saved_adam['param_groups'][0]['foreach'] = source_flag
++                        dst, dst_params = build(kind, target_flag)
++                        with patch.dict(os.environ, {'LINGBOT_ADAMW_FOREACH_NPU': '0' if target_flag else '1'}):
++                            # Load uses the captured construction policy, not a
++                            # later environment mutation or checkpoint value.
++                            if route == 'combined':
++                                dst.load_state_dict(copy.deepcopy(saved))
++                            else:
++                                dst.optimizers[1].load_state_dict(copy.deepcopy(saved_adam))
++                        dst_adam = dst.optimizers[1]
++                        expected = target_flag and kind != 'hybrid'
++                        actual = dst_adam.param_groups[0]['foreach']
++                        assert actual is expected, (kind, source_flag, target_flag, route, actual)
++                        got = dst_adam.state_dict()
++                        for key, value in saved_adam['param_groups'][0].items():
++                            if key not in ('foreach', 'params'):
++                                assert got['param_groups'][0][key] == value, key
++                        for param_id, state in saved_adam['state'].items():
++                            assert set(got['state'][param_id]) == set(state)
++                            for key, value in state.items():
++                                other = got['state'][param_id][key]
++                                assert type(value) == type(other) and value.dtype == other.dtype
++                                if isinstance(value, DTensor):
++                                    assert value.placements == other.placements
++                                    value, other = value.to_local(), other.to_local()
++                                torch.testing.assert_close(value, other, rtol=0, atol=0)
++                        assert saved_adam['param_groups'][0]['foreach'] is source_flag
++                        rows.append({'kind':kind, 'checkpoint_foreach':source_flag,
++                                     'runtime_flag':target_flag, 'route':route,
++                                     'loaded_foreach':actual, 'hyperparameters_and_moments_exact':True})
++        finally:
++            dist.destroy_process_group()
++    report={'device':'cpu', 'world_size':1, 'source':str(args.source), 'checks':rows,
++            'passed':len(rows)==12, 'scope':'Only foreach restored from captured runtime policy; LR/betas/decay/eps/state preserved.'}
++    args.output.write_text(json.dumps(report,indent=2)+'\n')
++    print(json.dumps(report,indent=2))
++
++if __name__=='__main__':
++    main()
+--- /dev/null
++++ b/tools/check_joint_attention.py
+@@ -0,0 +1,232 @@
++#!/usr/bin/env python3
++"""Check candidate against the actual eager function without importing the model.
++
++Defaults to CPU and does not initialize any NPU. NPU runs require --device npu:0.
++Example after reserving a card:
++  python tools/check_joint_attention.py --device npu:0 --benchmark --output result.json
++All benchmarks are single attention-call microbenchmarks, not training throughput.
++"""
++
++import argparse
++import ast
++import importlib.util
++import json
++from pathlib import Path
++import statistics
++import time
++
++import einops
++import torch
++from torch import nn
++
++
++HERE = Path(__file__).resolve().parent
++ROOT = HERE.parent
++
++
++def load_candidate(path):
++    spec = importlib.util.spec_from_file_location("attention_candidate", path)
++    module = importlib.util.module_from_spec(spec)
++    spec.loader.exec_module(module)
++    return module
++
++
++def load_real_eager():
++    path = ROOT / "lingbotvla/models/vla/lingbot_vla/utils.py"
++    tree = ast.parse(path.read_text())
++    func = next(n for n in tree.body if isinstance(n, ast.FunctionDef)
++                and n.name == "our_eager_attention_forward")
++    namespace = {"torch": torch, "nn": nn, "einops": einops}
++    exec(compile(ast.Module(body=[func], type_ignores=[]), str(path), "exec"), namespace)
++    return namespace[func.name]
++
++
++def errors(actual, expected):
++    actual, expected = actual.detach().float().cpu(), expected.detach().float().cpu()
++    difference = actual - expected
++    reference_is_zero = bool((expected == 0).all())
++    reference_l2 = expected.norm().item()
++    return {
++        "finite": bool(torch.isfinite(actual).all() and torch.isfinite(expected).all()),
++        "max_abs": difference.abs().max().item(),
++        "reference_is_zero": reference_is_zero,
++        "reference_l2": reference_l2,
++        # Relative error is undefined for a zero reference, not a huge number.
++        "relative_l2": None if reference_is_zero else (difference.norm() / expected.norm()).item(),
++    }
++
++
++def within_screening_budget(metrics, abs_limit, rel_limit):
++    # Preserve both original budgets for nonzero references. For an exactly
++    # zero reference (e.g. one-key softmax Q/K gradients), only absolute error
++    # is meaningful. The numerical tolerance itself is unchanged.
++    return (metrics["finite"] and metrics["max_abs"] <= abs_limit
++            and (metrics["reference_is_zero"] or metrics["relative_l2"] <= rel_limit))
++
++
++def check_error_rule():
++    cases = [
++        ("zero_reference_roundoff", [0.0, 1.33e-6, -5.4e-7], [0.0, 0.0, 0.0], True),
++        ("zero_reference_real_error", [0.0, 2e-4], [0.0, 0.0], False),
++        ("zero_reference_nan", [float("nan")], [0.0], False),
++        ("nonzero_relative_error", [1.01e-3], [1e-3], False),
++        ("nonzero_absolute_error", [1000.0005], [1000.0], False),
++        ("nonzero_roundoff", [1.000001], [1.0], True),
++    ]
++    rows = []
++    for name, actual, expected, should_pass in cases:
++        metrics = errors(torch.tensor(actual), torch.tensor(expected))
++        accepted = within_screening_budget(metrics, 1e-4, 1e-4)
++        rows.append({"case": name, "expected_acceptance": should_pass,
++                     "actual_acceptance": accepted, "passed": accepted == should_pass})
++    if not all(row["passed"] for row in rows):
++        raise AssertionError(f"Error-rule self-check failed: {rows}")
++    return rows
++
++
++def build_case(name, device, shape=(2, 17, 23, 8, 2, 16)):
++    b, lq, lk, hq, hkv, d = shape
++    generator = torch.Generator().manual_seed(412)
++    q = torch.randn(b, lq, hq, d, generator=generator).to(device)
++    k = torch.randn(b, lk, hkv, d, generator=generator).to(device)
++    v = torch.randn(b, lk, hkv, d, generator=generator).to(device)
++    # Build masks on CPU; production masks are already constructed by the model.
++    mask = torch.ones(b, lq, lk, dtype=torch.bool)
++    if name == "mixed":
++        mask = torch.rand(b, lq, lk, generator=generator) > 0.35
++        mask[:, :, 0] = True
++    elif name == "prefix_action":
++        prefix = min(7, lq, lk)
++        mask[:, :prefix, prefix:] = False
++        mask[0, :, -3:] = False
++        mask[0, -3:, :] = False  # Padded query rows.
++    elif name == "all_masked":
++        mask.zero_()
++    elif name == "one_key":
++        mask.zero_()
++        mask[:, :, 0] = True
++    elif name == "cache":
++        # Query length can be shorter than key length during cached inference.
++        mask[0, :, -2:] = False
++    elif name == "scaled_logits":
++        q *= 4
++        k *= 4
++        mask[:, -1, :] = False
++    elif name != "dense":
++        raise ValueError(name)
++    upstream = torch.randn(b, lq, hq * d, generator=generator).to(device)
++    return (q, k, v), mask.to(device), upstream
++
++
++def run_grad(func, tensors, mask, upstream):
++    inputs = [x.detach().clone().requires_grad_(True) for x in tensors]
++    out = func(*inputs, mask)
++    gradients = torch.autograd.grad((out * upstream).sum(), inputs)
++    return out, gradients
++
++
++def check_case(name, funcs, device, bf16, shape):
++    tensors, mask, upstream = build_case(name, device, shape)
++    expected, expected_gradients = run_grad(funcs["eager"], tensors, mask, upstream)
++    rows = []
++    for backend in (["sdpa", "sdpa_bf16"] if bf16 else ["sdpa"]):
++        actual, gradients = run_grad(funcs[backend], tensors, mask, upstream)
++        metrics = {"output": errors(actual, expected)}
++        metrics.update({label: errors(got, ref) for label, got, ref in
++                        zip(("dq", "dk", "dv"), gradients, expected_gradients)})
++        # Conservative screening budgets, not a claim about task quality.
++        abs_limit, rel_limit = ((1e-4, 1e-4) if backend == "sdpa" else (0.10, 0.03))
++        passed = all(within_screening_budget(m, abs_limit, rel_limit) for m in metrics.values())
++        rows.append({"case": name, "shape_B_Lq_Lk_Hq_Hkv_D": shape, "backend": backend,
++                     "metrics": metrics, "passed": passed,
++                     "screening_limits": {"max_abs": abs_limit, "relative_l2": rel_limit,
++                                          "zero_reference": "absolute_error_only"}})
++    return rows
++
++
++def benchmark(func, device, iterations, warmup, shape):
++    tensors, mask, upstream = build_case("prefix_action", device, shape)
++    inputs = [x.requires_grad_(True) for x in tensors]
++    sync = torch.npu.synchronize if device.startswith("npu") else lambda: None
++    def iteration():
++        out = func(*inputs, mask)
++        torch.autograd.grad((out * upstream).sum(), inputs)
++    for _ in range(warmup):
++        iteration()
++    sync()
++    times = []
++    for _ in range(iterations):
++        start = time.perf_counter()
++        iteration()
++        sync()
++        times.append((time.perf_counter() - start) * 1000)
++    return {"median_forward_backward_ms": statistics.median(times),
++            "min_ms": min(times), "max_ms": max(times), "samples_ms": times,
++            "shape_B_Lq_Lk_Hq_Hkv_D": shape}
++
++
++def main():
++    parser = argparse.ArgumentParser()
++    parser.add_argument("--device", default="cpu")
++    parser.add_argument("--candidate", type=Path, default=ROOT / "lingbotvla/ops/joint_attention.py")
++    parser.add_argument("--bf16", action="store_true")
++    parser.add_argument("--benchmark", action="store_true")
++    parser.add_argument("--actual-shape", action="store_true",
++                        help="Also compare output/gradients at the profiled training shape")
++    parser.add_argument("--shape", type=int, nargs=6, default=[12, 337, 337, 32, 8, 128],
++                        metavar=("B", "Lq", "Lk", "Hq", "Hkv", "D"))
++    parser.add_argument("--iterations", type=int, default=10)
++    parser.add_argument("--warmup", type=int, default=3)
++    parser.add_argument("--output", type=Path)
++    parser.add_argument("--check-error-rule-only", action="store_true")
++    args = parser.parse_args()
++    torch.set_num_threads(2)
++    error_rule_checks = check_error_rule()
++    if args.check_error_rule_only:
++        payload = {"device": "cpu", "error_rule_checks": error_rule_checks, "passed": True}
++        output = json.dumps(payload, indent=2)
++        if args.output:
++            args.output.write_text(output + "\n")
++        print(output)
++        return
++    if args.device.startswith("npu"):
++        import torch_npu
++        torch.npu.set_device(args.device)
++    candidate = load_candidate(args.candidate)
++    if args.bf16 and not hasattr(candidate, "our_sdpa_bf16_attention_forward"):
++        parser.error("--bf16 requires a separate --candidate with a BF16 implementation; the project candidate keeps FP32 inputs")
++    funcs = {"eager": load_real_eager(), "sdpa": candidate.our_sdpa_attention_forward}
++    if args.bf16:
++        funcs["sdpa_bf16"] = candidate.our_sdpa_bf16_attention_forward
++    shapes = {"dense": (2, 17, 23, 8, 2, 16), "mixed": (2, 17, 23, 8, 2, 16),
++              "prefix_action": (2, 17, 23, 8, 2, 16), "all_masked": (2, 17, 23, 8, 2, 16),
++              "one_key": (2, 17, 23, 8, 2, 16), "cache": (2, 3, 23, 8, 2, 16),
++              "scaled_logits": (2, 17, 23, 8, 2, 16)}
++    checks = []
++    for name, shape in shapes.items():
++        checks += check_case(name, funcs, args.device, args.bf16, shape)
++    # Also cover matching query/KV head counts and NPU's production head dim.
++    checks += check_case("dense", funcs, args.device, args.bf16, (1, 32, 32, 2, 2, 128))
++    if args.actual_shape:
++        checks += check_case("prefix_action", funcs, args.device, args.bf16, args.shape)
++    payload = {"device": args.device, "torch_version": torch.__version__,
++               "checks": checks, "passed": all(row["passed"] for row in checks),
++               "error_rule_checks": error_rule_checks,
++               "error_rule_version": "2-zero-reference-absolute-only",
++               "scope": "Isolated attention output/input gradients; full training not validated"}
++    if args.device.startswith("npu"):
++        payload["torch_npu_version"] = torch_npu.__version__
++    if args.benchmark:
++        payload["benchmarks"] = {name: benchmark(func, args.device, args.iterations,
++                                                   args.warmup, args.shape)
++                                 for name, func in funcs.items()
++                                 if args.bf16 or name != "sdpa_bf16"}
++    output = json.dumps(payload, indent=2)
++    if args.output:
++        args.output.write_text(output + "\n")
++    print(output)
++    raise SystemExit(0 if payload["passed"] else 1)
++
++
++if __name__ == "__main__":
++    main()
+--- a/train_robotwin_npu.sh
++++ b/train_robotwin_npu.sh
+@@ -83,6 +83,20 @@
+ USE_COMPILE="${USE_COMPILE:-}"
+ ENABLE_ACTIVATION_OFFLOAD="${ENABLE_ACTIVATION_OFFLOAD:-}"
+ EMPTY_CACHE_STEPS="${EMPTY_CACHE_STEPS:-}"
++# 可逐项切换，便于比较相同训练任务的新旧执行方式。
++export LINGBOT_JOINT_ATTN_BACKEND="${LINGBOT_JOINT_ATTN_BACKEND:-}"
++export LINGBOT_MOE_MONITOR_BATCH_COUNTS="${LINGBOT_MOE_MONITOR_BATCH_COUNTS:-0}"
++export LINGBOT_ADAMW_FOREACH_NPU="${LINGBOT_ADAMW_FOREACH_NPU:-0}"
++case "$LINGBOT_JOINT_ATTN_BACKEND" in
++  ""|eager|sdpa_fp32) ;;
++  *) echo "[错误] LINGBOT_JOINT_ATTN_BACKEND 必须为空、eager 或 sdpa_fp32。" >&2; exit 1 ;;
++esac
++for speed_switch in LINGBOT_MOE_MONITOR_BATCH_COUNTS LINGBOT_ADAMW_FOREACH_NPU; do
++  case "${!speed_switch}" in
++    0|1) ;;
++    *) echo "[错误] $speed_switch 必须为 0 或 1。" >&2; exit 1 ;;
++  esac
++done
+ 
+ # ═════════════════ 5. 训练范围 / 冻结（留空 = 用配置文件） ═════════════════
+ FREEZE_VISION_ENCODER="${FREEZE_VISION_ENCODER:-}"
+@@ -258,6 +272,7 @@
+ GRAD_ACCUM=$(effective_arg train.gradient_accumulation_steps "$GRAD_ACCUM")
+ GLOBAL_BATCH=$(effective_arg train.global_batch_size "$GLOBAL_BATCH")
+ ENABLE_RESUME=$(effective_arg train.enable_resume "$ENABLE_RESUME")
++ENABLE_GRAD_CKPT=$(effective_arg train.enable_gradient_checkpointing "$ENABLE_GRAD_CKPT")
+ LR=$(effective_arg train.lr "$LR")
+ LR_MIN=$(effective_arg train.lr_min "$LR_MIN")
+ LR_WARMUP_RATIO=$(effective_arg train.lr_warmup_ratio "$LR_WARMUP_RATIO")
+@@ -284,6 +299,10 @@
+  提前停止步  : ${STOP_AFTER_STEPS:-未设置}（不改变学习率调度总长度）
+  batch       : micro=$MICRO_BATCH×卡=$NPROC_PER_NODE  accum=$GRAD_ACCUM  global=$GLOBAL_BATCH
+  NPU MoE     : $LINGBOT_NPU_MOE_IMPL
++ 联合注意力  : ${LINGBOT_JOINT_ATTN_BACKEND:-配置原值}
++ 统计合批    : $LINGBOT_MOE_MONITOR_BATCH_COUNTS
++ 参数合批    : $LINGBOT_ADAMW_FOREACH_NPU（现有 AdamW 分支）
++ 重计算      : ${ENABLE_GRAD_CKPT:-配置文件}（用于节省显存，与保存训练进度不同）
+  视频解码    : PyAV 每个解码器 $LINGBOT_VIDEO_DECODE_THREADS 线程，仅转换选中的帧
+  学习率      : $LR → $LR_MIN，warmup ratio=$LR_WARMUP_RATIO
+  续训        : $ENABLE_RESUME（启用时检查 OBS 最新完整检查点）
+@@ -296,6 +315,9 @@
+   echo "[DRY_RUN] 仅显示命令；未创建目录、下载数据或启动训练。"
+   printf 'cd %q\n' "$REPO_ROOT"
+   printf 'export LINGBOT_NPU_MOE_IMPL=%q\n' "$LINGBOT_NPU_MOE_IMPL"
++  printf 'export LINGBOT_JOINT_ATTN_BACKEND=%q\n' "$LINGBOT_JOINT_ATTN_BACKEND"
++  printf 'export LINGBOT_MOE_MONITOR_BATCH_COUNTS=%q\n' "$LINGBOT_MOE_MONITOR_BATCH_COUNTS"
++  printf 'export LINGBOT_ADAMW_FOREACH_NPU=%q\n' "$LINGBOT_ADAMW_FOREACH_NPU"
+   printf '%q ' "${COMMAND[@]}"
+   printf '\n'
+   exit 0
+@@ -345,6 +367,11 @@
+ conda activate "$CONDA_ENV"
+ mkdir -p "$OUTPUT_DIR" "$LOG_DIR"
+ 
++# 环境开关不在 YAML 中；追加到正式训练日志，便于复现和续训核对。
++printf '[NPU speed] moe=%s joint_attention=%s monitor_batch=%s adamw_foreach=%s gradient_checkpointing=%s\n' \
++  "$LINGBOT_NPU_MOE_IMPL" "${LINGBOT_JOINT_ATTN_BACKEND:-from_config}" \
++  "$LINGBOT_MOE_MONITOR_BATCH_COUNTS" "$LINGBOT_ADAMW_FOREACH_NPU" \
++  "${ENABLE_GRAD_CKPT:-from_config}" | tee -a "$LOG_DIR/train.log"
+ "${COMMAND[@]}" 2>&1 | tee -a "$LOG_DIR/train.log"
+ 
+ echo "日志已保存: $LOG_DIR/train.log"
+--- /dev/null
++++ b/train_robotwin_npu_optimized.sh
+@@ -0,0 +1,28 @@
++#!/usr/bin/env bash
++# 本机 RoboTwin / 8×Ascend 910B / micro-batch 12 的性能方案。
++# 每项都能用同名环境变量覆盖，学习率、优化器算法和 batch 沿用原入口。
++# 查看实际设置：DRY_RUN=1 bash train_robotwin_npu_optimized.sh
++# 退回本轮实验前的 GMM 基线：
++# LINGBOT_JOINT_ATTN_BACKEND=eager LINGBOT_MOE_MONITOR_BATCH_COUNTS=0 \
++# LINGBOT_ADAMW_FOREACH_NPU=0 ENABLE_GRAD_CKPT=true bash train_robotwin_npu_optimized.sh
++set -euo pipefail
++
++lingbot_script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
++export REPO_ROOT="${REPO_ROOT:-$lingbot_script_dir}"
++export RUN_NAME="${RUN_NAME:-robotwin_1ep_optimized}"
++
++# 把专家的小矩阵计算成批提交给 NPU。
++export LINGBOT_NPU_MOE_IMPL="${LINGBOT_NPU_MOE_IMPL:-gmm}"
++# 合并注意力计算，保留 FP32 输入/输出和原遮罩语义。
++export LINGBOT_JOINT_ATTN_BACKEND="${LINGBOT_JOINT_ATTN_BACKEND:-sdpa_fp32}"
++# 一次读取所有层的统计状态，减少 CPU/NPU 来回等待。
++export LINGBOT_MOE_MONITOR_BATCH_COUNTS="${LINGBOT_MOE_MONITOR_BATCH_COUNTS:-1}"
++# 批量执行已有 AdamW 分支，Muon 算法保持原样。
++export LINGBOT_ADAMW_FOREACH_NPU="${LINGBOT_ADAMW_FOREACH_NPU:-1}"
++# 注意力省出显存后，保留中间结果，避免反向传播时再算一次。
++# 本机当前配置实测 2.60 秒/步、rank 0 峰值已分配显存 50.61 GiB。
++# 如需节省更多显存，设 ENABLE_GRAD_CKPT=true：实测 3.06 秒/步、46.68 GiB。
++# 重计算与保存/恢复训练进度的检查点是两个独立功能。
++export ENABLE_GRAD_CKPT="${ENABLE_GRAD_CKPT:-false}"
++
++exec bash "$lingbot_script_dir/train_robotwin_npu.sh" "$@"

@@ -1,0 +1,39 @@
+--- a/tests/test_training_obs_flow.py
++++ b/tests/test_training_obs_flow.py
+@@ -7,6 +7,7 @@
+ 
+ import ast
+ import copy
++from contextlib import nullcontext
+ import importlib.util
+ import json
+ import os
+@@ -182,8 +183,8 @@
+         self.assertEqual(args.train.align_params["depth_loss_weight"], 0.004)
+         self.assertEqual(args.train.align_params["video"]["future_video_loss_weight"], 0.004)
+         self.assertEqual(args.data.obs_dataset_uri, "obs://yw-2030-extern/Partner_Qin/robot_1014/datasets/RoboTwin_lerobot_v30/")
+-        self.assertEqual(args.train.obs_output_dir, "obs://yw-2030-extern/Partner_Qin/robot_1014/robotwin_1ep_fast")
+-        self.assertEqual(args.train.logging_dir, str(REPO / "logs/robotwin_1ep_fast"))
++        self.assertEqual(args.train.obs_output_dir, "obs://yw-2030-extern/Partner_Qin/robot_1014/robotwin_1ep_optimized")
++        self.assertEqual(args.train.logging_dir, str(REPO / "logs/robotwin_1ep_optimized"))
+         args.train.compute_train_steps(dataset_length=548893)
+         self.assertEqual(args.train.train_steps, 5717)
+         self.assertEqual(args.train.train_steps * args.train.num_train_epochs, 5717)
+@@ -294,7 +295,7 @@
+         global_rank=0, local_rank=0, output_dir=str(run_dir), logging_dir=str(logging_dir),
+         save_checkpoint_path=str(run_dir / "checkpoints"), obs_remove_local_checkpoint=True,
+         train_steps=3, num_train_epochs=5, max_steps=None, stop_after_steps=stop_after_steps,
+-        save_steps=save_steps, save_epochs=1,
++        save_steps=save_steps, save_epochs=1, profile_only=False,
+         optimizer="muon", lr=5e-5, lr_min=1e-5, lr_start=0,
+         lr_decay_style="cosine", lr_decay_ratio=1, lr_warmup_ratio=0.02,
+         weight_decay=0.001, global_batch_size=96, train_expert_only=True,
+@@ -335,6 +336,8 @@
+         "model": object(), "optimizer": object(),
+         "lr_scheduler": SimpleNamespace(state_dict=lambda: {"last_epoch": 0}),
+         "train_dataloader": Loader(), "environ_meter": SimpleNamespace(state_dict=lambda: {}),
++        # Match disabled profiling without importing device-backed trainer helpers.
++        "training_profiler": SimpleNamespace(scope=lambda name: nullcontext()),
+         "writer": SimpleNamespace(flush=lambda: None), "loss_file": SimpleNamespace(flush=lambda: None),
+         "Checkpointer": SimpleNamespace(save=save), "obs_store": SimpleNamespace(upload_checkpoint=upload),
+         "logger": SimpleNamespace(info_rank0=lambda *args: None),

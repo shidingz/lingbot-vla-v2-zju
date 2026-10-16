@@ -1,0 +1,7 @@
+{
+  "time": "2026-10-16T18:07:12.655688+08:00",
+  "training_or_sampling_processes": [],
+  "npu_smi_exit_code": 0,
+  "npu_smi_file": "final_npu_smi.txt",
+  "all_training_experiments_finished": true
+}

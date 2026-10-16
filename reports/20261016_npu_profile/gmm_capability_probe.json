@@ -1,0 +1,21 @@
+{
+  "torch": "2.6.0+cpu",
+  "torch_npu": "2.6.0",
+  "forward": {
+    "shape": [
+      64,
+      48
+    ],
+    "max_abs_error": 0.0,
+    "requires_grad": true,
+    "grad_fn": "<CppFunction object at 0xfffeda063e50>"
+  },
+  "autograd": {
+    "x_grad_present": false,
+    "w_grad_present": false
+  },
+  "weight_gradient_add": {
+    "relative_l2": 1.6930854940255813e-08,
+    "max_abs_error": 9.5367431640625e-07
+  }
+}

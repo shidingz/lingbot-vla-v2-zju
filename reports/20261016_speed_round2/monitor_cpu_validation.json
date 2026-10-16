@@ -1,0 +1,94 @@
+{
+  "device": "cpu",
+  "torch": "2.6.0+cpu",
+  "npu_initialized": false,
+  "cases": [
+    {
+      "case": "populated",
+      "layers": 4,
+      "auxiliary_losses": true,
+      "remapped_layers": false,
+      "metric_keys": 45,
+      "exact_outputs_and_gradients": true
+    },
+    {
+      "case": "all_zero",
+      "layers": 4,
+      "auxiliary_losses": true,
+      "remapped_layers": false,
+      "metric_keys": 11,
+      "exact_outputs_and_gradients": true
+    },
+    {
+      "case": "mixed",
+      "layers": 4,
+      "auxiliary_losses": true,
+      "remapped_layers": false,
+      "metric_keys": 33,
+      "exact_outputs_and_gradients": true
+    },
+    {
+      "case": "mixed_missing",
+      "layers": 4,
+      "auxiliary_losses": true,
+      "remapped_layers": false,
+      "metric_keys": 39,
+      "exact_outputs_and_gradients": true
+    },
+    {
+      "case": "no_buffers",
+      "layers": 4,
+      "auxiliary_losses": true,
+      "remapped_layers": false,
+      "metric_keys": 45,
+      "exact_outputs_and_gradients": true
+    },
+    {
+      "case": "dead_expert",
+      "layers": 4,
+      "auxiliary_losses": true,
+      "remapped_layers": false,
+      "metric_keys": 45,
+      "exact_outputs_and_gradients": true
+    },
+    {
+      "case": "mixed",
+      "layers": 36,
+      "auxiliary_losses": true,
+      "remapped_layers": true,
+      "metric_keys": 193,
+      "exact_outputs_and_gradients": true
+    },
+    {
+      "case": "populated",
+      "layers": 36,
+      "auxiliary_losses": false,
+      "remapped_layers": false,
+      "metric_keys": 226,
+      "exact_outputs_and_gradients": true
+    },
+    {
+      "case": "populated",
+      "layers": 0,
+      "auxiliary_losses": false,
+      "remapped_layers": false,
+      "metric_keys": 0,
+      "exact_outputs_and_gradients": true
+    }
+  ],
+  "dispatch_audit": {
+    "original": {
+      "local_scalar_dense_calls": 36,
+      "explicit_cpu_transfer_shapes": []
+    },
+    "candidate": {
+      "local_scalar_dense_calls": 0,
+      "explicit_cpu_transfer_shapes": [
+        [
+          36
+        ]
+      ]
+    }
+  },
+  "limitation": "CPU equivalence and dispatch audit only; no NPU timing or end-to-end speed claim."
+}

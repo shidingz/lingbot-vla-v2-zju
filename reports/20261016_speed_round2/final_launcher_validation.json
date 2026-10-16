@@ -1,0 +1,96 @@
+{
+  "time": "2026-10-16T18:06:31.680404+08:00",
+  "checks": [
+    {
+      "case": "train_robotwin_npu.sh_syntax",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "case": "train_robotwin_npu_optimized.sh_syntax",
+      "passed": true,
+      "exit_code": 0
+    },
+    {
+      "case": "original",
+      "passed": true,
+      "exit_code": 0,
+      "expected": {
+        "attn": "",
+        "monitor": "0",
+        "foreach": "0",
+        "ckpt": "配置文件"
+      }
+    },
+    {
+      "case": "optimized",
+      "passed": true,
+      "exit_code": 0,
+      "expected": {
+        "attn": "sdpa_fp32",
+        "monitor": "1",
+        "foreach": "1",
+        "ckpt": "false"
+      }
+    },
+    {
+      "case": "low_memory",
+      "passed": true,
+      "exit_code": 0,
+      "expected": {
+        "attn": "sdpa_fp32",
+        "monitor": "1",
+        "foreach": "1",
+        "ckpt": "true"
+      }
+    },
+    {
+      "case": "rollback",
+      "passed": true,
+      "exit_code": 0,
+      "expected": {
+        "attn": "eager",
+        "monitor": "0",
+        "foreach": "0",
+        "ckpt": "true"
+      }
+    },
+    {
+      "case": "cli_override",
+      "passed": true,
+      "exit_code": 0,
+      "expected": {
+        "attn": "sdpa_fp32",
+        "monitor": "1",
+        "foreach": "1",
+        "ckpt": "true"
+      }
+    },
+    {
+      "case": "extra_args_override",
+      "passed": true,
+      "exit_code": 0,
+      "expected": {
+        "attn": "sdpa_fp32",
+        "monitor": "1",
+        "foreach": "1",
+        "ckpt": "true"
+      }
+    },
+    {
+      "case": "invalid_attention",
+      "passed": true,
+      "exit_code": 1
+    },
+    {
+      "case": "invalid_foreach",
+      "passed": true,
+      "exit_code": 1
+    },
+    {
+      "case": "all_8_python_files_compile",
+      "passed": true
+    }
+  ],
+  "training_started": false
+}

@@ -14,3 +14,11 @@
 
 
 __version__ = "0.0.1"
+
+# On Ascend NPU environments, activate Huawei's CUDA->NPU compatibility shim as
+# early as possible so the torch.cuda.* / device="cuda" idioms used across this
+# codebase resolve to torch_npu. No-op on CUDA/CPU machines (torch_npu absent).
+import importlib.util as _importlib_util
+
+if _importlib_util.find_spec("torch_npu") is not None:
+    import torch_npu.contrib.transfer_to_npu  # noqa: F401

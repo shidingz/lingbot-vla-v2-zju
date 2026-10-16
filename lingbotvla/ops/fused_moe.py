@@ -13,11 +13,13 @@
 # limitations under the License.
 
 
+import os
+
 import torch
 
 from ..distributed.moe import EPGroupGemm, preprocess, token_pre_all2all, tokens_post_all2all
 from ..distributed.parallel_state import get_parallel_state
-from ..utils.import_utils import is_fused_moe_available
+from ..utils.import_utils import is_fused_moe_available, is_torch_npu_available
 
 
 if is_fused_moe_available():
@@ -271,6 +273,45 @@ class FusedMoeExpertFunction(torch.autograd.Function):
         )
 
 
+def grouped_moe_torch_forward(
+    num_experts: int,
+    routing_weights: torch.Tensor,
+    selected_experts: torch.Tensor,
+    hidden_states: torch.Tensor,
+    fc1_1_weight: torch.Tensor,
+    fc1_2_weight: torch.Tensor,
+    fc2_weight: torch.Tensor,
+) -> torch.Tensor:
+    """Grouped MoE with plain torch ops — same math as FusedMoeExpertFunction.
+
+    Fallback for environments where the triton group_gemm kernels cannot run
+    (e.g. Ascend NPU, where triton-ascend fails to lower the kernels).
+    Expects plain (non-DTensor) operands; all ops are autograd-friendly.
+    """
+    T, K = selected_experts.shape
+    D = hidden_states.shape[-1]
+    flat_e = selected_experts.reshape(-1)
+    order = torch.argsort(flat_e, stable=True)
+    counts = torch.bincount(flat_e, minlength=num_experts).tolist()
+    x_sorted = hidden_states[order // K]
+
+    sorted_out = torch.empty_like(x_sorted)
+    start = 0
+    for e, n in enumerate(counts):
+        if n == 0:
+            continue
+        end = start + n
+        xe = x_sorted[start:end]
+        act = torch.nn.functional.silu(xe @ fc1_1_weight[e].t()) * (xe @ fc1_2_weight[e].t())
+        sorted_out[start:end] = act @ fc2_weight[e].t()
+        start = end
+
+    out = torch.empty_like(sorted_out)
+    out[order] = sorted_out
+    out = (out.view(T, K, D).float() * routing_weights.unsqueeze(-1).float()).sum(dim=1)
+    return out.to(hidden_states.dtype)
+
+
 def fused_moe_forward(
     module: torch.nn.Module,
     num_experts: int,
@@ -360,14 +401,33 @@ def fused_moe_forward(
 
     else:
         # Non-EP fused path (group_gemm without token dispatch)
-        final_hidden_states = FusedMoeExpertFunction.apply(
-            num_experts,
-            routing_weights,
-            selected_experts,
-            hidden_states,
-            fc1_1_weight,
-            fc1_2_weight,
-            fc2_weight,
-        )
+        if is_torch_npu_available():
+            implementation = os.environ.get("LINGBOT_NPU_MOE_IMPL", "gmm")
+            if implementation == "gmm":
+                from .npu_moe import grouped_moe_npu_forward
+                npu_forward = grouped_moe_npu_forward
+            elif implementation == "torch":
+                npu_forward = grouped_moe_torch_forward
+            else:
+                raise ValueError("LINGBOT_NPU_MOE_IMPL must be gmm or torch")
+            final_hidden_states = npu_forward(
+                num_experts,
+                routing_weights,
+                selected_experts,
+                hidden_states,
+                fc1_1_weight,
+                fc1_2_weight,
+                fc2_weight,
+            )
+        else:
+            final_hidden_states = FusedMoeExpertFunction.apply(
+                num_experts,
+                routing_weights,
+                selected_experts,
+                hidden_states,
+                fc1_1_weight,
+                fc1_2_weight,
+                fc2_weight,
+            )
 
     return final_hidden_states

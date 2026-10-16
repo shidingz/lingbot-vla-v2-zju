@@ -1,0 +1,483 @@
+{
+  "run": "robotwin_1ep_fast",
+  "audit_scope": "Read-only training completion, warnings, checkpoint and routing audit; no training/evaluation started and no source code modified.",
+  "completion": {
+    "exit_code": 0,
+    "loss_records": 5717,
+    "steps_contiguous": true,
+    "train_finished_cst": "2026-10-16 12:38:14",
+    "obs_verified_cst": "2026-10-16 12:51:21",
+    "final_summary_cst": "2026-10-16 12:51:22",
+    "checkpoint_uri": "obs://yw-2030-extern/Partner_Qin/robot_1014/robotwin_1ep_fast/checkpoints/global_step_5717",
+    "checkpoint_manifest_file_count": 283,
+    "hf_success": 1,
+    "hf_failed": 0,
+    "run_failures": [],
+    "evidence": [
+      "logs/robotwin_1ep_fast/exit_code:1",
+      "logs/robotwin_1ep_fast/train.log:7740",
+      "logs/robotwin_1ep_fast/train.log:7773",
+      "logs/robotwin_1ep_fast/train.log:7774"
+    ]
+  },
+  "numerical_anomalies": {
+    "nonfinite_values": [],
+    "tracebacks": 0,
+    "oom_log_matches": 0,
+    "ignore_batch_zero_records": 5717,
+    "ignore_batch_nonzero_records": 0
+  },
+  "evaluation": {
+    "actual_eval_submitted": 0,
+    "actual_eval_ran": false,
+    "reported_eval_failed": 1,
+    "classification": "Misleading summary bookkeeping, not an evaluation execution failure.",
+    "reason": "HFCheckpointResult defaults eval_submitted=False and eval_skipped=False; summary counts every successful HF save with both false as eval_failed. Saver has no eval submission implementation; args.eval enabled/command were null.",
+    "evidence": [
+      "logs/robotwin_1ep_fast/train.log:466",
+      "logs/robotwin_1ep_fast/train.log:7775",
+      "lingbotvla/utils/async_hf_checkpoint.py:40",
+      "lingbotvla/utils/async_hf_checkpoint.py:164",
+      "lingbotvla/utils/async_hf_checkpoint.py:295"
+    ]
+  },
+  "video_tail": {
+    "warning_lines": 207,
+    "worker_camera_keys": 192,
+    "unique_episode_ids_in_throttled_logs": 163,
+    "last_visible_counter_lower_bounds": {
+      "queries": 138410,
+      "repaired_samples": 7677,
+      "future_clamps": 7677,
+      "current_clamps": 172
+    },
+    "last_counter_distribution": {
+      "1": 177,
+      "500": 15
+    },
+    "interpretation": "207 warnings are throttled first/every-500 logs, not total repaired samples or unique corrupt frames. Lower bounds sum separate worker-camera counters and can double-count an item across cameras. No final full counter dump exists; no exact occurrence percentage can be claimed. In-memory repetition is within episode; original dataset files unchanged.",
+    "evidence": [
+      "lingbotvla/data/vla_data/base_dataset.py:130",
+      "lingbotvla/data/vla_data/base_dataset.py:138"
+    ],
+    "first_warning": {
+      "line": 1209,
+      "rank": 6,
+      "pid": 1104214,
+      "episode": 1226,
+      "camera": "observation.images.cam_high",
+      "counters": {
+        "queries": 1,
+        "repaired_samples": 1,
+        "current_clamps": 0,
+        "future_clamps": 1
+      }
+    },
+    "last_warning": {
+      "line": 7705,
+      "rank": 4,
+      "pid": 1103878,
+      "episode": 499,
+      "camera": "observation.images.cam_high",
+      "counters": {
+        "queries": 8571,
+        "repaired_samples": 500,
+        "current_clamps": 13,
+        "future_clamps": 500
+      }
+    }
+  },
+  "routing": {
+    "summary_metrics": {
+      "training/router_z_loss": {
+        "tag": "training/router_z_loss",
+        "records": 5717,
+        "first_step": 1,
+        "last_step": 5717,
+        "first": 1.683831214904785e-05,
+        "last": 1.7195940017700195e-05,
+        "minimum": 1.5221536159515381e-05,
+        "maximum": 2.5004148483276367e-05,
+        "first100_record_mean": 1.769617199897766e-05,
+        "last100_record_mean": 1.7166808247566224e-05,
+        "nonzero_count": 5717,
+        "last100_nonzero_count": 100
+      },
+      "moe_summary/maxvio_avg": {
+        "tag": "moe_summary/maxvio_avg",
+        "records": 5716,
+        "first_step": 2,
+        "last_step": 5717,
+        "first": 0.98828125,
+        "last": 1.0703125,
+        "minimum": 0.7734375,
+        "maximum": 2.46875,
+        "first100_record_mean": 0.932890625,
+        "last100_record_mean": 1.06296875,
+        "nonzero_count": 5716,
+        "last100_nonzero_count": 100
+      },
+      "moe_summary/maxvio_max": {
+        "tag": "moe_summary/maxvio_max",
+        "records": 5716,
+        "first_step": 2,
+        "last_step": 5717,
+        "first": 2.5625,
+        "last": 6.5625,
+        "minimum": 2.15625,
+        "maximum": 6.65625,
+        "first100_record_mean": 2.92015625,
+        "last100_record_mean": 6.5134375,
+        "nonzero_count": 5716,
+        "last100_nonzero_count": 100
+      },
+      "moe_summary/minvio_avg": {
+        "tag": "moe_summary/minvio_avg",
+        "records": 5716,
+        "first_step": 2,
+        "last_step": 5717,
+        "first": 0.55859375,
+        "last": 0.671875,
+        "minimum": 0.5078125,
+        "maximum": 0.86328125,
+        "first100_record_mean": 0.55265625,
+        "last100_record_mean": 0.6778515625,
+        "nonzero_count": 5716,
+        "last100_nonzero_count": 100
+      },
+      "moe_summary/minvio_max": {
+        "tag": "moe_summary/minvio_max",
+        "records": 5716,
+        "first_step": 2,
+        "last_step": 5717,
+        "first": 0.95703125,
+        "last": 1.0,
+        "minimum": 0.87109375,
+        "maximum": 1.0,
+        "first100_record_mean": 0.9744921875,
+        "last100_record_mean": 0.9894140625,
+        "nonzero_count": 5716,
+        "last100_nonzero_count": 100
+      },
+      "moe_summary/min_load_ratio": {
+        "tag": "moe_summary/min_load_ratio",
+        "records": 5716,
+        "first_step": 2,
+        "last_step": 5717,
+        "first": 0.04248046875,
+        "last": 0.0016326904296875,
+        "minimum": 0.0,
+        "maximum": 0.130859375,
+        "first100_record_mean": 0.025372772216796874,
+        "last100_record_mean": 0.010768280029296876,
+        "nonzero_count": 3655,
+        "last100_nonzero_count": 75
+      },
+      "moe_summary/has_dead_expert": {
+        "tag": "moe_summary/has_dead_expert",
+        "records": 5716,
+        "first_step": 2,
+        "last_step": 5717,
+        "first": 0.0,
+        "last": 0.0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "first100_record_mean": 0.02,
+        "last100_record_mean": 0.25,
+        "nonzero_count": 2061,
+        "last100_nonzero_count": 25
+      },
+      "moe_summary/entropy_avg_rank0": {
+        "tag": "moe_summary/entropy_avg_rank0",
+        "records": 5716,
+        "first_step": 2,
+        "last_step": 5717,
+        "first": 3.15625,
+        "last": 3.21875,
+        "minimum": 3.078125,
+        "maximum": 3.265625,
+        "first100_record_mean": 3.12359375,
+        "last100_record_mean": 3.228125,
+        "nonzero_count": 5716,
+        "last100_nonzero_count": 100
+      },
+      "moe_summary/topk_sigmoid_avg_rank0": {
+        "tag": "moe_summary/topk_sigmoid_avg_rank0",
+        "records": 5716,
+        "first_step": 2,
+        "last_step": 5717,
+        "first": 0.07568359375,
+        "last": 0.07080078125,
+        "minimum": 0.06591796875,
+        "maximum": 0.09228515625,
+        "first100_record_mean": 0.0817822265625,
+        "last100_record_mean": 0.0702685546875,
+        "nonzero_count": 5716,
+        "last100_nonzero_count": 100
+      },
+      "moe_summary/bias_absmax": {
+        "tag": "moe_summary/bias_absmax",
+        "records": 5716,
+        "first_step": 2,
+        "last_step": 5717,
+        "first": 0.0,
+        "last": 0.0,
+        "minimum": 0.0,
+        "maximum": 0.0,
+        "first100_record_mean": 0.0,
+        "last100_record_mean": 0.0,
+        "nonzero_count": 0,
+        "last100_nonzero_count": 0
+      },
+      "moe_summary/load_cv": {
+        "tag": "moe_summary/load_cv",
+        "records": 5,
+        "first_step": 1000,
+        "last_step": 5000,
+        "first": 0.1385740488767624,
+        "last": 0.09953124821186066,
+        "minimum": 0.09897388517856598,
+        "maximum": 0.1385740488767624,
+        "first100_record_mean": 0.11384273320436478,
+        "last100_record_mean": 0.11384273320436478,
+        "nonzero_count": 5,
+        "last100_nonzero_count": 5
+      }
+    },
+    "maxvio_definition": "(max expert token count - mean expert token count)/mean; maxvio_avg averages layers, maxvio_max takes worst layer. Last-step monitoring uses the previous globally reduced routing window snapshot.",
+    "has_dead_expert_interpretation": "Any layer has at least one zero-token expert in that single monitored window; 2061/5716 records (36.06%) and 25/last100. Does not imply a permanently unused expert or proven router collapse.",
+    "per_layer_sampling_caveat": "Per-layer metrics only at steps 1000,2000,3000,4000,5000; final per-layer sample is step5000, not step5717.",
+    "worst_layers_at_last_sample": [
+      {
+        "tag": "moe_maxvio/layer34",
+        "records": 5,
+        "samples": [
+          {
+            "step": 1000,
+            "maxvio": 5.25
+          },
+          {
+            "step": 2000,
+            "maxvio": 6.21875
+          },
+          {
+            "step": 3000,
+            "maxvio": 6.25
+          },
+          {
+            "step": 4000,
+            "maxvio": 6.375
+          },
+          {
+            "step": 5000,
+            "maxvio": 6.5
+          }
+        ]
+      },
+      {
+        "tag": "moe_maxvio/layer35",
+        "records": 5,
+        "samples": [
+          {
+            "step": 1000,
+            "maxvio": 3.125
+          },
+          {
+            "step": 2000,
+            "maxvio": 3.515625
+          },
+          {
+            "step": 3000,
+            "maxvio": 3.078125
+          },
+          {
+            "step": 4000,
+            "maxvio": 2.671875
+          },
+          {
+            "step": 5000,
+            "maxvio": 3.09375
+          }
+        ]
+      },
+      {
+        "tag": "moe_maxvio/layer33",
+        "records": 5,
+        "samples": [
+          {
+            "step": 1000,
+            "maxvio": 2.3125
+          },
+          {
+            "step": 2000,
+            "maxvio": 3.3125
+          },
+          {
+            "step": 3000,
+            "maxvio": 2.640625
+          },
+          {
+            "step": 4000,
+            "maxvio": 2.59375
+          },
+          {
+            "step": 5000,
+            "maxvio": 2.40625
+          }
+        ]
+      },
+      {
+        "tag": "moe_maxvio/layer30",
+        "records": 5,
+        "samples": [
+          {
+            "step": 1000,
+            "maxvio": 2.75
+          },
+          {
+            "step": 2000,
+            "maxvio": 2.5625
+          },
+          {
+            "step": 3000,
+            "maxvio": 2.453125
+          },
+          {
+            "step": 4000,
+            "maxvio": 2.484375
+          },
+          {
+            "step": 5000,
+            "maxvio": 2.375
+          }
+        ]
+      },
+      {
+        "tag": "moe_maxvio/layer31",
+        "records": 5,
+        "samples": [
+          {
+            "step": 1000,
+            "maxvio": 2.296875
+          },
+          {
+            "step": 2000,
+            "maxvio": 2.03125
+          },
+          {
+            "step": 3000,
+            "maxvio": 2.328125
+          },
+          {
+            "step": 4000,
+            "maxvio": 1.671875
+          },
+          {
+            "step": 5000,
+            "maxvio": 1.7890625
+          }
+        ]
+      },
+      {
+        "tag": "moe_maxvio/layer32",
+        "records": 5,
+        "samples": [
+          {
+            "step": 1000,
+            "maxvio": 1.9921875
+          },
+          {
+            "step": 2000,
+            "maxvio": 2.390625
+          },
+          {
+            "step": 3000,
+            "maxvio": 2.046875
+          },
+          {
+            "step": 4000,
+            "maxvio": 2.125
+          },
+          {
+            "step": 5000,
+            "maxvio": 1.78125
+          }
+        ]
+      }
+    ],
+    "bias_update_speed": 0.0,
+    "sequence_wise_loss_coeff": 0.001,
+    "router_z_loss_coeff": 0.0001,
+    "router_z_note": "Printed 0.0000 due four-decimal formatting; TensorBoard has positive ~1.5e-5 to 2.5e-5 throughout.",
+    "interpretation": "Cross-layer mean imbalance improves after early peak, but worst layers remain concentrated (layer34 at step5000 maxvio6.5 = peak load7.5x mean). Bias correction is disabled by configured speed0; sequence-wise balancing remains active. Requires evaluation and a controlled routing-balance ablation before a hyperparameter change.",
+    "evidence": [
+      "lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:1124",
+      "lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:1137",
+      "lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:1163",
+      "logs/robotwin_1ep_fast/lingbotvla_cli.yaml:132"
+    ]
+  },
+  "periodic_slow_steps": {
+    "moe_monitor_interval": 1000,
+    "observations": [
+      {
+        "monitor_step": 1000,
+        "next_step": 1001,
+        "next_step_time_seconds": 13.91486120223999,
+        "wall_gap_seconds": 14.0
+      },
+      {
+        "monitor_step": 2000,
+        "next_step": 2001,
+        "next_step_time_seconds": 13.029909133911133,
+        "wall_gap_seconds": 14.0
+      },
+      {
+        "monitor_step": 3000,
+        "next_step": 3001,
+        "next_step_time_seconds": 13.179650068283081,
+        "wall_gap_seconds": 14.0
+      },
+      {
+        "monitor_step": 4000,
+        "next_step": 4001,
+        "next_step_time_seconds": 13.035688400268555,
+        "wall_gap_seconds": 13.0
+      },
+      {
+        "monitor_step": 5000,
+        "next_step": 5001,
+        "next_step_time_seconds": 7.650349140167236,
+        "wall_gap_seconds": 16.0
+      }
+    ],
+    "assessment": "Timing aligns with every-1000-step MoE per-layer histograms/bar charts; step5000 also has video visualization. This is strong temporal/code correlation, not a profiled attribution. Plotting is after the step timer; accounting and rank waits can affect the next step. Short periodic overhead, not evidence of optimizer instability.",
+    "evidence": [
+      "tasks/vla/train_lingbotvla.py:1073",
+      "tasks/vla/train_lingbotvla.py:1125",
+      "tasks/vla/train_lingbotvla.py:1185"
+    ]
+  },
+  "performance_warnings": {
+    "cpu_linalg_inverse": {
+      "count": 1,
+      "evidence": "logs/robotwin_1ep_fast/train.log:1912"
+    },
+    "integer_argsort_aicpu": {
+      "count": 1,
+      "evidence": "logs/robotwin_1ep_fast/train.log:1913"
+    },
+    "unsupported_autocast_dtype": {
+      "count": 10,
+      "interpretation": "Scoped autocast warnings, does not establish that entire model mixed precision was disabled; FP32 autocast contexts exist in MoGe code."
+    },
+    "hccl_gather_uses_allgather": {
+      "count": 1,
+      "interpretation": "Compatibility fallback at save, checkpoint nevertheless completed."
+    },
+    "optional_pi0_import_missing_lerobot_common": {
+      "count": 16,
+      "interpretation": "Unused optional pi0 registration warnings; running LingBotVLA model completed."
+    }
+  }
+}

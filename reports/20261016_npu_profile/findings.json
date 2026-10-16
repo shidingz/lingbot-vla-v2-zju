@@ -1,0 +1,78 @@
+{
+  "profile_steps_per_rank": 4,
+  "rank_count": 8,
+  "profiled_host_step_mean_seconds": 9.2183422546875,
+  "phase_wall_times": [
+    {
+      "phase": "train.backward",
+      "mean_seconds": 5.1965324278125,
+      "min_seconds": 5.192829585000001,
+      "max_seconds": 5.2005407775,
+      "share_pct": 56.37165863710558
+    },
+    {
+      "phase": "train.forward",
+      "mean_seconds": 2.4206032646875,
+      "min_seconds": 2.4082685175000007,
+      "max_seconds": 2.4646647975,
+      "share_pct": 26.25855276155136
+    },
+    {
+      "phase": "train.optimizer",
+      "mean_seconds": 0.8685942903125,
+      "min_seconds": 0.83881384,
+      "max_seconds": 0.8828455650000001,
+      "share_pct": 9.422456514573675
+    },
+    {
+      "phase": "train.teachers",
+      "mean_seconds": 0.5454164815625,
+      "min_seconds": 0.52889526,
+      "max_seconds": 0.555387375,
+      "share_pct": 5.916643866039551
+    },
+    {
+      "phase": "train.clip_grad",
+      "mean_seconds": 0.08317073375,
+      "min_seconds": 0.07841865,
+      "max_seconds": 0.08769289749999999,
+      "share_pct": 0.9022309158428993
+    },
+    {
+      "phase": "train.data_wait",
+      "mean_seconds": 0.0009120190625,
+      "min_seconds": 0.0007231399999999999,
+      "max_seconds": 0.00113794,
+      "share_pct": 0.009893525726236092
+    },
+    {
+      "phase": "train.h2d",
+      "mean_seconds": 0.001064023125,
+      "min_seconds": 0.0009686925,
+      "max_seconds": 0.0011765274999999999,
+      "share_pct": 0.011542456285553376
+    },
+    {
+      "phase": "train.metrics_reduce",
+      "mean_seconds": 0.0011265975,
+      "min_seconds": 0.0010882874999999998,
+      "max_seconds": 0.0011854425,
+      "share_pct": 0.012221259190361787
+    }
+  ],
+  "moe_forward_plus_recompute_mean_seconds": 2.4803035940625,
+  "device_time_mean_seconds": {
+    "Computing": 1.9222963949999985,
+    "Communication(Not Overlapped)": 1.2369728548126224,
+    "Communication": 1.732031712,
+    "Free": 6.056781242934345,
+    "Stage": 9.2161719609375
+  },
+  "important_limits": [
+    "Host scopes include scheduling, execution and waiting; communication overlaps these scopes.",
+    "MoE scope is a subset of forward/backward, not an additional phase.",
+    "Profiler increases step time by ~30%; absolute profile timings must not be treated as unprofiled timing.",
+    "Device Free is a timeline category; it does not identify the host cause by itself.",
+    "Only four profiled steps per rank; no epoch-wide or task-success claim."
+  ]
+}

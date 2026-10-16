@@ -1,0 +1,8 @@
+{
+  "launched_at": "2026-10-16T19:34:43.812662+08:00",
+  "tmux_session": "lingbot_5ep_optimized",
+  "run_name": "robotwin_5ep_optimized_20261016",
+  "launch_script": "/home/ma-user/work/lingbot-vla-v2/reports/launch_robotwin_5ep_optimized_20261016/start_training.sh",
+  "log": "/home/ma-user/work/lingbot-vla-v2/logs/robotwin_5ep_optimized_20261016/train.log",
+  "epochs": 5
+}

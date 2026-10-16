@@ -1,0 +1,993 @@
+{
+  "created_at": "2026-10-16T19:56:52.375711+08:00",
+  "archive_root": "experiments/npu_20261016",
+  "source_root": "/cache/lingbot/profiling",
+  "copy_policy": "Byte-identical copies; originals retained. No raw native profiler traces, checkpoint weights, tokenizer bundles or source snapshots copied.",
+  "files": [
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/moe_optimization_20261016/ab/gmm/console.log",
+      "repository_relative_path": "experiments/npu_20261016/moe_optimization_20261016/ab/gmm/console.log",
+      "archive_relative_path": "moe_optimization_20261016/ab/gmm/console.log",
+      "sha256": "08b6db4a43d1569414e8147c96ad75606552d370f446a685c47c61e91fc0f990",
+      "bytes": 198780
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/moe_optimization_20261016/ab/gmm/exit_code",
+      "repository_relative_path": "experiments/npu_20261016/moe_optimization_20261016/ab/gmm/exit_code",
+      "archive_relative_path": "moe_optimization_20261016/ab/gmm/exit_code",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/moe_optimization_20261016/ab/gmm/logs/lingbotvla_cli.yaml",
+      "repository_relative_path": "experiments/npu_20261016/moe_optimization_20261016/ab/gmm/logs/lingbotvla_cli.yaml",
+      "archive_relative_path": "moe_optimization_20261016/ab/gmm/logs/lingbotvla_cli.yaml",
+      "sha256": "18aa46dfaeeeb4ce39761b6084aff0d3f9a31adae0007ed22f7457ef7dafd322",
+      "bytes": 7085
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/moe_optimization_20261016/ab/gmm/logs/loss.jsonl",
+      "repository_relative_path": "experiments/npu_20261016/moe_optimization_20261016/ab/gmm/logs/loss.jsonl",
+      "archive_relative_path": "moe_optimization_20261016/ab/gmm/logs/loss.jsonl",
+      "sha256": "faada01367b1395706130c78cc7468c8bfab15506831bc6a27a9733340f9cee6",
+      "bytes": 12774
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/moe_optimization_20261016/ab/gmm/logs/train.log",
+      "repository_relative_path": "experiments/npu_20261016/moe_optimization_20261016/ab/gmm/logs/train.log",
+      "archive_relative_path": "moe_optimization_20261016/ab/gmm/logs/train.log",
+      "sha256": "5047153e04aaf9b82d1657a1a69839a11baea8329c15d27008e93a7fe89a1b5e",
+      "bytes": 197265
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/moe_optimization_20261016/ab/gmm/moe_backend.txt",
+      "repository_relative_path": "experiments/npu_20261016/moe_optimization_20261016/ab/gmm/moe_backend.txt",
+      "archive_relative_path": "moe_optimization_20261016/ab/gmm/moe_backend.txt",
+      "sha256": "178c7aa60af46a79c0fa71130c221f8053f8b52630aedd5959fde093d0320a1b",
+      "bytes": 4
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/moe_optimization_20261016/ab/gmm/profile_robotwin_npu.snapshot.sh",
+      "repository_relative_path": "experiments/npu_20261016/moe_optimization_20261016/ab/gmm/profile_robotwin_npu.snapshot.sh",
+      "archive_relative_path": "moe_optimization_20261016/ab/gmm/profile_robotwin_npu.snapshot.sh",
+      "sha256": "27d3bffe8f6d1eef51a3c74d96128fadd320c67112eac75351e7c8ff594182e3",
+      "bytes": 1501
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/moe_optimization_20261016/ab/gmm/profile_root.txt",
+      "repository_relative_path": "experiments/npu_20261016/moe_optimization_20261016/ab/gmm/profile_root.txt",
+      "archive_relative_path": "moe_optimization_20261016/ab/gmm/profile_root.txt",
+      "sha256": "7e7bbcd7ddba16bf594aac7529055409bcca757bccd0f6a5eb5044d877899311",
+      "bytes": 58
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/moe_optimization_20261016/ab/gmm/run/data_source.json",
+      "repository_relative_path": "experiments/npu_20261016/moe_optimization_20261016/ab/gmm/run/data_source.json",
+      "archive_relative_path": "moe_optimization_20261016/ab/gmm/run/data_source.json",
+      "sha256": "bf03c8edf00f05adb1cdc39d549992dd86625039130abcf0294774b443638cf5",
+      "bytes": 472
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/moe_optimization_20261016/ab/gmm/run/lingbotvla_cli.yaml",
+      "repository_relative_path": "experiments/npu_20261016/moe_optimization_20261016/ab/gmm/run/lingbotvla_cli.yaml",
+      "archive_relative_path": "moe_optimization_20261016/ab/gmm/run/lingbotvla_cli.yaml",
+      "sha256": "18aa46dfaeeeb4ce39761b6084aff0d3f9a31adae0007ed22f7457ef7dafd322",
+      "bytes": 7085
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/moe_optimization_20261016/ab/gmm/run/train_robotwin.txt",
+      "repository_relative_path": "experiments/npu_20261016/moe_optimization_20261016/ab/gmm/run/train_robotwin.txt",
+      "archive_relative_path": "moe_optimization_20261016/ab/gmm/run/train_robotwin.txt",
+      "sha256": "aef479efd1f2b7ecf12812351c446b722090f313179205cc7ac323f100611beb",
+      "bytes": 59
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/moe_optimization_20261016/ab/gmm/train_robotwin_npu.snapshot.sh",
+      "repository_relative_path": "experiments/npu_20261016/moe_optimization_20261016/ab/gmm/train_robotwin_npu.snapshot.sh",
+      "archive_relative_path": "moe_optimization_20261016/ab/gmm/train_robotwin_npu.snapshot.sh",
+      "sha256": "c1cc67d7615c0baaf5dd547d8a1b12db8379b0e8178f8647bae7d21a271d3635",
+      "bytes": 17169
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/moe_optimization_20261016/ab/resources.jsonl",
+      "repository_relative_path": "experiments/npu_20261016/moe_optimization_20261016/ab/resources.jsonl",
+      "archive_relative_path": "moe_optimization_20261016/ab/resources.jsonl",
+      "sha256": "4874c90d56128e84f01a60ebcbb5fe89c83a50cd1cd9e490eaa4a1bbaa071c06",
+      "bytes": 324546
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/moe_optimization_20261016/ab/torch/console.log",
+      "repository_relative_path": "experiments/npu_20261016/moe_optimization_20261016/ab/torch/console.log",
+      "archive_relative_path": "moe_optimization_20261016/ab/torch/console.log",
+      "sha256": "2786f0bf6d9aaacb6705b38c30cbd407aeff7da8779c64a2df0c7cd9717c06de",
+      "bytes": 196252
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/moe_optimization_20261016/ab/torch/exit_code",
+      "repository_relative_path": "experiments/npu_20261016/moe_optimization_20261016/ab/torch/exit_code",
+      "archive_relative_path": "moe_optimization_20261016/ab/torch/exit_code",
+      "sha256": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3",
+      "bytes": 2
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/moe_optimization_20261016/ab/torch/logs/lingbotvla_cli.yaml",
+      "repository_relative_path": "experiments/npu_20261016/moe_optimization_20261016/ab/torch/logs/lingbotvla_cli.yaml",
+      "archive_relative_path": "moe_optimization_20261016/ab/torch/logs/lingbotvla_cli.yaml",
+      "sha256": "a93bd4de6774de602ddf6d8ca0478abe313f9ca6fbc2ff551a75afe252b2d4b5",
+      "bytes": 7090
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/moe_optimization_20261016/ab/torch/logs/loss.jsonl",
+      "repository_relative_path": "experiments/npu_20261016/moe_optimization_20261016/ab/torch/logs/loss.jsonl",
+      "archive_relative_path": "moe_optimization_20261016/ab/torch/logs/loss.jsonl",
+      "sha256": "1cdb5be53af1a94d5c865cd6917d15a650c8e10f889e8df58850178ccf6e41a6",
+      "bytes": 12783
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/moe_optimization_20261016/ab/torch/logs/train.log",
+      "repository_relative_path": "experiments/npu_20261016/moe_optimization_20261016/ab/torch/logs/train.log",
+      "archive_relative_path": "moe_optimization_20261016/ab/torch/logs/train.log",
+      "sha256": "3fc29aea02dd3ea3edcef55ab0f8dc0a9cea6eaeca113a18892c205220cf7ae6",
+      "bytes": 194852
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/moe_optimization_20261016/ab/torch/moe_backend.txt",
+      "repository_relative_path": "experiments/npu_20261016/moe_optimization_20261016/ab/torch/moe_backend.txt",
+      "archive_relative_path": "moe_optimization_20261016/ab/torch/moe_backend.txt",
+      "sha256": "6647b8314a965c8c1c888a358ad46dcd51955fdad5bc439a26fe0efd6aca8933",
+      "bytes": 6
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/moe_optimization_20261016/ab/torch/profile_root.txt",
+      "repository_relative_path": "experiments/npu_20261016/moe_optimization_20261016/ab/torch/profile_root.txt",
+      "archive_relative_path": "moe_optimization_20261016/ab/torch/profile_root.txt",
+      "sha256": "b60448b8ac5c162a87e6cb9cadb4962bca2dc1c85e8119d9b7f79bc74813f48d",
+      "bytes": 60
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/moe_optimization_20261016/ab/torch/run/data_source.json",
+      "repository_relative_path": "experiments/npu_20261016/moe_optimization_20261016/ab/torch/run/data_source.json",
+      "archive_relative_path": "moe_optimization_20261016/ab/torch/run/data_source.json",
+      "sha256": "bf03c8edf00f05adb1cdc39d549992dd86625039130abcf0294774b443638cf5",
+      "bytes": 472
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/moe_optimization_20261016/ab/torch/run/lingbotvla_cli.yaml",
+      "repository_relative_path": "experiments/npu_20261016/moe_optimization_20261016/ab/torch/run/lingbotvla_cli.yaml",
+      "archive_relative_path": "moe_optimization_20261016/ab/torch/run/lingbotvla_cli.yaml",
+      "sha256": "a93bd4de6774de602ddf6d8ca0478abe313f9ca6fbc2ff551a75afe252b2d4b5",
+      "bytes": 7090
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/moe_optimization_20261016/ab/torch/run/train_robotwin.txt",
+      "repository_relative_path": "experiments/npu_20261016/moe_optimization_20261016/ab/torch/run/train_robotwin.txt",
+      "archive_relative_path": "moe_optimization_20261016/ab/torch/run/train_robotwin.txt",
+      "sha256": "aef479efd1f2b7ecf12812351c446b722090f313179205cc7ac323f100611beb",
+      "bytes": 59
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/moe_optimization_20261016/ab/torch/training_completion.json",
+      "repository_relative_path": "experiments/npu_20261016/moe_optimization_20261016/ab/torch/training_completion.json",
+      "archive_relative_path": "moe_optimization_20261016/ab/torch/training_completion.json",
+      "sha256": "2fec9ecff64d54347955b613c62c0c3e0e0670b625222e4e6394c526d6202865",
+      "bytes": 580
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/moe_optimization_20261016/ab_driver.log",
+      "repository_relative_path": "experiments/npu_20261016/moe_optimization_20261016/ab_driver.log",
+      "archive_relative_path": "moe_optimization_20261016/ab_driver.log",
+      "sha256": "40b7f94a27390d9297a886acbc1c105285b7a7ffab9f9e078088b0638ae4c244",
+      "bytes": 24127
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/moe_optimization_20261016/analysis_driver.log",
+      "repository_relative_path": "experiments/npu_20261016/moe_optimization_20261016/analysis_driver.log",
+      "archive_relative_path": "moe_optimization_20261016/analysis_driver.log",
+      "sha256": "b3aa4689bc44e7ac7c791f05d98dc89809d30262abd808cb719267280acc5cf4",
+      "bytes": 1750
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/moe_optimization_20261016/fsdp_check.log",
+      "repository_relative_path": "experiments/npu_20261016/moe_optimization_20261016/fsdp_check.log",
+      "archive_relative_path": "moe_optimization_20261016/fsdp_check.log",
+      "sha256": "c95cab73257c683d294d42fa9e5996112489ff2b34b2f4708ea35a783b82d802",
+      "bytes": 19978
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/moe_optimization_20261016/gmm_driver.log",
+      "repository_relative_path": "experiments/npu_20261016/moe_optimization_20261016/gmm_driver.log",
+      "archive_relative_path": "moe_optimization_20261016/gmm_driver.log",
+      "sha256": "00504d20394537a97966993d53b92a0947b5f35a6dabc7c54571d232fec42be9",
+      "bytes": 76
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/moe_optimization_20261016/numerics.log",
+      "repository_relative_path": "experiments/npu_20261016/moe_optimization_20261016/numerics.log",
+      "archive_relative_path": "moe_optimization_20261016/numerics.log",
+      "sha256": "cb5ddfbd76d54ea5ae39932ad9b2ea2174968768ad1d0259dd82da12e9275266",
+      "bytes": 5189
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/robotwin_20261016_1530/analyze.log",
+      "repository_relative_path": "experiments/npu_20261016/robotwin_20261016_1530/analyze.log",
+      "archive_relative_path": "robotwin_20261016_1530/analyze.log",
+      "sha256": "fca75aee05e9b0118128fa0250e481b124c8810a91910b29e737db2a38626909",
+      "bytes": 323
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/robotwin_20261016_1530/console.log",
+      "repository_relative_path": "experiments/npu_20261016/robotwin_20261016_1530/console.log",
+      "archive_relative_path": "robotwin_20261016_1530/console.log",
+      "sha256": "1b934618d0089edf3647c22edda63875b2630f718a570e86b617c204ac0f9740",
+      "bytes": 200643
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/robotwin_20261016_1530/gmm_probe.log",
+      "repository_relative_path": "experiments/npu_20261016/robotwin_20261016_1530/gmm_probe.log",
+      "archive_relative_path": "robotwin_20261016_1530/gmm_probe.log",
+      "sha256": "052b69396d83f9f4a2b981d2a1d94d0f9a0747384db6528a9833102d9e4f65ee",
+      "bytes": 5291
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/robotwin_20261016_1530/logs/lingbotvla_cli.yaml",
+      "repository_relative_path": "experiments/npu_20261016/robotwin_20261016_1530/logs/lingbotvla_cli.yaml",
+      "archive_relative_path": "robotwin_20261016_1530/logs/lingbotvla_cli.yaml",
+      "sha256": "07c9de80afff9421b0c2659c3404e36b47d5c4f28634acaacd71ad21c03a1c48",
+      "bytes": 7055
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/robotwin_20261016_1530/logs/loss.jsonl",
+      "repository_relative_path": "experiments/npu_20261016/robotwin_20261016_1530/logs/loss.jsonl",
+      "archive_relative_path": "robotwin_20261016_1530/logs/loss.jsonl",
+      "sha256": "012eb8cfaf560490e687234609ff0f84b166763648034850b766e48a2c2cf0d4",
+      "bytes": 6386
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/robotwin_20261016_1530/logs/train.log",
+      "repository_relative_path": "experiments/npu_20261016/robotwin_20261016_1530/logs/train.log",
+      "archive_relative_path": "robotwin_20261016_1530/logs/train.log",
+      "sha256": "04463dc3d310a90c2c18b63a9d7e2dba37b730be91d621c41ac9f749abd81965",
+      "bytes": 199185
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/robotwin_20261016_1530/moe_benchmark.log",
+      "repository_relative_path": "experiments/npu_20261016/robotwin_20261016_1530/moe_benchmark.log",
+      "archive_relative_path": "robotwin_20261016_1530/moe_benchmark.log",
+      "sha256": "0fea352838adcda9dc9605374378d8ead0e9a786aa5af20fba86e7a9908cf905",
+      "bytes": 5108
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/robotwin_20261016_1530/moe_dynamic.log",
+      "repository_relative_path": "experiments/npu_20261016/robotwin_20261016_1530/moe_dynamic.log",
+      "archive_relative_path": "robotwin_20261016_1530/moe_dynamic.log",
+      "sha256": "862629c2868787fa9b25c859902c0ee42d6dfa1bd5a183b3762ecd37a0ee4ae8",
+      "bytes": 5238
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/robotwin_20261016_1530/moe_gmm_benchmark.log",
+      "repository_relative_path": "experiments/npu_20261016/robotwin_20261016_1530/moe_gmm_benchmark.log",
+      "archive_relative_path": "robotwin_20261016_1530/moe_gmm_benchmark.log",
+      "sha256": "f46c4ccae81536d2521236353de93854fa1231c6da84967e2a65f39bb13eba3b",
+      "bytes": 5237
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/robotwin_20261016_1530/moe_sparse.log",
+      "repository_relative_path": "experiments/npu_20261016/robotwin_20261016_1530/moe_sparse.log",
+      "archive_relative_path": "robotwin_20261016_1530/moe_sparse.log",
+      "sha256": "0239dc69e0e3ce0a4fb36c97010ed318b44b2a2e53079ea93ffffcbadf4d4a3f",
+      "bytes": 5235
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/robotwin_20261016_1530/profile_root.txt",
+      "repository_relative_path": "experiments/npu_20261016/robotwin_20261016_1530/profile_root.txt",
+      "archive_relative_path": "robotwin_20261016_1530/profile_root.txt",
+      "sha256": "df5495666682fd77b500ebb95bf19bb5aca508f3d3d82e3b711d8758a6832032",
+      "bytes": 48
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/robotwin_20261016_1530/pyspy_rank0.log",
+      "repository_relative_path": "experiments/npu_20261016/robotwin_20261016_1530/pyspy_rank0.log",
+      "archive_relative_path": "robotwin_20261016_1530/pyspy_rank0.log",
+      "sha256": "3224cba6f9d5063e2b0ed4a9cd0d7b4f6f150dd74d5f2e4adbf5b0fa09f62bbf",
+      "bytes": 14828
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/robotwin_20261016_1530/rank0_cpu_speedscope.json",
+      "repository_relative_path": "experiments/npu_20261016/robotwin_20261016_1530/rank0_cpu_speedscope.json",
+      "archive_relative_path": "robotwin_20261016_1530/rank0_cpu_speedscope.json",
+      "sha256": "7d124ad04de24620835463759a001ea479ced9593c9af54e727985324401790a",
+      "bytes": 73602
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/robotwin_20261016_1530/resources.jsonl",
+      "repository_relative_path": "experiments/npu_20261016/robotwin_20261016_1530/resources.jsonl",
+      "archive_relative_path": "robotwin_20261016_1530/resources.jsonl",
+      "sha256": "2d5e8e67cc5860679451f27909c7ec26cce9a3c47d5e8a626aefa412341471d3",
+      "bytes": 169197
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/robotwin_20261016_1530/run/data_source.json",
+      "repository_relative_path": "experiments/npu_20261016/robotwin_20261016_1530/run/data_source.json",
+      "archive_relative_path": "robotwin_20261016_1530/run/data_source.json",
+      "sha256": "bf03c8edf00f05adb1cdc39d549992dd86625039130abcf0294774b443638cf5",
+      "bytes": 472
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/robotwin_20261016_1530/run/lingbotvla_cli.yaml",
+      "repository_relative_path": "experiments/npu_20261016/robotwin_20261016_1530/run/lingbotvla_cli.yaml",
+      "archive_relative_path": "robotwin_20261016_1530/run/lingbotvla_cli.yaml",
+      "sha256": "07c9de80afff9421b0c2659c3404e36b47d5c4f28634acaacd71ad21c03a1c48",
+      "bytes": 7055
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/robotwin_20261016_1530/run/train_robotwin.txt",
+      "repository_relative_path": "experiments/npu_20261016/robotwin_20261016_1530/run/train_robotwin.txt",
+      "archive_relative_path": "robotwin_20261016_1530/run/train_robotwin.txt",
+      "sha256": "aef479efd1f2b7ecf12812351c446b722090f313179205cc7ac323f100611beb",
+      "bytes": 59
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/round2_default_20261016_185821/default_160/console.log",
+      "repository_relative_path": "experiments/npu_20261016/round2_default_20261016_185821/default_160/console.log",
+      "archive_relative_path": "round2_default_20261016_185821/default_160/console.log",
+      "sha256": "2139905cf4486300c62cef071e51e9f2013dc19aaedc885c42d0eb8799bba9cc",
+      "bytes": 266577
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/round2_default_20261016_185821/default_160/default_dry_run.log",
+      "repository_relative_path": "experiments/npu_20261016/round2_default_20261016_185821/default_160/default_dry_run.log",
+      "archive_relative_path": "round2_default_20261016_185821/default_160/default_dry_run.log",
+      "sha256": "47ed568778182f3ea02f86393af514fee302883cc7d25e34c9183198dd55406b",
+      "bytes": 3083
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/round2_default_20261016_185821/default_160/exit_code",
+      "repository_relative_path": "experiments/npu_20261016/round2_default_20261016_185821/default_160/exit_code",
+      "archive_relative_path": "round2_default_20261016_185821/default_160/exit_code",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/round2_default_20261016_185821/default_160/experiment_manifest.json",
+      "repository_relative_path": "experiments/npu_20261016/round2_default_20261016_185821/default_160/experiment_manifest.json",
+      "archive_relative_path": "round2_default_20261016_185821/default_160/experiment_manifest.json",
+      "sha256": "c5260155f45375db5b002dd6a65243b300f6303b2d3d86536d94680252963eda",
+      "bytes": 49082
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/round2_default_20261016_185821/default_160/logs/lingbotvla_cli.yaml",
+      "repository_relative_path": "experiments/npu_20261016/round2_default_20261016_185821/default_160/logs/lingbotvla_cli.yaml",
+      "archive_relative_path": "round2_default_20261016_185821/default_160/logs/lingbotvla_cli.yaml",
+      "sha256": "64ab6ab6486e47e9a6aeba77dfd0f916ed4c51b3441ad1b03f510ebf7c4f646d",
+      "bytes": 7113
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/round2_default_20261016_185821/default_160/logs/loss.jsonl",
+      "repository_relative_path": "experiments/npu_20261016/round2_default_20261016_185821/default_160/logs/loss.jsonl",
+      "archive_relative_path": "round2_default_20261016_185821/default_160/logs/loss.jsonl",
+      "sha256": "aa8509cfbc75af07416fda129c0bc792ecbb43e406b584488021477c2b999e7d",
+      "bytes": 51477
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/round2_default_20261016_185821/default_160/logs/train.log",
+      "repository_relative_path": "experiments/npu_20261016/round2_default_20261016_185821/default_160/logs/train.log",
+      "archive_relative_path": "round2_default_20261016_185821/default_160/logs/train.log",
+      "sha256": "ab4890551c2bd8e372111a250baebad2f1cf8591a47c441443d4991272fc8c3c",
+      "bytes": 264799
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/round2_default_20261016_185821/default_160/resource_samples.jsonl",
+      "repository_relative_path": "experiments/npu_20261016/round2_default_20261016_185821/default_160/resource_samples.jsonl",
+      "archive_relative_path": "round2_default_20261016_185821/default_160/resource_samples.jsonl",
+      "sha256": "6783017fe9d883372c29067806e27b68b08cf3a6ad551d9641b83734c0ddb8da",
+      "bytes": 123491
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/round2_default_20261016_185821/default_160/run/data_source.json",
+      "repository_relative_path": "experiments/npu_20261016/round2_default_20261016_185821/default_160/run/data_source.json",
+      "archive_relative_path": "round2_default_20261016_185821/default_160/run/data_source.json",
+      "sha256": "658d10f52a6ee5249d62ba62ce4ef351227091b65aee8be5e8704dcecfcb7c30",
+      "bytes": 501
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/round2_default_20261016_185821/default_160/run/lingbotvla_cli.yaml",
+      "repository_relative_path": "experiments/npu_20261016/round2_default_20261016_185821/default_160/run/lingbotvla_cli.yaml",
+      "archive_relative_path": "round2_default_20261016_185821/default_160/run/lingbotvla_cli.yaml",
+      "sha256": "64ab6ab6486e47e9a6aeba77dfd0f916ed4c51b3441ad1b03f510ebf7c4f646d",
+      "bytes": 7113
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/round2_default_20261016_185821/default_160/run/train_robotwin.txt",
+      "repository_relative_path": "experiments/npu_20261016/round2_default_20261016_185821/default_160/run/train_robotwin.txt",
+      "archive_relative_path": "round2_default_20261016_185821/default_160/run/train_robotwin.txt",
+      "sha256": "aef479efd1f2b7ecf12812351c446b722090f313179205cc7ac323f100611beb",
+      "bytes": 59
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/adamw_foreach/console.log",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/adamw_foreach/console.log",
+      "archive_relative_path": "speed_round2_20261016/adamw_foreach/console.log",
+      "sha256": "90107ede21107b830f96808c2cfe9744d0640a9438372ab8763ed7fde0b4d475",
+      "bytes": 211738
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/adamw_foreach/exit_code",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/adamw_foreach/exit_code",
+      "archive_relative_path": "speed_round2_20261016/adamw_foreach/exit_code",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/adamw_foreach/experiment_manifest.json",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/adamw_foreach/experiment_manifest.json",
+      "archive_relative_path": "speed_round2_20261016/adamw_foreach/experiment_manifest.json",
+      "sha256": "c60be7e6de05a06ec48da8d16e7e116f8f4a2fdcb9fbe9c78f49816be09b6d1d",
+      "bytes": 40104
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/adamw_foreach/logs/lingbotvla_cli.yaml",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/adamw_foreach/logs/lingbotvla_cli.yaml",
+      "archive_relative_path": "speed_round2_20261016/adamw_foreach/logs/lingbotvla_cli.yaml",
+      "sha256": "6a9f5c12131967d474bab3790097f02c62fd89128ff306a638cdeb9955f53654",
+      "bytes": 7093
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/adamw_foreach/logs/loss.jsonl",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/adamw_foreach/logs/loss.jsonl",
+      "archive_relative_path": "speed_round2_20261016/adamw_foreach/logs/loss.jsonl",
+      "sha256": "ecc81d346880d52c9fd45433ac70400f0218b3d20039fbd9b5e3397414a30d95",
+      "bytes": 19136
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/adamw_foreach/logs/train.log",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/adamw_foreach/logs/train.log",
+      "archive_relative_path": "speed_round2_20261016/adamw_foreach/logs/train.log",
+      "sha256": "e74a5c833e35236f1049d661ff9e61fbf0fd049238eb2e80e4891b9f420f3c11",
+      "bytes": 210186
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/adamw_foreach/profile_root.txt",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/adamw_foreach/profile_root.txt",
+      "archive_relative_path": "speed_round2_20261016/adamw_foreach/profile_root.txt",
+      "sha256": "70b5fe1c5cca01a1321c232d69ea89691fe673e5c860d8e8d3deed288860356d",
+      "bytes": 61
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/adamw_foreach/resource_samples.jsonl",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/adamw_foreach/resource_samples.jsonl",
+      "archive_relative_path": "speed_round2_20261016/adamw_foreach/resource_samples.jsonl",
+      "sha256": "de20bb7973c5cdff13709199d6ba6e8039dca86633b29b0c92c626c51885f8f2",
+      "bytes": 83726
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/adamw_foreach/run/data_source.json",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/adamw_foreach/run/data_source.json",
+      "archive_relative_path": "speed_round2_20261016/adamw_foreach/run/data_source.json",
+      "sha256": "2eede67ae6d52f1c93f83b30b123114f0bd383b6daf79f7fad9350a4f43d6596",
+      "bytes": 484
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/adamw_foreach/run/lingbotvla_cli.yaml",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/adamw_foreach/run/lingbotvla_cli.yaml",
+      "archive_relative_path": "speed_round2_20261016/adamw_foreach/run/lingbotvla_cli.yaml",
+      "sha256": "6a9f5c12131967d474bab3790097f02c62fd89128ff306a638cdeb9955f53654",
+      "bytes": 7093
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/adamw_foreach/run/train_robotwin.txt",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/adamw_foreach/run/train_robotwin.txt",
+      "archive_relative_path": "speed_round2_20261016/adamw_foreach/run/train_robotwin.txt",
+      "sha256": "aef479efd1f2b7ecf12812351c446b722090f313179205cc7ac323f100611beb",
+      "bytes": 59
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/attention/console.log",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/attention/console.log",
+      "archive_relative_path": "speed_round2_20261016/attention/console.log",
+      "sha256": "fa1e65f5448db11e0a59364122b47ac0204edcbfe8c034460b31311a25d9b0f4",
+      "bytes": 210750
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/attention/exit_code",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/attention/exit_code",
+      "archive_relative_path": "speed_round2_20261016/attention/exit_code",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/attention/experiment_manifest.json",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/attention/experiment_manifest.json",
+      "archive_relative_path": "speed_round2_20261016/attention/experiment_manifest.json",
+      "sha256": "998d5661c69e10ec9a3f7022d2fbac4657bd03484508552f00231b28d21cac91",
+      "bytes": 40232
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/attention/logs/lingbotvla_cli.yaml",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/attention/logs/lingbotvla_cli.yaml",
+      "archive_relative_path": "speed_round2_20261016/attention/logs/lingbotvla_cli.yaml",
+      "sha256": "1a26b707b35e0d4d3e0f55e24c28f69b168cd8b72bfd2027314f9523d19d2df6",
+      "bytes": 7081
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/attention/logs/loss.jsonl",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/attention/logs/loss.jsonl",
+      "archive_relative_path": "speed_round2_20261016/attention/logs/loss.jsonl",
+      "sha256": "8e06c23107f8f4fda2614024b61957bd0440ce852492220352e745059ad03671",
+      "bytes": 19145
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/attention/logs/train.log",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/attention/logs/train.log",
+      "archive_relative_path": "speed_round2_20261016/attention/logs/train.log",
+      "sha256": "426f2234fa22ce01576f51a416c7524f2b30c74ebb0632a1476b1633b9a6808c",
+      "bytes": 209218
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/attention/profile_root.txt",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/attention/profile_root.txt",
+      "archive_relative_path": "speed_round2_20261016/attention/profile_root.txt",
+      "sha256": "c49aae05af762084027dfa469e09bbd48de39822cc7115a1e41819ddd78bdef2",
+      "bytes": 57
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/attention/resource_samples.jsonl",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/attention/resource_samples.jsonl",
+      "archive_relative_path": "speed_round2_20261016/attention/resource_samples.jsonl",
+      "sha256": "24f34b17d6ea54cb4ed9655bb38c824ff838aec0a748ad3a420dfbc1637b28e1",
+      "bytes": 88318
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/attention/run/data_source.json",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/attention/run/data_source.json",
+      "archive_relative_path": "speed_round2_20261016/attention/run/data_source.json",
+      "sha256": "c34e50b56c3d279c5325c9b062870cbd426593b53029e09aef3ea223e7302c85",
+      "bytes": 488
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/attention/run/lingbotvla_cli.yaml",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/attention/run/lingbotvla_cli.yaml",
+      "archive_relative_path": "speed_round2_20261016/attention/run/lingbotvla_cli.yaml",
+      "sha256": "1a26b707b35e0d4d3e0f55e24c28f69b168cd8b72bfd2027314f9523d19d2df6",
+      "bytes": 7081
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/attention/run/train_robotwin.txt",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/attention/run/train_robotwin.txt",
+      "archive_relative_path": "speed_round2_20261016/attention/run/train_robotwin.txt",
+      "sha256": "aef479efd1f2b7ecf12812351c446b722090f313179205cc7ac323f100611beb",
+      "bytes": 59
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/baseline_repeat/console.log",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/baseline_repeat/console.log",
+      "archive_relative_path": "speed_round2_20261016/baseline_repeat/console.log",
+      "sha256": "eee7e75ef55a10ebfd5dde39c9c9a1643dc8c91374629d6e967b7775336bb9ba",
+      "bytes": 210773
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/baseline_repeat/exit_code",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/baseline_repeat/exit_code",
+      "archive_relative_path": "speed_round2_20261016/baseline_repeat/exit_code",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/baseline_repeat/experiment_manifest.json",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/baseline_repeat/experiment_manifest.json",
+      "archive_relative_path": "speed_round2_20261016/baseline_repeat/experiment_manifest.json",
+      "sha256": "86c87fad67c5a7013b550b30ec790d901fa36d605f4fe48fd9cdfaffc265b4e0",
+      "bytes": 40143
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/baseline_repeat/logs/lingbotvla_cli.yaml",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/baseline_repeat/logs/lingbotvla_cli.yaml",
+      "archive_relative_path": "speed_round2_20261016/baseline_repeat/logs/lingbotvla_cli.yaml",
+      "sha256": "b08c4aeaa122ed990c78ad0c5a7339022abf1f680b43a8cbe9030a03dbfc488a",
+      "bytes": 7099
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/baseline_repeat/logs/loss.jsonl",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/baseline_repeat/logs/loss.jsonl",
+      "archive_relative_path": "speed_round2_20261016/baseline_repeat/logs/loss.jsonl",
+      "sha256": "61071923d64c695814199cccfcb3349df3841834b7de55e782b66d7f9d4c3981",
+      "bytes": 19150
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/baseline_repeat/logs/train.log",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/baseline_repeat/logs/train.log",
+      "archive_relative_path": "speed_round2_20261016/baseline_repeat/logs/train.log",
+      "sha256": "37cdcb06e5b95cb4e3a2eed2a86e198748540dd37cdb4707b57ae27e8e889fdc",
+      "bytes": 209206
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/baseline_repeat/profile_root.txt",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/baseline_repeat/profile_root.txt",
+      "archive_relative_path": "speed_round2_20261016/baseline_repeat/profile_root.txt",
+      "sha256": "ceb86532ded53aa3a34c19e3e6b0681ebcc32bed00b04c2fe20d7f0bb1c52b68",
+      "bytes": 63
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/baseline_repeat/resource_samples.jsonl",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/baseline_repeat/resource_samples.jsonl",
+      "archive_relative_path": "speed_round2_20261016/baseline_repeat/resource_samples.jsonl",
+      "sha256": "b6776b0c9e33066b3cae3c26b78a7c6f7c0ab43cdc8fedcb35bf38c0b0c4a0d3",
+      "bytes": 88304
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/baseline_repeat/run/data_source.json",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/baseline_repeat/run/data_source.json",
+      "archive_relative_path": "speed_round2_20261016/baseline_repeat/run/data_source.json",
+      "sha256": "82e649269eb20e3b61ad3a2b9fb1d27a23d042c2fcedea0848f082487cb92609",
+      "bytes": 487
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/baseline_repeat/run/lingbotvla_cli.yaml",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/baseline_repeat/run/lingbotvla_cli.yaml",
+      "archive_relative_path": "speed_round2_20261016/baseline_repeat/run/lingbotvla_cli.yaml",
+      "sha256": "b08c4aeaa122ed990c78ad0c5a7339022abf1f680b43a8cbe9030a03dbfc488a",
+      "bytes": 7099
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/baseline_repeat/run/train_robotwin.txt",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/baseline_repeat/run/train_robotwin.txt",
+      "archive_relative_path": "speed_round2_20261016/baseline_repeat/run/train_robotwin.txt",
+      "sha256": "aef479efd1f2b7ecf12812351c446b722090f313179205cc7ac323f100611beb",
+      "bytes": 59
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/combined/console.log",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/combined/console.log",
+      "archive_relative_path": "speed_round2_20261016/combined/console.log",
+      "sha256": "33618413ff223316baa7a51057753eddf2ae0c0f04e21816f7965a54ec036042",
+      "bytes": 211893
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/combined/exit_code",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/combined/exit_code",
+      "archive_relative_path": "speed_round2_20261016/combined/exit_code",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/combined/experiment_manifest.json",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/combined/experiment_manifest.json",
+      "archive_relative_path": "speed_round2_20261016/combined/experiment_manifest.json",
+      "sha256": "acede0941a2571baafe690ade8b8c511726e589ff593f46256f225de5a4b53d0",
+      "bytes": 40582
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/combined/logs/lingbotvla_cli.yaml",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/combined/logs/lingbotvla_cli.yaml",
+      "archive_relative_path": "speed_round2_20261016/combined/logs/lingbotvla_cli.yaml",
+      "sha256": "b23fa4e193755180f6cc434a44ee5ab4f0750a03007c32e21cd7d6a763768e7a",
+      "bytes": 7078
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/combined/logs/loss.jsonl",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/combined/logs/loss.jsonl",
+      "archive_relative_path": "speed_round2_20261016/combined/logs/loss.jsonl",
+      "sha256": "c6ddbcecb2e60fe2e982d2ed95419e28e36ebd76d7f3dcf3bd761831885f0542",
+      "bytes": 19131
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/combined/logs/train.log",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/combined/logs/train.log",
+      "archive_relative_path": "speed_round2_20261016/combined/logs/train.log",
+      "sha256": "ca84fffb191e850cbd15021a9c272f9493bee0b0c45293006251f5e892bec082",
+      "bytes": 210368
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/combined/profile_root.txt",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/combined/profile_root.txt",
+      "archive_relative_path": "speed_round2_20261016/combined/profile_root.txt",
+      "sha256": "a78f90e2edb7c969fec27870b53a347997b1ecfaef4cd25c2fd80df00cb758fa",
+      "bytes": 56
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/combined/resource_samples.jsonl",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/combined/resource_samples.jsonl",
+      "archive_relative_path": "speed_round2_20261016/combined/resource_samples.jsonl",
+      "sha256": "33dbba3d5154982bb88583a62f3b4f245cfa464f28e745d327988369e73305d5",
+      "bytes": 83713
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/combined/run/data_source.json",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/combined/run/data_source.json",
+      "archive_relative_path": "speed_round2_20261016/combined/run/data_source.json",
+      "sha256": "58da0c5aa333e9e7163d293085d0faae07c9d007f29089c4ef35126c8e9572fc",
+      "bytes": 487
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/combined/run/lingbotvla_cli.yaml",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/combined/run/lingbotvla_cli.yaml",
+      "archive_relative_path": "speed_round2_20261016/combined/run/lingbotvla_cli.yaml",
+      "sha256": "b23fa4e193755180f6cc434a44ee5ab4f0750a03007c32e21cd7d6a763768e7a",
+      "bytes": 7078
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/combined/run/train_robotwin.txt",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/combined/run/train_robotwin.txt",
+      "archive_relative_path": "speed_round2_20261016/combined/run/train_robotwin.txt",
+      "sha256": "aef479efd1f2b7ecf12812351c446b722090f313179205cc7ac323f100611beb",
+      "bytes": 59
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/combined_no_checkpoint/console.log",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/combined_no_checkpoint/console.log",
+      "archive_relative_path": "speed_round2_20261016/combined_no_checkpoint/console.log",
+      "sha256": "d69115229da6b3695aa731f5639bc8125780d70cfb9ec8abf53f40e719e60e97",
+      "bytes": 211850
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/combined_no_checkpoint/exit_code",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/combined_no_checkpoint/exit_code",
+      "archive_relative_path": "speed_round2_20261016/combined_no_checkpoint/exit_code",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/combined_no_checkpoint/experiment_manifest.json",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/combined_no_checkpoint/experiment_manifest.json",
+      "archive_relative_path": "speed_round2_20261016/combined_no_checkpoint/experiment_manifest.json",
+      "sha256": "4ea2ee8bd7eda508a13034df9c380293b56ce9609fa6f5e649edf5e34b20a915",
+      "bytes": 40677
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/combined_no_checkpoint/logs/lingbotvla_cli.yaml",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/combined_no_checkpoint/logs/lingbotvla_cli.yaml",
+      "archive_relative_path": "speed_round2_20261016/combined_no_checkpoint/logs/lingbotvla_cli.yaml",
+      "sha256": "a70bfcea24180c0d3de72ca4eb2237e083f4fd268843dd870122c2ababa7c788",
+      "bytes": 7121
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/combined_no_checkpoint/logs/loss.jsonl",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/combined_no_checkpoint/logs/loss.jsonl",
+      "archive_relative_path": "speed_round2_20261016/combined_no_checkpoint/logs/loss.jsonl",
+      "sha256": "713eab711b25aba4125be44f0715020301dd4d7ea6e50da887a84ae1682d1962",
+      "bytes": 19153
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/combined_no_checkpoint/logs/train.log",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/combined_no_checkpoint/logs/train.log",
+      "archive_relative_path": "speed_round2_20261016/combined_no_checkpoint/logs/train.log",
+      "sha256": "04f2d66762d7207d0e4dac4422a098e77434cfb5f31860ca910a816f261ea705",
+      "bytes": 210241
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/combined_no_checkpoint/profile_root.txt",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/combined_no_checkpoint/profile_root.txt",
+      "archive_relative_path": "speed_round2_20261016/combined_no_checkpoint/profile_root.txt",
+      "sha256": "6809b4c2040d69a1fbbc904efc55dd3748f00c603fa16f64684ba6717e35088c",
+      "bytes": 70
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/combined_no_checkpoint/resource_samples.jsonl",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/combined_no_checkpoint/resource_samples.jsonl",
+      "archive_relative_path": "speed_round2_20261016/combined_no_checkpoint/resource_samples.jsonl",
+      "sha256": "3ae4da5979de3e3607c8d52a19d66f23a2b3c8f6c08079d6de9f016f80bbd29c",
+      "bytes": 79104
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/combined_no_checkpoint/run/data_source.json",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/combined_no_checkpoint/run/data_source.json",
+      "archive_relative_path": "speed_round2_20261016/combined_no_checkpoint/run/data_source.json",
+      "sha256": "58da0c5aa333e9e7163d293085d0faae07c9d007f29089c4ef35126c8e9572fc",
+      "bytes": 487
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/combined_no_checkpoint/run/lingbotvla_cli.yaml",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/combined_no_checkpoint/run/lingbotvla_cli.yaml",
+      "archive_relative_path": "speed_round2_20261016/combined_no_checkpoint/run/lingbotvla_cli.yaml",
+      "sha256": "a70bfcea24180c0d3de72ca4eb2237e083f4fd268843dd870122c2ababa7c788",
+      "bytes": 7121
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/combined_no_checkpoint/run/train_robotwin.txt",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/combined_no_checkpoint/run/train_robotwin.txt",
+      "archive_relative_path": "speed_round2_20261016/combined_no_checkpoint/run/train_robotwin.txt",
+      "sha256": "aef479efd1f2b7ecf12812351c446b722090f313179205cc7ac323f100611beb",
+      "bytes": 59
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/gmm_baseline/console.log",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/gmm_baseline/console.log",
+      "archive_relative_path": "speed_round2_20261016/gmm_baseline/console.log",
+      "sha256": "657a3ddb97ea1b82305cf4efb0d6de344485a3706d5ec2cf2d29a614b276850a",
+      "bytes": 50617
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/gmm_baseline/exit_code",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/gmm_baseline/exit_code",
+      "archive_relative_path": "speed_round2_20261016/gmm_baseline/exit_code",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "bytes": 2
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/gmm_baseline/logs/train.log",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/gmm_baseline/logs/train.log",
+      "archive_relative_path": "speed_round2_20261016/gmm_baseline/logs/train.log",
+      "sha256": "a11ae33016aa117d552df869bd2613e8ca9c97016c2c15c4659e8872d289e364",
+      "bytes": 49274
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/gmm_baseline/profile_root.txt",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/gmm_baseline/profile_root.txt",
+      "archive_relative_path": "speed_round2_20261016/gmm_baseline/profile_root.txt",
+      "sha256": "acea770a02494f99c41b1badea454acaf588951d462f16c6f33616f59658e648",
+      "bytes": 60
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/gmm_baseline/resource_samples.jsonl",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/gmm_baseline/resource_samples.jsonl",
+      "archive_relative_path": "speed_round2_20261016/gmm_baseline/resource_samples.jsonl",
+      "sha256": "e69f31f620cdd8f439e1df47cc35fd6d1f175df8d01cf1d951665a138a009287",
+      "bytes": 4582
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/gmm_baseline_v2/console.log",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/gmm_baseline_v2/console.log",
+      "archive_relative_path": "speed_round2_20261016/gmm_baseline_v2/console.log",
+      "sha256": "7fb7471d21f798b8bd2121fcc803918e031c9cf8a071c77cc5522c1535213cd8",
+      "bytes": 210775
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/gmm_baseline_v2/exit_code",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/gmm_baseline_v2/exit_code",
+      "archive_relative_path": "speed_round2_20261016/gmm_baseline_v2/exit_code",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/gmm_baseline_v2/experiment_manifest.json",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/gmm_baseline_v2/experiment_manifest.json",
+      "archive_relative_path": "speed_round2_20261016/gmm_baseline_v2/experiment_manifest.json",
+      "sha256": "a9e00cc3d1f6051989e5a7312941128374cb1ab6a3dfd1bd6392ea94c351eed3",
+      "bytes": 40069
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/gmm_baseline_v2/logs/lingbotvla_cli.yaml",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/gmm_baseline_v2/logs/lingbotvla_cli.yaml",
+      "archive_relative_path": "speed_round2_20261016/gmm_baseline_v2/logs/lingbotvla_cli.yaml",
+      "sha256": "ca2987f220a545199a63aed44679d0e2255c530af014eaa1753c5097ccd3d1ff",
+      "bytes": 7099
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/gmm_baseline_v2/logs/loss.jsonl",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/gmm_baseline_v2/logs/loss.jsonl",
+      "archive_relative_path": "speed_round2_20261016/gmm_baseline_v2/logs/loss.jsonl",
+      "sha256": "2af8a1e38bc14705f64bae495e8b13347852b75a036a744e75d0d4e155065f9f",
+      "bytes": 19139
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/gmm_baseline_v2/logs/train.log",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/gmm_baseline_v2/logs/train.log",
+      "archive_relative_path": "speed_round2_20261016/gmm_baseline_v2/logs/train.log",
+      "sha256": "3579599c12c286c1e097d8ade5e359cc8459c81ae94720ae9bf4b263e34afb23",
+      "bytes": 209206
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/gmm_baseline_v2/profile_root.txt",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/gmm_baseline_v2/profile_root.txt",
+      "archive_relative_path": "speed_round2_20261016/gmm_baseline_v2/profile_root.txt",
+      "sha256": "bea5a914af7a48ee258512951db9a12d6d66ace3492fc03cd524045a8d4b39a7",
+      "bytes": 63
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/gmm_baseline_v2/resource_samples.jsonl",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/gmm_baseline_v2/resource_samples.jsonl",
+      "archive_relative_path": "speed_round2_20261016/gmm_baseline_v2/resource_samples.jsonl",
+      "sha256": "024ac2ddf8339138af01764f7d4afd7898e733a09c155544d6e87d1438378280",
+      "bytes": 88310
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/gmm_baseline_v2/run/data_source.json",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/gmm_baseline_v2/run/data_source.json",
+      "archive_relative_path": "speed_round2_20261016/gmm_baseline_v2/run/data_source.json",
+      "sha256": "82e649269eb20e3b61ad3a2b9fb1d27a23d042c2fcedea0848f082487cb92609",
+      "bytes": 487
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/gmm_baseline_v2/run/lingbotvla_cli.yaml",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/gmm_baseline_v2/run/lingbotvla_cli.yaml",
+      "archive_relative_path": "speed_round2_20261016/gmm_baseline_v2/run/lingbotvla_cli.yaml",
+      "sha256": "ca2987f220a545199a63aed44679d0e2255c530af014eaa1753c5097ccd3d1ff",
+      "bytes": 7099
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/gmm_baseline_v2/run/train_robotwin.txt",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/gmm_baseline_v2/run/train_robotwin.txt",
+      "archive_relative_path": "speed_round2_20261016/gmm_baseline_v2/run/train_robotwin.txt",
+      "sha256": "aef479efd1f2b7ecf12812351c446b722090f313179205cc7ac323f100611beb",
+      "bytes": 59
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/monitor/console.log",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/monitor/console.log",
+      "archive_relative_path": "speed_round2_20261016/monitor/console.log",
+      "sha256": "eadd71e849a832b85aca1c5f176b4aeacbba78ebaeccbc6ec7a0a0a6410977e8",
+      "bytes": 210324
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/monitor/exit_code",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/monitor/exit_code",
+      "archive_relative_path": "speed_round2_20261016/monitor/exit_code",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/monitor/experiment_manifest.json",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/monitor/experiment_manifest.json",
+      "archive_relative_path": "speed_round2_20261016/monitor/experiment_manifest.json",
+      "sha256": "21af2cbd4683dc008934afe74feaf2447e2cb5691ac92d5697ebeffd3ce6977c",
+      "bytes": 40200
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/monitor/logs/lingbotvla_cli.yaml",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/monitor/logs/lingbotvla_cli.yaml",
+      "archive_relative_path": "speed_round2_20261016/monitor/logs/lingbotvla_cli.yaml",
+      "sha256": "0ffc872265575b23d7d3c8e97c45c400aa7a369c3ac61cd6d71296b8a7af37df",
+      "bytes": 7075
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/monitor/logs/loss.jsonl",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/monitor/logs/loss.jsonl",
+      "archive_relative_path": "speed_round2_20261016/monitor/logs/loss.jsonl",
+      "sha256": "91c6046bb79be601b449758afed70c7360b909fa48ff3975a25bb985bc192582",
+      "bytes": 19115
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/monitor/logs/train.log",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/monitor/logs/train.log",
+      "archive_relative_path": "speed_round2_20261016/monitor/logs/train.log",
+      "sha256": "f6eacb00db7801b5412e7d202e48b1cf7ff836a4f647f32f2509c19cd180b70f",
+      "bytes": 208806
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/monitor/profile_root.txt",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/monitor/profile_root.txt",
+      "archive_relative_path": "speed_round2_20261016/monitor/profile_root.txt",
+      "sha256": "ab61c4850638315a98864ced7a096b172752702db222e64d39d863b097a3f963",
+      "bytes": 55
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/monitor/resource_samples.jsonl",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/monitor/resource_samples.jsonl",
+      "archive_relative_path": "speed_round2_20261016/monitor/resource_samples.jsonl",
+      "sha256": "3d718efa935e4900db5f982f6d2092103da94f03b6d1e011967d9250f915f452",
+      "bytes": 86490
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/monitor/run/data_source.json",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/monitor/run/data_source.json",
+      "archive_relative_path": "speed_round2_20261016/monitor/run/data_source.json",
+      "sha256": "7b48c1db7480ef17a7009b324a630d7e691af1cda5f4cc19a05a72a709448dce",
+      "bytes": 486
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/monitor/run/lingbotvla_cli.yaml",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/monitor/run/lingbotvla_cli.yaml",
+      "archive_relative_path": "speed_round2_20261016/monitor/run/lingbotvla_cli.yaml",
+      "sha256": "0ffc872265575b23d7d3c8e97c45c400aa7a369c3ac61cd6d71296b8a7af37df",
+      "bytes": 7075
+    },
+    {
+      "source_absolute_path": "/cache/lingbot/profiling/speed_round2_20261016/monitor/run/train_robotwin.txt",
+      "repository_relative_path": "experiments/npu_20261016/speed_round2_20261016/monitor/run/train_robotwin.txt",
+      "archive_relative_path": "speed_round2_20261016/monitor/run/train_robotwin.txt",
+      "sha256": "aef479efd1f2b7ecf12812351c446b722090f313179205cc7ac323f100611beb",
+      "bytes": 59
+    }
+  ],
+  "file_count": 139,
+  "total_bytes": 6882785,
+  "text_credential_scan": {
+    "source_inventory": "/tmp/lingbot_log_secret_and_duplicate_inventory.json",
+    "initial_text_files_scanned": 387,
+    "initial_text_bytes_scanned": 29990540,
+    "additional_archive_candidates_scanned": 18,
+    "credential_pattern_findings": [],
+    "limits": "Pattern-based scan is not a proof of absence of secrets. Binary files were not decoded; this archive contains selected text evidence only."
+  },
+  "excluded_raw_profiler_tree_bytes_in_inventory": 24583273272,
+  "provenance_note": "Absolute source paths are retained as historical metadata, not portable hyperlinks; use repository_relative_path to locate archived evidence."
+}

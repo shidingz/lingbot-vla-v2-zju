@@ -1,0 +1,504 @@
+{
+  "completed_at": "2026-10-16T19:11:30.406342+08:00",
+  "status": "passed",
+  "run": "/cache/lingbot/profiling/round2_default_20261016_185821/default_160",
+  "updates": 160,
+  "launcher_exit_code": 0,
+  "performance_flags_from_main_defaults": true,
+  "launcher_checks_passed": 32,
+  "all_numeric_log_values_finite": true,
+  "lr_horizon": 5717,
+  "lr_warmup_steps": 114,
+  "peak_allocated_rank0_gib": 50.61,
+  "windows": {
+    "13-60": {
+      "available": true,
+      "steps_inclusive": [
+        13,
+        60
+      ],
+      "updates": 48,
+      "logged_step_seconds": {
+        "count": 48,
+        "mean": 2.585235541065534,
+        "median": 2.5784255266189575,
+        "p95": 2.6647873640060427,
+        "min": 2.5188632011413574,
+        "max": 2.6895859241485596,
+        "stddev": 0.03970678971002246
+      },
+      "wall_start_step": 12,
+      "wall_end_step": 60,
+      "wall_start_at": "2026-10-16T19:03:44",
+      "wall_end_at": "2026-10-16T19:05:49",
+      "wall_total_seconds": 125.0,
+      "wall_seconds_per_update": 2.6041666666666665,
+      "wall_timestamp_quantization_uncertainty_seconds_per_update": 0.020833333333333332,
+      "global_samples_per_second": 36.864,
+      "profiler_overlap_risk": false,
+      "usable_for_speed_comparison": true,
+      "loss": {
+        "count": 48,
+        "mean": 0.3494517008463542,
+        "median": 0.341552734375,
+        "p95": 0.4028076171875,
+        "min": 0.286865234375,
+        "max": 0.4326171875,
+        "stddev": 0.0329348813529189
+      },
+      "grad_norm": {
+        "count": 48,
+        "mean": 0.8630044671396414,
+        "median": 0.8658590912818909,
+        "p95": 0.9889676183462143,
+        "min": 0.646159827709198,
+        "max": 1.0878348350524902,
+        "stddev": 0.08556939311403806
+      },
+      "resources": {
+        "selection": "12 <= last_step < 60",
+        "sample_records": 23,
+        "first_sample_at": "2026-10-16T19:03:45.708186+08:00",
+        "last_sample_at": "2026-10-16T19:05:46.138426+08:00",
+        "cards": {
+          "0": {
+            "HBM Usage Rate(%)": {
+              "count": 23,
+              "mean": 92.0,
+              "median": 92.0,
+              "p95": 92.0,
+              "min": 92.0,
+              "max": 92.0,
+              "stddev": 0.0
+            },
+            "Aicore Usage Rate(%)": {
+              "count": 23,
+              "mean": 20.434782608695652,
+              "median": 20.0,
+              "p95": 37.39999999999999,
+              "min": 0.0,
+              "max": 56.0,
+              "stddev": 12.168477047206572
+            },
+            "Aivector Usage Rate(%)": {
+              "count": 23,
+              "mean": 29.434782608695652,
+              "median": 21.0,
+              "p95": 58.09999999999999,
+              "min": 1.0,
+              "max": 59.0,
+              "stddev": 19.2530654520408
+            },
+            "Aicpu Usage Rate(%)": {
+              "count": 23,
+              "mean": 0.2608695652173913,
+              "median": 0.0,
+              "p95": 1.0,
+              "min": 0.0,
+              "max": 1.0,
+              "stddev": 0.4391089103635686
+            },
+            "HBM Bandwidth Usage Rate(%)": {
+              "count": 23,
+              "mean": 25.652173913043477,
+              "median": 24.0,
+              "p95": 42.49999999999999,
+              "min": 7.0,
+              "max": 72.0,
+              "stddev": 14.930589247384113
+            }
+          },
+          "4": {
+            "HBM Usage Rate(%)": {
+              "count": 23,
+              "mean": 91.0,
+              "median": 91.0,
+              "p95": 91.0,
+              "min": 91.0,
+              "max": 91.0,
+              "stddev": 0.0
+            },
+            "Aicore Usage Rate(%)": {
+              "count": 23,
+              "mean": 17.217391304347824,
+              "median": 20.0,
+              "p95": 32.9,
+              "min": 0.0,
+              "max": 41.0,
+              "stddev": 11.413022774308343
+            },
+            "Aivector Usage Rate(%)": {
+              "count": 23,
+              "mean": 28.17391304347826,
+              "median": 29.0,
+              "p95": 47.8,
+              "min": 0.0,
+              "max": 59.0,
+              "stddev": 18.008819515455883
+            },
+            "Aicpu Usage Rate(%)": {
+              "count": 23,
+              "mean": 0.30434782608695654,
+              "median": 0.0,
+              "p95": 1.0,
+              "min": 0.0,
+              "max": 1.0,
+              "stddev": 0.46013066279384185
+            },
+            "HBM Bandwidth Usage Rate(%)": {
+              "count": 23,
+              "mean": 27.82608695652174,
+              "median": 23.0,
+              "p95": 67.19999999999999,
+              "min": 1.0,
+              "max": 73.0,
+              "stddev": 19.62396975731253
+            }
+          }
+        },
+        "limitation": "last_step is read before sequential npu-smi queries for cards 0 and 4. Readings may cross update boundaries and are not simultaneous. The 4-second sleep plus query time limits sampling resolution; no strict timing error bound is available. These short-window samples are not MFU or full-run utilization averages."
+      }
+    },
+    "13-160": {
+      "available": true,
+      "steps_inclusive": [
+        13,
+        160
+      ],
+      "updates": 148,
+      "logged_step_seconds": {
+        "count": 148,
+        "mean": 2.5851091033703573,
+        "median": 2.5774736404418945,
+        "p95": 2.671352767944336,
+        "min": 2.5188632011413574,
+        "max": 2.711627960205078,
+        "stddev": 0.03968009031019112
+      },
+      "wall_start_step": 12,
+      "wall_end_step": 160,
+      "wall_start_at": "2026-10-16T19:03:44",
+      "wall_end_at": "2026-10-16T19:10:10",
+      "wall_total_seconds": 386.0,
+      "wall_seconds_per_update": 2.608108108108108,
+      "wall_timestamp_quantization_uncertainty_seconds_per_update": 0.006756756756756757,
+      "global_samples_per_second": 36.80829015544042,
+      "profiler_overlap_risk": false,
+      "usable_for_speed_comparison": true,
+      "loss": {
+        "count": 148,
+        "mean": 0.26783628721494934,
+        "median": 0.26617431640625,
+        "p95": 0.383154296875,
+        "min": 0.15478515625,
+        "max": 0.4326171875,
+        "stddev": 0.06936648396046591
+      },
+      "grad_norm": {
+        "count": 148,
+        "mean": 0.6583507683228802,
+        "median": 0.6080438196659088,
+        "p95": 0.9464971870183945,
+        "min": 0.3824236989021301,
+        "max": 1.0878348350524902,
+        "stddev": 0.16939692493867187
+      },
+      "resources": {
+        "selection": "12 <= last_step < 160",
+        "sample_records": 71,
+        "first_sample_at": "2026-10-16T19:03:45.708186+08:00",
+        "last_sample_at": "2026-10-16T19:10:09.153212+08:00",
+        "cards": {
+          "0": {
+            "HBM Usage Rate(%)": {
+              "count": 71,
+              "mean": 92.0,
+              "median": 92.0,
+              "p95": 92.0,
+              "min": 92.0,
+              "max": 92.0,
+              "stddev": 0.0
+            },
+            "Aicore Usage Rate(%)": {
+              "count": 71,
+              "mean": 19.253521126760564,
+              "median": 19.0,
+              "p95": 38.0,
+              "min": 0.0,
+              "max": 56.0,
+              "stddev": 11.02713466269783
+            },
+            "Aivector Usage Rate(%)": {
+              "count": 71,
+              "mean": 28.267605633802816,
+              "median": 22.0,
+              "p95": 58.5,
+              "min": 0.0,
+              "max": 59.0,
+              "stddev": 18.516043858840458
+            },
+            "Aicpu Usage Rate(%)": {
+              "count": 71,
+              "mean": 0.28169014084507044,
+              "median": 0.0,
+              "p95": 1.0,
+              "min": 0.0,
+              "max": 1.0,
+              "stddev": 0.44982308232876933
+            },
+            "HBM Bandwidth Usage Rate(%)": {
+              "count": 71,
+              "mean": 25.140845070422536,
+              "median": 23.0,
+              "p95": 53.0,
+              "min": 2.0,
+              "max": 72.0,
+              "stddev": 16.128267350728045
+            }
+          },
+          "4": {
+            "HBM Usage Rate(%)": {
+              "count": 71,
+              "mean": 91.0,
+              "median": 91.0,
+              "p95": 91.0,
+              "min": 91.0,
+              "max": 91.0,
+              "stddev": 0.0
+            },
+            "Aicore Usage Rate(%)": {
+              "count": 71,
+              "mean": 19.704225352112676,
+              "median": 23.0,
+              "p95": 37.0,
+              "min": 0.0,
+              "max": 51.0,
+              "stddev": 10.755142060333226
+            },
+            "Aivector Usage Rate(%)": {
+              "count": 71,
+              "mean": 27.91549295774648,
+              "median": 29.0,
+              "p95": 58.0,
+              "min": 0.0,
+              "max": 59.0,
+              "stddev": 18.422082950902983
+            },
+            "Aicpu Usage Rate(%)": {
+              "count": 71,
+              "mean": 0.30985915492957744,
+              "median": 0.0,
+              "p95": 1.0,
+              "min": 0.0,
+              "max": 2.0,
+              "stddev": 0.5197927348519982
+            },
+            "HBM Bandwidth Usage Rate(%)": {
+              "count": 71,
+              "mean": 26.718309859154928,
+              "median": 23.0,
+              "p95": 64.0,
+              "min": 1.0,
+              "max": 73.0,
+              "stddev": 17.193335671405393
+            }
+          }
+        },
+        "limitation": "last_step is read before sequential npu-smi queries for cards 0 and 4. Readings may cross update boundaries and are not simultaneous. The 4-second sleep plus query time limits sampling resolution; no strict timing error bound is available. These short-window samples are not MFU or full-run utilization averages."
+      }
+    },
+    "115-160": {
+      "available": true,
+      "steps_inclusive": [
+        115,
+        160
+      ],
+      "updates": 46,
+      "logged_step_seconds": {
+        "count": 46,
+        "mean": 2.583204020624575,
+        "median": 2.5731669664382935,
+        "p95": 2.662904381752014,
+        "min": 2.522935152053833,
+        "max": 2.6967267990112305,
+        "stddev": 0.037585864722640694
+      },
+      "wall_start_step": 114,
+      "wall_end_step": 160,
+      "wall_start_at": "2026-10-16T19:08:10",
+      "wall_end_at": "2026-10-16T19:10:10",
+      "wall_total_seconds": 120.0,
+      "wall_seconds_per_update": 2.608695652173913,
+      "wall_timestamp_quantization_uncertainty_seconds_per_update": 0.021739130434782608,
+      "global_samples_per_second": 36.8,
+      "profiler_overlap_risk": false,
+      "usable_for_speed_comparison": true,
+      "loss": {
+        "count": 46,
+        "mean": 0.18946108610733695,
+        "median": 0.18780517578125,
+        "p95": 0.220703125,
+        "min": 0.15478515625,
+        "max": 0.2266845703125,
+        "stddev": 0.017412509386168964
+      },
+      "grad_norm": {
+        "count": 46,
+        "mean": 0.49515158780243085,
+        "median": 0.49077071249485016,
+        "p95": 0.5918222665786743,
+        "min": 0.3824236989021301,
+        "max": 0.6774834394454956,
+        "stddev": 0.06640271153849255
+      },
+      "resources": {
+        "selection": "114 <= last_step < 160",
+        "sample_records": 22,
+        "first_sample_at": "2026-10-16T19:08:14.841178+08:00",
+        "last_sample_at": "2026-10-16T19:10:09.153212+08:00",
+        "cards": {
+          "0": {
+            "HBM Usage Rate(%)": {
+              "count": 22,
+              "mean": 92.0,
+              "median": 92.0,
+              "p95": 92.0,
+              "min": 92.0,
+              "max": 92.0,
+              "stddev": 0.0
+            },
+            "Aicore Usage Rate(%)": {
+              "count": 22,
+              "mean": 18.954545454545453,
+              "median": 19.5,
+              "p95": 31.849999999999998,
+              "min": 0.0,
+              "max": 38.0,
+              "stddev": 8.865034854709068
+            },
+            "Aivector Usage Rate(%)": {
+              "count": 22,
+              "mean": 28.0,
+              "median": 26.5,
+              "p95": 52.75,
+              "min": 0.0,
+              "max": 59.0,
+              "stddev": 18.04539729782538
+            },
+            "Aicpu Usage Rate(%)": {
+              "count": 22,
+              "mean": 0.3181818181818182,
+              "median": 0.0,
+              "p95": 1.0,
+              "min": 0.0,
+              "max": 1.0,
+              "stddev": 0.46577048936179993
+            },
+            "HBM Bandwidth Usage Rate(%)": {
+              "count": 22,
+              "mean": 26.09090909090909,
+              "median": 24.0,
+              "p95": 50.9,
+              "min": 2.0,
+              "max": 55.0,
+              "stddev": 15.225305164605794
+            }
+          },
+          "4": {
+            "HBM Usage Rate(%)": {
+              "count": 22,
+              "mean": 91.0,
+              "median": 91.0,
+              "p95": 91.0,
+              "min": 91.0,
+              "max": 91.0,
+              "stddev": 0.0
+            },
+            "Aicore Usage Rate(%)": {
+              "count": 22,
+              "mean": 18.772727272727273,
+              "median": 21.5,
+              "p95": 31.799999999999997,
+              "min": 0.0,
+              "max": 39.0,
+              "stddev": 9.986043980484228
+            },
+            "Aivector Usage Rate(%)": {
+              "count": 22,
+              "mean": 25.59090909090909,
+              "median": 20.5,
+              "p95": 57.49999999999999,
+              "min": 0.0,
+              "max": 58.0,
+              "stddev": 20.486490206761516
+            },
+            "Aicpu Usage Rate(%)": {
+              "count": 22,
+              "mean": 0.3181818181818182,
+              "median": 0.0,
+              "p95": 1.0,
+              "min": 0.0,
+              "max": 1.0,
+              "stddev": 0.46577048936179993
+            },
+            "HBM Bandwidth Usage Rate(%)": {
+              "count": 22,
+              "mean": 27.40909090909091,
+              "median": 24.0,
+              "p95": 42.849999999999994,
+              "min": 3.0,
+              "max": 70.0,
+              "stddev": 15.526104384402801
+            }
+          }
+        },
+        "limitation": "last_step is read before sequential npu-smi queries for cards 0 and 4. Readings may cross update boundaries and are not simultaneous. The 4-second sleep plus query time limits sampling resolution; no strict timing error bound is available. These short-window samples are not MFU or full-run utilization averages."
+      }
+    }
+  },
+  "source_sha256": {
+    "train_robotwin_npu.sh": "873f1f4fb983b140e5dbe90e9bff4bcb223177a792e4f9995ad50efecbd5e42d",
+    "train_robotwin_npu_optimized.sh": "4d4cacdc2916a7c5684a0632f5d616ae58b1ca25c0333046dd1a2fe7e3dc32d8",
+    "configs/vla/robotwin/robotwin_npu.yaml": "32971da707409f49f0e18458e4904654bf98195dfdfa655fa02ce1f683c19719",
+    "lingbotvla/ops/npu_moe.py": "77ee243440df21d4eb62b19d88894573ac676339750dccbac14919dd7ca96c81",
+    "lingbotvla/ops/joint_attention.py": "6068a8a203cf00559635628b06a06799a1a691857d4a4245bd873fec781e07c5",
+    "lingbotvla/optim/optimizer.py": "fd332ec3328fecd8558d6f07950587f5b1cccddeb03910a4dc4e02d25a2ce473",
+    "lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py": "1c550b6313220e35767d297e45a29a52fba7161aa47c193b601b69006b10e463"
+  },
+  "snapshot_hash_check": {
+    "passed": true,
+    "changed": [],
+    "checked_files": 358
+  },
+  "new_default_run_name": "robotwin_1ep_optimized",
+  "historical_controlled_ab": {
+    "source": "../20261016_speed_round2/final_summary.json",
+    "baseline": {
+      "case": "baseline_repeat",
+      "wall_s": 3.5416666666666665,
+      "logged_s": 3.5303621838490167,
+      "samples_s": 27.105882352941176,
+      "peak_allocated_rank0_gib": 53.31,
+      "time_reduction_vs_repeat_pct": 0.0,
+      "eligible": true,
+      "exit": 0
+    },
+    "optimized": {
+      "case": "combined_no_checkpoint",
+      "wall_s": 2.6041666666666665,
+      "logged_s": 2.596568693717321,
+      "samples_s": 36.864,
+      "peak_allocated_rank0_gib": 50.61,
+      "time_reduction_vs_repeat_pct": 26.470588235294123,
+      "eligible": true,
+      "exit": 0
+    },
+    "throughput_gain_pct": 36.00000000000001
+  },
+  "limits": [
+    "This is a default-entry integration run; historical controlled A/B results are reported separately.",
+    "160 updates, not full-epoch convergence or RoboTwin task-success validation.",
+    "No full-size DCP save/resume in this run; existing optimizer state-dict tests were retained.",
+    "Peak allocation is rank 0 only; resource sampling covers cards 0/4 and is not MFU."
+  ]
+}

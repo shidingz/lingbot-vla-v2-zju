@@ -1,0 +1,77 @@
+{
+  "audited_at": "2026-10-16T17:28:48.457800+08:00",
+  "scope": "Read-only audit of combined snapshot and current effective training configuration; no code mutation or NPU execution.",
+  "global_off_vs_action_only": {
+    "equivalent_active_checkpoint_coverage_for_current_configuration": true,
+    "active_modules": "Action expert36 Qwen2DecoderLayer modules, two calls per layer: QKV and output-projection+MoE.",
+    "unchanged_subnets": [
+      "Frozen Qwen3-VL vision/text components are kept eval by QwenvlWithExpertV2Model.train(), disabling their GradientCheckpointingLayer wrappers already.",
+      "Trainable current/future depth and video heads are TaskTokenDepthHead -> TaskTokenResampler with ordinary nn.Module, Linear, LayerNorm and attention; no gradient_checkpointing attribute or explicit checkpoint call.",
+      "State/action/time projections and trainable task embeddings do not use checkpoint.",
+      "Depth/video teachers are independent local variables built outside the main model and do not receive model.gradient_checkpointing_enable().",
+      "Joint attention between the two decoder-layer calls is outside checkpoint regions."
+    ],
+    "other_global_branch": "enable_gradient_checkpointing also reaches activation offloading setup, but enable_activation_offload=false means both choices return nullcontext.",
+    "conditions": [
+      "train_expert_only=true",
+      "enable_activation_offload=false",
+      "enable_reentrant=false",
+      "enable_expert_vision=false (default in the selected model config)"
+    ],
+    "limit": "This is source/config equivalence for the current model graph, not a promise for future unfrozen VLM or offloading configurations. Verify final combined_no_checkpoint YAML actually records false."
+  },
+  "moe_training_semantics": {
+    "counter_update": "_update_moe_runtime_stats adds to tokens_per_expert on every training-mode MoE forward, including recomputation.",
+    "checkpoint_effect": "Current non-reentrant output+MoE checkpoint ordinarily calls MoE twice per update; existing profile recorded72 calls/update for36 layers. With checkpoint off there is one call per layer.",
+    "sequence_balance_loss": "Computed from original router_logits_list by triton_sequence_wise_balance_loss; its local top-k counts are separate from module tokens_per_expert. It does not read the mutable monitoring counter.",
+    "router_z_loss": "Computed from original router logits, independent of counter.",
+    "bias_update_speed": 0.0,
+    "bias_centering": false,
+    "correction_bias_effect": "Optimizer hook still all-reduces counts, snapshots last_tokens_per_expert and clears accumulated counts. Zero coeff and no centering leave correction bias unchanged.",
+    "math_conclusion": "Counter multiplicity does not alter the training objective or correction-bias update under this configuration; actual gradients can still differ from backend/recomputation numerical order."
+  },
+  "monitoring_semantics": {
+    "timing": "Forward monitoring reads clones of last_tokens_per_expert from the preceding optimizer step, so counts lag one update; first update has empty snapshots and skips count metrics.",
+    "expected_single_forward_assignments_per_layer_global": 19584,
+    "expected_with_full_recomputation_per_layer_global": 39168,
+    "expected_single_forward_assignments_all36layers": 705024,
+    "count_unit": "Expert assignments, not unique tokens: top_k4 means each of the96*51 tokens contributes4 assignments.",
+    "scale_invariant_if_routing_matches": [
+      "per-layer maxvio and minvio",
+      "per-layer min_load_ratio",
+      "has_dead_expert",
+      "global load_cv when every layer changes by the same factor"
+    ],
+    "unaffected_by_counter_scale": [
+      "entropy from original router probability distributions",
+      "average top-k sigmoid score",
+      "bias_absmax",
+      "sequence-wise and z-loss monitoring values"
+    ],
+    "changed": [
+      "raw per-expert count bars",
+      "histogram weights/frequencies",
+      "sum-over-layers raw bar magnitude"
+    ],
+    "normalization_caveat": "Uniform factor-two invariance assumes recomputation routes identically. Recomputed floating-point differences near top-k ties can change distributions; mixed per-layer policies also change relative weighting of the global histogram.",
+    "moe_monitor_interval": 1000,
+    "bounded60_step_runs_emit_raw_histograms": false
+  },
+  "future_correction_candidate": {
+    "do_not_mix_into_current_timing": true,
+    "desired_semantics": "Count logical forward assignments once, independent of checkpoint policy; mark recompute context and suppress runtime-stat accumulation there, then test forward/backward and all metrics.",
+    "avoid": "Do not blindly divide all counts by2: it fails for no-checkpoint, selective policies, altered recompute early-stop behavior or differing update windows.",
+    "require_validation": "Check per-layer totals, zero-count startup, gradient accumulation, update_interval>1 and resume; verify unchanged loss and gradients for fixed batches."
+  },
+  "source_locations": [
+    "lingbotvla/distributed/torch_parallelize.py:111",
+    "lingbotvla/distributed/offloading.py:71",
+    "lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:197",
+    "lingbotvla/models/vla/vision_models/align_heads/depth_head.py:43",
+    "lingbotvla/models/vla/vision_models/align_heads/resampler.py:162",
+    "lingbotvla/models/vla/lingbot_vla/qwen2_action_expert.py:40",
+    "lingbotvla/models/vla/lingbot_vla/moe_load_balance.py:73",
+    "tasks/vla/train_lingbotvla.py:1088",
+    "tasks/vla/train_lingbotvla.py:1134"
+  ]
+}

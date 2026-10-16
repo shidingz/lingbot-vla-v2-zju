@@ -1,0 +1,12 @@
+[
+  {
+    "Path": "README.md",
+    "Size": 1423,
+    "Sha256": "6440d222ddd869136629f082e7242f0f405f69aa04c1ac3756053fc213c91e82"
+  },
+  {
+    "Path": "configuration.json",
+    "Size": 19,
+    "Sha256": "ba0b459ab2fdab7212e05aaec184ebeb871ba530e4f86a1020624500651cabda"
+  }
+]

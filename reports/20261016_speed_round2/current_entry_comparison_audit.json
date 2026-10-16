@@ -1,0 +1,736 @@
+{
+  "audited_at": "2026-10-16T19:21:19.034253+08:00",
+  "scope": "Independent read-only code/log audit plus DRY_RUN argument parsing only. No NPU operation, no training launch, no production source edit. Existing reports are preserved.",
+  "conclusion": "当前裸 bash train_robotwin_npu.sh 的训练核心配置与已验证 combined_no_checkpoint 相同；新版默认入口另有160步集成实测通过且代码哈希仍对应当前文件。默认路径未发现阻断问题。",
+  "clean_environment_dry_run_cases": {
+    "default": {
+      "name": "default",
+      "script": "train_robotwin_npu.sh",
+      "overrides": {},
+      "extra_cli": [],
+      "exit_code": 0,
+      "exported_speed_settings": {
+        "LINGBOT_NPU_MOE_IMPL": "gmm",
+        "LINGBOT_JOINT_ATTN_BACKEND": "sdpa_fp32",
+        "LINGBOT_MOE_MONITOR_BATCH_COUNTS": "1",
+        "LINGBOT_ADAMW_FOREACH_NPU": "1"
+      },
+      "effective_selected_train": {
+        "enable_gradient_checkpointing": false,
+        "attention_implementation": "eager",
+        "optimizer": "muon",
+        "enable_fp32": true,
+        "enable_mixed_precision": true,
+        "train_expert_only": true,
+        "micro_batch_size": 12,
+        "gradient_accumulation_steps": 1,
+        "global_batch_size": 96,
+        "lr": 5e-05,
+        "lr_min": 1e-05,
+        "lr_warmup_ratio": 0.02,
+        "enable_resume": true,
+        "load_checkpoint_path": null,
+        "output_dir": "/cache/lingbot/robotwin_train/robotwin_1ep_optimized",
+        "logging_dir": "/home/ma-user/work/lingbot-vla-v2/logs/robotwin_1ep_optimized",
+        "obs_output_dir": "obs://yw-2030-extern/Partner_Qin/robot_1014/robotwin_1ep_optimized",
+        "save_epochs": 1,
+        "save_hf_weights": true,
+        "stop_after_steps": 0
+      }
+    },
+    "empty_speed": {
+      "name": "empty_speed",
+      "script": "train_robotwin_npu.sh",
+      "overrides": {
+        "LINGBOT_JOINT_ATTN_BACKEND": "",
+        "LINGBOT_MOE_MONITOR_BATCH_COUNTS": "",
+        "LINGBOT_ADAMW_FOREACH_NPU": "",
+        "ENABLE_GRAD_CKPT": ""
+      },
+      "extra_cli": [],
+      "exit_code": 0,
+      "exported_speed_settings": {
+        "LINGBOT_NPU_MOE_IMPL": "gmm",
+        "LINGBOT_JOINT_ATTN_BACKEND": "",
+        "LINGBOT_MOE_MONITOR_BATCH_COUNTS": "1",
+        "LINGBOT_ADAMW_FOREACH_NPU": "1"
+      },
+      "effective_selected_train": {
+        "enable_gradient_checkpointing": true,
+        "attention_implementation": "eager",
+        "optimizer": "muon",
+        "enable_fp32": true,
+        "enable_mixed_precision": true,
+        "train_expert_only": true,
+        "micro_batch_size": 12,
+        "gradient_accumulation_steps": 1,
+        "global_batch_size": 96,
+        "lr": 5e-05,
+        "lr_min": 1e-05,
+        "lr_warmup_ratio": 0.02,
+        "enable_resume": true,
+        "load_checkpoint_path": null,
+        "output_dir": "/cache/lingbot/robotwin_train/robotwin_1ep_optimized",
+        "logging_dir": "/home/ma-user/work/lingbot-vla-v2/logs/robotwin_1ep_optimized",
+        "obs_output_dir": "obs://yw-2030-extern/Partner_Qin/robot_1014/robotwin_1ep_optimized",
+        "save_epochs": 1,
+        "save_hf_weights": true,
+        "stop_after_steps": 0
+      }
+    },
+    "cli_overrides_env": {
+      "name": "cli_overrides_env",
+      "script": "train_robotwin_npu.sh",
+      "overrides": {
+        "ENABLE_GRAD_CKPT": "false"
+      },
+      "extra_cli": [
+        "--train.enable_gradient_checkpointing",
+        "true"
+      ],
+      "exit_code": 0,
+      "exported_speed_settings": {
+        "LINGBOT_NPU_MOE_IMPL": "gmm",
+        "LINGBOT_JOINT_ATTN_BACKEND": "sdpa_fp32",
+        "LINGBOT_MOE_MONITOR_BATCH_COUNTS": "1",
+        "LINGBOT_ADAMW_FOREACH_NPU": "1"
+      },
+      "effective_selected_train": {
+        "enable_gradient_checkpointing": true,
+        "attention_implementation": "eager",
+        "optimizer": "muon",
+        "enable_fp32": true,
+        "enable_mixed_precision": true,
+        "train_expert_only": true,
+        "micro_batch_size": 12,
+        "gradient_accumulation_steps": 1,
+        "global_batch_size": 96,
+        "lr": 5e-05,
+        "lr_min": 1e-05,
+        "lr_warmup_ratio": 0.02,
+        "enable_resume": true,
+        "load_checkpoint_path": null,
+        "output_dir": "/cache/lingbot/robotwin_train/robotwin_1ep_optimized",
+        "logging_dir": "/home/ma-user/work/lingbot-vla-v2/logs/robotwin_1ep_optimized",
+        "obs_output_dir": "obs://yw-2030-extern/Partner_Qin/robot_1014/robotwin_1ep_optimized",
+        "save_epochs": 1,
+        "save_hf_weights": true,
+        "stop_after_steps": 0
+      }
+    },
+    "custom_attention_needs_env_clear": {
+      "name": "custom_attention_needs_env_clear",
+      "script": "train_robotwin_npu.sh",
+      "overrides": {},
+      "extra_cli": [
+        "--train.attention_implementation",
+        "flex_cached"
+      ],
+      "exit_code": 0,
+      "exported_speed_settings": {
+        "LINGBOT_NPU_MOE_IMPL": "gmm",
+        "LINGBOT_JOINT_ATTN_BACKEND": "sdpa_fp32",
+        "LINGBOT_MOE_MONITOR_BATCH_COUNTS": "1",
+        "LINGBOT_ADAMW_FOREACH_NPU": "1"
+      },
+      "effective_selected_train": {
+        "enable_gradient_checkpointing": false,
+        "attention_implementation": "flex_cached",
+        "optimizer": "muon",
+        "enable_fp32": true,
+        "enable_mixed_precision": true,
+        "train_expert_only": true,
+        "micro_batch_size": 12,
+        "gradient_accumulation_steps": 1,
+        "global_batch_size": 96,
+        "lr": 5e-05,
+        "lr_min": 1e-05,
+        "lr_warmup_ratio": 0.02,
+        "enable_resume": true,
+        "load_checkpoint_path": null,
+        "output_dir": "/cache/lingbot/robotwin_train/robotwin_1ep_optimized",
+        "logging_dir": "/home/ma-user/work/lingbot-vla-v2/logs/robotwin_1ep_optimized",
+        "obs_output_dir": "obs://yw-2030-extern/Partner_Qin/robot_1014/robotwin_1ep_optimized",
+        "save_epochs": 1,
+        "save_hf_weights": true,
+        "stop_after_steps": 0
+      }
+    },
+    "old_run_name": {
+      "name": "old_run_name",
+      "script": "train_robotwin_npu.sh",
+      "overrides": {
+        "RUN_NAME": "robotwin_1ep_fast"
+      },
+      "extra_cli": [],
+      "exit_code": 0,
+      "exported_speed_settings": {
+        "LINGBOT_NPU_MOE_IMPL": "gmm",
+        "LINGBOT_JOINT_ATTN_BACKEND": "sdpa_fp32",
+        "LINGBOT_MOE_MONITOR_BATCH_COUNTS": "1",
+        "LINGBOT_ADAMW_FOREACH_NPU": "1"
+      },
+      "effective_selected_train": {
+        "enable_gradient_checkpointing": false,
+        "attention_implementation": "eager",
+        "optimizer": "muon",
+        "enable_fp32": true,
+        "enable_mixed_precision": true,
+        "train_expert_only": true,
+        "micro_batch_size": 12,
+        "gradient_accumulation_steps": 1,
+        "global_batch_size": 96,
+        "lr": 5e-05,
+        "lr_min": 1e-05,
+        "lr_warmup_ratio": 0.02,
+        "enable_resume": true,
+        "load_checkpoint_path": null,
+        "output_dir": "/cache/lingbot/robotwin_train/robotwin_1ep_fast",
+        "logging_dir": "/home/ma-user/work/lingbot-vla-v2/logs/robotwin_1ep_fast",
+        "obs_output_dir": "obs://yw-2030-extern/Partner_Qin/robot_1014/robotwin_1ep_fast",
+        "save_epochs": 1,
+        "save_hf_weights": true,
+        "stop_after_steps": 0
+      }
+    },
+    "wrapper": {
+      "name": "wrapper",
+      "script": "train_robotwin_npu_optimized.sh",
+      "overrides": {},
+      "extra_cli": [],
+      "exit_code": 0,
+      "exported_speed_settings": {
+        "LINGBOT_NPU_MOE_IMPL": "gmm",
+        "LINGBOT_JOINT_ATTN_BACKEND": "sdpa_fp32",
+        "LINGBOT_MOE_MONITOR_BATCH_COUNTS": "1",
+        "LINGBOT_ADAMW_FOREACH_NPU": "1"
+      },
+      "effective_selected_train": {
+        "enable_gradient_checkpointing": false,
+        "attention_implementation": "eager",
+        "optimizer": "muon",
+        "enable_fp32": true,
+        "enable_mixed_precision": true,
+        "train_expert_only": true,
+        "micro_batch_size": 12,
+        "gradient_accumulation_steps": 1,
+        "global_batch_size": 96,
+        "lr": 5e-05,
+        "lr_min": 1e-05,
+        "lr_warmup_ratio": 0.02,
+        "enable_resume": true,
+        "load_checkpoint_path": null,
+        "output_dir": "/cache/lingbot/robotwin_train/robotwin_1ep_optimized",
+        "logging_dir": "/home/ma-user/work/lingbot-vla-v2/logs/robotwin_1ep_optimized",
+        "obs_output_dir": "obs://yw-2030-extern/Partner_Qin/robot_1014/robotwin_1ep_optimized",
+        "save_epochs": 1,
+        "save_hf_weights": true,
+        "stop_after_steps": 0
+      }
+    }
+  },
+  "wrapper_main_effective_configs_and_commands_equal": true,
+  "historical_combined_no_checkpoint_vs_current_default": {
+    "effective_config_differences": [
+      {
+        "field": "data.obs_dataset_uri",
+        "baseline": "",
+        "candidate": "obs://yw-2030-extern/Partner_Qin/robot_1014/datasets/RoboTwin_lerobot_v30/"
+      },
+      {
+        "field": "eval",
+        "baseline": null,
+        "candidate": {
+          "enabled": null,
+          "command": null,
+          "env": {},
+          "eval_step": null,
+          "eval_epoch": null,
+          "image": null,
+          "k8s_app_name": null,
+          "k8s_priority": null,
+          "worker_num": null,
+          "cpu": null,
+          "memory": null,
+          "gpu_num": null,
+          "gpu_percent": null,
+          "gpu_type": null,
+          "disk_m": null,
+          "shared_memory": null,
+          "datastore_mount": null,
+          "datastore_name": null,
+          "datastore_sub_path": null,
+          "repo_url": null,
+          "repo_branch": null,
+          "repo_commit_id": null,
+          "task_name": null,
+          "workdir": null
+        }
+      },
+      {
+        "field": "train.enable_profiling",
+        "baseline": true,
+        "candidate": false
+      },
+      {
+        "field": "train.enable_resume",
+        "baseline": false,
+        "candidate": true
+      },
+      {
+        "field": "train.logging_dir",
+        "baseline": "/cache/lingbot/profiling/speed_round2_20261016/combined_no_checkpoint/logs",
+        "candidate": "/home/ma-user/work/lingbot-vla-v2/logs/robotwin_1ep_optimized"
+      },
+      {
+        "field": "train.obs_output_dir",
+        "baseline": "",
+        "candidate": "obs://yw-2030-extern/Partner_Qin/robot_1014/robotwin_1ep_optimized"
+      },
+      {
+        "field": "train.output_dir",
+        "baseline": "/cache/lingbot/profiling/speed_round2_20261016/combined_no_checkpoint/run",
+        "candidate": "/cache/lingbot/robotwin_train/robotwin_1ep_optimized"
+      },
+      {
+        "field": "train.profile_end_step",
+        "baseline": 17,
+        "candidate": 2
+      },
+      {
+        "field": "train.profile_only",
+        "baseline": true,
+        "candidate": false
+      },
+      {
+        "field": "train.profile_profile_memory",
+        "baseline": false,
+        "candidate": true
+      },
+      {
+        "field": "train.profile_ranks",
+        "baseline": "",
+        "candidate": "0"
+      },
+      {
+        "field": "train.profile_record_shapes",
+        "baseline": false,
+        "candidate": true
+      },
+      {
+        "field": "train.profile_start_step",
+        "baseline": 13,
+        "candidate": 1
+      },
+      {
+        "field": "train.profile_trace_dir",
+        "baseline": "/cache/lingbot/profiling/speed_round2_20261016/combined_no_checkpoint/trace",
+        "candidate": "./trace"
+      },
+      {
+        "field": "train.profile_with_stack",
+        "baseline": false,
+        "candidate": true
+      },
+      {
+        "field": "train.save_epochs",
+        "baseline": 0,
+        "candidate": 1
+      },
+      {
+        "field": "train.save_hf_weights",
+        "baseline": false,
+        "candidate": true
+      },
+      {
+        "field": "train.stop_after_steps",
+        "baseline": 60,
+        "candidate": 0
+      }
+    ],
+    "unexpected_model_optimizer_loss_precision_data_loader_batch_differences": [],
+    "yaml_semantically_unchanged_since_combined_no_checkpoint": true,
+    "interpretation": "正式入口恢复OBS数据/存档、保存HF与DCP、整轮训练，关闭profile_only；隔离速度实验为禁用保存上传恢复的60步，因此正式运行不会逐项完全相同，但训练核心和性能开关相同。"
+  },
+  "current_vs_160_step_validated_source": {
+    "critical_source_hashes": {
+      "train_robotwin_npu.sh": {
+        "recorded_sha256": "873f1f4fb983b140e5dbe90e9bff4bcb223177a792e4f9995ad50efecbd5e42d",
+        "current_sha256": "873f1f4fb983b140e5dbe90e9bff4bcb223177a792e4f9995ad50efecbd5e42d",
+        "matches": true
+      },
+      "train_robotwin_npu_optimized.sh": {
+        "recorded_sha256": "4d4cacdc2916a7c5684a0632f5d616ae58b1ca25c0333046dd1a2fe7e3dc32d8",
+        "current_sha256": "4d4cacdc2916a7c5684a0632f5d616ae58b1ca25c0333046dd1a2fe7e3dc32d8",
+        "matches": true
+      },
+      "configs/vla/robotwin/robotwin_npu.yaml": {
+        "recorded_sha256": "32971da707409f49f0e18458e4904654bf98195dfdfa655fa02ce1f683c19719",
+        "current_sha256": "32971da707409f49f0e18458e4904654bf98195dfdfa655fa02ce1f683c19719",
+        "matches": true
+      },
+      "lingbotvla/ops/npu_moe.py": {
+        "recorded_sha256": "77ee243440df21d4eb62b19d88894573ac676339750dccbac14919dd7ca96c81",
+        "current_sha256": "77ee243440df21d4eb62b19d88894573ac676339750dccbac14919dd7ca96c81",
+        "matches": true
+      },
+      "lingbotvla/ops/joint_attention.py": {
+        "recorded_sha256": "6068a8a203cf00559635628b06a06799a1a691857d4a4245bd873fec781e07c5",
+        "current_sha256": "6068a8a203cf00559635628b06a06799a1a691857d4a4245bd873fec781e07c5",
+        "matches": true
+      },
+      "lingbotvla/optim/optimizer.py": {
+        "recorded_sha256": "fd332ec3328fecd8558d6f07950587f5b1cccddeb03910a4dc4e02d25a2ce473",
+        "current_sha256": "fd332ec3328fecd8558d6f07950587f5b1cccddeb03910a4dc4e02d25a2ce473",
+        "matches": true
+      },
+      "lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py": {
+        "recorded_sha256": "1c550b6313220e35767d297e45a29a52fba7161aa47c193b601b69006b10e463",
+        "current_sha256": "1c550b6313220e35767d297e45a29a52fba7161aa47c193b601b69006b10e463",
+        "matches": true
+      }
+    },
+    "snapshot_manifest_checked_files": 358,
+    "snapshot_changed_files": [],
+    "current_training_python_checked_files": 261,
+    "current_training_python_changed_files": []
+  },
+  "independent_160_step_log_verification": {
+    "run": "/cache/lingbot/profiling/round2_default_20261016_185821/default_160",
+    "updates": 160,
+    "exit_code": 0,
+    "eligible": true,
+    "all_required_metrics_finite": true,
+    "nonfinite_numeric_records": [],
+    "rank0_peak_allocated_gib": 50.61,
+    "windows": {
+      "13-60": {
+        "wall_start_step": 12,
+        "wall_end_step": 60,
+        "wall_seconds_per_update": 2.6041666666666665,
+        "wall_total_seconds": 125.0,
+        "logged_step_seconds": {
+          "count": 48,
+          "mean": 2.585235541065534,
+          "median": 2.5784255266189575,
+          "p95": 2.6647873640060427,
+          "min": 2.5188632011413574,
+          "max": 2.6895859241485596,
+          "stddev": 0.03970678971002246
+        },
+        "loss": {
+          "count": 48,
+          "mean": 0.3494517008463542,
+          "median": 0.341552734375,
+          "p95": 0.4028076171875,
+          "min": 0.286865234375,
+          "max": 0.4326171875,
+          "stddev": 0.0329348813529189
+        },
+        "grad_norm": {
+          "count": 48,
+          "mean": 0.8630044671396414,
+          "median": 0.8658590912818909,
+          "p95": 0.9889676183462143,
+          "min": 0.646159827709198,
+          "max": 1.0878348350524902,
+          "stddev": 0.08556939311403806
+        }
+      },
+      "13-160": {
+        "wall_start_step": 12,
+        "wall_end_step": 160,
+        "wall_seconds_per_update": 2.608108108108108,
+        "wall_total_seconds": 386.0,
+        "logged_step_seconds": {
+          "count": 148,
+          "mean": 2.5851091033703573,
+          "median": 2.5774736404418945,
+          "p95": 2.671352767944336,
+          "min": 2.5188632011413574,
+          "max": 2.711627960205078,
+          "stddev": 0.03968009031019112
+        },
+        "loss": {
+          "count": 148,
+          "mean": 0.26783628721494934,
+          "median": 0.26617431640625,
+          "p95": 0.383154296875,
+          "min": 0.15478515625,
+          "max": 0.4326171875,
+          "stddev": 0.06936648396046591
+        },
+        "grad_norm": {
+          "count": 148,
+          "mean": 0.6583507683228802,
+          "median": 0.6080438196659088,
+          "p95": 0.9464971870183945,
+          "min": 0.3824236989021301,
+          "max": 1.0878348350524902,
+          "stddev": 0.16939692493867187
+        }
+      },
+      "115-160": {
+        "wall_start_step": 114,
+        "wall_end_step": 160,
+        "wall_seconds_per_update": 2.608695652173913,
+        "wall_total_seconds": 120.0,
+        "logged_step_seconds": {
+          "count": 46,
+          "mean": 2.583204020624575,
+          "median": 2.5731669664382935,
+          "p95": 2.662904381752014,
+          "min": 2.522935152053833,
+          "max": 2.6967267990112305,
+          "stddev": 0.037585864722640694
+        },
+        "loss": {
+          "count": 46,
+          "mean": 0.18946108610733695,
+          "median": 0.18780517578125,
+          "p95": 0.220703125,
+          "min": 0.15478515625,
+          "max": 0.2266845703125,
+          "stddev": 0.017412509386168964
+        },
+        "grad_norm": {
+          "count": 46,
+          "mean": 0.49515158780243085,
+          "median": 0.49077071249485016,
+          "p95": 0.5918222665786743,
+          "min": 0.3824236989021301,
+          "max": 0.6774834394454956,
+          "stddev": 0.06640271153849255
+        }
+      }
+    },
+    "learning_rate_near_warmup_end": [
+      {
+        "step": 113,
+        "lr": 4.956140350877194e-05,
+        "loss": 0.22705078125,
+        "grad_norm": 0.509153425693512
+      },
+      {
+        "step": 114,
+        "lr": 5e-05,
+        "loss": 0.2220458984375,
+        "grad_norm": 0.5542914271354675
+      },
+      {
+        "step": 115,
+        "lr": 4.999999685617409e-05,
+        "loss": 0.2266845703125,
+        "grad_norm": 0.5157161355018616
+      },
+      {
+        "step": 160,
+        "lr": 4.999334803296888e-05,
+        "loss": 0.15478515625,
+        "grad_norm": 0.4825720191001892
+      }
+    ],
+    "limits": "160步集成验证跨过114步预热，覆盖46步接近峰值学习率训练；未覆盖完整5717步epoch或机器人闭环评测。速度结果不是新的随机化A/B。"
+  },
+  "run_name_and_resume": {
+    "new_default_run_name": "robotwin_1ep_optimized",
+    "previous_default_run_name": "robotwin_1ep_fast",
+    "default_destinations": {
+      "output_dir": "/cache/lingbot/robotwin_train/robotwin_1ep_optimized",
+      "logging_dir": "/home/ma-user/work/lingbot-vla-v2/logs/robotwin_1ep_optimized",
+      "obs_output_dir": "obs://yw-2030-extern/Partner_Qin/robot_1014/robotwin_1ep_optimized"
+    },
+    "meaning": "RUN_NAME作为默认本地暂存、日志、OBS三个目录的命名空间。主线只读OBS核验：optimized无latest且允许新run；本审计只读核验本地optimized/checkpoints目录不存在。因此当前裸bash会从预训练权重开始新的optimized一轮，不会接旧fast已完成训练。",
+    "resume_old_default_command": "RUN_NAME=robotwin_1ep_fast selects the historical namespace, but is not an additional-training command for its currently completed 1-epoch checkpoint.",
+    "explicit_path_overrides": "OUTPUT_DIR、LOG_DIR、OBS_OUTPUT_DIR一旦显式设置，就不再随RUN_NAME变动；末尾原始CLI可再次覆盖。",
+    "restore_order": "显式本地load_checkpoint_path优先；否则enable_resume且有OBS结果根时下载该根latest完整存档；若没有OBS候选，再搜索当前output_dir/checkpoints本地存档。",
+    "checkpoints_vs_recomputation": "ENABLE_GRAD_CKPT=false只关闭训练激活重计算，不关闭训练进度保存或恢复。",
+    "compatibility": "旧checkpoint的foreach会被当前AdamW内层load后hook按本次开关重设，只改foreach；保留checkpoint恢复的LR、betas、decay、step和moments。性能开关及gradient_checkpointing不在resume_signature中。",
+    "signature_safety": "训练设置签名或总LR步数不一致时会拒绝恢复；显式/OBS恢复失败不会静默从零重启。没有完整存档时仍可能从零开始。",
+    "not_verified": "本轮60步与默认160步均禁用完整DCP保存/恢复/上传；独立CPU optimizer state_dict恢复检查存在，但不能当成八卡完整训练存档端到端恢复已验证。",
+    "existing_optimizer_resume_validation": {
+      "device": "cpu",
+      "world_size": 1,
+      "source": "lingbotvla/optim/optimizer.py",
+      "checks": [
+        {
+          "kind": "local",
+          "checkpoint_foreach": false,
+          "runtime_flag": true,
+          "route": "inner_direct_dcp_path",
+          "loaded_foreach": true,
+          "hyperparameters_and_moments_exact": true
+        },
+        {
+          "kind": "local",
+          "checkpoint_foreach": false,
+          "runtime_flag": true,
+          "route": "combined",
+          "loaded_foreach": true,
+          "hyperparameters_and_moments_exact": true
+        },
+        {
+          "kind": "local",
+          "checkpoint_foreach": true,
+          "runtime_flag": false,
+          "route": "inner_direct_dcp_path",
+          "loaded_foreach": false,
+          "hyperparameters_and_moments_exact": true
+        },
+        {
+          "kind": "local",
+          "checkpoint_foreach": true,
+          "runtime_flag": false,
+          "route": "combined",
+          "loaded_foreach": false,
+          "hyperparameters_and_moments_exact": true
+        },
+        {
+          "kind": "dtensor",
+          "checkpoint_foreach": false,
+          "runtime_flag": true,
+          "route": "inner_direct_dcp_path",
+          "loaded_foreach": true,
+          "hyperparameters_and_moments_exact": true
+        },
+        {
+          "kind": "dtensor",
+          "checkpoint_foreach": false,
+          "runtime_flag": true,
+          "route": "combined",
+          "loaded_foreach": true,
+          "hyperparameters_and_moments_exact": true
+        },
+        {
+          "kind": "dtensor",
+          "checkpoint_foreach": true,
+          "runtime_flag": false,
+          "route": "inner_direct_dcp_path",
+          "loaded_foreach": false,
+          "hyperparameters_and_moments_exact": true
+        },
+        {
+          "kind": "dtensor",
+          "checkpoint_foreach": true,
+          "runtime_flag": false,
+          "route": "combined",
+          "loaded_foreach": false,
+          "hyperparameters_and_moments_exact": true
+        },
+        {
+          "kind": "hybrid",
+          "checkpoint_foreach": false,
+          "runtime_flag": true,
+          "route": "inner_direct_dcp_path",
+          "loaded_foreach": false,
+          "hyperparameters_and_moments_exact": true
+        },
+        {
+          "kind": "hybrid",
+          "checkpoint_foreach": false,
+          "runtime_flag": true,
+          "route": "combined",
+          "loaded_foreach": false,
+          "hyperparameters_and_moments_exact": true
+        },
+        {
+          "kind": "hybrid",
+          "checkpoint_foreach": true,
+          "runtime_flag": false,
+          "route": "inner_direct_dcp_path",
+          "loaded_foreach": false,
+          "hyperparameters_and_moments_exact": true
+        },
+        {
+          "kind": "hybrid",
+          "checkpoint_foreach": true,
+          "runtime_flag": false,
+          "route": "combined",
+          "loaded_foreach": false,
+          "hyperparameters_and_moments_exact": true
+        }
+      ],
+      "passed": true,
+      "scope": "Only foreach restored from captured runtime policy; LR/betas/decay/eps/state preserved."
+    },
+    "remote_state_evidence": {
+      "path": "/home/ma-user/work/lingbot-vla-v2/reports/20261016_speed_round2/current_entry_remote_state.json",
+      "sha256": "a0ecd4a760e1e1f6a23cfe5d7235849477dfea0b66a5d8ceff5644f9705a64f2",
+      "audit_owner": "Root agent; this child read the resulting evidence file and did not issue remote requests.",
+      "data": {
+        "checked_at": "2026-10-16T19:18:52.486677+08:00",
+        "read_only": true,
+        "checkpoint_downloaded": false,
+        "runs": [
+          {
+            "run_name": "robotwin_1ep_optimized",
+            "latest_exists": false,
+            "new_run_prefix_available": true
+          },
+          {
+            "run_name": "robotwin_1ep_fast",
+            "latest_exists": true,
+            "latest": {
+              "checkpoint_path": "checkpoints/global_step_5717",
+              "global_step": 5717,
+              "epoch": 1
+            }
+          }
+        ]
+      }
+    },
+    "local_checkpoint_state": {
+      "robotwin_1ep_optimized": {
+        "checkpoint_directory_exists": false,
+        "checkpoint_entries": []
+      },
+      "robotwin_1ep_fast": {
+        "checkpoint_directory_exists": true,
+        "checkpoint_entries": []
+      }
+    },
+    "old_run_already_complete": "fast最新完整存档为global_step5717、epoch1；默认总长度也是5717/1epoch，指定旧RUN_NAME后不会多训练一轮。直接将总轮数改5等会改变总LR horizon并被恢复保护拒绝，不建议当作续训命令。若要追加训练，应另行明确新的调度和阶段/存档迁移方案。"
+  },
+  "environment_and_custom_configuration_boundaries": [
+    {
+      "severity": "documented_override_semantics",
+      "finding": "attention未设置时默认sdpa_fp32，显式空字符串保留并让模型遵循YAML；monitor/foreach空值会变回1，禁用必须写0。",
+      "evidence": "train_robotwin_npu.sh:92–108；DRY_RUN empty_speed case"
+    },
+    {
+      "severity": "custom_config_compatibility",
+      "finding": "sdpa_fp32与eager环境覆盖都要求YAML attention_implementation=eager。自定义CONFIG或CLI改成flex/flex_cached时，必须同时显式清空LINGBOT_JOINT_ATTN_BACKEND，否则模型构建会报错；主脚本DRY_RUN本身不检测此跨配置约束。",
+      "workaround": "LINGBOT_JOINT_ATTN_BACKEND='' CONFIG=/path/to/custom.yaml bash train_robotwin_npu.sh",
+      "evidence": "modeling_lingbot_vla_v2.py:419–428"
+    },
+    {
+      "severity": "documented_override_semantics",
+      "finding": "默认sdpa_fp32下ENABLE_GRAD_CKPT未设置或空值会被设false，不表示沿用自定义YAML的true；需要明确ENABLE_GRAD_CKPT=true。末尾CLI值优先于环境组装值，已DRY_RUN确认。"
+    },
+    {
+      "severity": "scope_of_optimization",
+      "finding": "LINGBOT_ADAMW_FOREACH_NPU控制Muon组合优化器里的AdamW分支；自定义OPTIMIZER=adamw时纯AdamW构建分支仍在NPU上foreach=False。当前默认optimizer=muon，因此无默认路径偏差。"
+    },
+    {
+      "severity": "explicit_empty_obs_supported",
+      "finding": "OBS_OUTPUT_DIR=\"\"与OBS_DATASET_URI=\"\"分别关闭结果OBS与数据OBS；两者使用保留空值的展开。空RUN_NAME/OUTPUT_DIR等则会回到默认值。"
+    },
+    {
+      "severity": "performance_scope",
+      "finding": "自定义更大batch、可训练VLM、不同attention或activation offload配置不属于8×12冻结VLM验证范围；默认关闭重计算策略不应被当作这些配置的内存保证。"
+    }
+  ],
+  "maintenance_issue": {
+    "finding": "默认RUN_NAME断言与两个测试夹具存在过时预期。",
+    "resolution": "Root updated only the two test default paths; attention agent added missing no-op training_profiler.scope and profile_only=False to CPU test fixtures. Root reports all 15 tests in test_training_obs_flow.py now pass.",
+    "audit_owner": "Reported by root; child did not repeat tests or edit tests.",
+    "training_impact": "No production code changed; default runtime configuration remains the verified one."
+  },
+  "remaining_limits": [
+    "未重新执行已有32项入口验收；本审计补充关键DRY_RUN覆盖与原始160步日志/source哈希复核。",
+    "模型权重、完整数据内容和所有第三方依赖未做全量哈希；默认路径/数据列表匹配不等于逐位输入证明。",
+    "峰值50.61GiB为rank0已分配显存；不能把64GiB减它当作可随意增加batch的真实余量。",
+    "实际恢复会继续旧global_step而不是再跑新一轮；如果旧checkpoint已完成既定1epoch，保持1epoch默认不会再增加一轮。"
+  ],
+  "followup_verified_at": "2026-10-16T19:22:03.661050+08:00"
+}

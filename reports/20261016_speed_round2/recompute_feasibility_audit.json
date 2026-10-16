@@ -1,0 +1,76 @@
+{
+  "audited_at": "2026-10-16T17:23:22.132144+08:00",
+  "scope": "Read-only source/config audit; no patch, no NPU execution.",
+  "actual_checkpoint_scope": {
+    "use_reentrant": false,
+    "train_expert_only": true,
+    "gradient_checkpointing_enable_location": "lingbotvla/distributed/torch_parallelize.py:111",
+    "layer_wrapper_location": "transformers/modeling_layers.py:35",
+    "active_scope": "36 action Qwen2DecoderLayer modules; each is called separately for QKV and output projection plus MoE.",
+    "layer_forward_location": "lingbotvla/models/vla/lingbot_vla/qwen2_action_expert.py:367",
+    "joint_attention_outside_checkpoint_location": "lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:321",
+    "frozen_vlm_eval_location": "lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:197",
+    "frozen_vlm_note": "Qwen3-VL remains eval even when parent.train() runs; GradientCheckpointingLayer requires self.training. Frozen language blocks may still carry gradients to trainable task embeddings, but their wrappers do not checkpoint while eval."
+  },
+  "candidate_policy": {
+    "small_clean_switch_available_as_module_attribute": true,
+    "new_config_switch_needed": true,
+    "method": "After global gradient_checkpointing_enable(), set selected action decoder layers.gradient_checkpointing=False. Preserve layer __call__, FSDP hooks, dtype casts, and forward math.",
+    "coverage": "Disables both QKV and output+MoE checkpoints for selected layers. No direct existing flag disables only routed-expert MLP.",
+    "first_scope": "A bounded all36-action-layer checkpoint-off experiment is reasonable after the other scheduled experiments; first observe3-5 optimizer updates and all-rank memory, then continue60 steps if stable.9/18 layer variants remain fallbacks if memory is tight.",
+    "avoid": "Do not call layer.forward directly to bypass checkpoint: doing so also bypasses module/FSDP hooks. Do not disable checkpoint globally assuming VLM and joint attention receive the same policy.",
+    "global_switch_note": "Teacher models are instantiated outside the main trainable model; model.gradient_checkpointing_enable/disable does not toggle these teachers. The frozen VLM is eval and its checkpoint layer wrapper is already inactive. Prefer an action-only override to preserve this explicit scope across future configs."
+  },
+  "numerical_and_state_risks": {
+    "training_math": "Standard checkpoint policy changes recomputation versus saved activations, not intended forward math; exact bitwise gradients are not guaranteed on this stack.",
+    "moe_forward_side_effect": "_update_moe_runtime_stats() increments tokens_per_expert on every training forward, including recomputation. Selected layers will have fewer counter updates when checkpointing is disabled.",
+    "side_effect_location": "lingbotvla/models/vla/lingbot_vla/qwen2_action_expert.py:40",
+    "optimizer_bias_hook_location": "lingbotvla/models/vla/lingbot_vla/moe_load_balance.py:73",
+    "current_bias_update_speed": 0.0,
+    "current_effect": "The correction bias update is disabled, but raw counts/histograms can change. Normalized ratios may remain invariant under a uniform per-layer factor; do not assume all future configurations preserve state semantics.",
+    "required_checks": [
+      "Fixed input output and all parameter/input gradients against the original policy.",
+      "Count actual runtime-stat updates under non-reentrant early-stop recomputation and establish desired forward-only semantics.",
+      "Verify zero/finite gradients, optimizer step counts and state schema with FSDP2.",
+      "Measure peak allocated/reserved memory on all8 ranks and preserve margin for optimizer workspaces."
+    ]
+  },
+  "memory_budget": {
+    "observed_rank0_peak_allocated_gib_before_attention": 53.31,
+    "observed_rank0_peak_allocated_gib_after_attention": 46.68,
+    "observed_saving_gib": 6.63,
+    "action_token_count_per_rank": 612,
+    "routed_assignments_per_rank": 2448,
+    "known_bf16_weights_retained_per_uncheckpointed_layer_mib": 72.0,
+    "known_bf16_weights_for18_layers_gib": 1.265625,
+    "explicit_tensor_payload_overcount_model_bytes": {
+      "bf16_expert_weight_copies": 75497472,
+      "gathered_expert_inputs_bf16": 3760128,
+      "gate_up_silu_product_bf16": 10027008,
+      "expert_and_unpermuted_output_bf16": 7520256,
+      "fp32_unpermuted_and_weighted_output": 15040512,
+      "action_hidden_bf16": 940032,
+      "router_eight_fp32_buffers": 626688,
+      "shared_mlp_four_fp32_buffers": 6893568,
+      "qkv_outputs_fp32": 15040512,
+      "eight_fp32_norm_residual_buffers": 15040512,
+      "o_projection_input_fp32": 10027008,
+      "three_int64_index_buffers": 58752
+    },
+    "explicit_payload_sum_per_layer_mib": 153.0384521484375,
+    "explicit_payload_sum_9layers_gib": 1.3450645208358765,
+    "explicit_payload_sum_18layers_gib": 2.690129041671753,
+    "meaning": "72MiB/layer for three BF16 expert weights is directly derived from32 experts*768*512*3*2bytes. The approximately153MiB explicit payload model deliberately includes some tensors that may already be retained or released, but is not a proven bound on total device peak.",
+    "unknowns": "Custom kernel workspace, allocator fragmentation/reservation, FSDP buffer lifetimes, autograd saved-tensor choices, and other ranks prevent a rigorous whole-run upper bound from source inspection alone.",
+    "practical_budget_note": "A256MiB/layer experimental reservation is a conservative planning allowance, not a measured or guaranteed upper bound.9 layers would budget2.25GiB,18 layers4.5GiB.",
+    "known_bf16_weights_for36_layers_gib": 2.53125,
+    "explicit_payload_sum_36layers_gib": 5.380258083343506,
+    "illustrative_peak_after_disabling_all_action_layers_gib": 52.060258083343506
+  },
+  "speed_expectation": {
+    "not_quantified": true,
+    "reason": "The large joint attention operation is outside the current checkpoint regions. Grouped MoE is already much faster, so removing half of checkpointed action layers cannot be interpreted as removing half of total forward time.",
+    "profile_context": "Earlier GMM profile model.moe_experts host scopes total0.156s/update across original and recomputed calls; this is perturbed host timing, not a predicted end-to-end saving.",
+    "priority": "Finish AdamW, repeat baseline, and combined first. Source accounting suggests all36 action layers might fit: illustrative46.68+5.38=52.06GiB is below previously observed53.31GiB, but this does not bound workspaces, rank imbalance or allocator behavior. A final bounded action-only checkpoint-off trial is justified if those checks fit the time budget."
+  }
+}

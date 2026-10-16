@@ -1,0 +1,1098 @@
+{
+  "source": "/cache/lingbot/profiling/moe_optimization_20261016/ab/gmm/trace/rank0/notebook-1412a60d-0f41-4869-980d-933b2766338c_2694870_20261016082734660_ascend_pt/ASCEND_PROFILER_OUTPUT",
+  "timing_scope": "Two old GMM profiled steps, rank0 only; host scopes are asynchronous, inclusive totals overlap.",
+  "ranges": [
+    {
+      "name": "Optimizer.step#DistributedMuon.step",
+      "duration_us": 303993.01,
+      "ops_by_inclusive_host_us": [
+        [
+          "Optimizer.step#DistributedMuon.step",
+          {
+            "count": 1,
+            "inclusive_host_us": 303993.01
+          }
+        ],
+        [
+          "aten::baddbmm",
+          {
+            "count": 1360,
+            "inclusive_host_us": 34429.29000000001
+          }
+        ],
+        [
+          "aten::mul_",
+          {
+            "count": 583,
+            "inclusive_host_us": 29846.260000000006
+          }
+        ],
+        [
+          "aten::add_",
+          {
+            "count": 619,
+            "inclusive_host_us": 25916.60000000001
+          }
+        ],
+        [
+          "empty_tensor",
+          {
+            "count": 3791,
+            "inclusive_host_us": 20841.150000000074
+          }
+        ],
+        [
+          "aten::matmul",
+          {
+            "count": 680,
+            "inclusive_host_us": 14982.179999999991
+          }
+        ],
+        [
+          "c10d::allgather_",
+          {
+            "count": 28,
+            "inclusive_host_us": 13385.029999999999
+          }
+        ],
+        [
+          "aten::lerp",
+          {
+            "count": 583,
+            "inclusive_host_us": 12866.369999999992
+          }
+        ],
+        [
+          "aten::reshape",
+          {
+            "count": 2516,
+            "inclusive_host_us": 11801.830000000024
+          }
+        ],
+        [
+          "aten::lerp_",
+          {
+            "count": 583,
+            "inclusive_host_us": 9649.460000000014
+          }
+        ],
+        [
+          "aten::view",
+          {
+            "count": 2516,
+            "inclusive_host_us": 8956.010000000002
+          }
+        ],
+        [
+          "aten::to",
+          {
+            "count": 927,
+            "inclusive_host_us": 7915.890000000009
+          }
+        ],
+        [
+          "npu::npu_dtype_cast",
+          {
+            "count": 272,
+            "inclusive_host_us": 6273.900000000006
+          }
+        ],
+        [
+          "aten::select",
+          {
+            "count": 735,
+            "inclusive_host_us": 6143.1800000000085
+          }
+        ],
+        [
+          "aten::copy_",
+          {
+            "count": 286,
+            "inclusive_host_us": 6119.219999999999
+          }
+        ],
+        [
+          "aclnnBaddbmm",
+          {
+            "count": 1360,
+            "inclusive_host_us": 6108.03999999999
+          }
+        ],
+        [
+          "aten::mT",
+          {
+            "count": 770,
+            "inclusive_host_us": 6048.510000000003
+          }
+        ],
+        [
+          "aclnnInplaceMuls",
+          {
+            "count": 583,
+            "inclusive_host_us": 5062.9699999999975
+          }
+        ],
+        [
+          "aten::transpose",
+          {
+            "count": 770,
+            "inclusive_host_us": 4923.239999999996
+          }
+        ],
+        [
+          "Enqueue@aclnnBaddbmm",
+          {
+            "count": 1360,
+            "inclusive_host_us": 4816.020000000003
+          }
+        ],
+        [
+          "aten::linalg_vector_norm",
+          {
+            "count": 136,
+            "inclusive_host_us": 4324.110000000001
+          }
+        ],
+        [
+          "aten::as_strided",
+          {
+            "count": 1765,
+            "inclusive_host_us": 4281.140000000003
+          }
+        ]
+      ],
+      "scalar_reads": {
+        "count": 619,
+        "inclusive_host_us": 884.1199999999994
+      },
+      "all_gathers": {
+        "HcclAllgather": {
+          "count": 56,
+          "inclusive_host_us": 226.01000000000002
+        },
+        "c10d::allgather_": {
+          "count": 28,
+          "inclusive_host_us": 13385.029999999999
+        },
+        "Enqueue@HcclAllgather": {
+          "count": 28,
+          "inclusive_host_us": 38.03999999999999
+        }
+      },
+      "ns_matmul_ops": {
+        "aten::baddbmm": {
+          "count": 1360,
+          "inclusive_host_us": 34429.29000000001
+        }
+      },
+      "lerp_calls": {
+        "count": 583,
+        "inclusive_host_us": 9649.460000000014
+      }
+    },
+    {
+      "name": "Optimizer.step#AdamW.step",
+      "duration_us": 519117.16,
+      "ops_by_inclusive_host_us": [
+        [
+          "Optimizer.step#AdamW.step",
+          {
+            "count": 1,
+            "inclusive_host_us": 519117.16
+          }
+        ],
+        [
+          "aten::mul_",
+          {
+            "count": 1504,
+            "inclusive_host_us": 144358.3200000001
+          }
+        ],
+        [
+          "aten::div",
+          {
+            "count": 752,
+            "inclusive_host_us": 109239.49000000006
+          }
+        ],
+        [
+          "aten::addcdiv_",
+          {
+            "count": 752,
+            "inclusive_host_us": 89441.09999999999
+          }
+        ],
+        [
+          "aten::add_",
+          {
+            "count": 1128,
+            "inclusive_host_us": 71394.44999999998
+          }
+        ],
+        [
+          "aten::sqrt",
+          {
+            "count": 752,
+            "inclusive_host_us": 69939.50000000004
+          }
+        ],
+        [
+          "aten::addcmul_",
+          {
+            "count": 752,
+            "inclusive_host_us": 56445.45000000002
+          }
+        ],
+        [
+          "aten::lerp_",
+          {
+            "count": 752,
+            "inclusive_host_us": 54099.149999999994
+          }
+        ],
+        [
+          "aclnnInplaceMuls",
+          {
+            "count": 752,
+            "inclusive_host_us": 8687.29
+          }
+        ],
+        [
+          "Enqueue@aclnnInplaceMuls",
+          {
+            "count": 752,
+            "inclusive_host_us": 7187.019999999994
+          }
+        ],
+        [
+          "aten::item",
+          {
+            "count": 1880,
+            "inclusive_host_us": 6698.149999999984
+          }
+        ],
+        [
+          "empty_tensor",
+          {
+            "count": 752,
+            "inclusive_host_us": 6676.589999999998
+          }
+        ],
+        [
+          "aten::to",
+          {
+            "count": 376,
+            "inclusive_host_us": 6535.400000000003
+          }
+        ],
+        [
+          "aten::_to_copy",
+          {
+            "count": 376,
+            "inclusive_host_us": 5778.630000000005
+          }
+        ],
+        [
+          "aclnnInplaceAddcdiv",
+          {
+            "count": 376,
+            "inclusive_host_us": 4411.010000000004
+          }
+        ],
+        [
+          "aclnnDivs",
+          {
+            "count": 376,
+            "inclusive_host_us": 4204.839999999998
+          }
+        ],
+        [
+          "aclnnInplaceAdds",
+          {
+            "count": 376,
+            "inclusive_host_us": 4129.760000000003
+          }
+        ],
+        [
+          "aclnnSqrt",
+          {
+            "count": 376,
+            "inclusive_host_us": 3966.310000000002
+          }
+        ],
+        [
+          "aclnnInplaceLerps",
+          {
+            "count": 376,
+            "inclusive_host_us": 3949.7100000000005
+          }
+        ],
+        [
+          "aclnnInplaceAddcmul",
+          {
+            "count": 376,
+            "inclusive_host_us": 3943.360000000001
+          }
+        ],
+        [
+          "Enqueue@aclnnDivs",
+          {
+            "count": 376,
+            "inclusive_host_us": 3711.369999999998
+          }
+        ],
+        [
+          "Enqueue@aclnnInplaceAdds",
+          {
+            "count": 376,
+            "inclusive_host_us": 3639.479999999998
+          }
+        ]
+      ],
+      "scalar_reads": {
+        "count": 1880,
+        "inclusive_host_us": 2832.5599999999977
+      },
+      "all_gathers": {},
+      "ns_matmul_ops": {},
+      "lerp_calls": {
+        "count": 752,
+        "inclusive_host_us": 54099.149999999994
+      }
+    },
+    {
+      "name": "train.optimizer",
+      "duration_us": 827954.43,
+      "ops_by_inclusive_host_us": [
+        [
+          "train.optimizer",
+          {
+            "count": 1,
+            "inclusive_host_us": 827954.43
+          }
+        ],
+        [
+          "Optimizer.step#AdamW.step",
+          {
+            "count": 1,
+            "inclusive_host_us": 519117.16
+          }
+        ],
+        [
+          "Optimizer.step#DistributedMuon.step",
+          {
+            "count": 1,
+            "inclusive_host_us": 303993.01
+          }
+        ],
+        [
+          "aten::mul_",
+          {
+            "count": 2087,
+            "inclusive_host_us": 174204.58000000005
+          }
+        ],
+        [
+          "aten::div",
+          {
+            "count": 888,
+            "inclusive_host_us": 112442.74000000005
+          }
+        ],
+        [
+          "aten::add_",
+          {
+            "count": 1747,
+            "inclusive_host_us": 97311.04999999989
+          }
+        ],
+        [
+          "aten::addcdiv_",
+          {
+            "count": 752,
+            "inclusive_host_us": 89441.09999999999
+          }
+        ],
+        [
+          "aten::sqrt",
+          {
+            "count": 752,
+            "inclusive_host_us": 69939.50000000004
+          }
+        ],
+        [
+          "aten::lerp_",
+          {
+            "count": 1335,
+            "inclusive_host_us": 63748.610000000015
+          }
+        ],
+        [
+          "aten::addcmul_",
+          {
+            "count": 752,
+            "inclusive_host_us": 56445.45000000002
+          }
+        ],
+        [
+          "aten::baddbmm",
+          {
+            "count": 1360,
+            "inclusive_host_us": 34429.29000000001
+          }
+        ],
+        [
+          "empty_tensor",
+          {
+            "count": 4543,
+            "inclusive_host_us": 27517.74000000007
+          }
+        ],
+        [
+          "aten::matmul",
+          {
+            "count": 680,
+            "inclusive_host_us": 14982.179999999991
+          }
+        ],
+        [
+          "aten::to",
+          {
+            "count": 1303,
+            "inclusive_host_us": 14451.29
+          }
+        ],
+        [
+          "aclnnInplaceMuls",
+          {
+            "count": 1335,
+            "inclusive_host_us": 13750.259999999993
+          }
+        ],
+        [
+          "c10d::allgather_",
+          {
+            "count": 28,
+            "inclusive_host_us": 13385.029999999999
+          }
+        ],
+        [
+          "aten::lerp",
+          {
+            "count": 583,
+            "inclusive_host_us": 12866.369999999992
+          }
+        ],
+        [
+          "aten::reshape",
+          {
+            "count": 2516,
+            "inclusive_host_us": 11801.830000000024
+          }
+        ],
+        [
+          "Enqueue@aclnnInplaceMuls",
+          {
+            "count": 1335,
+            "inclusive_host_us": 10944.670000000013
+          }
+        ],
+        [
+          "aten::view",
+          {
+            "count": 2516,
+            "inclusive_host_us": 8956.010000000002
+          }
+        ],
+        [
+          "aten::item",
+          {
+            "count": 2499,
+            "inclusive_host_us": 8762.139999999985
+          }
+        ],
+        [
+          "aten::copy_",
+          {
+            "count": 662,
+            "inclusive_host_us": 8499.75
+          }
+        ]
+      ],
+      "scalar_reads": {
+        "count": 2499,
+        "inclusive_host_us": 3716.679999999996
+      },
+      "all_gathers": {
+        "HcclAllgather": {
+          "count": 56,
+          "inclusive_host_us": 226.01000000000002
+        },
+        "c10d::allgather_": {
+          "count": 28,
+          "inclusive_host_us": 13385.029999999999
+        },
+        "Enqueue@HcclAllgather": {
+          "count": 28,
+          "inclusive_host_us": 38.03999999999999
+        }
+      },
+      "ns_matmul_ops": {
+        "aten::baddbmm": {
+          "count": 1360,
+          "inclusive_host_us": 34429.29000000001
+        }
+      },
+      "lerp_calls": {
+        "count": 1335,
+        "inclusive_host_us": 63748.610000000015
+      }
+    },
+    {
+      "name": "Optimizer.step#DistributedMuon.step",
+      "duration_us": 312562.9,
+      "ops_by_inclusive_host_us": [
+        [
+          "Optimizer.step#DistributedMuon.step",
+          {
+            "count": 1,
+            "inclusive_host_us": 312562.9
+          }
+        ],
+        [
+          "aten::baddbmm",
+          {
+            "count": 1360,
+            "inclusive_host_us": 38753.520000000084
+          }
+        ],
+        [
+          "aten::mul_",
+          {
+            "count": 583,
+            "inclusive_host_us": 32654.300000000025
+          }
+        ],
+        [
+          "aten::add_",
+          {
+            "count": 619,
+            "inclusive_host_us": 27301.619999999977
+          }
+        ],
+        [
+          "empty_tensor",
+          {
+            "count": 3791,
+            "inclusive_host_us": 21125.44
+          }
+        ],
+        [
+          "aten::matmul",
+          {
+            "count": 680,
+            "inclusive_host_us": 15350.900000000005
+          }
+        ],
+        [
+          "aten::lerp",
+          {
+            "count": 583,
+            "inclusive_host_us": 13049.019999999993
+          }
+        ],
+        [
+          "c10d::allgather_",
+          {
+            "count": 28,
+            "inclusive_host_us": 12144.990000000002
+          }
+        ],
+        [
+          "aten::reshape",
+          {
+            "count": 2516,
+            "inclusive_host_us": 11839.59999999999
+          }
+        ],
+        [
+          "aten::view",
+          {
+            "count": 2516,
+            "inclusive_host_us": 9168.670000000007
+          }
+        ],
+        [
+          "aten::lerp_",
+          {
+            "count": 583,
+            "inclusive_host_us": 9063.99000000001
+          }
+        ],
+        [
+          "aten::to",
+          {
+            "count": 927,
+            "inclusive_host_us": 8254.63000000001
+          }
+        ],
+        [
+          "npu::npu_dtype_cast",
+          {
+            "count": 272,
+            "inclusive_host_us": 6614.429999999995
+          }
+        ],
+        [
+          "aten::mT",
+          {
+            "count": 770,
+            "inclusive_host_us": 6450.579999999994
+          }
+        ],
+        [
+          "aclnnBaddbmm",
+          {
+            "count": 1360,
+            "inclusive_host_us": 6431.139999999991
+          }
+        ],
+        [
+          "aten::select",
+          {
+            "count": 735,
+            "inclusive_host_us": 6270.720000000001
+          }
+        ],
+        [
+          "aten::copy_",
+          {
+            "count": 286,
+            "inclusive_host_us": 5396.27
+          }
+        ],
+        [
+          "aten::transpose",
+          {
+            "count": 770,
+            "inclusive_host_us": 5299.360000000004
+          }
+        ],
+        [
+          "Enqueue@aclnnBaddbmm",
+          {
+            "count": 1360,
+            "inclusive_host_us": 5120.069999999996
+          }
+        ],
+        [
+          "aclnnInplaceMuls",
+          {
+            "count": 583,
+            "inclusive_host_us": 5067.63
+          }
+        ],
+        [
+          "aten::as_strided",
+          {
+            "count": 1765,
+            "inclusive_host_us": 4758.120000000011
+          }
+        ],
+        [
+          "aclnnInplaceAdd",
+          {
+            "count": 619,
+            "inclusive_host_us": 4339.06
+          }
+        ]
+      ],
+      "scalar_reads": {
+        "count": 619,
+        "inclusive_host_us": 851.7700000000003
+      },
+      "all_gathers": {
+        "HcclAllgather": {
+          "count": 56,
+          "inclusive_host_us": 211.31
+        },
+        "c10d::allgather_": {
+          "count": 28,
+          "inclusive_host_us": 12144.990000000002
+        },
+        "Enqueue@HcclAllgather": {
+          "count": 28,
+          "inclusive_host_us": 31.889999999999997
+        }
+      },
+      "ns_matmul_ops": {
+        "aten::baddbmm": {
+          "count": 1360,
+          "inclusive_host_us": 38753.520000000084
+        }
+      },
+      "lerp_calls": {
+        "count": 583,
+        "inclusive_host_us": 9063.99000000001
+      }
+    },
+    {
+      "name": "Optimizer.step#AdamW.step",
+      "duration_us": 567387.86,
+      "ops_by_inclusive_host_us": [
+        [
+          "Optimizer.step#AdamW.step",
+          {
+            "count": 1,
+            "inclusive_host_us": 567387.86
+          }
+        ],
+        [
+          "aten::mul_",
+          {
+            "count": 1504,
+            "inclusive_host_us": 164896.18999999983
+          }
+        ],
+        [
+          "aten::div",
+          {
+            "count": 752,
+            "inclusive_host_us": 127113.12000000001
+          }
+        ],
+        [
+          "aten::addcdiv_",
+          {
+            "count": 752,
+            "inclusive_host_us": 102487.92000000004
+          }
+        ],
+        [
+          "aten::add_",
+          {
+            "count": 1128,
+            "inclusive_host_us": 77242.2899999999
+          }
+        ],
+        [
+          "aten::sqrt",
+          {
+            "count": 752,
+            "inclusive_host_us": 76447.44000000002
+          }
+        ],
+        [
+          "aten::addcmul_",
+          {
+            "count": 752,
+            "inclusive_host_us": 59152.32999999998
+          }
+        ],
+        [
+          "aten::lerp_",
+          {
+            "count": 752,
+            "inclusive_host_us": 58314.87000000005
+          }
+        ],
+        [
+          "empty_tensor",
+          {
+            "count": 752,
+            "inclusive_host_us": 9984.009999999993
+          }
+        ],
+        [
+          "aclnnInplaceMuls",
+          {
+            "count": 752,
+            "inclusive_host_us": 8614.250000000002
+          }
+        ],
+        [
+          "aten::item",
+          {
+            "count": 1880,
+            "inclusive_host_us": 7142.930000000001
+          }
+        ],
+        [
+          "Enqueue@aclnnInplaceMuls",
+          {
+            "count": 752,
+            "inclusive_host_us": 7005.750000000007
+          }
+        ],
+        [
+          "aten::to",
+          {
+            "count": 376,
+            "inclusive_host_us": 6637.520000000004
+          }
+        ],
+        [
+          "aten::_to_copy",
+          {
+            "count": 376,
+            "inclusive_host_us": 5889.699999999993
+          }
+        ],
+        [
+          "aclnnInplaceAddcdiv",
+          {
+            "count": 376,
+            "inclusive_host_us": 4437.649999999999
+          }
+        ],
+        [
+          "aclnnInplaceAdds",
+          {
+            "count": 376,
+            "inclusive_host_us": 4330.740000000001
+          }
+        ],
+        [
+          "aclnnDivs",
+          {
+            "count": 376,
+            "inclusive_host_us": 4222.369999999999
+          }
+        ],
+        [
+          "aclnnInplaceAddcmul",
+          {
+            "count": 376,
+            "inclusive_host_us": 3923.2199999999993
+          }
+        ],
+        [
+          "aclnnInplaceLerps",
+          {
+            "count": 376,
+            "inclusive_host_us": 3918.740000000003
+          }
+        ],
+        [
+          "Enqueue@aclnnDivs",
+          {
+            "count": 376,
+            "inclusive_host_us": 3684.0599999999995
+          }
+        ],
+        [
+          "aclnnSqrt",
+          {
+            "count": 376,
+            "inclusive_host_us": 3646.229999999999
+          }
+        ],
+        [
+          "Enqueue@aclnnInplaceAddcdiv",
+          {
+            "count": 376,
+            "inclusive_host_us": 3568.7100000000014
+          }
+        ]
+      ],
+      "scalar_reads": {
+        "count": 1880,
+        "inclusive_host_us": 2946.779999999995
+      },
+      "all_gathers": {},
+      "ns_matmul_ops": {},
+      "lerp_calls": {
+        "count": 752,
+        "inclusive_host_us": 58314.87000000005
+      }
+    },
+    {
+      "name": "train.optimizer",
+      "duration_us": 884861.54,
+      "ops_by_inclusive_host_us": [
+        [
+          "train.optimizer",
+          {
+            "count": 1,
+            "inclusive_host_us": 884861.54
+          }
+        ],
+        [
+          "Optimizer.step#AdamW.step",
+          {
+            "count": 1,
+            "inclusive_host_us": 567387.86
+          }
+        ],
+        [
+          "Optimizer.step#DistributedMuon.step",
+          {
+            "count": 1,
+            "inclusive_host_us": 312562.9
+          }
+        ],
+        [
+          "aten::mul_",
+          {
+            "count": 2087,
+            "inclusive_host_us": 197550.49000000008
+          }
+        ],
+        [
+          "aten::div",
+          {
+            "count": 888,
+            "inclusive_host_us": 130364.43
+          }
+        ],
+        [
+          "aten::add_",
+          {
+            "count": 1747,
+            "inclusive_host_us": 104543.91000000003
+          }
+        ],
+        [
+          "aten::addcdiv_",
+          {
+            "count": 752,
+            "inclusive_host_us": 102487.92000000004
+          }
+        ],
+        [
+          "aten::sqrt",
+          {
+            "count": 752,
+            "inclusive_host_us": 76447.44000000002
+          }
+        ],
+        [
+          "aten::lerp_",
+          {
+            "count": 1335,
+            "inclusive_host_us": 67378.86000000012
+          }
+        ],
+        [
+          "aten::addcmul_",
+          {
+            "count": 752,
+            "inclusive_host_us": 59152.32999999998
+          }
+        ],
+        [
+          "aten::baddbmm",
+          {
+            "count": 1360,
+            "inclusive_host_us": 38753.520000000084
+          }
+        ],
+        [
+          "empty_tensor",
+          {
+            "count": 4543,
+            "inclusive_host_us": 31109.45000000003
+          }
+        ],
+        [
+          "aten::matmul",
+          {
+            "count": 680,
+            "inclusive_host_us": 15350.900000000005
+          }
+        ],
+        [
+          "aten::to",
+          {
+            "count": 1303,
+            "inclusive_host_us": 14892.150000000016
+          }
+        ],
+        [
+          "aclnnInplaceMuls",
+          {
+            "count": 1335,
+            "inclusive_host_us": 13681.88000000001
+          }
+        ],
+        [
+          "aten::lerp",
+          {
+            "count": 583,
+            "inclusive_host_us": 13049.019999999993
+          }
+        ],
+        [
+          "c10d::allgather_",
+          {
+            "count": 28,
+            "inclusive_host_us": 12144.990000000002
+          }
+        ],
+        [
+          "aten::reshape",
+          {
+            "count": 2516,
+            "inclusive_host_us": 11839.59999999999
+          }
+        ],
+        [
+          "Enqueue@aclnnInplaceMuls",
+          {
+            "count": 1335,
+            "inclusive_host_us": 10742.02
+          }
+        ],
+        [
+          "aten::view",
+          {
+            "count": 2516,
+            "inclusive_host_us": 9168.670000000007
+          }
+        ],
+        [
+          "aten::item",
+          {
+            "count": 2499,
+            "inclusive_host_us": 9155.43000000002
+          }
+        ],
+        [
+          "aten::copy_",
+          {
+            "count": 662,
+            "inclusive_host_us": 7911.100000000002
+          }
+        ]
+      ],
+      "scalar_reads": {
+        "count": 2499,
+        "inclusive_host_us": 3798.550000000006
+      },
+      "all_gathers": {
+        "HcclAllgather": {
+          "count": 56,
+          "inclusive_host_us": 211.31
+        },
+        "c10d::allgather_": {
+          "count": 28,
+          "inclusive_host_us": 12144.990000000002
+        },
+        "Enqueue@HcclAllgather": {
+          "count": 28,
+          "inclusive_host_us": 31.889999999999997
+        }
+      },
+      "ns_matmul_ops": {
+        "aten::baddbmm": {
+          "count": 1360,
+          "inclusive_host_us": 38753.520000000084
+        }
+      },
+      "lerp_calls": {
+        "count": 1335,
+        "inclusive_host_us": 67378.86000000012
+      }
+    }
+  ]
+}

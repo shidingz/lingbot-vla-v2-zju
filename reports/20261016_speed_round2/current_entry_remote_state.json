@@ -1,0 +1,21 @@
+{
+  "checked_at": "2026-10-16T19:18:52.486677+08:00",
+  "read_only": true,
+  "checkpoint_downloaded": false,
+  "runs": [
+    {
+      "run_name": "robotwin_1ep_optimized",
+      "latest_exists": false,
+      "new_run_prefix_available": true
+    },
+    {
+      "run_name": "robotwin_1ep_fast",
+      "latest_exists": true,
+      "latest": {
+        "checkpoint_path": "checkpoints/global_step_5717",
+        "global_step": 5717,
+        "epoch": 1
+      }
+    }
+  ]
+}

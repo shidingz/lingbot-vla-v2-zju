@@ -1,0 +1,107 @@
+{
+  "completed_at": "2026-10-16T13:55:51.856849+08:00",
+  "run_uri": "obs://yw-2030-extern/Partner_Qin/robot_1014/robotwin_1ep_fast",
+  "purpose": "Final logs and completed training analysis; immutable checkpoint objects were not changed",
+  "files": [
+    {
+      "path": "analysis/analyze_run.py",
+      "size": 5039,
+      "sha256": "bcabf50b0a15690d44a6f4d747b473a5a92141a87fd7e33afa53b0ba79965d13"
+    },
+    {
+      "path": "analysis/artifact_index.txt",
+      "size": 2035,
+      "sha256": "ece8b71a07dc585d3b7ab9d64479aab62a423121cc5a6cd0f413822a750b6588"
+    },
+    {
+      "path": "analysis/create_charts.py",
+      "size": 3717,
+      "sha256": "0ac9ae98e810398180398338755d493e57b91a97a9ffe447e5ff10c8e2bf15ff"
+    },
+    {
+      "path": "analysis/create_report.py",
+      "size": 14213,
+      "sha256": "0c36325df3cbbebfd7b129e20a40a70015b47039786a444e9053e4f1229190e1"
+    },
+    {
+      "path": "analysis/early_bottleneck_diagnosis.json",
+      "size": 3177,
+      "sha256": "ddfb6eec3b4c4c7bedbe919252b6687cfe885010b6e353b2955b8bb778c622b8"
+    },
+    {
+      "path": "analysis/early_resource_snapshot.json",
+      "size": 19630,
+      "sha256": "d1ad507782d95416fcca1c94582fcf4b2057207e786d97084747f0826eb33128"
+    },
+    {
+      "path": "analysis/metrics.csv",
+      "size": 1041890,
+      "sha256": "1011b9221a7f7ff22b4f426cf883b3afbf6f5a229ed69b198b858859f8a9b9f4"
+    },
+    {
+      "path": "analysis/npu_detailed_sampling.json",
+      "size": 22531,
+      "sha256": "b5eb2b976cca6ad26b85148eee68ea85e886cdb95e900590afb2231e682aef89"
+    },
+    {
+      "path": "analysis/obs_audit.json",
+      "size": 2824,
+      "sha256": "2dbb2e44ddcd8a5dbe250fbf243f7ac0240308bd37f021e5df21135914916e43"
+    },
+    {
+      "path": "analysis/report.html",
+      "size": 527397,
+      "sha256": "fee942477ca68873a5e8a88536a5bc61c802d90f5a881cee0c26f8e447cd01d0"
+    },
+    {
+      "path": "analysis/run_audit.json",
+      "size": 14972,
+      "sha256": "6e7d8ad3609dafe67857cb3ce899229b345b1fb88fea0cba6cccc07efb0cb4c9"
+    },
+    {
+      "path": "analysis/training_overview.pdf",
+      "size": 243067,
+      "sha256": "c87830eab40503a74b5738bb61631176ddf2edec72f89e35c5da1bf4b4e5974b"
+    },
+    {
+      "path": "analysis/training_overview.png",
+      "size": 385173,
+      "sha256": "75062878d316c7ecc3f7490cd1f6c59f65cf739037e37a52e6f5b2dfbc7f070f"
+    },
+    {
+      "path": "analysis/training_summary.json",
+      "size": 20596,
+      "sha256": "bd842ad6f9ea84abd8a848fc5467c65bb407c6f13f6d112b68a58941e367c407"
+    },
+    {
+      "path": "logs/exit_code",
+      "size": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "logs/lingbotvla_cli.yaml",
+      "size": 7105,
+      "sha256": "9fe398e7365e75da9ea259d3e3fe6b7e55d80086ea8625173d93627b1ffaccb2"
+    },
+    {
+      "path": "logs/loss.jsonl",
+      "size": 1893617,
+      "sha256": "1b692236cbf5e3c9095ee10fcc39f38b630491f98cbeab8e6d3450e64465aef8"
+    },
+    {
+      "path": "logs/obs_checkpoints.jsonl",
+      "size": 51991,
+      "sha256": "eeded63934efe1a20d1bfabda03d4b03d281603e9bcc8ec428ab6cc74b60c58b"
+    },
+    {
+      "path": "logs/runs/events.out.tfevents.1792082464.notebook-1412a60d-0f41-4869-980d-933b2766338c.1095153.0",
+      "size": 20780629,
+      "sha256": "ef217510f6732ad43e9d627e183178363b95f23939e70243cfdb6fa869dfe19f"
+    },
+    {
+      "path": "logs/train.log",
+      "size": 2687083,
+      "sha256": "84f61d06cf4615b054a1e5a4193a8d4ba7a8bcfad611a544bfd57054bde99d6c"
+    }
+  ]
+}

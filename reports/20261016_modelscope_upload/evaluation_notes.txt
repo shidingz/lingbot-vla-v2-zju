@@ -1,0 +1,116 @@
+ModelScope 队友下载与 RoboTwin 评测说明（代码静态核查，尚未在另一台机器完成端到端评测）
+目标私有仓库：shidingz/lingbot-vla-v2-robotwin-1ep-npu
+
+一、建议仓库布局（HF 原始 17 个文件保持逐字一致）
+仓库根目录：6 个 *.safetensors、model.safetensors.index.json、config.json 及原 tokenizer/processor 文件。
+另附：
+  inference_assets/lingbotvla_cli.yaml
+  inference_assets/configs/robot_configs/robotwin.yaml
+  inference_assets/assets/norm_stats/robotwin.json
+  inference_assets/Qwen3-VL-4B-Instruct/config.json
+  inference_assets/Qwen3-VL-4B-Instruct/ 下的 tokenizer/processor 小文件
+其中 Qwen config 必须来自 Qwen/Qwen3-VL-4B-Instruct 的 config.json；其 model_type=qwen3_vl。
+可将 HF 根目录所有 tokenizer/processor 小文件复制到该 Qwen 子目录（排除根 config.json 和 model.safetensors.index.json、所有权重分片）。
+不要把 HF 根目录 config.json 复制覆盖 Qwen config；HF 根 config 的 model_type=lingbotvla。
+不需要再复制或下载 Qwen 原始大权重：6 个 HF safetensors 已经包含完整推理模型参数。
+
+二、真实资产来源和一致性
+训练配置：/cache/lingbot/robotwin_train/robotwin_1ep_fast/lingbotvla_cli.yaml
+也可用项目 logs/robotwin_1ep_fast/lingbotvla_cli.yaml；两者与已归档训练配置对应。
+机器人配置：/cache/lingbot/robotwin_train/robotwin_1ep_fast/configs/robot_configs/robotwin.yaml
+归一化：/cache/lingbot/robotwin_train/robotwin_1ep_fast/assets/norm_stats/robotwin.json
+不可变 OBS 快照前缀：
+obs://yw-2030-extern/Partner_Qin/robot_1014/robotwin_1ep_fast/checkpoints/global_step_5717/_run_assets/
+上述 3 个文件的相对路径分别是：lingbotvla_cli.yaml、configs/robot_configs/robotwin.yaml、assets/norm_stats/robotwin.json。
+本机现存文件 SHA256 与 checkpoint manifest 对应记录一致：
+  lingbotvla_cli.yaml: 9fe398e7365e75da9ea259d3e3fe6b7e55d80086ea8625173d93627b1ffaccb2
+  robotwin.yaml: 2c2a26509fc9662a8ada64adaa7fa959627dd6dadc6b48b680c4285da2d8ffd8
+  robotwin.json: 488ec6569c30dd69419358241efdb2e6c3488117768e7028a1e891be83e10db8
+Qwen config 来源：/home/ma-user/work/modelscope/models/Qwen--Qwen3-VL-4B-Instruct/snapshots/master/config.json
+
+三、下载（队友需先获私有仓库访问授权，再使用自己的访问令牌登录；不共享账号密码或令牌）
+在装好 modelscope 的 Python 环境执行：
+
+from getpass import getpass
+from modelscope.hub.api import HubApi
+from modelscope import snapshot_download
+HubApi().login(getpass('ModelScope Access Token（输入隐藏）: '))
+model_dir = snapshot_download(
+    'shidingz/lingbot-vla-v2-robotwin-1ep-npu',
+    local_dir='/data/models/lingbot-vla-v2-robotwin-1ep-npu',
+)
+print(model_dir)
+
+如果已成功登录，可省略 HubApi().login。/data/models 需按队友机器实际空间修改。
+发布说明应在上传完成后提供精确 revision/commit，必要时传 revision=... 固定本次 checkpoint。
+
+四、让现有部署入口找到配置（避免拷贝第二份大权重）
+假设已下载到上述绝对路径，且 LingBot 项目代码和 RoboTwin 环境已安装。
+以下命令使用一个独立的新评测工作目录，避免覆盖已有实验：
+
+export MODEL_ROOT=/data/models/lingbot-vla-v2-robotwin-1ep-npu
+export EVAL_RUN=/data/eval_runs/robotwin_1ep_5717
+export LINGBOT_REPO=/path/to/lingbot-vla-v2
+mkdir -p "$EVAL_RUN/checkpoints/global_step_5717"
+cp "$MODEL_ROOT/inference_assets/lingbotvla_cli.yaml" "$EVAL_RUN/lingbotvla_cli.yaml"
+ln -s "$MODEL_ROOT" "$EVAL_RUN/checkpoints/global_step_5717/hf_ckpt"
+export QWEN3VL_PATH="$MODEL_ROOT/inference_assets/Qwen3-VL-4B-Instruct"
+
+关键：MODEL_ROOT、EVAL_RUN 使用绝对路径；这里软链接指向完整仓库下载根目录。
+部署入口按传入路径的上三级寻找 lingbotvla_cli.yaml，不能只把模型根目录直接传给 --model_path。
+不要将该软链接 resolve 后的真实路径作为 --model_path，否则上三级又变成下载路径的祖先目录。
+目标最终目录结构：
+  EVAL_RUN/lingbotvla_cli.yaml
+  EVAL_RUN/checkpoints/global_step_5717/hf_ckpt -> MODEL_ROOT
+
+运行前在 LingBot 项目工作目录使用匹配的机器人配置和归一化文件：
+  configs/robot_configs/robotwin.yaml
+  assets/norm_stats/robotwin.json
+本机项目当前文件与本次归档哈希相同；队友应先用 sha256sum 比较本地版本，不一致时使用本次模型附带的配对文件，保留旧文件备份。
+机器人配置规定 14 维双臂状态/动作映射、3 路相机，以及 norm_stats 相对路径。
+训练 yaml 的 data.norm_stats_file=null，因此实际归一化路径来自 robotwin.yaml。
+data.robot_config_root 虽在 yaml 中，当前部署 reset() 仍固定使用工作目录 configs/robot_configs/<robo_name>.yaml。
+
+五、推理启动和 randomized 评测参数
+单服务启动示例（先做一次动作输出冒烟检查，再跑全任务）：
+
+cd "$LINGBOT_REPO"
+python -m deploy.lingbot_vla_v2_policy \
+  --model_path "$EVAL_RUN/checkpoints/global_step_5717/hf_ckpt" \
+  --use_length 50 --use_bf16 True --use_fp32 False --use_compile False --port 9330
+
+BF16、关闭 compile 是首轮兼容性/吞吐检查设置，不代表已验证与 FP32 成功率一致。
+若严格对齐项目默认发布评测精度，使用 --use_bf16 False --use_fp32 True，并按显存调整并发。
+当前 checkpoint 配置 num_steps=10、chunk_size=50；CLI 的 use_length=50 为动作块执行长度。
+训练在 Ascend NPU 完成，但 safetensors 是设备无关权重格式。其他机器仍需与代码兼容的 PyTorch/Transformers、注意力和 MoE 算子环境。
+
+NVIDIA/CUDA 队友使用项目联合评测脚本的示例（填写实际环境路径）：
+
+bash experiment/robotwin/start_robotwin_infer_and_eval.sh \
+  --model_path "$EVAL_RUN/checkpoints/global_step_5717/hf_ckpt" \
+  --inference_workdir "$LINGBOT_REPO/" \
+  --eval_workdir /path/to/RoboTwin \
+  --conda_sh /path/to/miniconda3/etc/profile.d/conda.sh \
+  --inference_env lingbotvla --sim_env RoboTwin \
+  --output_base /data/eval_results \
+  --task_config demo_randomized \
+  --num_tasks 1 --num_gpus 1 --num_per_gpu 1 \
+  --use_length 50 --use_bf16 True --use_fp32 False --use_compile False --no_video
+
+先单任务确认后，把 --num_tasks 改为 50，再按资源提升并发。
+务必显式 --task_config demo_randomized；脚本默认是 demo_clean。
+该联合脚本针对 CUDA GPU，不能原样宣称在 Ascend 上可启动 RoboTwin 仿真。
+推荐在所有对比模型中固定精度、10 个去噪步骤、动作执行长度、任务清单、种子与 episode 数。
+
+六、无需搬运的训练文件 / 当前核查边界
+深度 MoRGBD 与 DINO-video teacher 的大 checkpoint 只在训练时用于生成目标；当前推理构建模型只初始化对应可学习 alignment heads，随后从已保存 safetensors 严格加载参数，不调用 teacher 权重加载。
+训练 yaml 中 teacher 绝对路径保留做溯源即可，不必在新机器重建；QWEN3VL_PATH 必须覆盖原 tokenizer_path。
+optimizer、DCP model、extra_state、训练数据均不是闭环推理评测必需。
+仅上传模型不能替代 LingBot 源码、RoboTwin 仿真资产及其运行环境安装。
+此次为源码和资产静态核查，没有声称已在队友机器跑通 randomized 或得到成功率。
+
+核查入口：
+  deploy/lingbot_vla_v2_policy.py:276（上三级配置）、:298（QWEN3VL_PATH 覆盖）、:303/312（Qwen config/processor）、:333（归一化配置）、:353（机器人配置）
+  lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py:124（Qwen 从配置构建）、:430（FlowMatchingV2/head 构建）
+  lingbotvla/data/vla_data/utils.py:87（norm_stats 选择）、:156（归一化 json 加载）
+  lingbotvla/utils/obs_storage.py:386（_run_assets 快照）

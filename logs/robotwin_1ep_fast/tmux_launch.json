@@ -1,0 +1,14 @@
+{
+  "session": "lingbot_1ep",
+  "window": "train",
+  "started_at": "2026-10-16T00:37:14.229665+08:00",
+  "npus": 8,
+  "epochs": 1,
+  "peak_lr": 5e-05,
+  "global_batch_size": 96,
+  "pyav_decode_threads": 1,
+  "log": "/home/ma-user/work/lingbot-vla-v2/logs/robotwin_1ep_fast/train.log",
+  "wrapper": "/home/ma-user/work/lingbot-vla-v2/logs/robotwin_1ep_fast/launch_tmux.sh",
+  "obs_output_dir": "obs://yw-2030-extern/Partner_Qin/robot_1014/robotwin_1ep_fast",
+  "pretrained_restart": true
+}

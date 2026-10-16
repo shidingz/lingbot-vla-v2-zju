@@ -1,0 +1,1 @@
+robotwin /cache/lingbot/robotwin_data/RoboTwin_lerobot_v30

@@ -1,0 +1,407 @@
+{
+  "cases": {
+    "torch": {
+      "root": "/cache/lingbot/profiling/moe_optimization_20261016/ab/torch",
+      "steps": 40,
+      "steady_range_inclusive": [
+        13,
+        29
+      ],
+      "launcher_exit_code": 2,
+      "post_training_launcher_note": "Source script was edited while Bash was blocked in torchrun; after training completed, the shell resumed at an invalid byte offset and reported unexpected EOF.",
+      "steady_step_time_mean_s": 7.214398327995749,
+      "steady_step_time_median_s": 7.197879076004028,
+      "steady_step_time_p95_s": 7.308955907821655,
+      "steady_wall_seconds_per_update": 7.235294117647059,
+      "global_samples_per_second": 13.268292682926829,
+      "peak_allocated_gib": 53.31,
+      "finite_loss_and_gradients": true,
+      "first_loss": 0.355224609375,
+      "last_loss": 0.376953125
+    },
+    "gmm": {
+      "root": "/cache/lingbot/profiling/moe_optimization_20261016/ab/gmm",
+      "steps": 40,
+      "steady_range_inclusive": [
+        13,
+        29
+      ],
+      "launcher_exit_code": 0,
+      "post_training_launcher_note": null,
+      "steady_step_time_mean_s": 3.4515524471507355,
+      "steady_step_time_median_s": 3.4564929008483887,
+      "steady_step_time_p95_s": 3.5303648471832276,
+      "steady_wall_seconds_per_update": 3.4705882352941178,
+      "global_samples_per_second": 27.661016949152543,
+      "peak_allocated_gib": 53.31,
+      "finite_loss_and_gradients": true,
+      "first_loss": 0.35546875,
+      "last_loss": 0.376708984375
+    }
+  },
+  "steady_comparison_steps_inclusive": [
+    13,
+    29
+  ],
+  "speedup_wall": 2.084745762711864,
+  "step_time_reduction_pct": 52.032520325203244,
+  "speedup_logged_time": 2.0901893969339076,
+  "max_loss_abs_diff": 0.001220703125,
+  "max_grad_norm_abs_diff": 0.03573983907699585,
+  "paired_updates": [
+    {
+      "step": 1,
+      "loss_abs_diff": 0.000244140625,
+      "grad_norm_abs_diff": 0.004308581352233887
+    },
+    {
+      "step": 2,
+      "loss_abs_diff": 0.000244140625,
+      "grad_norm_abs_diff": 0.0027787089347839355
+    },
+    {
+      "step": 3,
+      "loss_abs_diff": 0.000244140625,
+      "grad_norm_abs_diff": 0.02769649028778076
+    },
+    {
+      "step": 4,
+      "loss_abs_diff": 0.0,
+      "grad_norm_abs_diff": 0.007796823978424072
+    },
+    {
+      "step": 5,
+      "loss_abs_diff": 0.000244140625,
+      "grad_norm_abs_diff": 0.0157240629196167
+    },
+    {
+      "step": 6,
+      "loss_abs_diff": 0.000732421875,
+      "grad_norm_abs_diff": 0.010745227336883545
+    },
+    {
+      "step": 7,
+      "loss_abs_diff": 0.00048828125,
+      "grad_norm_abs_diff": 0.005171418190002441
+    },
+    {
+      "step": 8,
+      "loss_abs_diff": 0.000244140625,
+      "grad_norm_abs_diff": 0.001735389232635498
+    },
+    {
+      "step": 9,
+      "loss_abs_diff": 0.0,
+      "grad_norm_abs_diff": 0.006293773651123047
+    },
+    {
+      "step": 10,
+      "loss_abs_diff": 0.000732421875,
+      "grad_norm_abs_diff": 0.0017447471618652344
+    },
+    {
+      "step": 11,
+      "loss_abs_diff": 0.000244140625,
+      "grad_norm_abs_diff": 0.006572306156158447
+    },
+    {
+      "step": 12,
+      "loss_abs_diff": 0.00048828125,
+      "grad_norm_abs_diff": 0.0027709603309631348
+    },
+    {
+      "step": 13,
+      "loss_abs_diff": 0.000244140625,
+      "grad_norm_abs_diff": 0.0009613633155822754
+    },
+    {
+      "step": 14,
+      "loss_abs_diff": 0.00048828125,
+      "grad_norm_abs_diff": 0.004481792449951172
+    },
+    {
+      "step": 15,
+      "loss_abs_diff": 0.00048828125,
+      "grad_norm_abs_diff": 0.0054836273193359375
+    },
+    {
+      "step": 16,
+      "loss_abs_diff": 0.000732421875,
+      "grad_norm_abs_diff": 0.0005642175674438477
+    },
+    {
+      "step": 17,
+      "loss_abs_diff": 0.000732421875,
+      "grad_norm_abs_diff": 0.005529463291168213
+    },
+    {
+      "step": 18,
+      "loss_abs_diff": 0.00048828125,
+      "grad_norm_abs_diff": 0.015337824821472168
+    },
+    {
+      "step": 19,
+      "loss_abs_diff": 0.00048828125,
+      "grad_norm_abs_diff": 0.008639931678771973
+    },
+    {
+      "step": 20,
+      "loss_abs_diff": 0.00048828125,
+      "grad_norm_abs_diff": 0.012998640537261963
+    },
+    {
+      "step": 21,
+      "loss_abs_diff": 0.000732421875,
+      "grad_norm_abs_diff": 0.00412064790725708
+    },
+    {
+      "step": 22,
+      "loss_abs_diff": 0.0,
+      "grad_norm_abs_diff": 0.0010833740234375
+    },
+    {
+      "step": 23,
+      "loss_abs_diff": 0.00048828125,
+      "grad_norm_abs_diff": 0.0029078125953674316
+    },
+    {
+      "step": 24,
+      "loss_abs_diff": 0.0,
+      "grad_norm_abs_diff": 0.0006608963012695312
+    },
+    {
+      "step": 25,
+      "loss_abs_diff": 0.0,
+      "grad_norm_abs_diff": 0.007242083549499512
+    },
+    {
+      "step": 26,
+      "loss_abs_diff": 0.000244140625,
+      "grad_norm_abs_diff": 0.0012860894203186035
+    },
+    {
+      "step": 27,
+      "loss_abs_diff": 0.00048828125,
+      "grad_norm_abs_diff": 0.0026976466178894043
+    },
+    {
+      "step": 28,
+      "loss_abs_diff": 0.001220703125,
+      "grad_norm_abs_diff": 0.004110813140869141
+    },
+    {
+      "step": 29,
+      "loss_abs_diff": 0.0,
+      "grad_norm_abs_diff": 0.020241081714630127
+    },
+    {
+      "step": 30,
+      "loss_abs_diff": 0.000732421875,
+      "grad_norm_abs_diff": 0.03573983907699585
+    },
+    {
+      "step": 31,
+      "loss_abs_diff": 0.0009765625,
+      "grad_norm_abs_diff": 0.0019469261169433594
+    },
+    {
+      "step": 32,
+      "loss_abs_diff": 0.000244140625,
+      "grad_norm_abs_diff": 0.005709588527679443
+    },
+    {
+      "step": 33,
+      "loss_abs_diff": 0.000732421875,
+      "grad_norm_abs_diff": 0.018387258052825928
+    },
+    {
+      "step": 34,
+      "loss_abs_diff": 0.000732421875,
+      "grad_norm_abs_diff": 0.0058040618896484375
+    },
+    {
+      "step": 35,
+      "loss_abs_diff": 0.00048828125,
+      "grad_norm_abs_diff": 0.0011657476425170898
+    },
+    {
+      "step": 36,
+      "loss_abs_diff": 0.0,
+      "grad_norm_abs_diff": 0.003631889820098877
+    },
+    {
+      "step": 37,
+      "loss_abs_diff": 0.00048828125,
+      "grad_norm_abs_diff": 0.008262574672698975
+    },
+    {
+      "step": 38,
+      "loss_abs_diff": 0.000244140625,
+      "grad_norm_abs_diff": 0.0008211135864257812
+    },
+    {
+      "step": 39,
+      "loss_abs_diff": 0.000732421875,
+      "grad_norm_abs_diff": 0.004657387733459473
+    },
+    {
+      "step": 40,
+      "loss_abs_diff": 0.000244140625,
+      "grad_norm_abs_diff": 0.004321634769439697
+    }
+  ],
+  "resources": {
+    "torch": {
+      "0": {
+        "HBM Usage Rate(%)": {
+          "mean": 96.0,
+          "min": 96.0,
+          "max": 96.0,
+          "samples": 35
+        },
+        "Aicore Usage Rate(%)": {
+          "mean": 5.714285714285714,
+          "min": 0.0,
+          "max": 32.0,
+          "samples": 35
+        },
+        "Aivector Usage Rate(%)": {
+          "mean": 10.6,
+          "min": 0.0,
+          "max": 52.0,
+          "samples": 35
+        },
+        "HBM Bandwidth Usage Rate(%)": {
+          "mean": 9.457142857142857,
+          "min": 0.0,
+          "max": 16.0,
+          "samples": 35
+        }
+      },
+      "4": {
+        "HBM Usage Rate(%)": {
+          "mean": 96.0,
+          "min": 96.0,
+          "max": 96.0,
+          "samples": 35
+        },
+        "Aicore Usage Rate(%)": {
+          "mean": 5.857142857142857,
+          "min": 0.0,
+          "max": 31.0,
+          "samples": 35
+        },
+        "Aivector Usage Rate(%)": {
+          "mean": 12.457142857142857,
+          "min": 0.0,
+          "max": 52.0,
+          "samples": 35
+        },
+        "HBM Bandwidth Usage Rate(%)": {
+          "mean": 10.82857142857143,
+          "min": 0.0,
+          "max": 55.0,
+          "samples": 35
+        }
+      }
+    },
+    "gmm": {
+      "0": {
+        "HBM Usage Rate(%)": {
+          "mean": 96.0,
+          "min": 96.0,
+          "max": 96.0,
+          "samples": 16
+        },
+        "Aicore Usage Rate(%)": {
+          "mean": 17.375,
+          "min": 0.0,
+          "max": 38.0,
+          "samples": 16
+        },
+        "Aivector Usage Rate(%)": {
+          "mean": 27.8125,
+          "min": 0.0,
+          "max": 59.0,
+          "samples": 16
+        },
+        "HBM Bandwidth Usage Rate(%)": {
+          "mean": 29.9375,
+          "min": 0.0,
+          "max": 72.0,
+          "samples": 16
+        }
+      },
+      "4": {
+        "HBM Usage Rate(%)": {
+          "mean": 96.0,
+          "min": 96.0,
+          "max": 96.0,
+          "samples": 16
+        },
+        "Aicore Usage Rate(%)": {
+          "mean": 14.1875,
+          "min": 0.0,
+          "max": 18.0,
+          "samples": 16
+        },
+        "Aivector Usage Rate(%)": {
+          "mean": 20.75,
+          "min": 17.0,
+          "max": 33.0,
+          "samples": 16
+        },
+        "HBM Bandwidth Usage Rate(%)": {
+          "mean": 15.625,
+          "min": 0.0,
+          "max": 53.0,
+          "samples": 16
+        }
+      }
+    }
+  },
+  "effective_config_differences": [
+    {
+      "section": "train",
+      "field": "logging_dir",
+      "torch": "/cache/lingbot/profiling/moe_optimization_20261016/ab/torch/logs",
+      "gmm": "/cache/lingbot/profiling/moe_optimization_20261016/ab/gmm/logs"
+    },
+    {
+      "section": "train",
+      "field": "output_dir",
+      "torch": "/cache/lingbot/profiling/moe_optimization_20261016/ab/torch/run",
+      "gmm": "/cache/lingbot/profiling/moe_optimization_20261016/ab/gmm/run"
+    },
+    {
+      "section": "train",
+      "field": "profile_end_step",
+      "torch": 17,
+      "gmm": 33
+    },
+    {
+      "section": "train",
+      "field": "profile_ranks",
+      "torch": "",
+      "gmm": "0"
+    },
+    {
+      "section": "train",
+      "field": "profile_start_step",
+      "torch": 13,
+      "gmm": 31
+    },
+    {
+      "section": "train",
+      "field": "profile_trace_dir",
+      "torch": "/cache/lingbot/profiling/moe_optimization_20261016/ab/torch/trace",
+      "gmm": "/cache/lingbot/profiling/moe_optimization_20261016/ab/gmm/trace"
+    }
+  ],
+  "limits": [
+    "Short 40-step runs, fixed initialization/data/LR horizon, sequential backend order.",
+    "Speed excludes initialization, profiler warmup/capture/export and the following collective wait.",
+    "Resource metrics are short-window npu-smi samples, not MFU or epoch averages.",
+    "No full-epoch training or RoboTwin success-rate evaluation."
+  ]
+}

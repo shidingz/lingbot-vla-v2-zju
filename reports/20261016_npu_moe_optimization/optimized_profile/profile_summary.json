@@ -1,0 +1,1287 @@
+{
+  "rank0": {
+    "output": "/cache/lingbot/profiling/moe_optimization_20261016/ab/gmm/trace/rank0/notebook-1412a60d-0f41-4869-980d-933b2766338c_2694870_20261016082734660_ascend_pt/ASCEND_PROFILER_OUTPUT",
+    "recorded_steps": 2,
+    "host_step_mean_s": 6.775453025,
+    "phases": {
+      "train.data_wait": {
+        "calls": 2,
+        "total_s": 0.00212649,
+        "per_step_s": 0.001063245,
+        "mean_call_ms": 1.063245
+      },
+      "train.h2d": {
+        "calls": 2,
+        "total_s": 0.0017951999999999998,
+        "per_step_s": 0.0008975999999999999,
+        "mean_call_ms": 0.8976
+      },
+      "teacher.current_depth": {
+        "calls": 2,
+        "total_s": 0.32713557,
+        "per_step_s": 0.163567785,
+        "mean_call_ms": 163.56778500000001
+      },
+      "teacher.future_depth": {
+        "calls": 2,
+        "total_s": 0.3255991,
+        "per_step_s": 0.16279955,
+        "mean_call_ms": 162.79954999999998
+      },
+      "teacher.video": {
+        "calls": 2,
+        "total_s": 0.42369813,
+        "per_step_s": 0.211849065,
+        "mean_call_ms": 211.849065
+      },
+      "train.teachers": {
+        "calls": 2,
+        "total_s": 1.07710306,
+        "per_step_s": 0.53855153,
+        "mean_call_ms": 538.5515300000001
+      },
+      "model.moe_experts": {
+        "calls": 144,
+        "total_s": 0.3120425200000001,
+        "per_step_s": 0.15602126000000005,
+        "mean_call_ms": 2.166961944444444
+      },
+      "train.forward": {
+        "calls": 2,
+        "total_s": 2.44000865,
+        "per_step_s": 1.220004325,
+        "mean_call_ms": 1220.0043249999999
+      },
+      "train.backward": {
+        "calls": 2,
+        "total_s": 8.02745525,
+        "per_step_s": 4.013727625,
+        "mean_call_ms": 4013.727625
+      },
+      "train.clip_grad": {
+        "calls": 2,
+        "total_s": 0.15862144,
+        "per_step_s": 0.07931072,
+        "mean_call_ms": 79.31072
+      },
+      "train.optimizer": {
+        "calls": 2,
+        "total_s": 1.7128159700000003,
+        "per_step_s": 0.8564079850000001,
+        "mean_call_ms": 856.407985
+      },
+      "train.metrics_reduce": {
+        "calls": 2,
+        "total_s": 0.00229525,
+        "per_step_s": 0.001147625,
+        "mean_call_ms": 1.147625
+      }
+    },
+    "step_trace_mean_s": {
+      "Computing": 1.634209169999984,
+      "Communication(Not Overlapped)": 2.905170709999945,
+      "Overlapped": 0.08912396000005351,
+      "Communication": 2.9942946699999986,
+      "Free": 2.231694960000405,
+      "Stage": 6.77107475,
+      "Bubble": 0.0,
+      "Communication(Not Overlapped and Exclude Receive)": 2.905170709999945,
+      "Preparing": 0.00764925
+    },
+    "compute_union_s_per_step": 4.538876875,
+    "communication_union_s_per_step": 0.0,
+    "top_host_self": [
+      {
+        "name": "aten::_index_put_impl_",
+        "calls": 276,
+        "host_self_s": 5.165080039999998,
+        "host_total_s": 5.1705055500000014,
+        "device_self_s": 0.0,
+        "device_total_s": 0.0184879
+      },
+      {
+        "name": "train.forward",
+        "calls": 2,
+        "host_self_s": 0.6675498,
+        "host_total_s": 2.4400086500000002,
+        "device_self_s": 0.0,
+        "device_total_s": 1.1456532600000129
+      },
+      {
+        "name": "aten::copy_",
+        "calls": 15802,
+        "host_self_s": 0.47220928000000034,
+        "host_total_s": 0.5369641399999986,
+        "device_self_s": 0.0,
+        "device_total_s": 0.42309906000000125
+      },
+      {
+        "name": "empty_tensor",
+        "calls": 62304,
+        "host_self_s": 0.43680361000000084,
+        "host_total_s": 0.43680361000000084,
+        "device_self_s": 0.0,
+        "device_total_s": 0.0
+      },
+      {
+        "name": "train.backward",
+        "calls": 2,
+        "host_self_s": 0.31117601000000006,
+        "host_total_s": 8.027455250000001,
+        "device_self_s": 0.0,
+        "device_total_s": 6.985961179999972
+      },
+      {
+        "name": "aten::mul_",
+        "calls": 6176,
+        "host_self_s": 0.2652905600000004,
+        "host_total_s": 0.38777422999999944,
+        "device_self_s": 0.0,
+        "device_total_s": 0.030116659999999046
+      },
+      {
+        "name": "Optimizer.step#DistributedMuon.step",
+        "calls": 2,
+        "host_self_s": 0.22685744,
+        "host_total_s": 0.61655591,
+        "device_self_s": 0.0,
+        "device_total_s": 0.4318276800000013
+      },
+      {
+        "name": "teacher.future_depth",
+        "calls": 2,
+        "host_self_s": 0.20104626,
+        "host_total_s": 0.32559910000000003,
+        "device_self_s": 0.0,
+        "device_total_s": 0.13073568000000008
+      },
+      {
+        "name": "teacher.current_depth",
+        "calls": 2,
+        "host_self_s": 0.19941351,
+        "host_total_s": 0.32713557000000004,
+        "device_self_s": 0.0,
+        "device_total_s": 0.13039652000000007
+      },
+      {
+        "name": "aten::div",
+        "calls": 3010,
+        "host_self_s": 0.17813146000000002,
+        "host_total_s": 0.2827910300000001,
+        "device_self_s": 0.0,
+        "device_total_s": 0.033171200000000275
+      },
+      {
+        "name": "aten::add_",
+        "calls": 5900,
+        "host_self_s": 0.1754399400000004,
+        "host_total_s": 0.2510263099999998,
+        "device_self_s": 0.0,
+        "device_total_s": 0.09369576000000118
+      },
+      {
+        "name": "aten::_local_scalar_dense",
+        "calls": 8928,
+        "host_self_s": 0.1728747199999998,
+        "host_total_s": 0.1728747199999998,
+        "device_self_s": 0.0,
+        "device_total_s": 0.0
+      },
+      {
+        "name": "MatmulBackward0",
+        "calls": 920,
+        "host_self_s": 0.15030210999999996,
+        "host_total_s": 0.5245765199999998,
+        "device_self_s": 0.0,
+        "device_total_s": 0.31634153999999987
+      },
+      {
+        "name": "aten::mul",
+        "calls": 9150,
+        "host_self_s": 0.14873407000000027,
+        "host_total_s": 0.27662967000000027,
+        "device_self_s": 0.0,
+        "device_total_s": 0.2415100199999994
+      },
+      {
+        "name": "aten::addcdiv_",
+        "calls": 1504,
+        "host_self_s": 0.12668333999999995,
+        "host_total_s": 0.1919290199999997,
+        "device_self_s": 0.0,
+        "device_total_s": 0.003703280000000005
+      },
+      {
+        "name": "Optimizer.step#AdamW.step",
+        "calls": 2,
+        "host_self_s": 0.12055515,
+        "host_total_s": 1.08650502,
+        "device_self_s": 0.0,
+        "device_total_s": 0.010656980000000033
+      },
+      {
+        "name": "aten::as_strided",
+        "calls": 48604,
+        "host_self_s": 0.11394006000000302,
+        "host_total_s": 0.11394006000000302,
+        "device_self_s": 0.0,
+        "device_total_s": 0.0
+      },
+      {
+        "name": "npu::npu_dtype_cast",
+        "calls": 9306,
+        "host_self_s": 0.11093206999999944,
+        "host_total_s": 0.25743948999999916,
+        "device_self_s": 0.0,
+        "device_total_s": 0.1945183800000004
+      },
+      {
+        "name": "Event::record",
+        "calls": 1324,
+        "host_self_s": 0.1080776700000001,
+        "host_total_s": 0.12146176999999996,
+        "device_self_s": 0.0,
+        "device_total_s": 2.3379999999999796e-05
+      },
+      {
+        "name": "aten::sqrt",
+        "calls": 1504,
+        "host_self_s": 0.1022028900000001,
+        "host_total_s": 0.14638694000000008,
+        "device_self_s": 0.0,
+        "device_total_s": 0.0016998399999999948
+      },
+      {
+        "name": "aten::lerp_",
+        "calls": 2670,
+        "host_self_s": 0.09575935999999993,
+        "host_total_s": 0.13112747000000005,
+        "device_self_s": 0.0,
+        "device_total_s": 0.022623359999999884
+      },
+      {
+        "name": "AddmmBackward0",
+        "calls": 542,
+        "host_self_s": 0.08978138000000004,
+        "host_total_s": 0.2122662200000001,
+        "device_self_s": 0.0,
+        "device_total_s": 0.04701610000000002
+      },
+      {
+        "name": "aten::view",
+        "calls": 22062,
+        "host_self_s": 0.0890752900000003,
+        "host_total_s": 0.0890752900000003,
+        "device_self_s": 0.0,
+        "device_total_s": 0.0
+      },
+      {
+        "name": "aten::addcmul_",
+        "calls": 1504,
+        "host_self_s": 0.08654185000000014,
+        "host_total_s": 0.11559778000000016,
+        "device_self_s": 0.0,
+        "device_total_s": 0.0038297600000000054
+      },
+      {
+        "name": "aten::matmul",
+        "calls": 2812,
+        "host_self_s": 0.08406745000000024,
+        "host_total_s": 0.12828012000000005,
+        "device_self_s": 0.0,
+        "device_total_s": 0.40057797999999945
+      }
+    ],
+    "top_device_self": [
+      {
+        "name": "HcclAllGather",
+        "calls": 292,
+        "host_self_s": 0.00088549,
+        "host_total_s": 0.00088549,
+        "device_self_s": 5.6362779199999995,
+        "device_total_s": 5.6362779199999995
+      },
+      {
+        "name": "aclnnMatmul",
+        "calls": 4076,
+        "host_self_s": 0.028772279999999997,
+        "host_total_s": 0.028772279999999997,
+        "device_self_s": 0.6168387000000012,
+        "device_total_s": 0.6168387000000012
+      },
+      {
+        "name": "aclnnInplaceCopy",
+        "calls": 12796,
+        "host_self_s": 0.06379838000000025,
+        "host_total_s": 0.06379838000000025,
+        "device_self_s": 0.416970480000001,
+        "device_total_s": 0.416970480000001
+      },
+      {
+        "name": "HcclReduceScatter",
+        "calls": 148,
+        "host_self_s": 0.0006184799999999999,
+        "host_total_s": 0.0006184799999999999,
+        "device_self_s": 0.26595640000000004,
+        "device_total_s": 0.26595640000000004
+      },
+      {
+        "name": "aclnnBatchMatMul",
+        "calls": 432,
+        "host_self_s": 0.0034648899999999987,
+        "host_total_s": 0.0034648899999999987,
+        "device_self_s": 0.23610710000000007,
+        "device_total_s": 0.23610710000000007
+      },
+      {
+        "name": "aclnnMul",
+        "calls": 6904,
+        "host_self_s": 0.049045620000000234,
+        "host_total_s": 0.049045620000000234,
+        "device_self_s": 0.20464433999999956,
+        "device_total_s": 0.20464433999999956
+      },
+      {
+        "name": "aclnnBaddbmm",
+        "calls": 2720,
+        "host_self_s": 0.01253918,
+        "host_total_s": 0.01253918,
+        "device_self_s": 0.19316076000000046,
+        "device_total_s": 0.19316076000000046
+      },
+      {
+        "name": "aclnnCast",
+        "calls": 9154,
+        "host_self_s": 0.06582226000000035,
+        "host_total_s": 0.06582226000000035,
+        "device_self_s": 0.1888550200000004,
+        "device_total_s": 0.1888550200000004
+      },
+      {
+        "name": "aclnnAddmm",
+        "calls": 1962,
+        "host_self_s": 0.01679656000000002,
+        "host_total_s": 0.01679656000000002,
+        "device_self_s": 0.15915413999999972,
+        "device_total_s": 0.15915413999999972
+      },
+      {
+        "name": "aclnnReduceSum",
+        "calls": 2526,
+        "host_self_s": 0.017910769999999965,
+        "host_total_s": 0.017910769999999965,
+        "device_self_s": 0.10245462000000012,
+        "device_total_s": 0.10245462000000012
+      },
+      {
+        "name": "aclnnInplaceAdd",
+        "calls": 3644,
+        "host_self_s": 0.025665989999999927,
+        "host_total_s": 0.025665989999999927,
+        "device_self_s": 0.09171383999999992,
+        "device_total_s": 0.09171383999999992
+      },
+      {
+        "name": "aclnnSWhere",
+        "calls": 196,
+        "host_self_s": 0.0011318099999999998,
+        "host_total_s": 0.0011318099999999998,
+        "device_self_s": 0.08650016000000002,
+        "device_total_s": 0.08650016000000002
+      },
+      {
+        "name": "aclnnSoftmax",
+        "calls": 200,
+        "host_self_s": 0.0013277599999999994,
+        "host_total_s": 0.0013277599999999994,
+        "device_self_s": 0.08360630000000001,
+        "device_total_s": 0.08360630000000001
+      },
+      {
+        "name": "aclnnPowTensorScalar",
+        "calls": 1608,
+        "host_self_s": 0.013383470000000007,
+        "host_total_s": 0.013383470000000007,
+        "device_self_s": 0.0807470999999999,
+        "device_total_s": 0.0807470999999999
+      },
+      {
+        "name": "aclnnCat",
+        "calls": 1062,
+        "host_self_s": 0.008714700000000014,
+        "host_total_s": 0.008714700000000014,
+        "device_self_s": 0.07256413999999997,
+        "device_total_s": 0.07256413999999997
+      },
+      {
+        "name": "HcclAllgather",
+        "calls": 112,
+        "host_self_s": 0.00032380999999999973,
+        "host_total_s": 0.00043731999999999994,
+        "device_self_s": 0.0650339,
+        "device_total_s": 0.13006779999999996
+      },
+      {
+        "name": "aclnnSoftmaxBackward",
+        "calls": 80,
+        "host_self_s": 0.0007578000000000001,
+        "host_total_s": 0.0007578000000000001,
+        "device_self_s": 0.046411160000000014,
+        "device_total_s": 0.046411160000000014
+      },
+      {
+        "name": "aclnnLayerNorm",
+        "calls": 728,
+        "host_self_s": 0.006208979999999995,
+        "host_total_s": 0.006208979999999995,
+        "device_self_s": 0.04038901999999997,
+        "device_total_s": 0.04038901999999997
+      },
+      {
+        "name": "aclnnFlashAttentionScore",
+        "calls": 144,
+        "host_self_s": 0.0013605599999999996,
+        "host_total_s": 0.0013605599999999996,
+        "device_self_s": 0.039403440000000005,
+        "device_total_s": 0.039403440000000005
+      },
+      {
+        "name": "aclnnAdd",
+        "calls": 1720,
+        "host_self_s": 0.013036169999999988,
+        "host_total_s": 0.013036169999999988,
+        "device_self_s": 0.0388733799999999,
+        "device_total_s": 0.0388733799999999
+      },
+      {
+        "name": "aclnnMuls",
+        "calls": 1806,
+        "host_self_s": 0.011420250000000015,
+        "host_total_s": 0.011420250000000015,
+        "device_self_s": 0.036479520000000085,
+        "device_total_s": 0.036479520000000085
+      },
+      {
+        "name": "aclnnMm",
+        "calls": 792,
+        "host_self_s": 0.007163879999999996,
+        "host_total_s": 0.007163879999999996,
+        "device_self_s": 0.029514739999999977,
+        "device_total_s": 0.029514739999999977
+      },
+      {
+        "name": "Conv2D",
+        "calls": 290,
+        "host_self_s": 0.0027146500000000007,
+        "host_total_s": 0.0027146500000000007,
+        "device_self_s": 0.02824283999999999,
+        "device_total_s": 0.02824283999999999
+      },
+      {
+        "name": "aclnnInplaceZero",
+        "calls": 1312,
+        "host_self_s": 0.011272439999999984,
+        "host_total_s": 0.011272439999999984,
+        "device_self_s": 0.027157300000000002,
+        "device_total_s": 0.027157300000000002
+      },
+      {
+        "name": "aclnnIsNegInf",
+        "calls": 48,
+        "host_self_s": 0.00031763000000000006,
+        "host_total_s": 0.00031763000000000006,
+        "device_self_s": 0.0254209,
+        "device_total_s": 0.0254209
+      }
+    ],
+    "top_device_total_inclusive": [
+      {
+        "name": "train.backward",
+        "calls": 2,
+        "host_self_s": 0.31117601000000006,
+        "host_total_s": 8.027455250000001,
+        "device_self_s": 0.0,
+        "device_total_s": 6.985961179999972
+      },
+      {
+        "name": "c10d::_allgather_base_",
+        "calls": 292,
+        "host_self_s": 0.020641339999999998,
+        "host_total_s": 0.028269850000000006,
+        "device_self_s": 0.0,
+        "device_total_s": 5.6362939999999995
+      },
+      {
+        "name": "HcclAllgatherBase",
+        "calls": 292,
+        "host_self_s": 0.0012052599999999994,
+        "host_total_s": 0.00209075,
+        "device_self_s": 0.0,
+        "device_total_s": 5.6362779199999995
+      },
+      {
+        "name": "HcclAllGather",
+        "calls": 292,
+        "host_self_s": 0.00088549,
+        "host_total_s": 0.00088549,
+        "device_self_s": 5.6362779199999995,
+        "device_total_s": 5.6362779199999995
+      },
+      {
+        "name": "autograd::engine::evaluate_function: ViewBackward0",
+        "calls": 1320,
+        "host_self_s": 0.02171110999999997,
+        "host_total_s": 0.3722968399999996,
+        "device_self_s": 0.0,
+        "device_total_s": 2.800664520000001
+      },
+      {
+        "name": "autograd::engine::evaluate_function: AddBackward0",
+        "calls": 1266,
+        "host_self_s": 0.013097740000000024,
+        "host_total_s": 0.11778697999999997,
+        "device_self_s": 0.0,
+        "device_total_s": 2.6958402199999987
+      },
+      {
+        "name": "FSDP::all_gather (model.qwenvl_with_expert.qwenvl.model.language_model.layers.3)",
+        "calls": 4,
+        "host_self_s": 0.00227276,
+        "host_total_s": 0.00547129,
+        "device_self_s": 0.0,
+        "device_total_s": 2.5984100399999996
+      },
+      {
+        "name": "FSDP::pre_backward (model.qwenvl_with_expert.qwen_expert.model.layers.3)",
+        "calls": 4,
+        "host_self_s": 0.00082818,
+        "host_total_s": 0.00636971,
+        "device_self_s": 0.0,
+        "device_total_s": 2.59614478
+      },
+      {
+        "name": "FSDP::backward_prefetch for model.qwenvl_with_expert.qwenvl.model.language_model.layers.3",
+        "calls": 4,
+        "host_self_s": 0.00024193999999999998,
+        "host_total_s": 0.00294186,
+        "device_self_s": 0.0,
+        "device_total_s": 2.5950903399999996
+      },
+      {
+        "name": "FSDP::all_gather (model.qwenvl_with_expert.qwen_expert.model.layers.3)",
+        "calls": 4,
+        "host_self_s": 0.00205152,
+        "host_total_s": 0.004869409999999999,
+        "device_self_s": 0.0,
+        "device_total_s": 2.56911588
+      },
+      {
+        "name": "FSDP::pre_backward (model.qwenvl_with_expert.qwenvl.model.language_model.layers.3)",
+        "calls": 4,
+        "host_self_s": 0.00066515,
+        "host_total_s": 0.0051956,
+        "device_self_s": 0.0,
+        "device_total_s": 2.56685298
+      },
+      {
+        "name": "FSDP::backward_prefetch for model.qwenvl_with_expert.qwen_expert.model.layers.3",
+        "calls": 4,
+        "host_self_s": 0.00023263,
+        "host_total_s": 0.00263096,
+        "device_self_s": 0.0,
+        "device_total_s": 2.56588246
+      },
+      {
+        "name": "train.forward",
+        "calls": 2,
+        "host_self_s": 0.6675498,
+        "host_total_s": 2.4400086500000002,
+        "device_self_s": 0.0,
+        "device_total_s": 1.1456532600000129
+      },
+      {
+        "name": "aten::scaled_dot_product_attention",
+        "calls": 384,
+        "host_self_s": 0.0025216400000000003,
+        "host_total_s": 0.06931247999999998,
+        "device_self_s": 0.0,
+        "device_total_s": 0.6994700800000009
+      },
+      {
+        "name": "train.teachers",
+        "calls": 2,
+        "host_self_s": 0.00067026,
+        "host_total_s": 1.0771030599999998,
+        "device_self_s": 0.0,
+        "device_total_s": 0.6693046000000002
+      },
+      {
+        "name": "aclnnMatmul",
+        "calls": 4076,
+        "host_self_s": 0.028772279999999997,
+        "host_total_s": 0.028772279999999997,
+        "device_self_s": 0.6168387000000012,
+        "device_total_s": 0.6168387000000012
+      },
+      {
+        "name": "aten::linear",
+        "calls": 4078,
+        "host_self_s": 0.02716828000000005,
+        "host_total_s": 0.3451505199999999,
+        "device_self_s": 0.0,
+        "device_total_s": 0.4807931199999989
+      },
+      {
+        "name": "train.optimizer",
+        "calls": 2,
+        "host_self_s": 0.00065184,
+        "host_total_s": 1.71281597,
+        "device_self_s": 0.0,
+        "device_total_s": 0.4424846599999992
+      },
+      {
+        "name": "Optimizer.step#DistributedMuon.step",
+        "calls": 2,
+        "host_self_s": 0.22685744,
+        "host_total_s": 0.61655591,
+        "device_self_s": 0.0,
+        "device_total_s": 0.4318276800000013
+      },
+      {
+        "name": "aten::copy_",
+        "calls": 15802,
+        "host_self_s": 0.47220928000000034,
+        "host_total_s": 0.5369641399999986,
+        "device_self_s": 0.0,
+        "device_total_s": 0.42309906000000125
+      },
+      {
+        "name": "aclnnInplaceCopy",
+        "calls": 12796,
+        "host_self_s": 0.06379838000000025,
+        "host_total_s": 0.06379838000000025,
+        "device_self_s": 0.416970480000001,
+        "device_total_s": 0.416970480000001
+      },
+      {
+        "name": "teacher.video",
+        "calls": 2,
+        "host_self_s": 0.04634557,
+        "host_total_s": 0.42369813,
+        "device_self_s": 0.0,
+        "device_total_s": 0.4081724000000002
+      },
+      {
+        "name": "aten::matmul",
+        "calls": 2812,
+        "host_self_s": 0.08406745000000024,
+        "host_total_s": 0.12828012000000005,
+        "device_self_s": 0.0,
+        "device_total_s": 0.40057797999999945
+      },
+      {
+        "name": "autograd::engine::evaluate_function: MatmulBackward0",
+        "calls": 920,
+        "host_self_s": 0.022363010000000016,
+        "host_total_s": 0.5531353700000006,
+        "device_self_s": 0.0,
+        "device_total_s": 0.32411286
+      },
+      {
+        "name": "MatmulBackward0",
+        "calls": 920,
+        "host_self_s": 0.15030210999999996,
+        "host_total_s": 0.5245765199999998,
+        "device_self_s": 0.0,
+        "device_total_s": 0.31634153999999987
+      }
+    ],
+    "kernel_types": [
+      {
+        "type": "hcom_allGather_",
+        "calls": 348,
+        "duration_s": 5.701311819999999
+      },
+      {
+        "type": "BatchMatMulV2",
+        "calls": 4662,
+        "duration_s": 0.509787759999999
+      },
+      {
+        "type": "MatMulV3",
+        "calls": 1768,
+        "duration_s": 0.48799487999999963
+      },
+      {
+        "type": "hcom_reduceScatter_",
+        "calls": 148,
+        "duration_s": 0.26595640000000004
+      },
+      {
+        "type": "Mul",
+        "calls": 13426,
+        "duration_s": 0.24688758000000083
+      },
+      {
+        "type": "Slice",
+        "calls": 8116,
+        "duration_s": 0.2217581000000005
+      },
+      {
+        "type": "Cast",
+        "calls": 13482,
+        "duration_s": 0.1852000799999998
+      },
+      {
+        "type": "Add",
+        "calls": 7544,
+        "duration_s": 0.15537488000000163
+      },
+      {
+        "type": "Transpose",
+        "calls": 2518,
+        "duration_s": 0.12818095999999995
+      },
+      {
+        "type": "TensorMove",
+        "calls": 1436,
+        "duration_s": 0.09856031999999994
+      },
+      {
+        "type": "MatMulV2",
+        "calls": 3482,
+        "duration_s": 0.09398413999999967
+      },
+      {
+        "type": "SelectV2",
+        "calls": 196,
+        "duration_s": 0.08650016000000002
+      },
+      {
+        "type": "ReduceSum",
+        "calls": 2526,
+        "duration_s": 0.08565610000000014
+      },
+      {
+        "type": "SoftmaxV2",
+        "calls": 200,
+        "duration_s": 0.08360630000000001
+      },
+      {
+        "type": "Pow",
+        "calls": 514,
+        "duration_s": 0.06576433999999996
+      },
+      {
+        "type": "MemSet",
+        "calls": 3116,
+        "duration_s": 0.06328423999999992
+      },
+      {
+        "type": "ConcatD",
+        "calls": 1064,
+        "duration_s": 0.057215299999999976
+      },
+      {
+        "type": "ViewCopy",
+        "calls": 634,
+        "duration_s": 0.05421138
+      },
+      {
+        "type": "SoftmaxGrad",
+        "calls": 80,
+        "duration_s": 0.046411160000000014
+      },
+      {
+        "type": "FlashAttentionScore",
+        "calls": 192,
+        "duration_s": 0.04177859999999997
+      },
+      {
+        "type": "Lerp",
+        "calls": 3084,
+        "duration_s": 0.03387129999999993
+      },
+      {
+        "type": "LayerNormV3",
+        "calls": 616,
+        "duration_s": 0.03247693999999999
+      },
+      {
+        "type": "Muls",
+        "calls": 2752,
+        "duration_s": 0.02937391999999984
+      },
+      {
+        "type": "ZerosLike",
+        "calls": 1312,
+        "duration_s": 0.027157300000000002
+      },
+      {
+        "type": "Axpy",
+        "calls": 2526,
+        "duration_s": 0.025908679999999986
+      },
+      {
+        "type": "IsNegInf",
+        "calls": 48,
+        "duration_s": 0.0254209
+      },
+      {
+        "type": "Gelu",
+        "calls": 256,
+        "duration_s": 0.024716180000000035
+      },
+      {
+        "type": "RealDiv",
+        "calls": 2408,
+        "duration_s": 0.024639059999999754
+      },
+      {
+        "type": "hcom_allReduce_",
+        "calls": 12,
+        "duration_s": 0.021321119999999995
+      },
+      {
+        "type": "BroadcastTo",
+        "calls": 1276,
+        "duration_s": 0.019133820000000013
+      },
+      {
+        "type": "Conv2D",
+        "calls": 290,
+        "duration_s": 0.018862180000000013
+      },
+      {
+        "type": "GroupedMatmul",
+        "calls": 648,
+        "duration_s": 0.016941279999999986
+      },
+      {
+        "type": "ReduceMean",
+        "calls": 1072,
+        "duration_s": 0.016629800000000004
+      },
+      {
+        "type": "TransData",
+        "calls": 838,
+        "duration_s": 0.016523580000000027
+      },
+      {
+        "type": "FloorDiv",
+        "calls": 434,
+        "duration_s": 0.01641138000000001
+      },
+      {
+        "type": "ForeachCopy",
+        "calls": 308,
+        "duration_s": 0.01617795999999999
+      },
+      {
+        "type": "SiluGrad",
+        "calls": 218,
+        "duration_s": 0.01554892
+      },
+      {
+        "type": "Pows",
+        "calls": 1096,
+        "duration_s": 0.014991879999999975
+      },
+      {
+        "type": "GroupedMatmulAdd",
+        "calls": 216,
+        "duration_s": 0.014820839999999991
+      },
+      {
+        "type": "RepeatInterleave",
+        "calls": 6,
+        "duration_s": 0.01110536
+      },
+      {
+        "type": "PadV3",
+        "calls": 180,
+        "duration_s": 0.010340919999999995
+      },
+      {
+        "type": "AsStrided",
+        "calls": 448,
+        "duration_s": 0.010145520000000002
+      },
+      {
+        "type": "ResizeBilinearV2",
+        "calls": 28,
+        "duration_s": 0.01010508
+      },
+      {
+        "type": "ReduceAll",
+        "calls": 50,
+        "duration_s": 0.009161799999999996
+      },
+      {
+        "type": "Swish",
+        "calls": 362,
+        "duration_s": 0.008331619999999993
+      },
+      {
+        "type": "Index",
+        "calls": 290,
+        "duration_s": 0.0081389
+      },
+      {
+        "type": "GatherElements",
+        "calls": 290,
+        "duration_s": 0.008136019999999999
+      },
+      {
+        "type": "LayerNormV4",
+        "calls": 112,
+        "duration_s": 0.00784674
+      },
+      {
+        "type": "TopKV2",
+        "calls": 292,
+        "duration_s": 0.007722039999999999
+      },
+      {
+        "type": "Neg",
+        "calls": 638,
+        "duration_s": 0.007600320000000007
+      },
+      {
+        "type": "LpNormV2",
+        "calls": 290,
+        "duration_s": 0.007543880000000008
+      },
+      {
+        "type": "IndexPutV2",
+        "calls": 240,
+        "duration_s": 0.007533759999999998
+      },
+      {
+        "type": "NonZero",
+        "calls": 132,
+        "duration_s": 0.005660999999999999
+      },
+      {
+        "type": "Cumsum",
+        "calls": 156,
+        "duration_s": 0.005397979999999998
+      },
+      {
+        "type": "Pack",
+        "calls": 304,
+        "duration_s": 0.004163139999999998
+      },
+      {
+        "type": "OneHot",
+        "calls": 288,
+        "duration_s": 0.00400074
+      },
+      {
+        "type": "ForeachNorm",
+        "calls": 80,
+        "duration_s": 0.0035046799999999996
+      },
+      {
+        "type": "Conv2DTranspose",
+        "calls": 48,
+        "duration_s": 0.003153799999999999
+      },
+      {
+        "type": "IndexPut",
+        "calls": 24,
+        "duration_s": 0.00310344
+      },
+      {
+        "type": "LayerNormGradV3",
+        "calls": 32,
+        "duration_s": 0.00280224
+      },
+      {
+        "type": "StridedSlice",
+        "calls": 160,
+        "duration_s": 0.0024160400000000004
+      },
+      {
+        "type": "Addcmul",
+        "calls": 752,
+        "duration_s": 0.0019148799999999981
+      },
+      {
+        "type": "UpsampleBicubic2d",
+        "calls": 12,
+        "duration_s": 0.0019089
+      },
+      {
+        "type": "Addcdiv",
+        "calls": 752,
+        "duration_s": 0.0018516399999999984
+      },
+      {
+        "type": "Rsqrt",
+        "calls": 580,
+        "duration_s": 0.00169602
+      },
+      {
+        "type": "Range",
+        "calls": 306,
+        "duration_s": 0.0015777600000000005
+      },
+      {
+        "type": "ClipByValueV2",
+        "calls": 446,
+        "duration_s": 0.0014510800000000006
+      },
+      {
+        "type": "Sub",
+        "calls": 462,
+        "duration_s": 0.0013870399999999993
+      },
+      {
+        "type": "Cos",
+        "calls": 78,
+        "duration_s": 0.0012655000000000003
+      },
+      {
+        "type": "Relu",
+        "calls": 104,
+        "duration_s": 0.0012035400000000001
+      },
+      {
+        "type": "Fill",
+        "calls": 802,
+        "duration_s": 0.0011698799999999992
+      },
+      {
+        "type": "Sin",
+        "calls": 78,
+        "duration_s": 0.0011577799999999995
+      },
+      {
+        "type": "ScatterElementsV2",
+        "calls": 74,
+        "duration_s": 0.0011368799999999996
+      },
+      {
+        "type": "Sort",
+        "calls": 148,
+        "duration_s": 0.001108580000000001
+      },
+      {
+        "type": "UpsampleBilinear2dAA",
+        "calls": 8,
+        "duration_s": 0.00086276
+      },
+      {
+        "type": "Sqrt",
+        "calls": 752,
+        "duration_s": 0.000849919999999999
+      },
+      {
+        "type": "MaskedFill",
+        "calls": 84,
+        "duration_s": 0.0008276600000000005
+      },
+      {
+        "type": "ReduceMax",
+        "calls": 228,
+        "duration_s": 0.0007944399999999997
+      },
+      {
+        "type": "GeluGrad",
+        "calls": 8,
+        "duration_s": 0.0007348200000000001
+      },
+      {
+        "type": "LinearIndex",
+        "calls": 78,
+        "duration_s": 0.0007209599999999999
+      },
+      {
+        "type": "Sigmoid",
+        "calls": 150,
+        "duration_s": 0.0006965000000000003
+      },
+      {
+        "type": "Equal",
+        "calls": 358,
+        "duration_s": 0.0006795199999999995
+      },
+      {
+        "type": "Tile",
+        "calls": 104,
+        "duration_s": 0.0006530999999999998
+      },
+      {
+        "type": "ResizeNearestNeighborV2",
+        "calls": 16,
+        "duration_s": 0.00056634
+      },
+      {
+        "type": "ReduceLogSumExp",
+        "calls": 72,
+        "duration_s": 0.00051928
+      },
+      {
+        "type": "Greater",
+        "calls": 160,
+        "duration_s": 0.0005120400000000005
+      },
+      {
+        "type": "ReduceMin",
+        "calls": 218,
+        "duration_s": 0.0004360000000000004
+      },
+      {
+        "type": "LpNormReduceV2",
+        "calls": 4,
+        "duration_s": 0.00036854
+      },
+      {
+        "type": "LinSpace",
+        "calls": 58,
+        "duration_s": 0.00035553999999999995
+      },
+      {
+        "type": "SigmoidGrad",
+        "calls": 74,
+        "duration_s": 0.0003423
+      },
+      {
+        "type": "SmoothL1LossGradV2",
+        "calls": 4,
+        "duration_s": 0.00033626
+      },
+      {
+        "type": "OnesLike",
+        "calls": 18,
+        "duration_s": 0.00030598
+      },
+      {
+        "type": "ScatterAddWithSorted",
+        "calls": 4,
+        "duration_s": 0.00028792
+      },
+      {
+        "type": "Log",
+        "calls": 72,
+        "duration_s": 0.00026812
+      },
+      {
+        "type": "Abs",
+        "calls": 148,
+        "duration_s": 0.00022591999999999992
+      },
+      {
+        "type": "GatherV2",
+        "calls": 10,
+        "duration_s": 0.00021982
+      },
+      {
+        "type": "Exp",
+        "calls": 80,
+        "duration_s": 0.00018801999999999998
+      },
+      {
+        "type": "MseLossGrad",
+        "calls": 4,
+        "duration_s": 0.00016318000000000002
+      },
+      {
+        "type": "SmoothL1LossV2",
+        "calls": 4,
+        "duration_s": 0.0001268
+      },
+      {
+        "type": "Sign",
+        "calls": 72,
+        "duration_s": 0.00011315999999999998
+      },
+      {
+        "type": "LessEqual",
+        "calls": 2,
+        "duration_s": 9.984e-05
+      },
+      {
+        "type": "MSELossV2",
+        "calls": 4,
+        "duration_s": 9.574e-05
+      },
+      {
+        "type": "LogicalOr",
+        "calls": 70,
+        "duration_s": 9.425999999999995e-05
+      },
+      {
+        "type": "NanToNum",
+        "calls": 4,
+        "duration_s": 7.486e-05
+      },
+      {
+        "type": "NotEqual",
+        "calls": 4,
+        "duration_s": 6.956e-05
+      },
+      {
+        "type": "LogicalAnd",
+        "calls": 6,
+        "duration_s": 5.8519999999999995e-05
+      },
+      {
+        "type": "ReduceProd",
+        "calls": 6,
+        "duration_s": 4.442e-05
+      },
+      {
+        "type": "LpNormUpdateV2",
+        "calls": 4,
+        "duration_s": 3.704e-05
+      },
+      {
+        "type": "LpLoss",
+        "calls": 2,
+        "duration_s": 1.558e-05
+      },
+      {
+        "type": "ReduceAny",
+        "calls": 4,
+        "duration_s": 1.466e-05
+      },
+      {
+        "type": "L1LossGrad",
+        "calls": 2,
+        "duration_s": 1.3579999999999999e-05
+      },
+      {
+        "type": "FloorMod",
+        "calls": 4,
+        "duration_s": 1.106e-05
+      },
+      {
+        "type": "GreaterEqual",
+        "calls": 4,
+        "duration_s": 9.02e-06
+      },
+      {
+        "type": "Reciprocal",
+        "calls": 6,
+        "duration_s": 8.540000000000001e-06
+      },
+      {
+        "type": "DSARandomNormal",
+        "calls": 2,
+        "duration_s": 8.400000000000001e-06
+      },
+      {
+        "type": "LogicalNot",
+        "calls": 4,
+        "duration_s": 6.38e-06
+      },
+      {
+        "type": "DSARandomUniform",
+        "calls": 4,
+        "duration_s": 4.18e-06
+      }
+    ]
+  }
+}

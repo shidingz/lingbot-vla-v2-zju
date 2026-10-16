@@ -1,0 +1,40 @@
+联合注意力候选：FP32 SDPA（2026-10-16）
+
+通俗解释
+注意力的作用，是让每个位置决定“其他哪些位置的信息值得参考”。原代码先列一张大表，给所有位置两两打分，再把分数变成比例，再按比例汇总信息。SDPA 用一个专门的计算入口完成这个过程，让 NPU 有机会少写、少读中间大表。它也直接支持多个提问组共用一组资料（GQA），不必先把资料复制四份。
+
+真实规模来自旧 profiler 的 CANN kernel_details.csv：batch=12，序列长度337，query头32，key/value头8，每头128维。单张 FP32 分数表有43,610,496个数字，约166.36 MiB；这不是整模型显存，也不能乘36就声称省下等量显存，因为现有训练含重计算。
+
+先保持 FP32 精度，只更换算法入口。这样若速度变化，能较清楚知道是不是融合和少搬运带来的。BF16 相当于每个数字记得更粗略，需单独验证；它不在本次生产候选中。
+
+实现和启用
+attention_candidate.patch 新增 lingbotvla/ops/joint_attention.py，并给 V2 的 get_attention_interface 添加默认关闭的环境变量开关。
+LINGBOT_JOINT_ATTN_BACKEND=sdpa_fp32 开启；不设置或设 eager 使用原路径。
+为防 flex_cached 的特殊分支绕过接口，设置环境变量时要求原 attention_implementation=eager。
+仍使用调用者现有 FP32 QKV、旋转位置编码和KV缓存；不改训练精度。
+候选没有 .item()、.tolist() 或基于设备数值的 Python 分支。
+
+容易漏掉的数学边界
+mask True 表示可以看；给 PyTorch SDPA 时必须是 [B,1,Lq,Lk]，NPU会自己反转为底层 fusion 的屏蔽语义。
+旧 eager 的整行全 False 情况不是0，而是 V 的均值，因为它用同一个有限负数替换整行得分。
+候选先给这些空行设置安全 SDPA mask，再用 V 均值覆盖输出。因此空行对 Q/K 的梯度为0，对 V 均匀分配，保持旧行为。
+非空行原先使用约-2.38e38，SDPA使用逻辑屏蔽；只在普通有限logit范围等价。测试含放大logit压力用例；若模型logit逼近浮点极值，应另行排查数值稳定性。
+只在硬件实际成功运行后才能确认 NPU kernel 与性能；源码分发规则不是性能结果。
+
+已完成的检查
+补丁 git apply --check 通过；候选和测试脚本语法有效。
+CPU真实 eager 对照：8个用例，每个比输出及Q/K/V梯度，FP32全部通过；最大绝对误差9.54e-7。
+覆盖随机mask、prefix/action+padding、全遮罩、只看一个key、缓存Qlen!=Klen、GQA、相同头数、head_dim128、放大logit。
+CPU BF16独立压力用例未通过原先设定阈值：放大logit的Q/K梯度相对L2误差约3.64%/3.95%。阈值未为通过测试放宽，生产补丁不包含BF16候选。
+原始CPU结果见 attention_cpu_checks.json；其中总passed=false来自BF16压力用例，FP32子集全部true。
+目前未使用 NPU，尚无该候选的速度结论。
+
+交给主线的硬件验证命令（仅在卡已空闲后）
+PYTHONDONTWRITEBYTECODE=1 /home/ma-user/anaconda3/envs/PyTorch-2.6.0/bin/python reports/20261016_speed_round2/test_attention_candidate.py --device npu:0 --actual-shape --benchmark --iterations 5 --warmup 2 --output reports/20261016_speed_round2/attention_npu_checks.json
+应用补丁后可追加 --candidate lingbotvla/ops/joint_attention.py，直接验证生产候选。
+microbenchmark时间只反映单个注意力调用的前向+反向，不可等同整模型加速倍数。硬件数值通过后应做8卡全模型A/B，比较同种子、同batch、同训练步窗口，并确认loss和梯度有限。
+
+官方源码依据
+https://github.com/Ascend/op-plugin/blob/7.1.0/op_plugin/ops/opapi/ScaledDotProductAttentionKernelNpuOpApi.cpp
+该版本 PyTorch>=2.5 的分支接受 FP32/BF16、四维BNSD、bool二/四维mask，并支持Q头数是KV头数整数倍的GQA；910B1及后续设备符合该分支的硬件条件。
+本机 torch_npu/version.py 为2.6.0，git_version=41d2476c22b22f484ad1f07b5a6d011200638b6d；仍应以实际运行和trace确认wheel的行为。

@@ -1,0 +1,142 @@
+{
+  "experiment": "robotwin_1ep_fast",
+  "timezone": "Asia/Shanghai",
+  "method": "Read-only /proc samples. One 4.09-second idle/prefetch-full interval, then one 20.24-second active interval sampled every 0.5 seconds. No training signals, model imports, or performance workload.",
+  "decode_thread_environment": "LINGBOT_VIDEO_DECODE_THREADS=1 (verified on all 8 training ranks)",
+  "prior_run_reference": {
+    "experiment": "robotwin_5ep_lr5e5",
+    "note": "Earlier snapshot, not a controlled simultaneous A/B comparison",
+    "workers": 64,
+    "worker_threads_total": 7740,
+    "sampled_dav1d_threads_per_active_worker": 192,
+    "sample_seconds": 4.106541462242603,
+    "worker_cpu_cores": 59.27,
+    "vscode_rg_processes": 4,
+    "vscode_rg_cpu_cores": 46.95,
+    "system_cpu_percent": {
+      "system": 58.16,
+      "idle": 33.72,
+      "iowait": 0.01
+    }
+  },
+  "new_run_prefetch_full_sample": {
+    "asof": "2026-10-16T00:42:11.050981",
+    "sample_seconds": 4.092957507818937,
+    "workers": 64,
+    "worker_threads_total": 256,
+    "threads_per_worker": 4,
+    "observed_dav1d_threads": 0,
+    "worker_cpu_cores": 0.002,
+    "vscode_rg_processes": 2,
+    "vscode_rg_cpu_cores": 23.611,
+    "note": "All workers were sleeping in this interval; do not use idle CPU time as a speedup measurement"
+  },
+  "new_run_active_sample": {
+    "sample_start": "2026-10-16T00:43:43.792128",
+    "sample_end": "2026-10-16T00:44:04.024531",
+    "seconds": 20.235449213534594,
+    "worker_count": 64,
+    "worker_average_cpu_cores": 3.4059041275892445,
+    "worker_threads_max_concurrent": 316,
+    "worker_max_thread_distribution": {
+      "4": 57,
+      "11": 1,
+      "19": 2,
+      "23": 1,
+      "27": 1,
+      "34": 2
+    },
+    "active_workers_count": 37,
+    "perrank": {
+      "0": {
+        "max_threads": 23,
+        "max_dav1d_threads": 0,
+        "active_pid_examples": [
+          1118712,
+          1119828,
+          1120765
+        ]
+      },
+      "1": {
+        "max_threads": 4,
+        "max_dav1d_threads": 0,
+        "active_pid_examples": [
+          1123001,
+          1127590,
+          1128995
+        ]
+      },
+      "2": {
+        "max_threads": 19,
+        "max_dav1d_threads": 0,
+        "active_pid_examples": [
+          1108979,
+          1112204,
+          1113153
+        ]
+      },
+      "3": {
+        "max_threads": 27,
+        "max_dav1d_threads": 0,
+        "active_pid_examples": [
+          1103854,
+          1104008,
+          1104027
+        ]
+      },
+      "4": {
+        "max_threads": 4,
+        "max_dav1d_threads": 0,
+        "active_pid_examples": [
+          1103989,
+          1104048,
+          1104144
+        ]
+      },
+      "5": {
+        "max_threads": 19,
+        "max_dav1d_threads": 0,
+        "active_pid_examples": [
+          1119874,
+          1124595,
+          1126070
+        ]
+      },
+      "6": {
+        "max_threads": 34,
+        "max_dav1d_threads": 0,
+        "active_pid_examples": [
+          1103946,
+          1104053,
+          1104149
+        ]
+      },
+      "7": {
+        "max_threads": 34,
+        "max_dav1d_threads": 0,
+        "active_pid_examples": [
+          1103932,
+          1104050,
+          1104146
+        ]
+      }
+    },
+    "system_cpu_percent": {
+      "user": 6.36,
+      "nice": 0,
+      "system": 16.26,
+      "idle": 76.49,
+      "iowait": 0,
+      "irq": 0.79,
+      "softirq": 0.09,
+      "steal": 0
+    }
+  },
+  "interpretation": [
+    "All 8 ranks had 8 workers. Active samples covered each rank; no 192-thread dav1d pools were observed.",
+    "During active sampling, 37 of 64 workers accumulated CPU time. Concurrent worker threads peaked at 316; non-decoder thread counts can transiently exceed four.",
+    "One-thread decoding can execute in the caller thread, so zero separately named dav1d-worker threads is consistent with the configured limit.",
+    "Worker CPU consumption fell markedly in these observations, but intervals differ and background VSCode rg process count fell from four to two.",
+    "Do not attribute all end-to-end training speed changes causally to the decoder modification; use main training timestamps for throughput."
+  ]
+}

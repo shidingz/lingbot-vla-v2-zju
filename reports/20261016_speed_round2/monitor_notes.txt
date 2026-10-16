@@ -1,0 +1,54 @@
+MoE monitoring candidate — 2026-10-16
+
+Purpose
+The monitoring function currently asks Python to inspect a device result once
+per layer: `if counts.sum() == 0`. On the 36-layer action model this introduces
+36 device-scalar reads. Each can force the host to wait before dispatching the
+next layer's monitoring operators. This is monitoring work, not model learning.
+
+Candidate
+Snapshot the same count buffers, enqueue all readiness checks, and copy the
+36-element boolean vector to CPU once. Run the original per-layer monitoring
+math with these Python flags. Toggle with LINGBOT_MOE_MONITOR_BATCH_COUNTS=1.
+Unset or 0 retains the original path. Patch applies only to the V2 model file.
+
+Preserved exactly
+- Training forward output, router logits, action loss, router z-loss,
+  sequence-wise balance loss, their gradients, optimizer and load-balance hook.
+- Every monitoring key/value at every step and the existing logging frequency.
+- Missing counts buffers use the original unbiased top-1 fallback.
+- All-zero buffers are skipped at startup/resume exactly as before.
+- Partial zero/missing buffer cases and non-consecutive configured layer IDs.
+- Counts in exported histograms remain snapshots even if buffers are updated.
+
+CPU validation
+Nine cases passed with zero tolerance for output/metric comparisons. Enabled
+auxiliary-loss cases also have bit-identical router gradients. Runtime buffers
+remain unchanged. Disabled-switch path matches the original results.
+CPU operator profiler: original has 36 aten::_local_scalar_dense calls;
+candidate has zero, plus exactly one explicit CPU transfer of shape [36].
+No NPU was initialized, and these checks make no end-to-end speed claim.
+See monitor_cpu_validation.json and check_monitor_candidate.py for reproduction.
+
+Suggested full-model A/B
+Use the same snapshot, backend, seed, data order, batch, weights, and step count.
+Compare only switch=0 vs switch=1; do not combine other changes in this test.
+Discard warmup and compare steady-step median and spread; keep loss, gradients,
+all MoE health summaries, and NPU memory finite and comparable. Repeat the pair
+if the difference is within normal step variance. A full profiler is unnecessary
+for first timing: its overhead can hide the small saving being evaluated.
+
+Plain-language explanation
+The CPU is like the person handing out work, and NPU is the worker doing the
+large calculations. The previous monitoring asks "is this layer ready?" 36 times,
+waiting after each question. This change collects all 36 answers at once. It
+changes how we check the dashboard, not what the model learns. This is lower
+risk than asking the model to calculate with lower precision or changing its
+attention rules, but it may save only a small amount of the whole step.
+
+Scope limitation
+This removes per-layer waits in this one monitoring branch. It does not remove
+other scalar reads in expert dispatch, optimizer logic, logging, or loss code.
+This candidate still computes every per-layer metric each step. Sampling pure
+metrics less often would be a separate change that needs deliberate logging
+semantics, since moe_summary/* is currently promised every step.

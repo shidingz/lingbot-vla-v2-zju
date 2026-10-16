@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -uo pipefail
+cd /home/ma-user/work/lingbot-vla-v2
+export RUN_NAME=robotwin_5ep_lr5e5
+export NPROC_PER_NODE=8 MICRO_BATCH=12 GRAD_ACCUM=1 GLOBAL_BATCH=96
+export NUM_TRAIN_EPOCHS=5 LR=5e-5 LR_MIN=1e-5 LR_WARMUP_RATIO=0.02
+export SAVE_EPOCHS=1 SAVE_STEPS=0 DRY_RUN=0
+export TRAIN_EXPERT_ONLY=true ENABLE_RESUME=true SAVE_HF_WEIGHTS=true
+export PYTHONUNBUFFERED=1
+export OUTPUT_DIR=/cache/lingbot/robotwin_train/robotwin_5ep_lr5e5
+export LOG_DIR=/home/ma-user/work/lingbot-vla-v2/logs/robotwin_5ep_lr5e5
+export OBS_OUTPUT_DIR=obs://yw-2030-extern/Partner_Qin/robot_1014/robotwin_5ep_lr5e5
+export OBS_DATASET_URI=obs://yw-2030-extern/Partner_Qin/robot_1014/datasets/RoboTwin_lerobot_v30/
+export CONFIG=configs/vla/robotwin/robotwin_npu.yaml
+unset MAX_STEPS STOP_AFTER_STEPS EXTRA_ARGS ALIGN_MERGE ALIGN_JSON LOAD_CHECKPOINT_PATH
+bash /home/ma-user/work/lingbot-vla-v2/train_robotwin_npu.sh
+training_exit_code=$?
+printf '%s\n' "$training_exit_code" > "$LOG_DIR/exit_code"
+printf '\nTraining process exited with code %s\n' "$training_exit_code"
+exit "$training_exit_code"

@@ -1,0 +1,111 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>LingBot 训练提速：实验与学习记录</title>
+<style>
+:root{--ink:#172e3b;--muted:#526675;--line:#dce5e9;--accent:#006a68;--paper:#fff;--bg:#edf2f4}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 system-ui,-apple-system,"Noto Sans CJK SC","Microsoft YaHei",sans-serif}
+main{max-width:1100px;margin:30px auto;padding:42px 48px;background:var(--paper);border-radius:14px}
+h1{font-size:32px;line-height:1.35;margin:0 0 12px} h2{font-size:23px;margin:36px 0 12px}h3{font-size:18px;margin:20px 0 8px}
+p{margin:10px 0}a{color:var(--accent);text-underline-offset:3px}small,.muted{color:var(--muted);font-size:13px}small{display:block}
+.eyebrow{color:var(--accent);font-weight:700;letter-spacing:1px;font-size:13px}.lede{font-size:18px;max-width:900px}
+.callout{background:#edf7f5;padding:18px 22px;border-left:4px solid var(--accent);border-radius:4px;margin:20px 0}
+.table-scroll{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:14px;margin:14px 0}th,td{border-bottom:1px solid var(--line);padding:12px 10px;text-align:left;vertical-align:top}th{background:#f0f5f6;font-size:13px;white-space:nowrap}td:first-child{min-width:130px}tr:last-child td{border-bottom:1px solid var(--line)}
+.good{color:#087348}.pending{color:#86601b}.bad{color:#a13232}.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0}.step{padding:16px;background:#f4f7f8;border-top:3px solid #87b9b1;border-radius:4px}.step b{display:block}.step p{font-size:14px}
+code,pre{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}code{background:#eef3f5;padding:2px 4px;border-radius:3px;font-size:.9em}pre{padding:16px;background:#172e3b;color:#f2f7f9;white-space:pre-wrap;overflow-wrap:anywhere;border-radius:5px;font-size:13px}
+.evidence{columns:2;column-gap:30px;padding-left:20px}.evidence li{break-inside:avoid;margin:5px 0}details{border:1px solid var(--line);padding:14px 18px;margin:16px 0;border-radius:6px}summary{cursor:pointer;font-weight:600}footer{margin-top:32px;padding-top:18px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+@media(max-width:760px){main{margin:0;padding:24px 18px;border-radius:0}h1{font-size:27px}.steps{grid-template-columns:1fr 1fr}.evidence{columns:1}}@media print{body{background:white}main{margin:0;padding:0;max-width:none}h2{break-after:avoid}tr,.step{break-inside:avoid}details{display:block}}
+</style></head><body><main>
+<div class="eyebrow">LINGBOT · 8 × 昇腾 910B1 · 2026-10-16</div>
+<h1>训练为什么慢，怎样一步步变快</h1>
+<p class="lede">把优化拆成小实验：每次只改一件事，先检查算得对不对，再用整模型短跑测每步快了多少。你可以把这份记录当作代码修改说明，也可以按下面的解释学习训练的基本过程。</p>
+<p class="muted">统计更新时间：2026-10-16T17:55:13.481244+08:00（时间含 +08:00 时为北京时间）。本页是生成时的结果快照；重新运行报告脚本可读取最新汇总。缺失实验始终标为未完成。</p>
+
+<h2>先看结果：本轮各项修改有没有省时间</h2>
+<div class="callout"><p><b>最终采用：</b>7组有效实验各完成60步并正常退出。以较快的原代码复测为对照，最终方案3.54→2.60秒/步，每步时间减少26.5%，吞吐27.11→36.86样本/秒（增加36.0%）；rank 0峰值已分配显存53.31→50.61 GiB。保留重计算时为3.06秒/步、46.68 GiB，可作为更省显存的选项。</p></div>
+<p>主要看<b>每秒完成多少有效训练样本</b>，以及固定batch下等价的每步时间。取第13–60步，共48次更新，目的是避开最初编译、首次执行等热身干扰。单项优化和组合方案与本轮基准比较；<b>“关闭动作重计算”单独与同一组合的保留重计算版本比较</b>。第31–60步提供另一段窗口，帮助判断效果是否稳定。</p>
+<div class="table-scroll"><table><thead><tr><th scope='col'>实验</th><th scope='col'>状态</th><th scope='col'>每步实际时间 ↓</th><th scope='col'>相对指定对照</th><th scope='col'>全机样本/秒 ↑</th><th scope='col'>31–60 步复核 ↓</th></tr></thead><tbody><tr><td>本轮基准：已有 MoE 合批<small>gmm_baseline_v2</small></td><td><span class="good">已完成，可进入比较</span></td><td>3.646 秒</td><td>基准</td><td>26.33</td><td>3.633 秒</td></tr><tr><td>原代码复测（控制波动）<small>baseline_repeat</small></td><td><span class="good">已完成，可进入比较</span></td><td>3.542 秒</td><td><strong>2.9% 更省时</strong><small>原代码重复测量，反映波动</small></td><td>27.11</td><td>3.567 秒</td></tr><tr><td>只改监控查询<small>monitor</small></td><td><span class="good">已完成，可进入比较</span></td><td>3.479 秒</td><td><strong>4.6% 更省时</strong><small>对照：本轮基准</small></td><td>27.59</td><td>3.500 秒</td></tr><tr><td>只改联合注意力<small>attention</small></td><td><span class="good">已完成，可进入比较</span></td><td>3.500 秒</td><td><strong>4.0% 更省时</strong><small>对照：本轮基准</small></td><td>27.43</td><td>3.533 秒</td></tr><tr><td>只改 AdamW 批量更新<small>adamw_foreach</small></td><td><span class="good">已完成，可进入比较</span></td><td>3.104 秒</td><td><strong>14.9% 更省时</strong><small>对照：本轮基准</small></td><td>30.93</td><td>3.100 秒</td></tr><tr><td>组合实验（保留重计算）<small>combined</small></td><td><span class="good">已完成，可进入比较</span></td><td>3.062 秒</td><td><strong>16.0% 更省时</strong><small>对照：本轮基准</small></td><td>31.35</td><td>3.033 秒</td></tr><tr><td>同一组合，关闭动作重计算<small>combined_no_checkpoint</small></td><td><span class="good">已完成，可进入比较</span></td><td>2.604 秒</td><td><strong>15.0% 更省时</strong><small>对照：同一组合，保留重计算</small></td><td>36.86</td><td>2.633 秒</td></tr><tr><td>其他/失败尝试<small>gmm_baseline</small></td><td><span class="bad">失败：退出码 1</span></td><td>—</td><td>—</td><td>—</td><td>—</td></tr></tbody></table></div>
+<p class="muted">未完成、退出异常或受到 profiler 采集影响的窗口不参与收益比较。实际时间由第60步时间戳减去第12步时间戳，再除以48；日志按整秒记时，单步时间的量化误差小于约0.021秒。模型加载、首次编译、最初12步、保存检查点和上传时间另计。</p>
+<p><b>这与学习率预热是两回事：</b>学习率预热是在训练刚开始时逐步增大学习率，避免一开始更新过猛。本配置调度长度5717步、预热比例0.02，约前114步都在学习率预热中；因此<b>60步短跑仍处于学习率预热</b>，没有验证后期专家分布、长期收敛或任务质量。</p>
+<p class="muted">“原代码复测”再次运行本轮基准代码，用来观察机器状态、缓存和调度造成的自然波动；它不是新优化。候选的小幅变化需要结合这组对照判断，见 <a href="baseline_repeat_audit.json">原代码复测审计</a>。</p>
+<div class="callout"><b>小幅提速，要先和自然波动比较。</b><p>相同原代码两次测得 3.646 和 3.542 秒/步，相差约 2.9%。改用较快的原代码结果作对照，单独监控查询只省 1.8%，单独注意力只省 1.2%。这两项整步时间变化与已观察到的运行波动接近，不能把表里的小幅改善全部认定为稳定收益。注意力的显存下降更明确，也为关闭重计算留出了空间。</p><p>AdamW 批量更新相对较快原代码仍省 12.4% 时间，本轮提速证据更明确。只有两次原代码测量、每个候选一次短跑，尚不足以给出长期速度范围或统计显著性结论。顶部最终方案也采用较快原代码作对照，避免只挑较慢基线报告收益。</p></div>
+<div class="callout"><b>此前的 MoE 改进：7.24 → 3.47 秒/步</b>
+    <p>这是此前独立 A/B 的第 13–29 步窗口。把许多专家的小矩阵计算合批后，观察到明显提速。
+    本轮已经以这项改进为起点，重新测量基准约 3.65 秒/步。<b>跨轮数字的变化不能记作某个新候选的收益。</b></p>
+    <p class="muted">旧后端已有40步训练记录，但启动脚本最终退出码为2；此处仅引用已完成的训练窗口。
+    旧实验还存在配置记录和源码快照的局限，见 <a href="previous_ab_audit.json">此前 A/B 独立审计</a>。</p></div>
+
+<h2>读懂一步训练：96 个样本怎样更新一次模型</h2>
+<p>本实验每张卡一次处理12个样本，8张卡合计<b>96个样本</b>。梯度累积次数为1，因此这里的一个 <code>step</code> 就是用这96个样本完成一次参数更新。比如每步3.6秒，全机吞吐约为96÷3.6≈26.7个样本/秒。</p>
+<div class="steps"><div class="step"><b>1 · 前向：做一次题</b><p>模型读入图像、文字和状态，预测动作，并完成辅助任务。</p></div><div class="step"><b>2 · loss：给答案打分</b><p>损失衡量预测与目标的差距。它是学习信号，不能单独代表机器人实际任务成功率。</p></div><div class="step"><b>3 · 反向：找修改方向</b><p>梯度描述每个参数往哪个方向变化能减小损失。梯度范数是这许多方向数值的整体大小。</p></div><div class="step"><b>4 · optimizer：真正改参数</b><p>优化器结合梯度、学习率和历史状态更新参数。多卡训练还需要交换、汇总相关数据。</p></div></div>
+<p><b>为什么要测完整一步：</b>某个算子即使快一倍，读数据、其他层、更新参数和卡间通信仍然要花时间，所以整步不一定快一倍。</p>
+
+<h2>这次具体在改哪里</h2>
+<h3>① 监控查询：把逐层问进度，改成集中问一次</h3>
+<p>模型有36层 MoE。旧代码为了统计每层专家有没有收到数据，多次让 CPU 等待 NPU 给出一个计数结果。像工人每做一点事，就被叫停汇报一次。</p>
+<p>新代码把36层的计数集中取回，再生成原来的监控指标；不删除参与训练的辅助损失。这样减少往返等待，同时保留学习过程需要的信息。本轮已合入，但单独整步提速很小，仍需结合原代码复测波动理解。</p>
+<h3>② 联合注意力：减少中间大表的搬运</h3>
+<p>注意力让每个位置判断“其他哪些位置的信息值得参考”。原实现分开打分、计算比例、汇总信息；融合入口让 NPU 用专门算法完成这些步骤。实际序列长度337、32个查询头时，一张 FP32 得分表就约166 MiB。</p>
+<p>32个查询头会共用8组 key/value 资料，这叫 <code>GQA</code>。新入口能直接处理这种共享关系，避免先复制完整资料。这里保持输入、输出及调用前位置编码的 FP32 类型，<b>没有启用 BF16 候选</b>。</p>
+<p><b>遮罩（mask）就是“哪些信息可以看”。</b>动作、图像和任务位置之间原有的可见规则必须保留。还有一个容易漏掉的边界：某一行全部被遮住时，旧实现返回value信息的均值，新SDPA入口显式保留这个结果及对应梯度行为；不能为了提速顺手把它改成零或其他默认结果。</p>
+<p class="muted">“FP32 接口”不等于已经证明每条内部硬件指令都使用完整 FP32。对应版本包装代码没有把 QKV 降成半精度，本机 CANN 也有 float 输入/中间类型模板；此次尚未用实际 tiling key 和硬件数学模式证明全部内部精度。结论依据应包括下面的数值对照。</p>
+<div class="callout"><p><b>单独改注意力的整模型短跑记录：</b>3.646 → 3.500 秒/步；<b>rank 0 峰值已分配显存</b> 53.31 → 46.68 GiB。显存指标只针对rank 0的allocated峰值，不能解释为每张卡已经释放了同样大小的物理显存。</p></div>
+<h3>③ AdamW foreach：同样的更新规则，一次安排更多参数</h3>
+<p>当前优化器组合里，本来就有一部分参数由 AdamW 更新。旧路径逐个张量发出更新指令；<code>foreach</code> 把一批张量的相同操作一起提交，减少调度次数。</p>
+<p>这项候选只改变现有 AdamW 分支的执行方式，<b>不把 Muon 换成 AdamW</b>。学习率、权重衰减、参数分组和 Muon 更新算法沿用原方案。混合普通张量与分片张量的组有兼容保护，仍使用原路径。</p>
+<p><b>续训也要检查：</b>训练存档里带着当时的优化器开关，恢复时可能把今天想启用的设置盖回去。新增加载完成后的处理，先恢复原有学习状态，再采用本次配置的批量执行方式；因此从旧存档继续训练、或关闭开关回退，都需要有对应验证。</p>
+
+<h2>显存很满，为什么计算单元还不忙</h2>
+<p>可以把<b>显存理解成仓库、计算单元理解成工人</b>。模型权重、中间结果和优化器状态会占仓库；仓库装满，不代表工人一直在计算。若任务太碎、反复等待 CPU、搬数据或等其他卡，工人仍可能闲着。</p>
+<p><b>让工人忙不是最终目标，让同样的训练任务更快完成才是。</b>减少重复计算后，利用率读数可能变化不大，甚至下降，但有效样本/秒仍可能提高。重算出来的中间结果不算新样本；不能为了追求100%的利用率而增加无用计算。</p>
+<div class="table-scroll"><table><thead><tr><th scope='col'>实验</th><th scope='col'>AI Core 0/4 卡</th><th scope='col'>HBM 占用 0/4 卡</th><th scope='col'>HBM 带宽 0/4 卡</th><th scope='col'>rank 0 峰值已分配 GiB</th></tr></thead><tbody><tr><td>gmm_baseline_v2</td><td>15.1% / 11.1%</td><td>98.0% / 96.0%</td><td>23.1% / 18.9%</td><td>53.31</td></tr><tr><td>baseline_repeat</td><td>12.6% / 13.7%</td><td>96.8% / 96.0%</td><td>24.1% / 25.7%</td><td>53.31</td></tr><tr><td>monitor</td><td>15.1% / 14.1%</td><td>96.2% / 96.0%</td><td>20.8% / 23.2%</td><td>53.31</td></tr><tr><td>attention</td><td>15.1% / 12.1%</td><td>86.0% / 85.0%</td><td>21.5% / 18.9%</td><td>46.68</td></tr><tr><td>adamw_foreach</td><td>17.1% / 16.9%</td><td>98.0% / 97.1%</td><td>19.6% / 23.8%</td><td>53.31</td></tr><tr><td>combined</td><td>16.9% / 14.2%</td><td>87.0% / 87.0%</td><td>23.3% / 22.0%</td><td>46.68</td></tr><tr><td>combined_no_checkpoint</td><td>19.5% / 21.8%</td><td>92.0% / 91.0%</td><td>24.8% / 20.3%</td><td>50.61</td></tr></tbody></table></div>
+<p class="muted">这里只采样0号和4号卡，而且查询有先后、间隔约数秒。AI Core 数字是短窗读数，不是整轮平均效率，也不是理论算力利用率 MFU。HBM占用、HBM带宽和计算忙碌度是不同指标。rank 0峰值已分配显存只统计该rank，不等于各卡总占用或缓存预留量；融合后分配需求变小，缓存分配器也可能暂不归还显存。</p>
+<h3>把省下的显存用于少做“重计算”</h3>
+<p>训练原本可以把中间结果当作草稿留着，反向时直接使用。显存紧张时，就少留一部分草稿，需要时再算一遍；这样省内存，但增加计算。融合注意力省下内存后，可以测试保留更多草稿、减少重算，以内存余量换速度。</p>
+<p><b>两个 checkpoint 不是一回事：</b><code>gradient checkpointing</code> 指本段的“计算草稿少留、需要时重算”；保存训练进度的 <code>checkpoint</code> 则是把模型、优化器和训练步数写进存档。<b>关闭前者不妨碍存档和恢复训练。</b>本轮性能短跑是否保存文件，仍由独立的保存开关控制。</p>
+<p class="muted">本轮60步短跑关闭了保存与恢复，没有验证八卡真实存档的端到端恢复；AdamW跨开关恢复的结论来自下面单列的组件验证。</p>
+<div class="callout"><b>只关闭重计算的增量：</b>3.062 → 2.604 秒/步，15.0% 更省时。<p>rank 0峰值已分配显存：46.68 → 50.61 GiB。这是同一组合代码、只改变激活重计算开关的对照；短跑结果不能代替长跑稳定性验证。</p></div>
+<p>源码审计表明，在<b>本次只训练动作专家</b>的配置下，这个开关实际影响动作专家的36层。冻结的视觉/语言模型保持eval，teacher独立构建，联合注意力也位于被重算区域之外。这个结论依赖当前配置，不能直接推广到解冻视觉/语言模型或启用激活卸载的训练。</p>
+<details><summary>关闭重算后，专家计数可能减半：为什么并非少训练一半样本</summary>
+<p>现有计数器每执行一次专家前向就记一次，重算时也会再记。源码推导：每层全机专家分配次数，可能从包含重算的约39,168降到19,584。后一个数来自96个样本 × 每样本51个动作位置 × 每个位置分给4个专家。它统计的是<b>专家分配次数</b>，不是不同训练样本的数量；每次更新仍然使用96个样本。</p>
+<p>如果重算选择的专家相同、每层计数统一缩放，归一化后的负载比例、偏差和死专家判断应保持一致；原始条形图高度会变化。接近top-k选择边界的浮点差异可能改变路由，因此“比例相同”有条件，不能无条件保证。</p>
+<p>本配置的专家偏置更新速度为0、偏置居中关闭；用于训练的平衡损失读取另外计算的路由信息，不读取这个监控计数。因此计数重复本身不表示训练目标翻倍。本轮保留原始计数实现，避免把计数修正和速度实验混在一起。这些是源码与配置推导，详见 <a href="checkpoint_scope_semantics_audit.json">重计算与计数语义审计</a>。</p>
+</details>
+
+<h2>怎样判断“跑快了，也没有明显算错”</h2>
+<div class="table-scroll"><table><thead><tr><th scope='col'>修改</th><th scope='col'>已检查什么</th><th scope='col'>证据</th></tr></thead><tbody><tr><td>监控批量查询</td><td>9 项 CPU 边界用例；验证监控输出、辅助损失及梯度。原36次标量读取改成一次长度36的计数传输。</td><td><a href="monitor_cpu_validation.json">监控验证</a></td></tr><tr><td>FP32 接口注意力</td><td>9 项 NPU 用例，结果：通过。输出及 Q/K/V 梯度的最大绝对差为 4.2e-06。</td><td><a href="attention_npu_checks_v2.json">NPU 修正后验证</a></td></tr><tr><td>AdamW foreach</td><td>NPU 已生成 8/8 个 rank 的验证报告。全部通过。 CPU还检查参数、动量状态、跳过梯度与保存恢复。</td><td><a href="adamw_foreach_cpu_final24.rank0.json">CPU 最终验证</a> · <a href="adamw_foreach_npu_validation.rank0.json">adamw_foreach_npu_validation.rank0.json</a> · <a href="adamw_foreach_npu_validation.rank1.json">adamw_foreach_npu_validation.rank1.json</a> · <a href="adamw_foreach_npu_validation.rank2.json">adamw_foreach_npu_validation.rank2.json</a> · <a href="adamw_foreach_npu_validation.rank3.json">adamw_foreach_npu_validation.rank3.json</a> · <a href="adamw_foreach_npu_validation.rank4.json">adamw_foreach_npu_validation.rank4.json</a> · <a href="adamw_foreach_npu_validation.rank5.json">adamw_foreach_npu_validation.rank5.json</a> · <a href="adamw_foreach_npu_validation.rank6.json">adamw_foreach_npu_validation.rank6.json</a> · <a href="adamw_foreach_npu_validation.rank7.json">adamw_foreach_npu_validation.rank7.json</a></td></tr><tr><td>AdamW 续训开关</td><td>12 项 CPU 切换用例，结果：通过。恢复后遵守本次 foreach 开关；学习率、betas、衰减、步数和动量状态保持。</td><td><a href="adamw_foreach_resume_cpu.json">续训兼容验证</a></td></tr><tr><td>组合源码快照</td><td>组合快照 CPU 组件检查：通过。监控12项、注意力8项、AdamW更新4项、续训开关12项。这不是组合方案的8卡整模型短跑验证；短跑状态见主表。</td><td><a href="combined_cpu_validation.json">组合快照 CPU 验证</a></td></tr></tbody></table></div>
+<p>单模块测试使用相同输入检查输出和梯度；优化器测试还检查更新后的参数与历史状态。整模型短跑则继续观察损失、梯度是否有限，以及同一步的差异。</p>
+<div class="table-scroll"><table><thead><tr><th scope='col'>实验</th><th scope='col'>loss/梯度记录均有限</th><th scope='col'>平均 loss</th><th scope='col'>逐步 loss 最大绝对差</th><th scope='col'>梯度范数最大相对差</th></tr></thead><tbody><tr><td>gmm_baseline_v2</td><td>是</td><td>0.34961</td><td>—</td><td>—</td></tr><tr><td>baseline_repeat</td><td>是</td><td>0.34950</td><td>0.00122</td><td>5.82%</td></tr><tr><td>monitor</td><td>是</td><td>0.34952</td><td>0.00171</td><td>10.50%</td></tr><tr><td>attention</td><td>是</td><td>0.34954</td><td>0.000977</td><td>7.91%</td></tr><tr><td>adamw_foreach</td><td>是</td><td>0.34945</td><td>0.000977</td><td>4.02%</td></tr><tr><td>combined</td><td>是</td><td>0.34954</td><td>0.00146</td><td>3.72%</td></tr><tr><td>combined_no_checkpoint</td><td>是</td><td>0.34947</td><td>0.000977</td><td>9.40%</td></tr></tbody></table></div>
+<p class="muted">上表数值差异来自分析器的第13–60步逐步配对结果，当前均以本轮基准为数值对照；关闭重算的单项速度收益则使用保留重算的组合作对照。“有限”只表示没有 NaN/Inf，不表示数值完全一致。梯度范数是一个汇总标量，不能代替全部梯度逐元素比较。短跑会受浮点运算顺序和多卡执行影响；数值测试通过也不等于长期收敛或机器人任务质量已经验证。</p>
+
+<h2>失败和暂未采用的方向也要留下来</h2>
+<div class="table-scroll"><table><thead><tr><th scope='col'>问题/候选</th><th scope='col'>处理状态</th><th scope='col'>原因与学习点</th></tr></thead><tbody><tr><td>gmm_baseline</td><td><span class="bad">失败：退出码 1</span></td><td>实验快照遗漏归一化输入文件，训练前失败；补齐快照后使用新目录重跑。原数据未改。</td></tr><tr><td>BF16 注意力</td><td>本轮未采纳</td><td>CPU 大 logit 压力用例中，Q/K 梯度相对 L2 差约3.6%/3.9%，未通过预设门槛；没有为通过而调高门槛。</td></tr><tr><td>注意力第一次 NPU 验证</td><td>验证规则已修正，原记录保留</td><td>只允许看一个 key 时，理想 Q/K 梯度为0。约1e-6的舍入差被除以1e-12，产生无意义的巨大相对误差。改为仅零参考使用原绝对门槛1e-4，非零参考规则不变。</td></tr><tr><td>Tensor/DTensor 混合 foreach</td><td>保留兼容保护</td><td>同一批次混合普通张量与分片张量会报错。候选检查真实参数组，这类组继续逐个更新；不更换优化算法或参数分组。</td></tr><tr><td>续训覆盖 foreach 开关</td><td>已修复并独立验证</td><td>旧存档中的foreach设置会覆盖本次开关。加载完成后重新应用本次执行策略，同时保留学习率、步数、动量等训练状态。</td></tr><tr><td>FSDP/通信、选择性重计算</td><td>本轮尚无这些调整的完整对照</td><td>已完成的重计算实验只比较当前动作层全部开/关；更细的选择性重计算、FSDP和通信改动尚未完成新A/B，不计入本轮收益。</td></tr></tbody></table></div>
+<p>保留失败能帮助区分代码问题、测试规则问题和实验环境问题。下次升级软件或改变数据形状时，可以复用这些边界用例。</p>
+
+<h2>想边改边学，可以从这些代码开始</h2>
+<p>先看启动入口的中文注释，再挑一个算子或测试读。建议每次只跟踪一项改动：它改了哪次等待或计算、哪些数学行为要保留、对应测试怎样证明这些条件。</p>
+<div class="table-scroll"><table><thead><tr><th scope='col'>代码入口</th><th scope='col'>读它时重点看什么</th></tr></thead><tbody><tr><td><a href="../../train_robotwin_npu_optimized.sh">train_robotwin_npu_optimized.sh</a></td><td>先读中文开关注释，理解每个环境变量对应哪项实验。报告生成时重计算默认值为 <code>false</code>；当前设置及适用范围见最终采用方案。</td></tr><tr><td><a href="../../lingbotvla/ops/joint_attention.py">joint_attention.py</a></td><td>对照输入形状、mask方向、GQA，以及整行不可见时恢复原均值结果的处理。</td></tr><tr><td><a href="../../lingbotvla/optim/optimizer.py">optimizer.py</a></td><td>看哪些参数走Muon、哪些走既有AdamW；再看foreach开关、混合张量保护和存档加载后的开关恢复。</td></tr><tr><td><a href="../../tests/test_moe_monitor_batch.py">test_moe_monitor_batch.py</a></td><td>把测试当作小例子：正常计数、空计数、缺失监控状态时，优化前后应满足什么条件。</td></tr></tbody></table></div>
+
+<h2>最终采用方案与下一步验证</h2>
+<div class="callout"><p><b>合入状态：</b>已合入监控统计合批、FP32联合注意力和AdamW批量更新；新增带中文注释的优化入口，默认启用三项并关闭动作重计算。原入口保留原默认开关。本轮没有启动新的完整epoch。</p><p><b>组合实验：</b>7组有效实验各完成60步并正常退出。以较快的原代码复测为对照，最终方案3.54→2.60秒/步，每步时间减少26.5%，吞吐27.11→36.86样本/秒（增加36.0%）；rank 0峰值已分配显存53.31→50.61 GiB。保留重计算时为3.06秒/步、46.68 GiB，可作为更省显存的选项。</p><p>当前证据支持在本机8×910B1、每卡12样本、仅训练动作专家的配置下采用此性能方案。60步仍处在学习率预热期；损失和梯度没有NaN/Inf，轨迹接近但并非逐位相同，长期收敛和机器人任务成功率仍需完整训练与评测确认。增大batch或解冻视觉/语言模型后，需要重新检查显存。</p></div>
+<p>启动与省显存选项（已通过命令预览验证）：</p><pre>cd /home/ma-user/work/lingbot-vla-v2
+# 先预览实际设置，不启动训练
+DRY_RUN=1 bash train_robotwin_npu_optimized.sh
+# 正式训练时执行；本轮尚未执行此命令
+bash train_robotwin_npu_optimized.sh
+# 如需更省显存，用下面这条代替上面的正式启动命令
+ENABLE_GRAD_CKPT=true bash train_robotwin_npu_optimized.sh</pre>
+<p>回退到本轮基线：</p><pre># 退回本轮开始时已有的GMM基线；沿用原学习率、batch和优化器算法
+LINGBOT_JOINT_ATTN_BACKEND=eager LINGBOT_MOE_MONITOR_BATCH_COUNTS=0 LINGBOT_ADAMW_FOREACH_NPU=0 ENABLE_GRAD_CKPT=true bash train_robotwin_npu_optimized.sh</pre>
+
+<details><summary>比较方法与可复核证据</summary>
+<p>本轮使用独立源码快照和新实验目录；同一初始化路径、随机种子、数据清单、全局batch96、学习率与5717步调度长度。性能短跑关闭profiler采集、检查点保存与上传。配置、数据清单和源码差异记录在审计文件中；没有逐batch数据指纹和完整初始权重哈希，所以不宣称逐位可复现。</p>
+<ul class='evidence'><li><a href="round2_analysis.json">本轮完整汇总</a></li><li><a href="analyze_round2.py">统计与窗口计算脚本</a></li><li><a href="run_case.py">隔离短跑启动器</a></li><li><a href="launcher_fairness_audit.json">可比性审计</a></li><li><a href="baseline_repeat_audit.json">原代码复测与自然波动审计</a></li><li><a href="final_experiment_audit.json">最终实验独立复核</a></li><li><a href="final_code_review.json">最终代码审阅</a></li><li><a href="integration_manifest.json">主代码合入清单</a></li><li><a href="final_launcher_validation.json">最终启动与回退验证</a></li><li><a href="final_resource_state.json">实验结束后的进程状态</a></li><li><a href="final_npu_smi.txt">实验结束后的八卡资源快照</a></li><li><a href="snapshot_manifest.json">源码快照清单</a></li><li><a href="monitor_candidate.patch">监控补丁</a></li><li><a href="check_monitor_candidate.py">监控验证脚本</a></li><li><a href="attention_candidate.patch">注意力补丁</a></li><li><a href="test_attention_candidate.py">注意力验证脚本</a></li><li><a href="attention_npu_checks.json">注意力原始失败记录</a></li><li><a href="attention_error_rule_audit.txt">零参考误差规则说明</a></li><li><a href="attention_cpu_checks.json">含BF16压力失败的CPU记录</a></li><li><a href="adamw_foreach_candidate.patch">AdamW批量更新补丁</a></li><li><a href="check_adamw_foreach.py">AdamW验证脚本</a></li><li><a href="adamw_foreach_resume_cpu.json">续训开关12项验证</a></li><li><a href="combined_cpu_validation.json">组合快照CPU组件验证</a></li><li><a href="checkpoint_scope_semantics_audit.json">重计算作用范围与专家计数审计</a></li><li><a href="muon_trace_readonly_audit.json">优化器瓶颈审计</a></li></ul>
+<p>报告生成命令：<code>python reports/20261016_speed_round2/build_learning_report.py</code>。它只读取已有证据、重建本页，不启动训练，也不使用 NPU。</p>
+</details>
+<details><summary>官方源码与精度说明：需要时再看</summary>
+<p>安装的 torch_npu 2.6.0 提交为 <code>41d2476c22b22f484ad1f07b5a6d011200638b6d</code>，对应 op-plugin 固定提交为 <code>480bc4311abb3be02a5e204caf3890bc02e32e10</code>。以下链接固定版本，方便以后对照。</p>
+<ul><li><a href="https://github.com/Ascend/op-plugin/blob/480bc4311abb3be02a5e204caf3890bc02e32e10/op_plugin/ops/opapi/ScaledDotProductAttentionKernelNpuOpApi.cpp#L223">SDPA 分发条件，第223–257行</a>：支持FP32、BNSD四维、bool二/四维mask和整倍数GQA；当前32/8头、D128符合这些条件。第98行转换mask方向。</li>
+<li><a href="https://github.com/Ascend/op-plugin/blob/480bc4311abb3be02a5e204caf3890bc02e32e10/op_plugin/ops/opapi/FlashAttentionKernelNpuOpApi.cpp#L1667">FlashAttention 包装，第1667–1720行</a>：QKV只变换存储格式，输出沿用query类型，再调用CANN；包装层未显式降为BF16/FP16。</li>
+<li>本机CANN8.2.RC1的 <code>flash_attention_score.cpp:8347</code> 有带mask的BNSD float/float模板；它是源码证据，不是此次具体kernel与数学模式的完整证明。<code>inner_precise=0</code> 也不能单独当作“内部所有计算都为FP32”的保证。</li></ul>
+</details>
+<footer>阅读顺序建议：先看整模型短跑的有效样本/秒和每步时间，再看某项修改的原理，最后看验证和局限。优化的价值是同样的训练任务更省时间，且有足够证据支持继续使用。</footer>
+</main></body></html>

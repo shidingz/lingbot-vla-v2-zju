@@ -12,6 +12,7 @@ from tqdm import tqdm
 
 from torch.utils.data import Dataset
 from .base_dataset import VLADataset
+from .video_episode_bounds import VideoEpisodeBoundaryError
 
 logger = helper.create_logger(__name__)
 
@@ -155,6 +156,9 @@ class MultiVLADataset(Dataset):
         while attempts < max_retries:
             try:
                 return self.getdata(cur)
+            except VideoEpisodeBoundaryError:
+                # A structural alignment error is not a transient decoding failure.
+                raise
             except Exception as e:
                 last_err = e
                 attempts += 1

@@ -1,0 +1,5 @@
+rank=0: checking local mixed=False
+rank=0: checking local mixed=True
+rank=0: checking dtensor mixed=False
+rank=0: checking dtensor mixed=True
+rank=0: saved /home/ma-user/work/lingbot-vla-v2/reports/20261016_speed_round2/combined_adamw_postload_cpu.rank0.json; passed=True

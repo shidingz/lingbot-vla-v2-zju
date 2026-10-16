@@ -1,0 +1,44 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LingBot V2 / 910B1 训练性能独立审计</title><style>body{max-width:1060px;margin:40px auto;padding:0 24px;font:16px/1.8 system-ui,sans-serif;color:#172432;background:#f8fafc}article{background:white;padding:32px;border:1px solid #dbe3eb;border-radius:12px}h1{font-size:27px;line-height:1.4}p{margin:18px 0}table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14px}th,td{border:1px solid #dbe3eb;text-align:left;padding:10px;vertical-align:top}th{background:#edf3f8}code{background:#eff3f7;padding:1px 5px;overflow-wrap:anywhere}a{color:#1265a8}small,.muted{color:#536778}.callout{border-left:4px solid #007f7b;background:#edf9f7;padding:12px 18px}li{margin:10px 0}</style><article>
+<h1>LingBot-VLA V2-6B × 8 张 Ascend 910B1：训练性能独立审计</h1>
+<p class="muted">审计日期：2026-10-16，北京时间。对象：tmux lingbot_1ep / robotwin_1ep_fast。基于原始训练日志、历史资源采样、独立短跑 profiler 原始 CSV、当前代码及官方资料。</p>
+<p class="callout"><b>最强瓶颈证据是 NPU MoE 的逐专家小矩阵计算、主机调度与同步；FP32 eager 联合注意力及 FSDP 精度/重叠是后续重点。</b>数据等待很小；尚无证据把驱动不匹配、散热、HBM 带宽或 HCCS 带宽认定为主因。这里给出诊断与可验证方案，不把微基准倍率当整轮训练提速。</p>
+<p><b>运行与资源</b>：原训练 00:37:14 启动，12:38:14 完成计算，12:51:21 完成 checkpoint/OBS 验证，正常退出。5717 步，无缺失/重复，loss 和 grad_norm 全部有限。global batch 96=8×12，梯度累积 1，训练 expert，Muon，FSDP2，梯度检查点开启。</p>
+<table><tr><th>指标</th><th>实测</th><th>解释</th></tr>
+<tr><td>训练循环</td><td>11:57:07</td><td>整轮 wall 时间，不含最终保存上传</td></tr>
+<tr><td>稳态 wall / update</td><td>7.5152 秒；12.774 samples/s（全机）</td><td>排除第一步，按原始日志时间戳独立重算</td></tr>
+<tr><td>日志 StepTime</td><td>均值 7.4859 秒，中位数 7.4463 秒，P95 7.8775 秒</td><td>不包含全部取数/日志等外围工作；比 wall 少约 0.029 秒/步</td></tr>
+<tr><td>历史 NPU 采样</td><td>AI Core 平均 6.84%；单卡 HBM 61.59–62.04 GiB / 64 GiB</td><td>00:57:38–00:58:14，8 个时点×8卡；不是全轮平均或峰值算力利用率</td></tr>
+<tr><td>更细短窗</td><td>卡0/4 AI Core 7.85%/6.55%；Vector 9.95%/11.15%；HBM带宽 9.3%/10.4%</td><td>01:11 左右约43秒、每卡20次；显存接近满不代表算力或带宽满</td></tr>
+<tr><td>健康/主机</td><td>8卡 Health OK，历史约50–57°C；192核 Kunpeng-920，8 NUMA，约1.5 TiB内存；CPU配额192核</td><td>未见配额不足或热异常证据；当前VSCode后台扫描占数十核，属于可控制的对照实验干扰</td></tr>
+<tr><td>互连</td><td>8卡两两 HCCS</td><td>不是跨机器以太网链路；EP=1，没有MoE专家并行的all-to-all</td></tr>
+</table>
+<p><b>独立 profiler 的证据范围</b>：现有 15:30 短跑，原预训练权重、相同超参和数据，8 ranks，各采4步（13–16）。两份数据列表 SHA256 完全一致。关闭保存/上传。无采集均值7.1105秒，采集均值9.2560秒，约30.2%采集开销；下面绝对值属于该短窗，不能直接当原整轮7.515秒的拆分。</p>
+<table><tr><th>主机阶段</th><th>秒/步（8 rank均值）</th><th>采样步占比</th></tr><tr><td>train.backward</td><td>5.1965</td><td>56.37%</td></tr><tr><td>train.forward</td><td>2.4206</td><td>26.26%</td></tr><tr><td>train.optimizer</td><td>0.8686</td><td>9.42%</td></tr><tr><td>train.teachers</td><td>0.5454</td><td>5.92%</td></tr><tr><td>train.clip_grad</td><td>0.0832</td><td>0.90%</td></tr><tr><td>train.data_wait</td><td>0.0009</td><td>0.01%</td></tr><tr><td>train.h2d</td><td>0.0011</td><td>0.01%</td></tr><tr><td>train.metrics_reduce</td><td>0.0011</td><td>0.01%</td></tr></table>
+<p>主机范围含等待与异步任务提交；H2D 的 1ms 是提交范围，不是完整DMA耗时。MoE forward+重计算范围2.4803秒/步已包含在forward/backward中，不能再相加；梯度算子也未全包含在这个MoE范围内。</p>
+<table><tr><th>设备时间线（官方CSV，独立重算交叉验证）</th><th>秒/步</th><th>份额</th></tr><tr><td>计算执行（包含与通信重叠的部分）</td><td>1.9223</td><td>20.86%</td></tr><tr><td>未与计算重叠的通信</td><td>1.2370</td><td>13.42%</td></tr><tr><td>Free：未记录计算或通信的时间</td><td>6.0568</td><td>65.72%</td></tr></table>
+<p><b>本次新发现的统计问题</b>：<code>tools/analyze_npu_profile.py:65</code>仅认<code>HCCL/hccl</code>，原始CSV却用<code>COMMUNICATION/hcom_*</code>，导致旧JSON辅助union字段把通信算成计算、通信显示0。新脚本使用整数纳秒合并区间，修正后的计算1.922296395秒、通信总量1.732031712秒，与官方CSV一致。原报告引用官方step_trace的阶段结论仍有效。通信总量中约0.495秒被计算覆盖，不能与上表三项再次相加。</p>
+<p>每步约174次allGather、74次reduceScatter、6次allReduce，说明FSDP存在碎片化通信机会。但通信Time Info中所有1016个collective/rank的Transit/Wait/Sync均为0，Idle等于Elapsed；对应HCCS子任务又有真实传输量，且CANN分析日志提示除零。这个分解不能证明“无等待”“全部空闲”或“链路带宽满”。每步HCCS子任务约3.35–3.48GB，子任务时间不能当关键路径耗时。SDMA包含HCCS，二者不可累加。</p>
+<p><b>优化优先级与落点</b></p>
+<table><tr><th>顺序</th><th>证据与改动方向</th><th>验证要求</th></tr>
+<tr><td>1 · MoE算子与主机同步</td><td>原路径<code>fused_moe.py:276–312</code>：整数argsort→AICPU、<code>counts.tolist()</code>回CPU、32专家逐个做3次矩阵乘、索引写回。36层，检查点重计算使forward范围每步72次。rank0四步有62248次MatMulV2、平均8.624µs；共有339528个计算kernel。建议原生grouped GEMM合批、设备端分组与路由、减少切片反传及标量读取。</td><td>保留路由数学与checkpoint权重布局；验证输出、输入/专家/router梯度、零token专家、不同路由、DTensor和checkpoint重计算。当前torch_npu2.6原生GMM不能假设自动提供所需梯度。</td></tr>
+<tr><td>1 · 监控同步清理</td><td><code>modeling_lingbot_vla_v2.py:1118–1127</code>每步每层<code>if counts.sum()==0</code>会触发设备标量同步；monitor_interval=1000只控制写日志，不控制这段计算。将纯监控统计按频率采样、设备端向量化，集中读取。<code>counts.tolist()</code>也应消除。</td><td>保留参与训练的balance/router loss和必要路由更新；只优化监控副作用。减小日志频率不能等同于关闭整个MoE统计。</td></tr>
+<tr><td>2 · 联合注意力融合</td><td><code>modeling_lingbot_vla_v2.py:347–349</code>显式QKV转FP32，:423–425选择eager；<code>utils.py:247–275</code>展开GQA K/V、手写QK/softmax/AV。配置中vision的flash_attention_2没有覆盖这一段。可试BF16 QKV+NPU融合SDPA/FA，减少显存中间量与小算子。</td><td>保留prefix/action/task mask、GQA、mRoPE、scale及梯度。当前mask是bool[B,L,L]，SDPA需[B,1,L,L]。SDPA True=允许，直接NPU fusion True=屏蔽；全masked行与有限big_neg行为也要单独核对。改精度需数值及任务质量验证。</td></tr>
+<tr><td>3 · FSDP精度/预取</td><td><code>torch_parallelize.py:203–222</code> action decoder当前FP32 param/reduce/output，MoE矩阵前又转BF16；VLM/root已经是BF16 param + FP32 reduce。可独立试action FSDP混合精度。EP=1路径未配置显式forward/backward prefetch，<code>enable_forward_prefetch=true</code>不代表此FSDP2路径已显式启用。</td><td>保留FP32主权重、reduce和导出策略，先测试局部policy。不要盲切全局ENABLE_FP32，因为也影响HF导出精度。按实际双分支执行顺序设计预取并量峰值显存。</td></tr>
+<tr><td>3 · 梯度检查点</td><td>重算使每层MoE多执行一次；融合attention/GMM先释放内存，再测试选择性重算。<code>enable_full_shard=false</code>已经映射<code>reshard_after_forward=False</code>，当前已用显存换少一次backward all-gather。</td><td>不要把取消前向reshard作为“新优化”；也不要因AI Core低就直接增batch或全关重算。保留global batch96，记录allocated/reserved和设备总HBM余量。</td></tr>
+<tr><td>4 · Muon与teacher</td><td>优化器约0.869秒/步（9.4%）；分析矩阵正交化、参数打包和小算子。teacher总约0.545秒（5.9%），已eval/frozen/no_grad/BF16；原日志有linalg_inv_ex CPU fallback，depth中CPU拟合可进一步定位。</td><td>Muon不能直接换AdamW再把差异归作等价提速。teacher可在固定预处理/视角/时间点/权重下缓存，但需测I/O和存储成本；其当前占比限制了收益优先级。</td></tr>
+<tr><td>5 · 数据、主机与保存</td><td>8 workers/rank，prefetch4、视频解码threads1；当前窗口data_wait约0.9ms，没有优先增加workers依据。根据NPU NUMA亲和性测试绑核，避免VSCode后台全目录扫描扰动。每1000步可视化与1001/2001/3001/4001的约13秒长尾相关；5001没有同样长尾，因果仍需对照。</td><td>批处理TB标量与图表，必要时独立进程画图；empty_cache每500步也可增加后续分配，先测再调。最终保存/上传共13分07秒，主要影响收尾，解释不了持续7.5秒/步。</td></tr></table>
+<p><b>环境与官方资料</b>：实机torch2.6.0、torch_npu2.6.0、CANN8.2.RC1、driver24.1.0.3、transformers4.57.3、AV18.1.0，无CUDA Triton。前3项属于官方配套；驱动精确patch/固件/机型仍需核验，不应先归因环境或原地升级。</p>
+<ul>
+<li><a href="https://github.com/Robbyant/lingbot-vla-v2">Robbyant V2官方仓库</a>：当前是Qwen3-VL体系的V2-6B，不能与V1同名基准混用。未找到经官方验证的V2-6B+910B1训练吞吐参考。</li>
+<li><a href="https://github.com/Ascend/DrivingSDK/blob/master/model_examples/Lingbot-vla/README.md">Ascend DrivingSDK的LingBot专项适配</a>：针对V1-4B/Qwen2.5-VL-3B，环境CANN9.1.0/PTAdapter26.1.0/PyTorch2.7.1，基准Atlas800T A3。其融合attention/RMSNorm/RoPE和混合精度思路可参考，不能直接应用patch或横比301.76FPS。</li>
+<li><a href="https://github.com/Ascend/pytorch/blob/v2.6.0/README.md#ascend-auxiliary-software">TorchNPU版本矩阵</a>：CANN8.2.RC1配torch2.6.0/torch_npu2.6.0。</li>
+<li><a href="https://support.huaweicloud.com/usermanual-server-modelarts/ModelArts%20Lite%20Server%E7%94%A8%E6%88%B7%E6%8C%87%E5%8D%97-pdf.pdf">华为云组件兼容表7-1</a>：包含CANN8.2.RC1与HDK24.1.0系列兼容；未核实到当前24.1.0.3+实际固件+910B1全部精细组合。推荐新版本不等于当前已不兼容。</li>
+<li><a href="https://github.com/Ascend/op-plugin/blob/7.1.0/op_plugin/ops/opapi/ScaledDotProductAttentionKernelNpuOpApi.cpp">当前栈对应SDPA分发源码</a>：满足形状、dtype及bool mask条件时已有fusion路径；3D或float mask可能走math。应看实际kernel而非仅看配置名。</li>
+<li><a href="https://github.com/Ascend/MindSpeed/blob/master/docs/zh/features/megatron_moe/megatron-moe-gmm.md">MindSpeed MoE GMM</a>与<a href="https://github.com/Ascend/MindSpeed/blob/master/mindspeed/ops/gmm.py">显式autograd实现</a>：支持聚合小专家计算这一方向，收益依形状，训练反向必须实现并核验。</li>
+<li><a href="https://docs.pytorch.org/docs/stable/distributed.fsdp.fully_shard.html">PyTorch FSDP2文档</a>：reshard_after_forward=false以显存换少一次参数聚合；新版本文档中的预取能力需与本地torch2.6实现对照。</li>
+</ul>
+<p><b>已经存在的优化实验，和本次审计的边界</b>：原1ep运行的是torch fallback。进入本次检查时，工作区已经有新<code>npu_moe.py</code>，当前代码默认后端已被其他会话改成GMM；并有40步torch→gmm的独立A/B正在跑。本次没有创建、停止或重启该训练，也没有改训练代码/环境。已有单层原型33.49ms→2.89ms及10项数值测试通过的记录，是已有实验结果，不代表整模型或任务成功率提升。最终采用前需看到完整8卡A/B结果。</p>
+<p><b>验收实验</b>：同初始权重、样本顺序/seed、global batch96、学习率horizon5717和全部损失权重，关闭profiler与上传，预热至少10步；每候选记录至少30–100稳态步的wall samples/s、P50/P95、各rank时间、峰值allocated/reserved/HBM、loss/grad差异。A/B至少重复并交换顺序；只改一个变量。先GMM→监控同步→融合attention→FSDP混合精度/预取→选择性checkpoint→Muon→teacher。观察到阶段提速后再进行足够长度训练和RoboTwin评估；更换学习率、优化器、精度或冻结范围不能宣称数学等价。</p>
+<p>当前没有可信的“整轮能快几倍”实测结论。每步减少1秒约节省整轮95分钟，可用于评估后续A/B的实际价值；单层GMM约11.6倍不等于整轮11.6倍。</p>
+<p class="muted">复核文件：<a href="audit_metrics.json">原始日志重算指标与哈希</a> · <a href="communication_audit.json">通信复算及每rank原始证据路径</a> · <a href="audit_communication.py">可复跑的通信审计脚本</a> · <a href="../20261016_npu_profile/analysis.txt">此前profiler分析</a>。现有统计脚本未覆盖修改；修正结果独立保存。审计截止：2026-10-16T16:21:10+08:00。</p>
+</article></html>

@@ -1,0 +1,69 @@
+{
+  "valid_main_thread_samples": 249,
+  "sampling_errors_all_threads": 100,
+  "phase_pct": {
+    "other": 11.646586345381492,
+    "forward": 55.02008032128483,
+    "backward": 2.4096385542168592,
+    "optimizer": 16.86746987951802,
+    "teachers": 14.056224899598353
+  },
+  "subset_pct": {
+    "moe_fallback": 36.54618473895564
+  },
+  "top_leaves": [
+    {
+      "frame": "/home/ma-user/work/lingbot-vla-v2/lingbotvla/ops/fused_moe.py:303 grouped_moe_torch_forward",
+      "pct": 17.26907630522083
+    },
+    {
+      "frame": "/home/ma-user/work/lingbot-vla-v2/lingbotvla/ops/fused_moe.py:304 grouped_moe_torch_forward",
+      "pct": 8.43373493975901
+    },
+    {
+      "frame": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch_npu/contrib/transfer_to_npu.py:161 decorated",
+      "pct": 4.4176706827309085
+    },
+    {
+      "frame": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/nn/functional.py:2380 silu",
+      "pct": 2.8112449799196693
+    },
+    {
+      "frame": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/autograd/graph.py:823 _engine_run_backward",
+      "pct": 2.4096385542168592
+    },
+    {
+      "frame": "/home/ma-user/work/lingbot-vla-v2/lingbotvla/ops/fused_moe.py:293 grouped_moe_torch_forward",
+      "pct": 2.4096385542168592
+    },
+    {
+      "frame": "/home/ma-user/work/lingbot-vla-v2/lingbotvla/optim/muon.py:551 _step_megabatch_chunk",
+      "pct": 2.0080321285140497
+    },
+    {
+      "frame": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/scipy/optimize/_lsq/least_squares.py:63 call_minpack",
+      "pct": 2.0080321285140497
+    },
+    {
+      "frame": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/utils/checkpoint.py:1109 pack_hook",
+      "pct": 2.0080321285140497
+    },
+    {
+      "frame": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch/optim/adamw.py:477 _single_tensor_adamw",
+      "pct": 2.0080321285140497
+    },
+    {
+      "frame": "/home/ma-user/work/lingbot-vla-v2/tasks/vla/train_lingbotvla.py:1033 main",
+      "pct": 2.0080321285140497
+    },
+    {
+      "frame": "/home/ma-user/work/lingbot-vla-v2/lingbotvla/models/vla/vision_models/MoGe/moge/utils/geometry_numpy.py:85 fn",
+      "pct": 2.0080321285140497
+    }
+  ],
+  "note": "Sampling includes native execution and waiting; MoE subset is not additive.",
+  "limitations": [
+    "py-spy was run without --idle; inactive or native-blocked main-thread samples can be omitted. Percentages are conditional on captured samples, NOT wall-time phase percentages.",
+    "100 stack-read errors across all threads. Use native profiler phase ranges for timing conclusions."
+  ]
+}

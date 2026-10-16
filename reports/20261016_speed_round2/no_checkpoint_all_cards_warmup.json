@@ -1,0 +1,6 @@
+{
+  "captured_at": "2026-10-16T17:48:04.065768+08:00",
+  "loss_records_before_query": 3,
+  "npu_smi_exit_code": 0,
+  "scope": "One all-card physical-memory/health observation during warmup, not per-rank allocated-peak telemetry."
+}

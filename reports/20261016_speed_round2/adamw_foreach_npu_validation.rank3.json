@@ -1,0 +1,243 @@
+{
+  "device": "npu:3",
+  "rank": 3,
+  "world_size": 8,
+  "torch": "2.6.0+cpu",
+  "cases": [
+    {
+      "layout": "local",
+      "mixed_fp32_bf16": false,
+      "steps": 20,
+      "parameters": 24,
+      "checked_tensors": 1896,
+      "checkpoint_state_dict_roundtrip": true,
+      "maxima": {
+        "float32": {
+          "parameter": {
+            "max_abs": 0.0,
+            "max_relative_to_global_max": 0.0,
+            "unequal_elements": 0,
+            "elements_checked": 30880
+          },
+          "step": {
+            "max_abs": 0.0,
+            "max_relative_to_global_max": 0.0,
+            "unequal_elements": 0,
+            "elements_checked": 472
+          },
+          "exp_avg": {
+            "max_abs": 0.0,
+            "max_relative_to_global_max": 0.0,
+            "unequal_elements": 0,
+            "elements_checked": 30238
+          },
+          "exp_avg_sq": {
+            "max_abs": 0.0,
+            "max_relative_to_global_max": 0.0,
+            "unequal_elements": 0,
+            "elements_checked": 30238
+          }
+        },
+        "bfloat16": {}
+      },
+      "passed": true,
+      "failures": []
+    },
+    {
+      "layout": "local",
+      "mixed_fp32_bf16": true,
+      "steps": 20,
+      "parameters": 24,
+      "checked_tensors": 1896,
+      "checkpoint_state_dict_roundtrip": true,
+      "maxima": {
+        "float32": {
+          "parameter": {
+            "max_abs": 0.0,
+            "max_relative_to_global_max": 0.0,
+            "unequal_elements": 0,
+            "elements_checked": 12880
+          },
+          "step": {
+            "max_abs": 0.0,
+            "max_relative_to_global_max": 0.0,
+            "unequal_elements": 0,
+            "elements_checked": 472
+          },
+          "exp_avg": {
+            "max_abs": 0.0,
+            "max_relative_to_global_max": 0.0,
+            "unequal_elements": 0,
+            "elements_checked": 12560
+          },
+          "exp_avg_sq": {
+            "max_abs": 0.0,
+            "max_relative_to_global_max": 0.0,
+            "unequal_elements": 0,
+            "elements_checked": 12560
+          }
+        },
+        "bfloat16": {
+          "parameter": {
+            "max_abs": 0.001953125,
+            "max_relative_to_global_max": 0.0004980079829692841,
+            "unequal_elements": 88,
+            "elements_checked": 18000
+          },
+          "exp_avg": {
+            "max_abs": 0.0009765625,
+            "max_relative_to_global_max": 0.009803921915590763,
+            "unequal_elements": 6596,
+            "elements_checked": 17678
+          },
+          "exp_avg_sq": {
+            "max_abs": 0.00048828125,
+            "max_relative_to_global_max": 0.008583690971136093,
+            "unequal_elements": 1820,
+            "elements_checked": 17678
+          }
+        }
+      },
+      "passed": true,
+      "failures": []
+    },
+    {
+      "layout": "dtensor",
+      "mixed_fp32_bf16": false,
+      "steps": 20,
+      "parameters": 24,
+      "checked_tensors": 1776,
+      "checkpoint_state_dict_roundtrip": true,
+      "maxima": {
+        "float32": {
+          "parameter": {
+            "max_abs": 0.0,
+            "max_relative_to_global_max": 0.0,
+            "unequal_elements": 0,
+            "elements_checked": 9560
+          },
+          "step": {
+            "max_abs": 0.0,
+            "max_relative_to_global_max": 0.0,
+            "unequal_elements": 0,
+            "elements_checked": 472
+          },
+          "exp_avg": {
+            "max_abs": 0.0,
+            "max_relative_to_global_max": 0.0,
+            "unequal_elements": 0,
+            "elements_checked": 9422
+          },
+          "exp_avg_sq": {
+            "max_abs": 0.0,
+            "max_relative_to_global_max": 0.0,
+            "unequal_elements": 0,
+            "elements_checked": 9422
+          }
+        },
+        "bfloat16": {}
+      },
+      "passed": true,
+      "failures": []
+    },
+    {
+      "layout": "dtensor",
+      "mixed_fp32_bf16": true,
+      "steps": 20,
+      "parameters": 24,
+      "checked_tensors": 1776,
+      "checkpoint_state_dict_roundtrip": true,
+      "maxima": {
+        "float32": {
+          "parameter": {
+            "max_abs": 0.0,
+            "max_relative_to_global_max": 0.0,
+            "unequal_elements": 0,
+            "elements_checked": 7240
+          },
+          "step": {
+            "max_abs": 0.0,
+            "max_relative_to_global_max": 0.0,
+            "unequal_elements": 0,
+            "elements_checked": 472
+          },
+          "exp_avg": {
+            "max_abs": 0.0,
+            "max_relative_to_global_max": 0.0,
+            "unequal_elements": 0,
+            "elements_checked": 7144
+          },
+          "exp_avg_sq": {
+            "max_abs": 0.0,
+            "max_relative_to_global_max": 0.0,
+            "unequal_elements": 0,
+            "elements_checked": 7144
+          }
+        },
+        "bfloat16": {
+          "parameter": {
+            "max_abs": 0.000244140625,
+            "max_relative_to_global_max": 6.225099787116051e-05,
+            "unequal_elements": 41,
+            "elements_checked": 2320
+          },
+          "exp_avg": {
+            "max_abs": 0.0009765625,
+            "max_relative_to_global_max": 0.010526316240429878,
+            "unequal_elements": 906,
+            "elements_checked": 2278
+          },
+          "exp_avg_sq": {
+            "max_abs": 0.0003662109375,
+            "max_relative_to_global_max": 0.011627906933426857,
+            "unequal_elements": 187,
+            "elements_checked": 2278
+          }
+        }
+      },
+      "passed": true,
+      "failures": []
+    }
+  ],
+  "tolerances": {
+    "fp32_rtol": 2e-05,
+    "fp32_atol": 2e-07,
+    "bf16_rtol": 0.02,
+    "bf16_atol": 0.002
+  },
+  "timing_scope": "Correctness test with explicit synchronizations; not a performance benchmark.",
+  "builder_switch": "actual builder expression passed CPU/NPU x off/on truth table",
+  "builder_guard": [
+    {
+      "group_kind": "local",
+      "switch": "0",
+      "foreach": false
+    },
+    {
+      "group_kind": "local",
+      "switch": "1",
+      "foreach": true
+    },
+    {
+      "group_kind": "dtensor",
+      "switch": "0",
+      "foreach": false
+    },
+    {
+      "group_kind": "dtensor",
+      "switch": "1",
+      "foreach": true
+    },
+    {
+      "group_kind": "hybrid",
+      "switch": "0",
+      "foreach": false
+    },
+    {
+      "group_kind": "hybrid",
+      "switch": "1",
+      "foreach": false
+    }
+  ],
+  "passed": true
+}

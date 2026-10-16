@@ -1,0 +1,1571 @@
+{
+  "baseline": "/home/ma-user/work/lingbot-speed-round2/baseline",
+  "combined": "/home/ma-user/work/lingbot-speed-round2/combined",
+  "optimizer_source": "/home/ma-user/work/lingbot-speed-round2/adamw/lingbotvla/optim/optimizer.py",
+  "ignored_runtime_artifacts": [
+    ".pytest_cache",
+    "__pycache__",
+    "fusion_result.json",
+    "*.pyc"
+  ],
+  "changed_files": [
+    "lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py",
+    "lingbotvla/ops/joint_attention.py",
+    "lingbotvla/optim/optimizer.py",
+    "tests/test_moe_monitor_batch.py",
+    "tools/check_adamw_foreach.py",
+    "tools/check_adamw_resume.py",
+    "tools/check_joint_attention.py"
+  ],
+  "baseline_all_other_files_identical": true,
+  "baseline_file_count": 373,
+  "combined_file_count": 378,
+  "hashes": {
+    "assets/LingBot_VLA_2_0.pdf": {
+      "baseline_sha256": "13bab934180d648d796667704a8cf0abb3ed52c6ae4047c4d6c99403be01553d",
+      "combined_sha256": "13bab934180d648d796667704a8cf0abb3ed52c6ae4047c4d6c99403be01553d"
+    },
+    "assets/lingbot_vla2_data_demo.png": {
+      "baseline_sha256": "2d4a9546b1107eb4ebe2b4d0739601538848ab7a8e84894db0a80043b19456b8",
+      "combined_sha256": "2d4a9546b1107eb4ebe2b4d0739601538848ab7a8e84894db0a80043b19456b8"
+    },
+    "assets/lingbot_vla2_data_dimension.png": {
+      "baseline_sha256": "21db4a3782018e0965e5676dc6fda609f03e9e5f89b6962e5fda3b07a5247ae5",
+      "combined_sha256": "21db4a3782018e0965e5676dc6fda609f03e9e5f89b6962e5fda3b07a5247ae5"
+    },
+    "assets/lingbot_vla2_data_process.png": {
+      "baseline_sha256": "526f19e456b1fec1d5a3b65ff83dee51092870b72a88a74e15ff2c792eb5fbd0",
+      "combined_sha256": "526f19e456b1fec1d5a3b65ff83dee51092870b72a88a74e15ff2c792eb5fbd0"
+    },
+    "assets/lingbot_vla2_framework.png": {
+      "baseline_sha256": "5e7fccb501606ae27383bbb0c5e6d6824a5cdcaa9a2534488b5af059bb7e13d7",
+      "combined_sha256": "5e7fccb501606ae27383bbb0c5e6d6824a5cdcaa9a2534488b5af059bb7e13d7"
+    },
+    "assets/lingbot_vla2_gm100_ablation_barplot.png": {
+      "baseline_sha256": "e896c942c3106bfb52d00bfe53c411cc521d4ff1c335581ec18acdb048595fff",
+      "combined_sha256": "e896c942c3106bfb52d00bfe53c411cc521d4ff1c335581ec18acdb048595fff"
+    },
+    "assets/lingbot_vla2_loss_mse_comparison.png": {
+      "baseline_sha256": "fe73c8ace5d606672e6dd37c961d85ea5c929c059abe82b122fcb05ce13359b8",
+      "combined_sha256": "fe73c8ace5d606672e6dd37c961d85ea5c929c059abe82b122fcb05ce13359b8"
+    },
+    "assets/lingbot_vla2_mobile_robots.png": {
+      "baseline_sha256": "9a45455ad6e6238c4e6e71e10bf7bd41ec7eaa72d17bbb87be0217eeb88c35ae",
+      "combined_sha256": "9a45455ad6e6238c4e6e71e10bf7bd41ec7eaa72d17bbb87be0217eeb88c35ae"
+    },
+    "assets/lingbot_vla2_vis_distillation.png": {
+      "baseline_sha256": "40ce6810ea47ab944de030551efd7753fb2ed84bd7477d3668ba0fab84c3277e",
+      "combined_sha256": "40ce6810ea47ab944de030551efd7753fb2ed84bd7477d3668ba0fab84c3277e"
+    },
+    "assets/norm_stats/robotwin.json": {
+      "baseline_sha256": "488ec6569c30dd69419358241efdb2e6c3488117768e7028a1e891be83e10db8",
+      "combined_sha256": "488ec6569c30dd69419358241efdb2e6c3488117768e7028a1e891be83e10db8"
+    },
+    "assets/training_data/robotwin.txt": {
+      "baseline_sha256": "b5b470fa911f91bd8918befd49ea1cdc5fc31327936ae2b49b4641ab391bb686",
+      "combined_sha256": "b5b470fa911f91bd8918befd49ea1cdc5fc31327936ae2b49b4641ab391bb686"
+    },
+    "configs/robot_configs/agilex_cobot_magic.yaml": {
+      "baseline_sha256": "8ab06b150fe28d7f0f90e67df445325d6b31d4a11929b46b7e06159d94922baa",
+      "combined_sha256": "8ab06b150fe28d7f0f90e67df445325d6b31d4a11929b46b7e06159d94922baa"
+    },
+    "configs/robot_configs/robotwin.yaml": {
+      "baseline_sha256": "2c2a26509fc9662a8ada64adaa7fa959627dd6dadc6b48b680c4285da2d8ffd8",
+      "combined_sha256": "2c2a26509fc9662a8ada64adaa7fa959627dd6dadc6b48b680c4285da2d8ffd8"
+    },
+    "configs/vla/Training_Config.md": {
+      "baseline_sha256": "8f8609f194b0ea6a81ed19713d8b3a447a4b9e66d080cd0673f3365ddb7d1339",
+      "combined_sha256": "8f8609f194b0ea6a81ed19713d8b3a447a4b9e66d080cd0673f3365ddb7d1339"
+    },
+    "configs/vla/norm_compute/post_data.yaml": {
+      "baseline_sha256": "8d1537aedf05f030c00cf8c1ddad9919d9e609148cdbb3927925682f6c109c41",
+      "combined_sha256": "8d1537aedf05f030c00cf8c1ddad9919d9e609148cdbb3927925682f6c109c41"
+    },
+    "configs/vla/real_robot/real_robot.yaml": {
+      "baseline_sha256": "8d5ddcd1d6caa846c4c0442cc3e9ea3f25078c6f274536d1ee1caadb560d8124",
+      "combined_sha256": "8d5ddcd1d6caa846c4c0442cc3e9ea3f25078c6f274536d1ee1caadb560d8124"
+    },
+    "configs/vla/robotwin/robotwin.yaml": {
+      "baseline_sha256": "ee915e4ad34589a6def35c9e3c12bb8ff7d9f768dfc7ad44ce789fa7aaea57e2",
+      "combined_sha256": "ee915e4ad34589a6def35c9e3c12bb8ff7d9f768dfc7ad44ce789fa7aaea57e2"
+    },
+    "configs/vla/robotwin/robotwin_dist_muon.yaml": {
+      "baseline_sha256": "ad337ddba68a8e8fabdd7a63d3cdcaf14abaf7129dfc73c45eba8f4eef736505",
+      "combined_sha256": "ad337ddba68a8e8fabdd7a63d3cdcaf14abaf7129dfc73c45eba8f4eef736505"
+    },
+    "configs/vla/robotwin/robotwin_local.yaml": {
+      "baseline_sha256": "665d3a50c0c3863a7f07af38614fd8150b089488031437d6bfb00242a41ce52b",
+      "combined_sha256": "665d3a50c0c3863a7f07af38614fd8150b089488031437d6bfb00242a41ce52b"
+    },
+    "configs/vla/robotwin/robotwin_npu.yaml": {
+      "baseline_sha256": "c24df7637cc59e8082b158f52cd04e9aefc5d40761289de06f22364060238782",
+      "combined_sha256": "c24df7637cc59e8082b158f52cd04e9aefc5d40761289de06f22364060238782"
+    },
+    "lingbotvla/__init__.py": {
+      "baseline_sha256": "019748dfc2c88655164de1b78192a8a20dcff8f71b385250f39bbabeb4f6ebe1",
+      "combined_sha256": "019748dfc2c88655164de1b78192a8a20dcff8f71b385250f39bbabeb4f6ebe1"
+    },
+    "lingbotvla/checkpoint/__init__.py": {
+      "baseline_sha256": "5b68a96dcd313876a211b3023e3e9dbbbedff96b6d5bddfd155c910525d89f96",
+      "combined_sha256": "5b68a96dcd313876a211b3023e3e9dbbbedff96b6d5bddfd155c910525d89f96"
+    },
+    "lingbotvla/checkpoint/checkpointer.py": {
+      "baseline_sha256": "da48ecca6d78e7982f73018179b50a99b9d211bdebf87c200443b1f51466d8ca",
+      "combined_sha256": "da48ecca6d78e7982f73018179b50a99b9d211bdebf87c200443b1f51466d8ca"
+    },
+    "lingbotvla/checkpoint/format_utils.py": {
+      "baseline_sha256": "25dc1eead76e7cbf1d773196927f472d452efebc4eef53a586ea5d257941e2b5",
+      "combined_sha256": "25dc1eead76e7cbf1d773196927f472d452efebc4eef53a586ea5d257941e2b5"
+    },
+    "lingbotvla/data/__init__.py": {
+      "baseline_sha256": "db4230123017f1d3f684b402e46b8d94bdd6583f9bc18100c7401855a2b4af2b",
+      "combined_sha256": "db4230123017f1d3f684b402e46b8d94bdd6583f9bc18100c7401855a2b4af2b"
+    },
+    "lingbotvla/data/batching_strategy.py": {
+      "baseline_sha256": "3fae066e32fc83d4df3a15a333bd30d1e4800886c750ade9bd0921a5e569960b",
+      "combined_sha256": "3fae066e32fc83d4df3a15a333bd30d1e4800886c750ade9bd0921a5e569960b"
+    },
+    "lingbotvla/data/chat_template.py": {
+      "baseline_sha256": "54fa29e91838dbab619dc33e9c8619948c0778ac7b1037b7674acfd7930c2126",
+      "combined_sha256": "54fa29e91838dbab619dc33e9c8619948c0778ac7b1037b7674acfd7930c2126"
+    },
+    "lingbotvla/data/constants.py": {
+      "baseline_sha256": "126d4dae9fe60353d4ff3f8a94cb2be0bd1a2ea769771106ce6f73a48c7dd77e",
+      "combined_sha256": "126d4dae9fe60353d4ff3f8a94cb2be0bd1a2ea769771106ce6f73a48c7dd77e"
+    },
+    "lingbotvla/data/data_collator.py": {
+      "baseline_sha256": "02505732b0143c39271b38b215d7d72a197f9f95fa9cf9d5e6f18ded51b2cefa",
+      "combined_sha256": "02505732b0143c39271b38b215d7d72a197f9f95fa9cf9d5e6f18ded51b2cefa"
+    },
+    "lingbotvla/data/data_loader.py": {
+      "baseline_sha256": "3e50b30313a5178295ccc524cbb17cda40fbb0d7c18b85736d2ab1599fabe819",
+      "combined_sha256": "3e50b30313a5178295ccc524cbb17cda40fbb0d7c18b85736d2ab1599fabe819"
+    },
+    "lingbotvla/data/data_transform.py": {
+      "baseline_sha256": "6dd6ab7d3a02a243b548b297045500e8310cdfb7f3fffa493be4027232fabb56",
+      "combined_sha256": "6dd6ab7d3a02a243b548b297045500e8310cdfb7f3fffa493be4027232fabb56"
+    },
+    "lingbotvla/data/dataset.py": {
+      "baseline_sha256": "120991b363c4c4457546de56913d9fb6d5fbcf433a790dba0bc28ff96df15809",
+      "combined_sha256": "120991b363c4c4457546de56913d9fb6d5fbcf433a790dba0bc28ff96df15809"
+    },
+    "lingbotvla/data/dynamic_batching.py": {
+      "baseline_sha256": "e5fadeaf804fc78054ca836b3fb21c7f73e1fb9e934519bd06bb88bcbee06416",
+      "combined_sha256": "e5fadeaf804fc78054ca836b3fb21c7f73e1fb9e934519bd06bb88bcbee06416"
+    },
+    "lingbotvla/data/multimodal/__init__.py": {
+      "baseline_sha256": "ced14be479d27e864cf3557c37d8abe00d2204ba6c030620bf48ea85e25a5921",
+      "combined_sha256": "ced14be479d27e864cf3557c37d8abe00d2204ba6c030620bf48ea85e25a5921"
+    },
+    "lingbotvla/data/multimodal/data_collator.py": {
+      "baseline_sha256": "babb31d85587da9caa79d3e3bcca5b791e8e5e56cb4ad202b8c253a436e7786c",
+      "combined_sha256": "babb31d85587da9caa79d3e3bcca5b791e8e5e56cb4ad202b8c253a436e7786c"
+    },
+    "lingbotvla/data/multimodal/multimodal_chat_template.py": {
+      "baseline_sha256": "4088ff01a8748e7c21024b2966068d98724fd30930f29eb0287be0925561e9d4",
+      "combined_sha256": "4088ff01a8748e7c21024b2966068d98724fd30930f29eb0287be0925561e9d4"
+    },
+    "lingbotvla/data/multimodal/multimodal_transform.py": {
+      "baseline_sha256": "1dbd3e1fba5a50249b440a3f5aa4f32595726d94419a16ad95b758407a2b1de3",
+      "combined_sha256": "1dbd3e1fba5a50249b440a3f5aa4f32595726d94419a16ad95b758407a2b1de3"
+    },
+    "lingbotvla/data/multimodal/preprocess.py": {
+      "baseline_sha256": "d867f93a9d3b6fde2209bdf85dacea2a3d6ea3bf782b2c1bc096ac1dbbb4c950",
+      "combined_sha256": "d867f93a9d3b6fde2209bdf85dacea2a3d6ea3bf782b2c1bc096ac1dbbb4c950"
+    },
+    "lingbotvla/data/vla_data/README.md": {
+      "baseline_sha256": "8e6cb71b5e74fea590727d4c4deab11a32092a50fc2aae72de5dec9a0c45673b",
+      "combined_sha256": "8e6cb71b5e74fea590727d4c4deab11a32092a50fc2aae72de5dec9a0c45673b"
+    },
+    "lingbotvla/data/vla_data/__init__.py": {
+      "baseline_sha256": "362282de0f8ac1ab332571a3e52ad29e40430a9cd43c7f1f7de003a0d77abb67",
+      "combined_sha256": "362282de0f8ac1ab332571a3e52ad29e40430a9cd43c7f1f7de003a0d77abb67"
+    },
+    "lingbotvla/data/vla_data/base_dataset.py": {
+      "baseline_sha256": "f8bfe3bc57a3e74bb7877bd3dcd6e3cf2409d59fa0f0d82733bf7fd846d5bf45",
+      "combined_sha256": "f8bfe3bc57a3e74bb7877bd3dcd6e3cf2409d59fa0f0d82733bf7fd846d5bf45"
+    },
+    "lingbotvla/data/vla_data/ee_pose_transform.py": {
+      "baseline_sha256": "07a54ad75ca3bb0a7f65ab8e726452548679ae272d960c20b742c5222f13ea53",
+      "combined_sha256": "07a54ad75ca3bb0a7f65ab8e726452548679ae272d960c20b742c5222f13ea53"
+    },
+    "lingbotvla/data/vla_data/multi_vla_dataset.py": {
+      "baseline_sha256": "d15888c1b2db8327b4c81b3e57e462e79fa22657fa01d83f700f9f64b2dc02b4",
+      "combined_sha256": "d15888c1b2db8327b4c81b3e57e462e79fa22657fa01d83f700f9f64b2dc02b4"
+    },
+    "lingbotvla/data/vla_data/pyav_decoder.py": {
+      "baseline_sha256": "b2e3eb3ce2453126318fe3f83987214fa8db28304238f4f2ecbff689d3c4d417",
+      "combined_sha256": "b2e3eb3ce2453126318fe3f83987214fa8db28304238f4f2ecbff689d3c4d417"
+    },
+    "lingbotvla/data/vla_data/transform.py": {
+      "baseline_sha256": "e8f237c99ebf6cb4b16178b9bca7fba147337071f004aca8a135ac11f8ca2e49",
+      "combined_sha256": "e8f237c99ebf6cb4b16178b9bca7fba147337071f004aca8a135ac11f8ca2e49"
+    },
+    "lingbotvla/data/vla_data/utils.py": {
+      "baseline_sha256": "cfbd6e08dda8f7a3a462c50f6c230c372189f8148b3ffe6a962e240dccd86a16",
+      "combined_sha256": "cfbd6e08dda8f7a3a462c50f6c230c372189f8148b3ffe6a962e240dccd86a16"
+    },
+    "lingbotvla/data/vla_data/video_episode_bounds.py": {
+      "baseline_sha256": "e245a50a9811320dbcc7b8b3d7ae68a0818d1cc921449640ff538abaa270d9a8",
+      "combined_sha256": "e245a50a9811320dbcc7b8b3d7ae68a0818d1cc921449640ff538abaa270d9a8"
+    },
+    "lingbotvla/data/vla_data/video_utils.py": {
+      "baseline_sha256": "54cc73b18453a1b933029ce143d80def23aa800daa896b11f6db87aa142f654b",
+      "combined_sha256": "54cc73b18453a1b933029ce143d80def23aa800daa896b11f6db87aa142f654b"
+    },
+    "lingbotvla/distributed/__init__.py": {
+      "baseline_sha256": "ced14be479d27e864cf3557c37d8abe00d2204ba6c030620bf48ea85e25a5921",
+      "combined_sha256": "ced14be479d27e864cf3557c37d8abe00d2204ba6c030620bf48ea85e25a5921"
+    },
+    "lingbotvla/distributed/checkpoint.py": {
+      "baseline_sha256": "e6c98c3ed48849d79d1f981ab65b8f19011120391ef8f4734e13bf8b12630f8d",
+      "combined_sha256": "e6c98c3ed48849d79d1f981ab65b8f19011120391ef8f4734e13bf8b12630f8d"
+    },
+    "lingbotvla/distributed/fsdp/__init__.py": {
+      "baseline_sha256": "ea33030a80e0bf61602e39e8e08fbe612197ba71a9c805eadb7f98afd6409287",
+      "combined_sha256": "ea33030a80e0bf61602e39e8e08fbe612197ba71a9c805eadb7f98afd6409287"
+    },
+    "lingbotvla/distributed/fsdp/clip_grad_norm.py": {
+      "baseline_sha256": "bea38ed7ca18f5cd68f1b68407dbe6e5d0ec30ca0086a7c8712ae16decb8775a",
+      "combined_sha256": "bea38ed7ca18f5cd68f1b68407dbe6e5d0ec30ca0086a7c8712ae16decb8775a"
+    },
+    "lingbotvla/distributed/fsdp/extension.py": {
+      "baseline_sha256": "3fa259f460f91b49ffb0974af08b26cee2a2b4b9626e7dc20f73de704f9ea8f1",
+      "combined_sha256": "3fa259f460f91b49ffb0974af08b26cee2a2b4b9626e7dc20f73de704f9ea8f1"
+    },
+    "lingbotvla/distributed/fsdp/initialize.py": {
+      "baseline_sha256": "54ed6958c2be1cb1a0d43d6e33cfe9aa2037273bd8239ecc11410581b1c362bb",
+      "combined_sha256": "54ed6958c2be1cb1a0d43d6e33cfe9aa2037273bd8239ecc11410581b1c362bb"
+    },
+    "lingbotvla/distributed/fsdp2/__init__.py": {
+      "baseline_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "combined_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "lingbotvla/distributed/fsdp2/clip_grad_norm.py": {
+      "baseline_sha256": "0743ff0c1f175cafcd2d57cbf78031b8ed97472acf5e98d3fea1dae375a9874f",
+      "combined_sha256": "0743ff0c1f175cafcd2d57cbf78031b8ed97472acf5e98d3fea1dae375a9874f"
+    },
+    "lingbotvla/distributed/moe/__init__.py": {
+      "baseline_sha256": "1dcf10d80db3716f81de18b07bbccb9d7d4f31d4204e60e8deceacc1f587c31a",
+      "combined_sha256": "1dcf10d80db3716f81de18b07bbccb9d7d4f31d4204e60e8deceacc1f587c31a"
+    },
+    "lingbotvla/distributed/moe/comm.py": {
+      "baseline_sha256": "6c4a676ae00ae8bbbb4fd9e939b32cd8a08dd0f34bead8171656731dd5ff1b99",
+      "combined_sha256": "6c4a676ae00ae8bbbb4fd9e939b32cd8a08dd0f34bead8171656731dd5ff1b99"
+    },
+    "lingbotvla/distributed/moe/moe_layer.py": {
+      "baseline_sha256": "9941aae19371b8b06ba34f0857403a901b78882f7f78fb50f01654a159d49764",
+      "combined_sha256": "9941aae19371b8b06ba34f0857403a901b78882f7f78fb50f01654a159d49764"
+    },
+    "lingbotvla/distributed/moe/moe_utils.py": {
+      "baseline_sha256": "ae70dfd57a1ca723a606ed1d934743f71f6847b30b00595e536151bbf921a49d",
+      "combined_sha256": "ae70dfd57a1ca723a606ed1d934743f71f6847b30b00595e536151bbf921a49d"
+    },
+    "lingbotvla/distributed/offloading.py": {
+      "baseline_sha256": "044511219c31a33df46f381a40d5bca9dd5aea8ff6ee4cce6aaf5bea5c2688aa",
+      "combined_sha256": "044511219c31a33df46f381a40d5bca9dd5aea8ff6ee4cce6aaf5bea5c2688aa"
+    },
+    "lingbotvla/distributed/parallel_plan.py": {
+      "baseline_sha256": "48e8da68e4cc70ac5e955fbf10340fe7b0a5c2442120c8344f85cb6e66554837",
+      "combined_sha256": "48e8da68e4cc70ac5e955fbf10340fe7b0a5c2442120c8344f85cb6e66554837"
+    },
+    "lingbotvla/distributed/parallel_state.py": {
+      "baseline_sha256": "c15d7d0d509845a331ea5bc0503d7ebfac380a16b48d11ce4377ea6310b3dd7c",
+      "combined_sha256": "c15d7d0d509845a331ea5bc0503d7ebfac380a16b48d11ce4377ea6310b3dd7c"
+    },
+    "lingbotvla/distributed/sequence_parallel/__init__.py": {
+      "baseline_sha256": "cba224d2e25125a28fabdd9dc43970460f8f1b288475672575379cdfe03ceaa7",
+      "combined_sha256": "cba224d2e25125a28fabdd9dc43970460f8f1b288475672575379cdfe03ceaa7"
+    },
+    "lingbotvla/distributed/sequence_parallel/async_ulysses.py": {
+      "baseline_sha256": "052b86c46f281376b339811e9ea42f394a417d435a6b11a8b573d59a545aa3ac",
+      "combined_sha256": "052b86c46f281376b339811e9ea42f394a417d435a6b11a8b573d59a545aa3ac"
+    },
+    "lingbotvla/distributed/sequence_parallel/async_ulysses_dit.py": {
+      "baseline_sha256": "9a28b37253108aaf4d38e34cccb516a47d3f7f7065a8c7bb70f191e68e08bdef",
+      "combined_sha256": "9a28b37253108aaf4d38e34cccb516a47d3f7f7065a8c7bb70f191e68e08bdef"
+    },
+    "lingbotvla/distributed/sequence_parallel/comm.py": {
+      "baseline_sha256": "aaee38fb444c6c4c9ae0e3f1e09e01da10808e299299e2d8be30fcf393ef1fd4",
+      "combined_sha256": "aaee38fb444c6c4c9ae0e3f1e09e01da10808e299299e2d8be30fcf393ef1fd4"
+    },
+    "lingbotvla/distributed/sequence_parallel/data.py": {
+      "baseline_sha256": "ab1081840a5704894c8f622a4558b424acb6189bd180aa8ecfbe2a301ee14b35",
+      "combined_sha256": "ab1081840a5704894c8f622a4558b424acb6189bd180aa8ecfbe2a301ee14b35"
+    },
+    "lingbotvla/distributed/sequence_parallel/loss.py": {
+      "baseline_sha256": "4d5ab17b522bced7b693870dbf0953055cb33f441abdd7ef3e757a45530bdf2d",
+      "combined_sha256": "4d5ab17b522bced7b693870dbf0953055cb33f441abdd7ef3e757a45530bdf2d"
+    },
+    "lingbotvla/distributed/sequence_parallel/ulysses.py": {
+      "baseline_sha256": "25836baadf5c08a567c65774c45e4eed082860dc74dda1740a0f8880b5dd1d11",
+      "combined_sha256": "25836baadf5c08a567c65774c45e4eed082860dc74dda1740a0f8880b5dd1d11"
+    },
+    "lingbotvla/distributed/sequence_parallel/utils.py": {
+      "baseline_sha256": "5aa78940f3aa85aaea181528ac551d97a754034a7979b8ac4299965dc45a18dc",
+      "combined_sha256": "5aa78940f3aa85aaea181528ac551d97a754034a7979b8ac4299965dc45a18dc"
+    },
+    "lingbotvla/distributed/torch_parallelize.py": {
+      "baseline_sha256": "00d6e229fc5587f6590cfab07e581f39ffe272715999946ee50ae35c14bb6e5f",
+      "combined_sha256": "00d6e229fc5587f6590cfab07e581f39ffe272715999946ee50ae35c14bb6e5f"
+    },
+    "lingbotvla/distributed/utils.py": {
+      "baseline_sha256": "90638562bd7a2eb63595cc18bba1fc5dc93cb3520820a9ecbad3e30f53e615b3",
+      "combined_sha256": "90638562bd7a2eb63595cc18bba1fc5dc93cb3520820a9ecbad3e30f53e615b3"
+    },
+    "lingbotvla/distributed/vescale_parallelize.py": {
+      "baseline_sha256": "a610275eceb40a0f1bcdc326b1eb3171aa9086b7a66b0b0c2ff0ee46ffba155c",
+      "combined_sha256": "a610275eceb40a0f1bcdc326b1eb3171aa9086b7a66b0b0c2ff0ee46ffba155c"
+    },
+    "lingbotvla/distributed/vescale_plan.py": {
+      "baseline_sha256": "a5c157cf81a5c200ac4bb7dd8e20674730f541973e66cc86bc0276eebb3ba067",
+      "combined_sha256": "a5c157cf81a5c200ac4bb7dd8e20674730f541973e66cc86bc0276eebb3ba067"
+    },
+    "lingbotvla/models/__init__.py": {
+      "baseline_sha256": "e0d0fb7e7ac2f3e5fddbbea68dd4e06a2038dc723ce34a144d98307e61f2ad7e",
+      "combined_sha256": "e0d0fb7e7ac2f3e5fddbbea68dd4e06a2038dc723ce34a144d98307e61f2ad7e"
+    },
+    "lingbotvla/models/auto.py": {
+      "baseline_sha256": "c7c01d27297eefdca3503fef0b2666662550c933c523a87e07597b5d8d2005f1",
+      "combined_sha256": "c7c01d27297eefdca3503fef0b2666662550c933c523a87e07597b5d8d2005f1"
+    },
+    "lingbotvla/models/config_registry.py": {
+      "baseline_sha256": "3c5e1758e5c3acb0a9e28e1087b19424340cef614af7d99dd33ffd02b35c45ee",
+      "combined_sha256": "3c5e1758e5c3acb0a9e28e1087b19424340cef614af7d99dd33ffd02b35c45ee"
+    },
+    "lingbotvla/models/loader.py": {
+      "baseline_sha256": "dbac5bb3d6a901bd2ff4ef6c362022cc0096eb3561521a8b9eeaa5ddd18c683e",
+      "combined_sha256": "dbac5bb3d6a901bd2ff4ef6c362022cc0096eb3561521a8b9eeaa5ddd18c683e"
+    },
+    "lingbotvla/models/modeling_layers.py": {
+      "baseline_sha256": "9f86f23ced2d9111a5a6a8b6a388fe56554b18650f8dd5168c690e6a846b149b",
+      "combined_sha256": "9f86f23ced2d9111a5a6a8b6a388fe56554b18650f8dd5168c690e6a846b149b"
+    },
+    "lingbotvla/models/module_utils.py": {
+      "baseline_sha256": "95eb1b970829ead088792bf6c6f0e32b349399fc36e6988b6a91e25f2ac2c595",
+      "combined_sha256": "95eb1b970829ead088792bf6c6f0e32b349399fc36e6988b6a91e25f2ac2c595"
+    },
+    "lingbotvla/models/registry.py": {
+      "baseline_sha256": "25b2f06ac447fbbda79b04dbcda4260967d9a839ada35b6c721df2ef13a02f38",
+      "combined_sha256": "25b2f06ac447fbbda79b04dbcda4260967d9a839ada35b6c721df2ef13a02f38"
+    },
+    "lingbotvla/models/vla/__init__.py": {
+      "baseline_sha256": "8beb7f9e986cf86c79caabd9bf916a72287c7e7f18a2d9aa762740fd89cdb4b4",
+      "combined_sha256": "8beb7f9e986cf86c79caabd9bf916a72287c7e7f18a2d9aa762740fd89cdb4b4"
+    },
+    "lingbotvla/models/vla/lingbot_vla/__init__.py": {
+      "baseline_sha256": "24a6e4f8507703f4f3ae21f2206bc5ec6a713a6b76d171a43900a0cf932e38d7",
+      "combined_sha256": "24a6e4f8507703f4f3ae21f2206bc5ec6a713a6b76d171a43900a0cf932e38d7"
+    },
+    "lingbotvla/models/vla/lingbot_vla/configuration_lingbot_vla.py": {
+      "baseline_sha256": "37987af05ca8980debf5bfe81211cc2a9db1b2fb0e14e15076fa6497c5baf023",
+      "combined_sha256": "37987af05ca8980debf5bfe81211cc2a9db1b2fb0e14e15076fa6497c5baf023"
+    },
+    "lingbotvla/models/vla/lingbot_vla/flex_attention.py": {
+      "baseline_sha256": "c7ea18fc1b122e14b24775b4e0e983dbffc7dd0b02e91b03a5a1c4369eff3da9",
+      "combined_sha256": "c7ea18fc1b122e14b24775b4e0e983dbffc7dd0b02e91b03a5a1c4369eff3da9"
+    },
+    "lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla.py": {
+      "baseline_sha256": "af6a365f05e4ccd7d2585368412be5d186a3afdabfc6e9eaf0c97e71a51037dc",
+      "combined_sha256": "af6a365f05e4ccd7d2585368412be5d186a3afdabfc6e9eaf0c97e71a51037dc"
+    },
+    "lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py": {
+      "baseline_sha256": "9b3c9a2ad6823f9d58da51b732477785a1e4db0d29db80e030e094c7b605e40c",
+      "combined_sha256": "1c550b6313220e35767d297e45a29a52fba7161aa47c193b601b69006b10e463"
+    },
+    "lingbotvla/models/vla/lingbot_vla/moe_load_balance.py": {
+      "baseline_sha256": "15dd33d388d503fc96b891e8ff2cb29415cefa5bb165f1450f847a7f0bbca833",
+      "combined_sha256": "15dd33d388d503fc96b891e8ff2cb29415cefa5bb165f1450f847a7f0bbca833"
+    },
+    "lingbotvla/models/vla/lingbot_vla/qwen2_action_expert.py": {
+      "baseline_sha256": "5363cd841a431d178952f95111118fffb59bd945d1e183c45f21ab947030fb43",
+      "combined_sha256": "5363cd841a431d178952f95111118fffb59bd945d1e183c45f21ab947030fb43"
+    },
+    "lingbotvla/models/vla/lingbot_vla/qwen3vl_in_vla.py": {
+      "baseline_sha256": "eb2202bd01916c891b366c90f9bf11a2782f9387031cc24ed08851b3d8f01e96",
+      "combined_sha256": "eb2202bd01916c891b366c90f9bf11a2782f9387031cc24ed08851b3d8f01e96"
+    },
+    "lingbotvla/models/vla/lingbot_vla/qwenvl_in_vla.py": {
+      "baseline_sha256": "35b5a022ea3f717d1d754b1a2b3779004907f7196e33c844fccc3c862d4cc2f4",
+      "combined_sha256": "35b5a022ea3f717d1d754b1a2b3779004907f7196e33c844fccc3c862d4cc2f4"
+    },
+    "lingbotvla/models/vla/lingbot_vla/utils.py": {
+      "baseline_sha256": "aa8d55137c17a1efa78d3a8124a131ddacf8166b56a2d8802f68bc04b434e747",
+      "combined_sha256": "aa8d55137c17a1efa78d3a8124a131ddacf8166b56a2d8802f68bc04b434e747"
+    },
+    "lingbotvla/models/vla/pi0/__init__.py": {
+      "baseline_sha256": "24a6e4f8507703f4f3ae21f2206bc5ec6a713a6b76d171a43900a0cf932e38d7",
+      "combined_sha256": "24a6e4f8507703f4f3ae21f2206bc5ec6a713a6b76d171a43900a0cf932e38d7"
+    },
+    "lingbotvla/models/vla/pi0/flex_attention.py": {
+      "baseline_sha256": "f46e0fd09eddf4ccbeac21fbdea58685fb7e821e6850d3c190db11272ffc8d96",
+      "combined_sha256": "f46e0fd09eddf4ccbeac21fbdea58685fb7e821e6850d3c190db11272ffc8d96"
+    },
+    "lingbotvla/models/vla/pi0/modeling_pi0.py": {
+      "baseline_sha256": "cb0186a313f124fc0d70c1957e2fbb6981dbe323bde1f305bc099ae68f1bf59d",
+      "combined_sha256": "cb0186a313f124fc0d70c1957e2fbb6981dbe323bde1f305bc099ae68f1bf59d"
+    },
+    "lingbotvla/models/vla/pi0/utils.py": {
+      "baseline_sha256": "7d5d67dbdeeec9d8038ae1445a952d23749938d2ad3d5da7e4f134183fa79bd1",
+      "combined_sha256": "7d5d67dbdeeec9d8038ae1445a952d23749938d2ad3d5da7e4f134183fa79bd1"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/.gitignore": {
+      "baseline_sha256": "0dae49e65a00047d3366919831987bcfc2989d983dfdd1a2dbb48f8f4e55fe30",
+      "combined_sha256": "0dae49e65a00047d3366919831987bcfc2989d983dfdd1a2dbb48f8f4e55fe30"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/CHANGELOG.md": {
+      "baseline_sha256": "25dd1fb896e0f0e2cb64a38a40940784667c82f105a53f845831b615fd10ccb5",
+      "combined_sha256": "25dd1fb896e0f0e2cb64a38a40940784667c82f105a53f845831b615fd10ccb5"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/CODE_OF_CONDUCT.md": {
+      "baseline_sha256": "9daeae709a0bd71bcfd1c96dc5822ecec5210327eff929da64b0ae7f8faf1444",
+      "combined_sha256": "9daeae709a0bd71bcfd1c96dc5822ecec5210327eff929da64b0ae7f8faf1444"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/LICENSE": {
+      "baseline_sha256": "ad7d951c80c5fc2b2bce035f2041bc0a0dbf9028c8ecc4c9a8e1fba8130b6b59",
+      "combined_sha256": "ad7d951c80c5fc2b2bce035f2041bc0a0dbf9028c8ecc4c9a8e1fba8130b6b59"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/README.md": {
+      "baseline_sha256": "a2c691163d7f4ec066c1a20c7b0a1b7cbd2e1406155600a46d5664501e1eba7f",
+      "combined_sha256": "a2c691163d7f4ec066c1a20c7b0a1b7cbd2e1406155600a46d5664501e1eba7f"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/SECURITY.md": {
+      "baseline_sha256": "7b6976eec43edfa68b79a459dd089c56b7a395916dbf1a01bd11e6d86e12128f",
+      "combined_sha256": "7b6976eec43edfa68b79a459dd089c56b7a395916dbf1a01bd11e6d86e12128f"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/SUPPORT.md": {
+      "baseline_sha256": "149773411caf2c59cb1a6bfb2c6f070d1d054f1f018e7a80be319a8c384eeaf5",
+      "combined_sha256": "149773411caf2c59cb1a6bfb2c6f070d1d054f1f018e7a80be319a8c384eeaf5"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/assets/normal_comaprison.jpg": {
+      "baseline_sha256": "c653f5e14d29ede3964aa038d9c9529c18de71cacc8aee34cfddf215589c5ebe",
+      "combined_sha256": "c653f5e14d29ede3964aa038d9c9529c18de71cacc8aee34cfddf215589c5ebe"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/baselines/da_v2.py": {
+      "baseline_sha256": "897958984c030b2388c9801aa25053cd1bf1dd3be98bb4c131e8826d38685ae2",
+      "combined_sha256": "897958984c030b2388c9801aa25053cd1bf1dd3be98bb4c131e8826d38685ae2"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/baselines/da_v2_metric.py": {
+      "baseline_sha256": "d339b3e229b57601a28491cde80a93968826989a76251cbe4f7eff1ee87a49ee",
+      "combined_sha256": "d339b3e229b57601a28491cde80a93968826989a76251cbe4f7eff1ee87a49ee"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/baselines/metric3d_v2.py": {
+      "baseline_sha256": "7f40a3f200f84947b30003d70f539da6f5e8242413b06d0edeef69977eb97d33",
+      "combined_sha256": "7f40a3f200f84947b30003d70f539da6f5e8242413b06d0edeef69977eb97d33"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/baselines/moge.py": {
+      "baseline_sha256": "c245f279dcfb1abe68b18199c34fe065cbf94c6415b39b6a6601d078ab9a465e",
+      "combined_sha256": "c245f279dcfb1abe68b18199c34fe065cbf94c6415b39b6a6601d078ab9a465e"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/configs/eval/all_benchmarks.json": {
+      "baseline_sha256": "028d405eddf0e5c65cb7ad4f832d11fc9a73992c1acb260b2f1c64437cfa8b54",
+      "combined_sha256": "028d405eddf0e5c65cb7ad4f832d11fc9a73992c1acb260b2f1c64437cfa8b54"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/configs/eval/benchmarks/ddad.json": {
+      "baseline_sha256": "bd5479209fa7541cbc189c30ba3a91d47ee3dda7d57584773757a1034af42cc2",
+      "combined_sha256": "bd5479209fa7541cbc189c30ba3a91d47ee3dda7d57584773757a1034af42cc2"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/configs/eval/benchmarks/diode.json": {
+      "baseline_sha256": "a223974ab82aff6a2ddad1a7864972b25d67060833a38a7090d3db82bf4257ca",
+      "combined_sha256": "a223974ab82aff6a2ddad1a7864972b25d67060833a38a7090d3db82bf4257ca"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/configs/eval/benchmarks/eth3d.json": {
+      "baseline_sha256": "b6311545d9c7ca5b7581bad694d698b536a93d792390b1f088c49d4014006770",
+      "combined_sha256": "b6311545d9c7ca5b7581bad694d698b536a93d792390b1f088c49d4014006770"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/configs/eval/benchmarks/gso.json": {
+      "baseline_sha256": "54e8f7bc4243541c42d79c5fbbf6f5e727b48d6633e73587978ec4ce43d241b9",
+      "combined_sha256": "54e8f7bc4243541c42d79c5fbbf6f5e727b48d6633e73587978ec4ce43d241b9"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/configs/eval/benchmarks/hammer.json": {
+      "baseline_sha256": "aaf6ea2c6fc4a82b2c37428539c89d9dc18e77e481b9c78ab0f55826fdabb252",
+      "combined_sha256": "aaf6ea2c6fc4a82b2c37428539c89d9dc18e77e481b9c78ab0f55826fdabb252"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/configs/eval/benchmarks/ibims-1.json": {
+      "baseline_sha256": "c56f2362c6bc08f5b91d627ce3a30f8cc71056d36707217aab9afbfdad33343b",
+      "combined_sha256": "c56f2362c6bc08f5b91d627ce3a30f8cc71056d36707217aab9afbfdad33343b"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/configs/eval/benchmarks/kitti.json": {
+      "baseline_sha256": "caf8893ff50bbeb7f8b1e41c524d07508ca88853c3dd6a8d184fe8bee1cd919e",
+      "combined_sha256": "caf8893ff50bbeb7f8b1e41c524d07508ca88853c3dd6a8d184fe8bee1cd919e"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/configs/eval/benchmarks/nyu.json": {
+      "baseline_sha256": "27764421867a97728a9fe03e543f78a27c372fce51487d72eadcc58ee73f6aa7",
+      "combined_sha256": "27764421867a97728a9fe03e543f78a27c372fce51487d72eadcc58ee73f6aa7"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/configs/eval/benchmarks/sintel.json": {
+      "baseline_sha256": "e1db76f5e45a46676371d8dc05f753c5450723b7f240c5e51894312121832881",
+      "combined_sha256": "e1db76f5e45a46676371d8dc05f753c5450723b7f240c5e51894312121832881"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/configs/eval/benchmarks/spring.json": {
+      "baseline_sha256": "e8a474ab587994161ec7391f55c667c52d10e8f590bca782f13fabc857eef92a",
+      "combined_sha256": "e8a474ab587994161ec7391f55c667c52d10e8f590bca782f13fabc857eef92a"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/configs/train/v1.json": {
+      "baseline_sha256": "87f8f091ac74b45cfc77137e768cbe52c7e13eb989492652b82ac529cf939375",
+      "combined_sha256": "87f8f091ac74b45cfc77137e768cbe52c7e13eb989492652b82ac529cf939375"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/configs/train/v2.json": {
+      "baseline_sha256": "dccee76a670f09ceafe47d79b6122799af3a35496d18b69539a841794aa8c5bb",
+      "combined_sha256": "dccee76a670f09ceafe47d79b6122799af3a35496d18b69539a841794aa8c5bb"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/docs/eval.md": {
+      "baseline_sha256": "2f91fdf81046c26246c2b9200c2f9f9862ab91577add8fe412e44f0f0bd2d68c",
+      "combined_sha256": "2f91fdf81046c26246c2b9200c2f9f9862ab91577add8fe412e44f0f0bd2d68c"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/docs/normal.md": {
+      "baseline_sha256": "2a074d5cc140800e1ffbddbc8c23065f6cedf17b7d7fcc38b2422003d97f5a65",
+      "combined_sha256": "2a074d5cc140800e1ffbddbc8c23065f6cedf17b7d7fcc38b2422003d97f5a65"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/docs/onnx.md": {
+      "baseline_sha256": "e670ef794ed1d703dfe464894252f3fb1fa0f07bbeef811da60ad11f4a56f39b",
+      "combined_sha256": "e670ef794ed1d703dfe464894252f3fb1fa0f07bbeef811da60ad11f4a56f39b"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/docs/train.md": {
+      "baseline_sha256": "70f46c542fa0367635e4b867b3cb4ef939636ae76301b498852b0a9f88b9d802",
+      "combined_sha256": "70f46c542fa0367635e4b867b3cb4ef939636ae76301b498852b0a9f88b9d802"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/example_images/01_HouseIndoor.jpg": {
+      "baseline_sha256": "3eb519bc68d4262af0c68166ca69e786cac5f6656a1083f4c585c4a94005c859",
+      "combined_sha256": "3eb519bc68d4262af0c68166ca69e786cac5f6656a1083f4c585c4a94005c859"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/example_images/02_Office.jpg": {
+      "baseline_sha256": "28767640002f93b703b24a34a6d75ca24b1ef093a19f52ef0f9d3b074ef68c61",
+      "combined_sha256": "28767640002f93b703b24a34a6d75ca24b1ef093a19f52ef0f9d3b074ef68c61"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/example_images/03_Traffic.jpg": {
+      "baseline_sha256": "4fa8b46849dd3de5b3b0a141d6aafe98e190f578ccec0c9dacc440cd8434db11",
+      "combined_sha256": "4fa8b46849dd3de5b3b0a141d6aafe98e190f578ccec0c9dacc440cd8434db11"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/example_images/04_BunnyCake.jpg": {
+      "baseline_sha256": "7ddd187d91ebc2cf626bc51a26e1fc71d478237ce348732ae547f83655f05260",
+      "combined_sha256": "7ddd187d91ebc2cf626bc51a26e1fc71d478237ce348732ae547f83655f05260"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/example_images/05_Mountain.jpg": {
+      "baseline_sha256": "670d322f6588713f7d9c7349091de0aacb2a5b0b37c7b7433995e110fb2bcfbc",
+      "combined_sha256": "670d322f6588713f7d9c7349091de0aacb2a5b0b37c7b7433995e110fb2bcfbc"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/example_images/07_Breads.jpg": {
+      "baseline_sha256": "a95c2cab81412e252ee5a56a6100df31bb83de0f117607ca8476478f7f152a7b",
+      "combined_sha256": "a95c2cab81412e252ee5a56a6100df31bb83de0f117607ca8476478f7f152a7b"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/example_images/09_Restaurant.jpg": {
+      "baseline_sha256": "b2bb7b5a1e91a174101109b0976b8ae2a4d6bb7d6eadad6569106ed102d0d5a6",
+      "combined_sha256": "b2bb7b5a1e91a174101109b0976b8ae2a4d6bb7d6eadad6569106ed102d0d5a6"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/example_images/10_MedievalVillage.jpg": {
+      "baseline_sha256": "718ed1aeb1e0010194c5cf0e95371e6a29d45b84e93efbed63ff4cc60e74508b",
+      "combined_sha256": "718ed1aeb1e0010194c5cf0e95371e6a29d45b84e93efbed63ff4cc60e74508b"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/example_images/panorama/Braunschweig_Panoram.jpg": {
+      "baseline_sha256": "abc31b78f03a0b5254f3735bc3201c28d21b6855708f971ce4b6a740dfbddcba",
+      "combined_sha256": "abc31b78f03a0b5254f3735bc3201c28d21b6855708f971ce4b6a740dfbddcba"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge.egg-info/PKG-INFO": {
+      "baseline_sha256": "0f51380d64cf18004feeb3c0a76b67f8be2b6a0ea0484e9c2ae7aa480b402bad",
+      "combined_sha256": "0f51380d64cf18004feeb3c0a76b67f8be2b6a0ea0484e9c2ae7aa480b402bad"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge.egg-info/SOURCES.txt": {
+      "baseline_sha256": "a763a0133f51cf48294d053cca20d8a937977109404644def6f9540285a343a9",
+      "combined_sha256": "a763a0133f51cf48294d053cca20d8a937977109404644def6f9540285a343a9"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge.egg-info/dependency_links.txt": {
+      "baseline_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "combined_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge.egg-info/entry_points.txt": {
+      "baseline_sha256": "ac7e9a507d39ea8d2caae3fa55dd7dfa8f2b24f497e9313034f96b5ea60816aa",
+      "combined_sha256": "ac7e9a507d39ea8d2caae3fa55dd7dfa8f2b24f497e9313034f96b5ea60816aa"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge.egg-info/requires.txt": {
+      "baseline_sha256": "40c80ddac88311c1dbc2228c9a641a413d26cdf91de5fa806f45225a7b3817ff",
+      "combined_sha256": "40c80ddac88311c1dbc2228c9a641a413d26cdf91de5fa806f45225a7b3817ff"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge.egg-info/top_level.txt": {
+      "baseline_sha256": "fb31d43ccefcd8515f36d3a74a97986acf0b1319b9d1eae644900c6b566da6e8",
+      "combined_sha256": "fb31d43ccefcd8515f36d3a74a97986acf0b1319b9d1eae644900c6b566da6e8"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/__init__.py": {
+      "baseline_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "combined_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/model/__init__.py": {
+      "baseline_sha256": "8cf7085951f070021c3e212f35570d924aaa85e98002c285bc7c1df917d36294",
+      "combined_sha256": "8cf7085951f070021c3e212f35570d924aaa85e98002c285bc7c1df917d36294"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/model/dinov2/__init__.py": {
+      "baseline_sha256": "0d2b87b7e71c7f7279ccc4b4f8b541d26071425284a0ea01a5a435fac4511cfe",
+      "combined_sha256": "0d2b87b7e71c7f7279ccc4b4f8b541d26071425284a0ea01a5a435fac4511cfe"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/model/dinov2/hub/__init__.py": {
+      "baseline_sha256": "2932e94a2d67be87b717c49468214c1127be7864aedf37f5891d26be7bc1437f",
+      "combined_sha256": "2932e94a2d67be87b717c49468214c1127be7864aedf37f5891d26be7bc1437f"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/model/dinov2/hub/backbones.py": {
+      "baseline_sha256": "11c3b7e3da2a843ba5953191e8fc2027b37490313dfb315c0d4ad1a0ea31d27d",
+      "combined_sha256": "11c3b7e3da2a843ba5953191e8fc2027b37490313dfb315c0d4ad1a0ea31d27d"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/model/dinov2/hub/utils.py": {
+      "baseline_sha256": "c0533919016531b320bf9aef7cd7001249bc8ef8957cdb29246c15b67d5abdf8",
+      "combined_sha256": "c0533919016531b320bf9aef7cd7001249bc8ef8957cdb29246c15b67d5abdf8"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/model/dinov2/layers/__init__.py": {
+      "baseline_sha256": "5b5f637b2371089e34e0bec9a49518e2250f915aa9e10cae83a32f8e671ad24f",
+      "combined_sha256": "5b5f637b2371089e34e0bec9a49518e2250f915aa9e10cae83a32f8e671ad24f"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/model/dinov2/layers/attention.py": {
+      "baseline_sha256": "cc3f20ec18a07061297bcbeacc842aec43534f8eb5fd62516273c2c3385a6b79",
+      "combined_sha256": "cc3f20ec18a07061297bcbeacc842aec43534f8eb5fd62516273c2c3385a6b79"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/model/dinov2/layers/block.py": {
+      "baseline_sha256": "13a024d6b45dd0c63300f0ef0b5135d8551dc563436c4d70fc4ec7c44980023b",
+      "combined_sha256": "13a024d6b45dd0c63300f0ef0b5135d8551dc563436c4d70fc4ec7c44980023b"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/model/dinov2/layers/dino_head.py": {
+      "baseline_sha256": "9fdb1fa61c0609dc0876f711f9d0d828c33bf9fd972aab3d9c968d44e16b98d1",
+      "combined_sha256": "9fdb1fa61c0609dc0876f711f9d0d828c33bf9fd972aab3d9c968d44e16b98d1"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/model/dinov2/layers/drop_path.py": {
+      "baseline_sha256": "b9f8236e86054b9d9a71275efcad2a9ecaa1f86b529d4b8d6109ddb5e806f67a",
+      "combined_sha256": "b9f8236e86054b9d9a71275efcad2a9ecaa1f86b529d4b8d6109ddb5e806f67a"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/model/dinov2/layers/layer_scale.py": {
+      "baseline_sha256": "abb7bbfae152a9de2e6d0961ab5e75c79428e849281bfe50dd07b66b54b485d1",
+      "combined_sha256": "abb7bbfae152a9de2e6d0961ab5e75c79428e849281bfe50dd07b66b54b485d1"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/model/dinov2/layers/mlp.py": {
+      "baseline_sha256": "255825c73b60a916dd00eb1e38aacbcdbf316e40d6a005efb46e245b7edb43aa",
+      "combined_sha256": "255825c73b60a916dd00eb1e38aacbcdbf316e40d6a005efb46e245b7edb43aa"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/model/dinov2/layers/patch_embed.py": {
+      "baseline_sha256": "40da6add3d811198ea3e17cb99cdd4e5cda59e369efbbe3d18d89308618cf142",
+      "combined_sha256": "40da6add3d811198ea3e17cb99cdd4e5cda59e369efbbe3d18d89308618cf142"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/model/dinov2/layers/swiglu_ffn.py": {
+      "baseline_sha256": "4c75f68d902cf497cb51e770ab8720057fa9957dd4c93da83aaf4f8893d14538",
+      "combined_sha256": "4c75f68d902cf497cb51e770ab8720057fa9957dd4c93da83aaf4f8893d14538"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/model/dinov2/models/__init__.py": {
+      "baseline_sha256": "87b360c71997314f41be1c497cc42326fc32617d3a2840f2f19d3795ca8b85ee",
+      "combined_sha256": "87b360c71997314f41be1c497cc42326fc32617d3a2840f2f19d3795ca8b85ee"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/model/dinov2/models/vision_transformer.py": {
+      "baseline_sha256": "1df8a949cf9e7eb3e1e4721f3a82839a0685b9dc94c52a5f5a9ab6ee9ffb0cd0",
+      "combined_sha256": "1df8a949cf9e7eb3e1e4721f3a82839a0685b9dc94c52a5f5a9ab6ee9ffb0cd0"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/model/dinov2/utils/__init__.py": {
+      "baseline_sha256": "2932e94a2d67be87b717c49468214c1127be7864aedf37f5891d26be7bc1437f",
+      "combined_sha256": "2932e94a2d67be87b717c49468214c1127be7864aedf37f5891d26be7bc1437f"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/model/dinov2/utils/cluster.py": {
+      "baseline_sha256": "ea195476b1f5316520c07233eb73ff4b0e5fe3f7a2645aacec5b416e7bed157c",
+      "combined_sha256": "ea195476b1f5316520c07233eb73ff4b0e5fe3f7a2645aacec5b416e7bed157c"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/model/dinov2/utils/config.py": {
+      "baseline_sha256": "588574a78951ccfe7ffaad9ef7cab53d37e837e3ae98cfc1b6a976189073d87c",
+      "combined_sha256": "588574a78951ccfe7ffaad9ef7cab53d37e837e3ae98cfc1b6a976189073d87c"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/model/dinov2/utils/dtype.py": {
+      "baseline_sha256": "610251537bcf55de8961a17dd625560eae5cfa5082e9382bbd9ded86db92e1c6",
+      "combined_sha256": "610251537bcf55de8961a17dd625560eae5cfa5082e9382bbd9ded86db92e1c6"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/model/dinov2/utils/param_groups.py": {
+      "baseline_sha256": "ec1daae9eb7c50492091504f97087e3179d46a080d7b7f131967c07cb15cf6d4",
+      "combined_sha256": "ec1daae9eb7c50492091504f97087e3179d46a080d7b7f131967c07cb15cf6d4"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/model/dinov2/utils/utils.py": {
+      "baseline_sha256": "10bfc824fdb00cf0c4afc0a875b5763ad4c5f33ec38c2515b12528307b789305",
+      "combined_sha256": "10bfc824fdb00cf0c4afc0a875b5763ad4c5f33ec38c2515b12528307b789305"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/model/modules.py": {
+      "baseline_sha256": "cb5d7ff75f410be2f8466fc5ca164e04f7b991385c141b3d896c02ead7858fc2",
+      "combined_sha256": "cb5d7ff75f410be2f8466fc5ca164e04f7b991385c141b3d896c02ead7858fc2"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/model/utils.py": {
+      "baseline_sha256": "cb7279c4295afae9278b13d70181128ab2e29027b08a012a1b0f33213c16de22",
+      "combined_sha256": "cb7279c4295afae9278b13d70181128ab2e29027b08a012a1b0f33213c16de22"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/model/v1.py": {
+      "baseline_sha256": "a6c030f2e93e3c02268dc6d523a33d74299b6d012c3c2bf34c7e7c4a44646241",
+      "combined_sha256": "a6c030f2e93e3c02268dc6d523a33d74299b6d012c3c2bf34c7e7c4a44646241"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/model/v2.py": {
+      "baseline_sha256": "e736ed59fdb8ad89ec0c29ddfeeccd6a4246c387b3f423b922708366b69758fd",
+      "combined_sha256": "e736ed59fdb8ad89ec0c29ddfeeccd6a4246c387b3f423b922708366b69758fd"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/scripts/__init__.py": {
+      "baseline_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "combined_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/scripts/app.py": {
+      "baseline_sha256": "8ea56be9dbcfaec9dd6a0f41f670e140a3a6f71f48f8e85a3e4eb7232be2e0ba",
+      "combined_sha256": "8ea56be9dbcfaec9dd6a0f41f670e140a3a6f71f48f8e85a3e4eb7232be2e0ba"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/scripts/cli.py": {
+      "baseline_sha256": "86419e34bbfd15d0646b1d3821fa68651cb21f316428be862ed1df0a126395d0",
+      "combined_sha256": "86419e34bbfd15d0646b1d3821fa68651cb21f316428be862ed1df0a126395d0"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/scripts/eval_baseline.py": {
+      "baseline_sha256": "17702081385cc1221e7ad04d57fbcabb687d1d9705a63011f20c0626b826f3fe",
+      "combined_sha256": "17702081385cc1221e7ad04d57fbcabb687d1d9705a63011f20c0626b826f3fe"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/scripts/infer.py": {
+      "baseline_sha256": "76b59a7edbb63748ee028f5479aa2ee8beecae4b0e8d240b2166e4207d4e1649",
+      "combined_sha256": "76b59a7edbb63748ee028f5479aa2ee8beecae4b0e8d240b2166e4207d4e1649"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/scripts/infer_baseline.py": {
+      "baseline_sha256": "dfc2ff6b161dceceeeecc31456e9e4ac534de3d0457954cea375ba061e27fbb2",
+      "combined_sha256": "dfc2ff6b161dceceeeecc31456e9e4ac534de3d0457954cea375ba061e27fbb2"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/scripts/infer_panorama.py": {
+      "baseline_sha256": "fddd6f0112dbcb91c10c2a3909a6e3c4367dd1b4466c1ed0f283b3a20171251f",
+      "combined_sha256": "fddd6f0112dbcb91c10c2a3909a6e3c4367dd1b4466c1ed0f283b3a20171251f"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/scripts/train.py": {
+      "baseline_sha256": "969c12ce3be0a70183da7f6015c3d80ee9cb5c6d92a944b4d662b3e3527f06cd",
+      "combined_sha256": "969c12ce3be0a70183da7f6015c3d80ee9cb5c6d92a944b4d662b3e3527f06cd"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/scripts/vis_data.py": {
+      "baseline_sha256": "5f19d6ea30bc4b76fe8ccb1a71423b65bd15b262fc9d3356150c98098464483c",
+      "combined_sha256": "5f19d6ea30bc4b76fe8ccb1a71423b65bd15b262fc9d3356150c98098464483c"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/test/__init__.py": {
+      "baseline_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "combined_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/test/baseline.py": {
+      "baseline_sha256": "8f62da7022ab16f3f00556ac38580f085c68477d9200722646c77a78720a0d75",
+      "combined_sha256": "8f62da7022ab16f3f00556ac38580f085c68477d9200722646c77a78720a0d75"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/test/dataloader.py": {
+      "baseline_sha256": "086974ff7f31378e202a187a73e4224db058fe834de34027850f04871672c60e",
+      "combined_sha256": "086974ff7f31378e202a187a73e4224db058fe834de34027850f04871672c60e"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/test/metrics.py": {
+      "baseline_sha256": "f581a2cf1d625127e644f4648d7e8d6414ba3ae0792dc18e3a076ba1e0a4acbf",
+      "combined_sha256": "f581a2cf1d625127e644f4648d7e8d6414ba3ae0792dc18e3a076ba1e0a4acbf"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/train/__init__.py": {
+      "baseline_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "combined_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/train/dataloader.py": {
+      "baseline_sha256": "0da45febd0e798de25828ee44ff38a5c9a4bad98c9db07796dce3eb10e45c210",
+      "combined_sha256": "0da45febd0e798de25828ee44ff38a5c9a4bad98c9db07796dce3eb10e45c210"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/train/losses.py": {
+      "baseline_sha256": "05c090c901e038be389df4cee04dea05444f5c6f2ff4dce9bfc76fe761c7c325",
+      "combined_sha256": "05c090c901e038be389df4cee04dea05444f5c6f2ff4dce9bfc76fe761c7c325"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/train/utils.py": {
+      "baseline_sha256": "97b645e3789cb4739ef87437313405b6b0b2dc04e745ae99f3bc987a3b22e723",
+      "combined_sha256": "97b645e3789cb4739ef87437313405b6b0b2dc04e745ae99f3bc987a3b22e723"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/utils/__init__.py": {
+      "baseline_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "combined_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/utils/alignment.py": {
+      "baseline_sha256": "85f65b3648a557fd39e76014503a892b2aceea7cd5e0471a1de1def68f0c31e1",
+      "combined_sha256": "85f65b3648a557fd39e76014503a892b2aceea7cd5e0471a1de1def68f0c31e1"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/utils/data_augmentation.py": {
+      "baseline_sha256": "c86762cf72aa07d59a75da42d8d0f2dd45bfd9b1eed14bbed8d05da15f8e8bbd",
+      "combined_sha256": "c86762cf72aa07d59a75da42d8d0f2dd45bfd9b1eed14bbed8d05da15f8e8bbd"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/utils/download.py": {
+      "baseline_sha256": "929fde9df713247927b93807809ffa9b5a49572d6bd5bd1ae57235d2c8f4fc91",
+      "combined_sha256": "929fde9df713247927b93807809ffa9b5a49572d6bd5bd1ae57235d2c8f4fc91"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/utils/geometry_numpy.py": {
+      "baseline_sha256": "f540c5b8ef55bfffcc32b1a62b38be605683e29fbf399ca86dfcbfc458ce4c10",
+      "combined_sha256": "f540c5b8ef55bfffcc32b1a62b38be605683e29fbf399ca86dfcbfc458ce4c10"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/utils/geometry_torch.py": {
+      "baseline_sha256": "2f8d5de7d671af16d25fe13c555fd73855d8447bc086bb23aa42e859b303fb05",
+      "combined_sha256": "2f8d5de7d671af16d25fe13c555fd73855d8447bc086bb23aa42e859b303fb05"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/utils/io.py": {
+      "baseline_sha256": "36dcbc1fc933dcd19d2c97d3a7a3d556ce3f3a191055bb4cc6f93168c4ef32ba",
+      "combined_sha256": "36dcbc1fc933dcd19d2c97d3a7a3d556ce3f3a191055bb4cc6f93168c4ef32ba"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/utils/panorama.py": {
+      "baseline_sha256": "861e747f6fa5d9c855cd4e9d7964165a6d3e3e73f81ad78d6dfe98f6b6d70d8d",
+      "combined_sha256": "861e747f6fa5d9c855cd4e9d7964165a6d3e3e73f81ad78d6dfe98f6b6d70d8d"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/utils/tools.py": {
+      "baseline_sha256": "ee4893ddbc49da5b24ab43277e9693e86a842dace69452803bab85b531121f60",
+      "combined_sha256": "ee4893ddbc49da5b24ab43277e9693e86a842dace69452803bab85b531121f60"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/utils/vis.py": {
+      "baseline_sha256": "eb4d3d9a77caf923628312ab56e5fc241f39a2d3f2c066a763e76ce49842c1a9",
+      "combined_sha256": "eb4d3d9a77caf923628312ab56e5fc241f39a2d3f2c066a763e76ce49842c1a9"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/utils/webfile.py": {
+      "baseline_sha256": "3ffcd69e343b9c867cf52c80ec1923f76478a6e8bda712cc677bfefb077b0777",
+      "combined_sha256": "3ffcd69e343b9c867cf52c80ec1923f76478a6e8bda712cc677bfefb077b0777"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/moge/utils/webzipfile.py": {
+      "baseline_sha256": "5e68057dad8f05ecbd08883f2b960211512c28bdb0243d32700ec5102b735668",
+      "combined_sha256": "5e68057dad8f05ecbd08883f2b960211512c28bdb0243d32700ec5102b735668"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/pyproject.toml": {
+      "baseline_sha256": "1c1c41fc449cee5e30cb02c36d4c7b208812f48739e7bcfdffc5a22207f1a3c2",
+      "combined_sha256": "1c1c41fc449cee5e30cb02c36d4c7b208812f48739e7bcfdffc5a22207f1a3c2"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/pyrightconfig.json": {
+      "baseline_sha256": "b2b2dc093467b72670b2df73dd4e3263c59d6b8aa131cd327438790a57ec4e45",
+      "combined_sha256": "b2b2dc093467b72670b2df73dd4e3263c59d6b8aa131cd327438790a57ec4e45"
+    },
+    "lingbotvla/models/vla/vision_models/MoGe/requirements.txt": {
+      "baseline_sha256": "aff0d7e9df26146afdcd0e7a4a30d967fd07a8da25c30be0737607b414a81a17",
+      "combined_sha256": "aff0d7e9df26146afdcd0e7a4a30d967fd07a8da25c30be0737607b414a81a17"
+    },
+    "lingbotvla/models/vla/vision_models/align_heads/__init_.py": {
+      "baseline_sha256": "3ee313b0fea665d122e54af056dfa3f8ef21528ffa08f23735aa91296c56b007",
+      "combined_sha256": "3ee313b0fea665d122e54af056dfa3f8ef21528ffa08f23735aa91296c56b007"
+    },
+    "lingbotvla/models/vla/vision_models/align_heads/depth_head.py": {
+      "baseline_sha256": "78d3a617b8b84647ee3811c606f6554d40efadd5ff330d5efc91a64af919fd79",
+      "combined_sha256": "78d3a617b8b84647ee3811c606f6554d40efadd5ff330d5efc91a64af919fd79"
+    },
+    "lingbotvla/models/vla/vision_models/align_heads/resampler.py": {
+      "baseline_sha256": "21e8444e7af259746c7786ec0064e8325b446305677fffebcc9569d749549ab8",
+      "combined_sha256": "21e8444e7af259746c7786ec0064e8325b446305677fffebcc9569d749549ab8"
+    },
+    "lingbotvla/models/vla/vision_models/dino_video/__init__.py": {
+      "baseline_sha256": "83824d4d91b800227e03562bf303d1e3758582efa6af9d9fb3898a971a21e807",
+      "combined_sha256": "83824d4d91b800227e03562bf303d1e3758582efa6af9d9fb3898a971a21e807"
+    },
+    "lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/__init__.py": {
+      "baseline_sha256": "94df78b000730b9534e7f575731bf4d1668eba5fa6ef693f57dd25dafc3572ce",
+      "combined_sha256": "94df78b000730b9534e7f575731bf4d1668eba5fa6ef693f57dd25dafc3572ce"
+    },
+    "lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/layers/__init__.py": {
+      "baseline_sha256": "b745baf826d0df619d7eaaf1d6fdd9c04e2cf87a2e74abad1ca37e435757a894",
+      "combined_sha256": "b745baf826d0df619d7eaaf1d6fdd9c04e2cf87a2e74abad1ca37e435757a894"
+    },
+    "lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/layers/attention.py": {
+      "baseline_sha256": "26d9ca3a0a9848dfe0da1221d4d0b902b0f63aa18c6e3bb75cf7bf9b6928d67e",
+      "combined_sha256": "26d9ca3a0a9848dfe0da1221d4d0b902b0f63aa18c6e3bb75cf7bf9b6928d67e"
+    },
+    "lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/layers/block.py": {
+      "baseline_sha256": "9ad2173e78d4037aebe7e6ef3a8c64e7f3b08fc8f888eda9e6e62ee92805b0d6",
+      "combined_sha256": "9ad2173e78d4037aebe7e6ef3a8c64e7f3b08fc8f888eda9e6e62ee92805b0d6"
+    },
+    "lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/layers/dino_head.py": {
+      "baseline_sha256": "cd7a83f00ac449f962484bad0f2959be477781e57943508428d32ff88f41fe33",
+      "combined_sha256": "cd7a83f00ac449f962484bad0f2959be477781e57943508428d32ff88f41fe33"
+    },
+    "lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/layers/ffn_layers.py": {
+      "baseline_sha256": "29d3f20800e9bcf5fa4e056f6b0e81c1375c291c1dbffd5b103ac555fe2cb9ff",
+      "combined_sha256": "29d3f20800e9bcf5fa4e056f6b0e81c1375c291c1dbffd5b103ac555fe2cb9ff"
+    },
+    "lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/layers/flash_attention.py": {
+      "baseline_sha256": "6f664bc7bc9f9e38e955c7fac07eea5cb236e869b00584ca9b263d11c8f890ad",
+      "combined_sha256": "6f664bc7bc9f9e38e955c7fac07eea5cb236e869b00584ca9b263d11c8f890ad"
+    },
+    "lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/layers/flash_attention_packed.py": {
+      "baseline_sha256": "2a8776749e7c0d6dd780a67764f8e51cc90b0f417cd53aec7422cf07f8712a6d",
+      "combined_sha256": "2a8776749e7c0d6dd780a67764f8e51cc90b0f417cd53aec7422cf07f8712a6d"
+    },
+    "lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/layers/flex_attention_packed.py": {
+      "baseline_sha256": "177f4ffdb522e861677e1178abc2cc114d3bf41d62b690c9baa2fd37dd8d2820",
+      "combined_sha256": "177f4ffdb522e861677e1178abc2cc114d3bf41d62b690c9baa2fd37dd8d2820"
+    },
+    "lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/layers/layer_scale.py": {
+      "baseline_sha256": "f9a10ee763a62136f9e814bfe2f2209c2cb501dfdc5573f858ab01ba9a69c23f",
+      "combined_sha256": "f9a10ee763a62136f9e814bfe2f2209c2cb501dfdc5573f858ab01ba9a69c23f"
+    },
+    "lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/layers/patch_embed.py": {
+      "baseline_sha256": "88ceaac1439a54a6553a5ca8e7d97c40f92747e9edc64f5680afd21af7299475",
+      "combined_sha256": "88ceaac1439a54a6553a5ca8e7d97c40f92747e9edc64f5680afd21af7299475"
+    },
+    "lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/layers/rms_norm.py": {
+      "baseline_sha256": "8509ffc53f0bbe9e353a8b9e57ca2396795640b4ecc85140c27b17127c971869",
+      "combined_sha256": "8509ffc53f0bbe9e353a8b9e57ca2396795640b4ecc85140c27b17127c971869"
+    },
+    "lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/layers/rope_position_encoding.py": {
+      "baseline_sha256": "5236c6fb9d84252655b1a60a7177db5e6cf4a3c15227e49f4959d32947b4ba2e",
+      "combined_sha256": "5236c6fb9d84252655b1a60a7177db5e6cf4a3c15227e49f4959d32947b4ba2e"
+    },
+    "lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/layers/sdpa_attention_packed.py": {
+      "baseline_sha256": "e062fe9c9df49330a54bd9922206a8b66fbd8753c61ce2d0ed3d5b3df4580bce",
+      "combined_sha256": "e062fe9c9df49330a54bd9922206a8b66fbd8753c61ce2d0ed3d5b3df4580bce"
+    },
+    "lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/models/__init__.py": {
+      "baseline_sha256": "1faa23c982cbfcd019e3bbc92021a79123e6ff802c70c618470681068652af5c",
+      "combined_sha256": "1faa23c982cbfcd019e3bbc92021a79123e6ff802c70c618470681068652af5c"
+    },
+    "lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/models/inference/__init__.py": {
+      "baseline_sha256": "75940a6a6035f3fc4cebcd5a0cb8800e1f5bd82547e0ec7cc9463d9774c149b2",
+      "combined_sha256": "75940a6a6035f3fc4cebcd5a0cb8800e1f5bd82547e0ec7cc9463d9774c149b2"
+    },
+    "lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/models/inference/causal_eval.py": {
+      "baseline_sha256": "c754df45a6113d4ddd6aa6d1527ab4587d4efb35b1906eeb6ef7480bd7da04bc",
+      "combined_sha256": "c754df45a6113d4ddd6aa6d1527ab4587d4efb35b1906eeb6ef7480bd7da04bc"
+    },
+    "lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/models/inference/kv_cache.py": {
+      "baseline_sha256": "3d186623252f18d240bf71622127622da5b2ccea15040c92b6109b03ab54e965",
+      "combined_sha256": "3d186623252f18d240bf71622127622da5b2ccea15040c92b6109b03ab54e965"
+    },
+    "lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/models/navit_eval.py": {
+      "baseline_sha256": "1fafad9450f0e5a53328cddc066cc37d71db9bbc2e3222dfabed05b4fb6a774e",
+      "combined_sha256": "1fafad9450f0e5a53328cddc066cc37d71db9bbc2e3222dfabed05b4fb6a774e"
+    },
+    "lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/models/navit_video_vision_transformer.py": {
+      "baseline_sha256": "4a3a1bd606c2f639edf418a4ead0864882b152f4c815956baa245c890a5fc503",
+      "combined_sha256": "4a3a1bd606c2f639edf418a4ead0864882b152f4c815956baa245c890a5fc503"
+    },
+    "lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/models/unified_video_vision_transformer.py": {
+      "baseline_sha256": "d50e23815d713e77eadf796cb1051a3051a5e38be20689b26e9e4927c3c64a2f",
+      "combined_sha256": "d50e23815d713e77eadf796cb1051a3051a5e38be20689b26e9e4927c3c64a2f"
+    },
+    "lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/models/vision_transformer.py": {
+      "baseline_sha256": "a04ac7f1393e8992bbfc8e8460c59d24e26c65c410baccbdbe90f605d98c3ba9",
+      "combined_sha256": "a04ac7f1393e8992bbfc8e8460c59d24e26c65c410baccbdbe90f605d98c3ba9"
+    },
+    "lingbotvla/models/vla/vision_models/dino_video/lumos_dinov3/utils.py": {
+      "baseline_sha256": "0e9422435fc9fc6a885800527b76476c22709852fb492b4b0f9705a93a4ebe2f",
+      "combined_sha256": "0e9422435fc9fc6a885800527b76476c22709852fb492b4b0f9705a93a4ebe2f"
+    },
+    "lingbotvla/models/vla/vision_models/dino_video/teacher.py": {
+      "baseline_sha256": "1aa25aca20347d7dca2d265ab377e6b2f8f3b36485422cfc6d6c4a9d503f63b5",
+      "combined_sha256": "1aa25aca20347d7dca2d265ab377e6b2f8f3b36485422cfc6d6c4a9d503f63b5"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/.gitignore": {
+      "baseline_sha256": "aeb0be9abf1374aeba63ebca85d96149ddfa42f564ca86ffc5f1b971a75187ff",
+      "combined_sha256": "aeb0be9abf1374aeba63ebca85d96149ddfa42f564ca86ffc5f1b971a75187ff"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/LEGAL.md": {
+      "baseline_sha256": "adba50d9794b9ef3f7ec8cbc680f7f1fa3fbf9df0ac8d1f9b9ccab6d941bc11b",
+      "combined_sha256": "adba50d9794b9ef3f7ec8cbc680f7f1fa3fbf9df0ac8d1f9b9ccab6d941bc11b"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/LICENSE": {
+      "baseline_sha256": "56ae0eb5ff848e312f8ecc450c806f710821db153b0e8db18a0d69d5a6f60f8b",
+      "combined_sha256": "56ae0eb5ff848e312f8ecc450c806f710821db153b0e8db18a0d69d5a6f60f8b"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/README.md": {
+      "baseline_sha256": "b97ef65b53f2d5bb05e4a1cc6389f0c3f19f9f09697f7f0077aa1c0074e39267",
+      "combined_sha256": "b97ef65b53f2d5bb05e4a1cc6389f0c3f19f9f09697f7f0077aa1c0074e39267"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/assets/device/device-divided.jpg": {
+      "baseline_sha256": "ebb466c2c5beed4dcf0919dab34d85f837f9e11d58b864d99029cabb2af5c953",
+      "combined_sha256": "ebb466c2c5beed4dcf0919dab34d85f837f9e11d58b864d99029cabb2af5c953"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/assets/device/device-full.jpg": {
+      "baseline_sha256": "c812502a85f7089740c030c92624e944997bd648c78b84d75cd6ff4389679c00",
+      "combined_sha256": "c812502a85f7089740c030c92624e944997bd648c78b84d75cd6ff4389679c00"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/example.py": {
+      "baseline_sha256": "ed5bc3807bba81be71f3b7d978e0e38100acc3c0d94fe254b2dfcabd45210795",
+      "combined_sha256": "ed5bc3807bba81be71f3b7d978e0e38100acc3c0d94fe254b2dfcabd45210795"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/examples/0/intrinsics.txt": {
+      "baseline_sha256": "599fd7617e1225e289fdbc4dec835d55ccb6577b83953b02ce89a53f3bf237d5",
+      "combined_sha256": "599fd7617e1225e289fdbc4dec835d55ccb6577b83953b02ce89a53f3bf237d5"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/examples/1/intrinsics.txt": {
+      "baseline_sha256": "76b62be8b9969ed3787630ce12e6667e0e13811b8484e2b9b69936928d31bd0f",
+      "combined_sha256": "76b62be8b9969ed3787630ce12e6667e0e13811b8484e2b9b69936928d31bd0f"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/examples/1/rgb.jpg": {
+      "baseline_sha256": "507c1818fca7f5a0270d146006e87744f084200447c9f5a7803b5352804733e8",
+      "combined_sha256": "507c1818fca7f5a0270d146006e87744f084200447c9f5a7803b5352804733e8"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/examples/2/intrinsics.txt": {
+      "baseline_sha256": "599fd7617e1225e289fdbc4dec835d55ccb6577b83953b02ce89a53f3bf237d5",
+      "combined_sha256": "599fd7617e1225e289fdbc4dec835d55ccb6577b83953b02ce89a53f3bf237d5"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/examples/3/intrinsics.txt": {
+      "baseline_sha256": "76b62be8b9969ed3787630ce12e6667e0e13811b8484e2b9b69936928d31bd0f",
+      "combined_sha256": "76b62be8b9969ed3787630ce12e6667e0e13811b8484e2b9b69936928d31bd0f"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/examples/3/rgb.jpg": {
+      "baseline_sha256": "a9eb065ce6d55edde4a2e60612e0ba0ae02b68bab2d3537dc619b3f35e9ef7fd",
+      "combined_sha256": "a9eb065ce6d55edde4a2e60612e0ba0ae02b68bab2d3537dc619b3f35e9ef7fd"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/examples/4/intrinsics.txt": {
+      "baseline_sha256": "599fd7617e1225e289fdbc4dec835d55ccb6577b83953b02ce89a53f3bf237d5",
+      "combined_sha256": "599fd7617e1225e289fdbc4dec835d55ccb6577b83953b02ce89a53f3bf237d5"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/examples/5/intrinsics.txt": {
+      "baseline_sha256": "599fd7617e1225e289fdbc4dec835d55ccb6577b83953b02ce89a53f3bf237d5",
+      "combined_sha256": "599fd7617e1225e289fdbc4dec835d55ccb6577b83953b02ce89a53f3bf237d5"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/examples/6/intrinsics.txt": {
+      "baseline_sha256": "76b62be8b9969ed3787630ce12e6667e0e13811b8484e2b9b69936928d31bd0f",
+      "combined_sha256": "76b62be8b9969ed3787630ce12e6667e0e13811b8484e2b9b69936928d31bd0f"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/examples/6/rgb.jpg": {
+      "baseline_sha256": "bb3958d5aec29adc8e35abe0980644e71bda48f06bbcddaf91b9957bcfbc1768",
+      "combined_sha256": "bb3958d5aec29adc8e35abe0980644e71bda48f06bbcddaf91b9957bcfbc1768"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/examples/7/intrinsics.txt": {
+      "baseline_sha256": "76b62be8b9969ed3787630ce12e6667e0e13811b8484e2b9b69936928d31bd0f",
+      "combined_sha256": "76b62be8b9969ed3787630ce12e6667e0e13811b8484e2b9b69936928d31bd0f"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/examples/7/rgb.jpg": {
+      "baseline_sha256": "8bc01589c575a1e5f5363743e4fed922f8093dcc7ca60858d0ac4e7fae1f17ff",
+      "combined_sha256": "8bc01589c575a1e5f5363743e4fed922f8093dcc7ca60858d0ac4e7fae1f17ff"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/mdm.egg-info/PKG-INFO": {
+      "baseline_sha256": "a60a482e5aa61e5855215d48aa607356645cf97b0d964cd8b5d00de8b8fe5a88",
+      "combined_sha256": "a60a482e5aa61e5855215d48aa607356645cf97b0d964cd8b5d00de8b8fe5a88"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/mdm.egg-info/SOURCES.txt": {
+      "baseline_sha256": "f0e6e7658cb18cc2097a72be3f8d2acb30ce954ce1d50f696112ec88bd3ba986",
+      "combined_sha256": "f0e6e7658cb18cc2097a72be3f8d2acb30ce954ce1d50f696112ec88bd3ba986"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/mdm.egg-info/dependency_links.txt": {
+      "baseline_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "combined_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/mdm.egg-info/requires.txt": {
+      "baseline_sha256": "3cf871b4192759af491804ebbae100ec2bea0643eacf998bc4463e5461246826",
+      "combined_sha256": "3cf871b4192759af491804ebbae100ec2bea0643eacf998bc4463e5461246826"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/mdm.egg-info/top_level.txt": {
+      "baseline_sha256": "e1c251886aa07f8ff3f8ca2a519fd01dc811ccadade001a038fd18f73c4bec16",
+      "combined_sha256": "e1c251886aa07f8ff3f8ca2a519fd01dc811ccadade001a038fd18f73c4bec16"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/mdm/model/__init__.py": {
+      "baseline_sha256": "20466a32b5c18e07a2afc9c1793ca48123039ee7e1a46de37461fb153a8d3193",
+      "combined_sha256": "20466a32b5c18e07a2afc9c1793ca48123039ee7e1a46de37461fb153a8d3193"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/mdm/model/dinov2_rgbd/__init__.py": {
+      "baseline_sha256": "0d2b87b7e71c7f7279ccc4b4f8b541d26071425284a0ea01a5a435fac4511cfe",
+      "combined_sha256": "0d2b87b7e71c7f7279ccc4b4f8b541d26071425284a0ea01a5a435fac4511cfe"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/mdm/model/dinov2_rgbd/hub/__init__.py": {
+      "baseline_sha256": "2932e94a2d67be87b717c49468214c1127be7864aedf37f5891d26be7bc1437f",
+      "combined_sha256": "2932e94a2d67be87b717c49468214c1127be7864aedf37f5891d26be7bc1437f"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/mdm/model/dinov2_rgbd/hub/backbones.py": {
+      "baseline_sha256": "74b7f24365cfd454326c91f438c77a4d7f0c3fb2a424eb6a5d48d53573bbf54d",
+      "combined_sha256": "74b7f24365cfd454326c91f438c77a4d7f0c3fb2a424eb6a5d48d53573bbf54d"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/mdm/model/dinov2_rgbd/hub/utils.py": {
+      "baseline_sha256": "c0533919016531b320bf9aef7cd7001249bc8ef8957cdb29246c15b67d5abdf8",
+      "combined_sha256": "c0533919016531b320bf9aef7cd7001249bc8ef8957cdb29246c15b67d5abdf8"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/mdm/model/dinov2_rgbd/layers/__init__.py": {
+      "baseline_sha256": "29d808e091d40cfdb4d5a4355c3c0fc325353686e6b0b0b3f6a24676ca4afd78",
+      "combined_sha256": "29d808e091d40cfdb4d5a4355c3c0fc325353686e6b0b0b3f6a24676ca4afd78"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/mdm/model/dinov2_rgbd/layers/attention.py": {
+      "baseline_sha256": "cc3f20ec18a07061297bcbeacc842aec43534f8eb5fd62516273c2c3385a6b79",
+      "combined_sha256": "cc3f20ec18a07061297bcbeacc842aec43534f8eb5fd62516273c2c3385a6b79"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/mdm/model/dinov2_rgbd/layers/block.py": {
+      "baseline_sha256": "fe8ae374b8b08d634320ca4083cdc5f671926bcf7eb012e8988b83920b99ef58",
+      "combined_sha256": "fe8ae374b8b08d634320ca4083cdc5f671926bcf7eb012e8988b83920b99ef58"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/mdm/model/dinov2_rgbd/layers/dino_head.py": {
+      "baseline_sha256": "9fdb1fa61c0609dc0876f711f9d0d828c33bf9fd972aab3d9c968d44e16b98d1",
+      "combined_sha256": "9fdb1fa61c0609dc0876f711f9d0d828c33bf9fd972aab3d9c968d44e16b98d1"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/mdm/model/dinov2_rgbd/layers/drop_path.py": {
+      "baseline_sha256": "b9f8236e86054b9d9a71275efcad2a9ecaa1f86b529d4b8d6109ddb5e806f67a",
+      "combined_sha256": "b9f8236e86054b9d9a71275efcad2a9ecaa1f86b529d4b8d6109ddb5e806f67a"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/mdm/model/dinov2_rgbd/layers/layer_scale.py": {
+      "baseline_sha256": "abb7bbfae152a9de2e6d0961ab5e75c79428e849281bfe50dd07b66b54b485d1",
+      "combined_sha256": "abb7bbfae152a9de2e6d0961ab5e75c79428e849281bfe50dd07b66b54b485d1"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/mdm/model/dinov2_rgbd/layers/mlp.py": {
+      "baseline_sha256": "255825c73b60a916dd00eb1e38aacbcdbf316e40d6a005efb46e245b7edb43aa",
+      "combined_sha256": "255825c73b60a916dd00eb1e38aacbcdbf316e40d6a005efb46e245b7edb43aa"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/mdm/model/dinov2_rgbd/layers/patch_embed.py": {
+      "baseline_sha256": "40da6add3d811198ea3e17cb99cdd4e5cda59e369efbbe3d18d89308618cf142",
+      "combined_sha256": "40da6add3d811198ea3e17cb99cdd4e5cda59e369efbbe3d18d89308618cf142"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/mdm/model/dinov2_rgbd/layers/patch_embed_mlp.py": {
+      "baseline_sha256": "0c18967ba6195c7864c5a963b3c128f125daea7198a0a9e0fc2528eb3246f221",
+      "combined_sha256": "0c18967ba6195c7864c5a963b3c128f125daea7198a0a9e0fc2528eb3246f221"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/mdm/model/dinov2_rgbd/layers/swiglu_ffn.py": {
+      "baseline_sha256": "4c75f68d902cf497cb51e770ab8720057fa9957dd4c93da83aaf4f8893d14538",
+      "combined_sha256": "4c75f68d902cf497cb51e770ab8720057fa9957dd4c93da83aaf4f8893d14538"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/mdm/model/dinov2_rgbd/models/__init__.py": {
+      "baseline_sha256": "ed3430c69b7845b741ac3badc189e901a52a7d45a97d6aaa441b79be29734f8a",
+      "combined_sha256": "ed3430c69b7845b741ac3badc189e901a52a7d45a97d6aaa441b79be29734f8a"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/mdm/model/dinov2_rgbd/models/mask_utils.py": {
+      "baseline_sha256": "f7a7db258f0a29cae1077056c95010b14004952ba455ba7915c0f2bbbffe75f3",
+      "combined_sha256": "f7a7db258f0a29cae1077056c95010b14004952ba455ba7915c0f2bbbffe75f3"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/mdm/model/dinov2_rgbd/models/vision_transformer.py": {
+      "baseline_sha256": "84e9883def1b61c62e438c4ee152c4425c9e7f8bba30cf655e6361eb684ba137",
+      "combined_sha256": "84e9883def1b61c62e438c4ee152c4425c9e7f8bba30cf655e6361eb684ba137"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/mdm/model/dinov2_rgbd/utils/__init__.py": {
+      "baseline_sha256": "2932e94a2d67be87b717c49468214c1127be7864aedf37f5891d26be7bc1437f",
+      "combined_sha256": "2932e94a2d67be87b717c49468214c1127be7864aedf37f5891d26be7bc1437f"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/mdm/model/dinov2_rgbd/utils/cluster.py": {
+      "baseline_sha256": "ea195476b1f5316520c07233eb73ff4b0e5fe3f7a2645aacec5b416e7bed157c",
+      "combined_sha256": "ea195476b1f5316520c07233eb73ff4b0e5fe3f7a2645aacec5b416e7bed157c"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/mdm/model/dinov2_rgbd/utils/config.py": {
+      "baseline_sha256": "588574a78951ccfe7ffaad9ef7cab53d37e837e3ae98cfc1b6a976189073d87c",
+      "combined_sha256": "588574a78951ccfe7ffaad9ef7cab53d37e837e3ae98cfc1b6a976189073d87c"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/mdm/model/dinov2_rgbd/utils/dtype.py": {
+      "baseline_sha256": "610251537bcf55de8961a17dd625560eae5cfa5082e9382bbd9ded86db92e1c6",
+      "combined_sha256": "610251537bcf55de8961a17dd625560eae5cfa5082e9382bbd9ded86db92e1c6"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/mdm/model/dinov2_rgbd/utils/param_groups.py": {
+      "baseline_sha256": "ec1daae9eb7c50492091504f97087e3179d46a080d7b7f131967c07cb15cf6d4",
+      "combined_sha256": "ec1daae9eb7c50492091504f97087e3179d46a080d7b7f131967c07cb15cf6d4"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/mdm/model/dinov2_rgbd/utils/utils.py": {
+      "baseline_sha256": "10bfc824fdb00cf0c4afc0a875b5763ad4c5f33ec38c2515b12528307b789305",
+      "combined_sha256": "10bfc824fdb00cf0c4afc0a875b5763ad4c5f33ec38c2515b12528307b789305"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/mdm/model/modules_decoder.py": {
+      "baseline_sha256": "e809c6f5abb57061b58e43e50a04e20ac2179503abed02cafda3f82dfac7387e",
+      "combined_sha256": "e809c6f5abb57061b58e43e50a04e20ac2179503abed02cafda3f82dfac7387e"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/mdm/model/modules_rgbd_encoder.py": {
+      "baseline_sha256": "72f06b74ba10c39ae20b01154c8b0b108a17e47e0bb978563c80fc51fe5c46cd",
+      "combined_sha256": "72f06b74ba10c39ae20b01154c8b0b108a17e47e0bb978563c80fc51fe5c46cd"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/mdm/model/utils.py": {
+      "baseline_sha256": "a7108de9525839a7277c6ce0db6d8108156739cb02571ad6a87eb822814204e6",
+      "combined_sha256": "a7108de9525839a7277c6ce0db6d8108156739cb02571ad6a87eb822814204e6"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/mdm/model/v2.py": {
+      "baseline_sha256": "45f69b4e2c5fab73f883a2790a3c7839d7fd4c11c4d11343ef1d98b31be0351e",
+      "combined_sha256": "45f69b4e2c5fab73f883a2790a3c7839d7fd4c11c4d11343ef1d98b31be0351e"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/mdm/utils/__init__.py": {
+      "baseline_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "combined_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/mdm/utils/geo.py": {
+      "baseline_sha256": "b235df79d279a8ba0c1d62004df0a8af9a0c2a0faa4ebb52a0e7140f0541c8eb",
+      "combined_sha256": "b235df79d279a8ba0c1d62004df0a8af9a0c2a0faa4ebb52a0e7140f0541c8eb"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/mdm/utils/io.py": {
+      "baseline_sha256": "b6907a108db83f8e40862c96ad089bc4d05dd88a630430b5c0f8c67ef5e1d20c",
+      "combined_sha256": "b6907a108db83f8e40862c96ad089bc4d05dd88a630430b5c0f8c67ef5e1d20c"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/mdm/utils/tools.py": {
+      "baseline_sha256": "ee4893ddbc49da5b24ab43277e9693e86a842dace69452803bab85b531121f60",
+      "combined_sha256": "ee4893ddbc49da5b24ab43277e9693e86a842dace69452803bab85b531121f60"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/mdm/utils/vis.py": {
+      "baseline_sha256": "564fbb5898b6981c70fb3ce845b4ad1a1594360bd10787773ed194efa497c88a",
+      "combined_sha256": "564fbb5898b6981c70fb3ce845b4ad1a1594360bd10787773ed194efa497c88a"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/pyproject.toml": {
+      "baseline_sha256": "ead97cc2acc436b7f8dc538c634a1937a85ea89fb2202fa9c1ec8a812a807bfa",
+      "combined_sha256": "ead97cc2acc436b7f8dc538c634a1937a85ea89fb2202fa9c1ec8a812a807bfa"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/pyrightconfig.json": {
+      "baseline_sha256": "57b08f87f3296e2675929e0202ba868921ab289cb264d417faf1f93ebf88f57b",
+      "combined_sha256": "57b08f87f3296e2675929e0202ba868921ab289cb264d417faf1f93ebf88f57b"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/requirements.txt": {
+      "baseline_sha256": "08e5c1253755a68475afc63e692510c1bbbcbaaa5d758eef1584bc40a455ccb4",
+      "combined_sha256": "08e5c1253755a68475afc63e692510c1bbbcbaaa5d758eef1584bc40a455ccb4"
+    },
+    "lingbotvla/models/vla/vision_models/lingbot-depth/tech-report.pdf": {
+      "baseline_sha256": "db1a4bd0435608eafbaad610862e90e20062a642cdcaca4e2038f4ba64a5ea63",
+      "combined_sha256": "db1a4bd0435608eafbaad610862e90e20062a642cdcaca4e2038f4ba64a5ea63"
+    },
+    "lingbotvla/models/vla/vision_models/module_utils.py": {
+      "baseline_sha256": "3d7cc8834d949c193f80add5ce2f031ec08e32312c895de07c68144c4bdc77aa",
+      "combined_sha256": "3d7cc8834d949c193f80add5ce2f031ec08e32312c895de07c68144c4bdc77aa"
+    },
+    "lingbotvla/ops/__init__.py": {
+      "baseline_sha256": "3935848ce37fb4598a1d091bc7162d17ff81df1bfb445bed4e8fc25bef705cc1",
+      "combined_sha256": "3935848ce37fb4598a1d091bc7162d17ff81df1bfb445bed4e8fc25bef705cc1"
+    },
+    "lingbotvla/ops/attention.py": {
+      "baseline_sha256": "1e89c4bd5112687e76f2e7a45971672b428fa2d5ff70c4979142feea1bc177c1",
+      "combined_sha256": "1e89c4bd5112687e76f2e7a45971672b428fa2d5ff70c4979142feea1bc177c1"
+    },
+    "lingbotvla/ops/dit/rope_wan/rotary.py": {
+      "baseline_sha256": "b8231dbea9fdbe268375bd0b18cc2b5ba932c27d0bba089fa31f88d5eb1f1aab",
+      "combined_sha256": "b8231dbea9fdbe268375bd0b18cc2b5ba932c27d0bba089fa31f88d5eb1f1aab"
+    },
+    "lingbotvla/ops/fused_moe.py": {
+      "baseline_sha256": "1bc8be3252cb6d9d043a2939b7cfd8c69822e79be59cf30866f94b163afbc8b5",
+      "combined_sha256": "1bc8be3252cb6d9d043a2939b7cfd8c69822e79be59cf30866f94b163afbc8b5"
+    },
+    "lingbotvla/ops/group_gemm/__init__.py": {
+      "baseline_sha256": "ced14be479d27e864cf3557c37d8abe00d2204ba6c030620bf48ea85e25a5921",
+      "combined_sha256": "ced14be479d27e864cf3557c37d8abe00d2204ba6c030620bf48ea85e25a5921"
+    },
+    "lingbotvla/ops/group_gemm/kernel/__init__.py": {
+      "baseline_sha256": "ced14be479d27e864cf3557c37d8abe00d2204ba6c030620bf48ea85e25a5921",
+      "combined_sha256": "ced14be479d27e864cf3557c37d8abe00d2204ba6c030620bf48ea85e25a5921"
+    },
+    "lingbotvla/ops/group_gemm/kernel/group_gemm.py": {
+      "baseline_sha256": "06d45d9be527a9def13e385297b8444b19ea2d75da58ae769ed838f6539a3d4b",
+      "combined_sha256": "06d45d9be527a9def13e385297b8444b19ea2d75da58ae769ed838f6539a3d4b"
+    },
+    "lingbotvla/ops/group_gemm/kernel/moe.py": {
+      "baseline_sha256": "e2392e269128d440b79f98415ff1ebd6045e015fd17513c68462787653b442a7",
+      "combined_sha256": "e2392e269128d440b79f98415ff1ebd6045e015fd17513c68462787653b442a7"
+    },
+    "lingbotvla/ops/group_gemm/kernel/triton_utils/__init__.py": {
+      "baseline_sha256": "ced14be479d27e864cf3557c37d8abe00d2204ba6c030620bf48ea85e25a5921",
+      "combined_sha256": "ced14be479d27e864cf3557c37d8abe00d2204ba6c030620bf48ea85e25a5921"
+    },
+    "lingbotvla/ops/group_gemm/kernel/triton_utils/activation.py": {
+      "baseline_sha256": "19c183fe5bd29444586a54a129414d5f4b79ebba0e58c0b5e4cafee75cf84137",
+      "combined_sha256": "19c183fe5bd29444586a54a129414d5f4b79ebba0e58c0b5e4cafee75cf84137"
+    },
+    "lingbotvla/ops/group_gemm/kernel/triton_utils/memory.py": {
+      "baseline_sha256": "070d0de9c420c44daf4b423cccb2b5bd144b1fb5137142b7b84e7db32d7d5b56",
+      "combined_sha256": "070d0de9c420c44daf4b423cccb2b5bd144b1fb5137142b7b84e7db32d7d5b56"
+    },
+    "lingbotvla/ops/group_gemm/kernel/triton_utils/utils.py": {
+      "baseline_sha256": "09e7d34dd88216694d07692df80e6db8611aa24df9563c3c024b50af61ec2d12",
+      "combined_sha256": "09e7d34dd88216694d07692df80e6db8611aa24df9563c3c024b50af61ec2d12"
+    },
+    "lingbotvla/ops/group_gemm/utils/__init__.py": {
+      "baseline_sha256": "ced14be479d27e864cf3557c37d8abe00d2204ba6c030620bf48ea85e25a5921",
+      "combined_sha256": "ced14be479d27e864cf3557c37d8abe00d2204ba6c030620bf48ea85e25a5921"
+    },
+    "lingbotvla/ops/group_gemm/utils/benchmark_utils.py": {
+      "baseline_sha256": "97d9558b56c3ee0e1990fb24d8fe31e56dfa0aa50cc8d05569ae8b905a57d975",
+      "combined_sha256": "97d9558b56c3ee0e1990fb24d8fe31e56dfa0aa50cc8d05569ae8b905a57d975"
+    },
+    "lingbotvla/ops/group_gemm/utils/config.py": {
+      "baseline_sha256": "d6a79bb8b43c87b68cf6dafebeed30382e2935c3771a4a7c930245ce860abe9a",
+      "combined_sha256": "d6a79bb8b43c87b68cf6dafebeed30382e2935c3771a4a7c930245ce860abe9a"
+    },
+    "lingbotvla/ops/group_gemm/utils/device.py": {
+      "baseline_sha256": "b6c0b0815f251d6d45ef85c546372cea75ae836d6070e3117641afaab1e55eb2",
+      "combined_sha256": "b6c0b0815f251d6d45ef85c546372cea75ae836d6070e3117641afaab1e55eb2"
+    },
+    "lingbotvla/ops/group_gemm/utils/envvars.py": {
+      "baseline_sha256": "2c0e816a20c5d0cfccf1497c50a78203c7aecc51fb4a08eefafaa33b2f22e8d7",
+      "combined_sha256": "2c0e816a20c5d0cfccf1497c50a78203c7aecc51fb4a08eefafaa33b2f22e8d7"
+    },
+    "lingbotvla/ops/group_gemm/utils/kernel.py": {
+      "baseline_sha256": "261363ce167e5dfc4e66a5a86bc7c24d6d36ff94c83f421050b98a7455a9b20d",
+      "combined_sha256": "261363ce167e5dfc4e66a5a86bc7c24d6d36ff94c83f421050b98a7455a9b20d"
+    },
+    "lingbotvla/ops/group_gemm/utils/path.py": {
+      "baseline_sha256": "82100f20fdf6aa4455dde917606e2f2b36fc062ff23db59f0f4aad01e7751d2d",
+      "combined_sha256": "82100f20fdf6aa4455dde917606e2f2b36fc062ff23db59f0f4aad01e7751d2d"
+    },
+    "lingbotvla/ops/group_gemm/utils/pretuned.py": {
+      "baseline_sha256": "7b09a5353a92c54d49911b96d042545a0143f83e02448f964755d30d0dbe0ba5",
+      "combined_sha256": "7b09a5353a92c54d49911b96d042545a0143f83e02448f964755d30d0dbe0ba5"
+    },
+    "lingbotvla/ops/joint_attention.py": {
+      "baseline_sha256": null,
+      "combined_sha256": "6068a8a203cf00559635628b06a06799a1a691857d4a4245bd873fec781e07c5"
+    },
+    "lingbotvla/ops/loss.py": {
+      "baseline_sha256": "c8ed3b1cd2d7eb6246fa126a2ba2cd03a1c15eb4ff038083e0ee32e0759b7b89",
+      "combined_sha256": "c8ed3b1cd2d7eb6246fa126a2ba2cd03a1c15eb4ff038083e0ee32e0759b7b89"
+    },
+    "lingbotvla/ops/moe_loss.py": {
+      "baseline_sha256": "9d3908b76a0becb7164890beb4ed409ea16b27cdafb7503b70debb3d42f1629b",
+      "combined_sha256": "9d3908b76a0becb7164890beb4ed409ea16b27cdafb7503b70debb3d42f1629b"
+    },
+    "lingbotvla/ops/npu_moe.py": {
+      "baseline_sha256": "77ee243440df21d4eb62b19d88894573ac676339750dccbac14919dd7ca96c81",
+      "combined_sha256": "77ee243440df21d4eb62b19d88894573ac676339750dccbac14919dd7ca96c81"
+    },
+    "lingbotvla/ops/robby_moe.py": {
+      "baseline_sha256": "56eb2c94987389517431e39cb4b4470967e96ff995713d9031b00b8607db1512",
+      "combined_sha256": "56eb2c94987389517431e39cb4b4470967e96ff995713d9031b00b8607db1512"
+    },
+    "lingbotvla/ops/triton_moe_loss.py": {
+      "baseline_sha256": "4a34fdae6bd59a98f49f773602d93b0bdee17745ed0a12ab43be4ebf4214ce68",
+      "combined_sha256": "4a34fdae6bd59a98f49f773602d93b0bdee17745ed0a12ab43be4ebf4214ce68"
+    },
+    "lingbotvla/optim/__init__.py": {
+      "baseline_sha256": "5214e466c80d09494bec7e2fa73c9a720a8d59968d99fce2ca561390e1954d44",
+      "combined_sha256": "5214e466c80d09494bec7e2fa73c9a720a8d59968d99fce2ca561390e1954d44"
+    },
+    "lingbotvla/optim/dist_muon.py": {
+      "baseline_sha256": "c37ff0ff975e1b07fd3cf5fcc2951b8eb3ff237f218907e546179854ecb43bd3",
+      "combined_sha256": "c37ff0ff975e1b07fd3cf5fcc2951b8eb3ff237f218907e546179854ecb43bd3"
+    },
+    "lingbotvla/optim/dist_muon_params.py": {
+      "baseline_sha256": "91837d1e5fea718d9795d3eae882fd5500bdece814177d682604c30d87e0ebf9",
+      "combined_sha256": "91837d1e5fea718d9795d3eae882fd5500bdece814177d682604c30d87e0ebf9"
+    },
+    "lingbotvla/optim/flex_shard/__init__.py": {
+      "baseline_sha256": "271c4ee375bf593e70ced7409e3086bfd9b9da68e8aee7be7e4b0db17878e274",
+      "combined_sha256": "271c4ee375bf593e70ced7409e3086bfd9b9da68e8aee7be7e4b0db17878e274"
+    },
+    "lingbotvla/optim/flex_shard/_compat.py": {
+      "baseline_sha256": "5ad8e41a593ddf1699a719a766fb33c2389048f7d4e77d87fe87d33b27af7d1a",
+      "combined_sha256": "5ad8e41a593ddf1699a719a766fb33c2389048f7d4e77d87fe87d33b27af7d1a"
+    },
+    "lingbotvla/optim/flex_shard/_optimizer_reshard_runtime.py": {
+      "baseline_sha256": "3995a8c4b258e3b652942481ade9c618a761b50f7a82bc939e7e04d722d8babf",
+      "combined_sha256": "3995a8c4b258e3b652942481ade9c618a761b50f7a82bc939e7e04d722d8babf"
+    },
+    "lingbotvla/optim/flex_shard/_optimizer_reshard_schedule.py": {
+      "baseline_sha256": "1ac4160ad5d5d62df3838646c82e2851befb0e8abf2489de35389ba302aac86f",
+      "combined_sha256": "1ac4160ad5d5d62df3838646c82e2851befb0e8abf2489de35389ba302aac86f"
+    },
+    "lingbotvla/optim/flex_shard/dist_muon.py": {
+      "baseline_sha256": "d12a27006bf23d6493521828129c2643517a7a23e5ef5770547e042f24c86439",
+      "combined_sha256": "d12a27006bf23d6493521828129c2643517a7a23e5ef5770547e042f24c86439"
+    },
+    "lingbotvla/optim/flex_shard/optimizer_reshard.py": {
+      "baseline_sha256": "f2ffcb294068ea7edf309d4a23b6f6b58f273bd7f21bd14e0041abe0d913ec3b",
+      "combined_sha256": "f2ffcb294068ea7edf309d4a23b6f6b58f273bd7f21bd14e0041abe0d913ec3b"
+    },
+    "lingbotvla/optim/lr_scheduler.py": {
+      "baseline_sha256": "fd1ace611797fb7ee9b33e6b293b0c2154fb18e4744fb77cde0c2e8381c283d2",
+      "combined_sha256": "fd1ace611797fb7ee9b33e6b293b0c2154fb18e4744fb77cde0c2e8381c283d2"
+    },
+    "lingbotvla/optim/muon.py": {
+      "baseline_sha256": "2ca3fcce6c158ed0dbf726313cb623520b13ff249d4ff83a98d6c3a4a6b47881",
+      "combined_sha256": "2ca3fcce6c158ed0dbf726313cb623520b13ff249d4ff83a98d6c3a4a6b47881"
+    },
+    "lingbotvla/optim/optimizer.py": {
+      "baseline_sha256": "88886197cc7aa2c3470ac4ba139c5ad5cc40f483c7dc61e3333611b0f577f733",
+      "combined_sha256": "fd332ec3328fecd8558d6f07950587f5b1cccddeb03910a4dc4e02d25a2ce473"
+    },
+    "lingbotvla/schedulers/flow_match.py": {
+      "baseline_sha256": "5a1d3ac920ea1b3b7fe1ee4027c46833c03d5a48f099d2f9bce0a054f9448d6d",
+      "combined_sha256": "5a1d3ac920ea1b3b7fe1ee4027c46833c03d5a48f099d2f9bce0a054f9448d6d"
+    },
+    "lingbotvla/utils/__init__.py": {
+      "baseline_sha256": "ced14be479d27e864cf3557c37d8abe00d2204ba6c030620bf48ea85e25a5921",
+      "combined_sha256": "ced14be479d27e864cf3557c37d8abe00d2204ba6c030620bf48ea85e25a5921"
+    },
+    "lingbotvla/utils/arguments.py": {
+      "baseline_sha256": "72a898580d7eeb68dd76395f376aa12a971ae7b0e87fe32a2e5816f7c8683351",
+      "combined_sha256": "72a898580d7eeb68dd76395f376aa12a971ae7b0e87fe32a2e5816f7c8683351"
+    },
+    "lingbotvla/utils/async_hf_checkpoint.py": {
+      "baseline_sha256": "bf9ab6ec4e166b353fd66313ebc5333696f77cafb2e31c866afc836cbc78c24c",
+      "combined_sha256": "bf9ab6ec4e166b353fd66313ebc5333696f77cafb2e31c866afc836cbc78c24c"
+    },
+    "lingbotvla/utils/async_tb_writer.py": {
+      "baseline_sha256": "f920b4532bc7d37523c266fe4dd82ca1a8ca1d166b393c04830c43092d75b8ac",
+      "combined_sha256": "f920b4532bc7d37523c266fe4dd82ca1a8ca1d166b393c04830c43092d75b8ac"
+    },
+    "lingbotvla/utils/count_flops.py": {
+      "baseline_sha256": "fc5c198a1705d30eb93067ac8302acda981bc8c5c3b1cb8c0c6a9797b8b5780c",
+      "combined_sha256": "fc5c198a1705d30eb93067ac8302acda981bc8c5c3b1cb8c0c6a9797b8b5780c"
+    },
+    "lingbotvla/utils/dist_utils.py": {
+      "baseline_sha256": "2fe84232343bc18e6cee980aa2d0531bb58805c3a05493707ea691c6b90cc3aa",
+      "combined_sha256": "2fe84232343bc18e6cee980aa2d0531bb58805c3a05493707ea691c6b90cc3aa"
+    },
+    "lingbotvla/utils/dit_utils.py": {
+      "baseline_sha256": "4302bda642387ec2025823999ef1fffc8cdf2aeaa053c9f9dc7085000406880f",
+      "combined_sha256": "4302bda642387ec2025823999ef1fffc8cdf2aeaa053c9f9dc7085000406880f"
+    },
+    "lingbotvla/utils/ema.py": {
+      "baseline_sha256": "e5491ff90a50f8170c0cc0cd5856a21fe1d084544de691652b5295cb758c8f82",
+      "combined_sha256": "e5491ff90a50f8170c0cc0cd5856a21fe1d084544de691652b5295cb758c8f82"
+    },
+    "lingbotvla/utils/helper.py": {
+      "baseline_sha256": "c35007430238271bcf394cd7d870ae66ac0c92413babbddca64732db6ee7d356",
+      "combined_sha256": "c35007430238271bcf394cd7d870ae66ac0c92413babbddca64732db6ee7d356"
+    },
+    "lingbotvla/utils/import_utils.py": {
+      "baseline_sha256": "1cfa2f06905d3fa0a32d08dc8973e32b6bcbf071a80f014d6371515b6b32a66f",
+      "combined_sha256": "1cfa2f06905d3fa0a32d08dc8973e32b6bcbf071a80f014d6371515b6b32a66f"
+    },
+    "lingbotvla/utils/logging.py": {
+      "baseline_sha256": "0311934e4d0382950bf2f1c77435117f3f8ce673d1bfec62d46e8cd83d6b0610",
+      "combined_sha256": "0311934e4d0382950bf2f1c77435117f3f8ce673d1bfec62d46e8cd83d6b0610"
+    },
+    "lingbotvla/utils/lora_utils.py": {
+      "baseline_sha256": "cc43360c66ec7062ee4302cd3bdd83771754b7cf2fc05af4694b8f820718b85d",
+      "combined_sha256": "cc43360c66ec7062ee4302cd3bdd83771754b7cf2fc05af4694b8f820718b85d"
+    },
+    "lingbotvla/utils/model_utils.py": {
+      "baseline_sha256": "fc4874db144ac2d21c5ead866c7b79151dbbf6e2d1b3998011f56bab23465d7c",
+      "combined_sha256": "fc4874db144ac2d21c5ead866c7b79151dbbf6e2d1b3998011f56bab23465d7c"
+    },
+    "lingbotvla/utils/moe_utils.py": {
+      "baseline_sha256": "378054f52b2aac9c59459278dadfceb4acf78f4b21a6e7934cd518031ae2a66d",
+      "combined_sha256": "378054f52b2aac9c59459278dadfceb4acf78f4b21a6e7934cd518031ae2a66d"
+    },
+    "lingbotvla/utils/normalize.py": {
+      "baseline_sha256": "64020713950bcb27b3589c12219292ed1859a090c986c69fdc5b62e053fd5737",
+      "combined_sha256": "64020713950bcb27b3589c12219292ed1859a090c986c69fdc5b62e053fd5737"
+    },
+    "lingbotvla/utils/obs_storage.py": {
+      "baseline_sha256": "8d74f8226b27561f05eb37b948498cce5bb835f669ca1b7efa5be1d74cd9479a",
+      "combined_sha256": "8d74f8226b27561f05eb37b948498cce5bb835f669ca1b7efa5be1d74cd9479a"
+    },
+    "lingbotvla/utils/process.py": {
+      "baseline_sha256": "a50241f6408cb09fa6c6d633c21e32504826a16b275fe995f39d46a0f78fe1f3",
+      "combined_sha256": "a50241f6408cb09fa6c6d633c21e32504826a16b275fe995f39d46a0f78fe1f3"
+    },
+    "lingbotvla/utils/recompute_utils.py": {
+      "baseline_sha256": "efee9e750d0788f699e9de82da0a06caa7f961d26e748075457be2bc35430158",
+      "combined_sha256": "efee9e750d0788f699e9de82da0a06caa7f961d26e748075457be2bc35430158"
+    },
+    "lingbotvla/utils/seqlen_pos_transform_utils.py": {
+      "baseline_sha256": "9db5f54ff91bcb8384ae8e88f8b430bfe018c2a7e07382f885cc2646894056d3",
+      "combined_sha256": "9db5f54ff91bcb8384ae8e88f8b430bfe018c2a7e07382f885cc2646894056d3"
+    },
+    "lingbotvla/utils/training_io.py": {
+      "baseline_sha256": "7878447e7127710936ddc5e641b41a65afdf1db2a433571a8afcd87d44a0a63e",
+      "combined_sha256": "7878447e7127710936ddc5e641b41a65afdf1db2a433571a8afcd87d44a0a63e"
+    },
+    "lingbotvla/utils/training_profiler.py": {
+      "baseline_sha256": "1e231f736b228f4c06577973139055d0ab7a434e90b34cdc6a764334eb05e5f7",
+      "combined_sha256": "1e231f736b228f4c06577973139055d0ab7a434e90b34cdc6a764334eb05e5f7"
+    },
+    "pyproject.toml": {
+      "baseline_sha256": "89af0b07014aa2a0d4c5eb387181cda56cd3d21a98d360abf691dea4dc200549",
+      "combined_sha256": "89af0b07014aa2a0d4c5eb387181cda56cd3d21a98d360abf691dea4dc200549"
+    },
+    "scripts/compute_norm_stats.py": {
+      "baseline_sha256": "6be79c051fda398a670645e61ab86155e057ea95dca206efaf2b113e44bc2042",
+      "combined_sha256": "6be79c051fda398a670645e61ab86155e057ea95dca206efaf2b113e44bc2042"
+    },
+    "scripts/download_hf_data.py": {
+      "baseline_sha256": "174ee3af13e4facc7741cfef7cef1c42eecb13e681d2a857492e17c8da8c3f06",
+      "combined_sha256": "174ee3af13e4facc7741cfef7cef1c42eecb13e681d2a857492e17c8da8c3f06"
+    },
+    "scripts/download_hf_model.py": {
+      "baseline_sha256": "4635cef3206a0a26c6429d06c8f66de14f72a4453c5f6252153e2ad3a43c641b",
+      "combined_sha256": "4635cef3206a0a26c6429d06c8f66de14f72a4453c5f6252153e2ad3a43c641b"
+    },
+    "scripts/open_loop_eval.py": {
+      "baseline_sha256": "e60d63ca35b7a279f308f8f73319a72a0c50d3301c6f72f652b48aef0bb3e634",
+      "combined_sha256": "e60d63ca35b7a279f308f8f73319a72a0c50d3301c6f72f652b48aef0bb3e634"
+    },
+    "tasks/vla/train_lingbotvla.py": {
+      "baseline_sha256": "9a059bc9a475549d059581ea2f04113d6dcbb500c1784687a614dc2f9d45abc9",
+      "combined_sha256": "9a059bc9a475549d059581ea2f04113d6dcbb500c1784687a614dc2f9d45abc9"
+    },
+    "tasks/vla/train_pi0.py": {
+      "baseline_sha256": "437b3fb2b802beccd208b60086be1bbb2a00f396e11796d18803f913ec63f0f2",
+      "combined_sha256": "437b3fb2b802beccd208b60086be1bbb2a00f396e11796d18803f913ec63f0f2"
+    },
+    "tests/test_moe_monitor_batch.py": {
+      "baseline_sha256": null,
+      "combined_sha256": "c69b722862a09a5a9a8708a2d6937d97507e314393e128c5e1c7c676b0d92fa9"
+    },
+    "tests/test_npu_moe.py": {
+      "baseline_sha256": "e03533c417a3f4486bd29a1091fc0d8f3d804eff8effb237572e304200f55f54",
+      "combined_sha256": "e03533c417a3f4486bd29a1091fc0d8f3d804eff8effb237572e304200f55f54"
+    },
+    "tests/test_obs_storage.py": {
+      "baseline_sha256": "297699372a78eb1f76fe34652349c214565502bfd834e2b990991df2f374be78",
+      "combined_sha256": "297699372a78eb1f76fe34652349c214565502bfd834e2b990991df2f374be78"
+    },
+    "tests/test_training_obs_flow.py": {
+      "baseline_sha256": "4a70a2fd454827204b1d292b72b20996c98a7b5f68779fcd8df92aa1ee514fc9",
+      "combined_sha256": "4a70a2fd454827204b1d292b72b20996c98a7b5f68779fcd8df92aa1ee514fc9"
+    },
+    "tests/test_video_decode_optimized.py": {
+      "baseline_sha256": "ef2c41bea3dda2472b672fb8751fd3f5853ed5f1d00532b8236b1861fd22e25d",
+      "combined_sha256": "ef2c41bea3dda2472b672fb8751fd3f5853ed5f1d00532b8236b1861fd22e25d"
+    },
+    "tests/test_video_episode_bounds.py": {
+      "baseline_sha256": "aaa9ee61923e2ea638f9c253021b7630dad7b539dea47faee2a10378787a6cc3",
+      "combined_sha256": "aaa9ee61923e2ea638f9c253021b7630dad7b539dea47faee2a10378787a6cc3"
+    },
+    "tests/test_video_episode_loader.py": {
+      "baseline_sha256": "a01a7283f7de7862bb8ed4b9a5072581f3ceee45af6326d83daeb45af39fef35",
+      "combined_sha256": "a01a7283f7de7862bb8ed4b9a5072581f3ceee45af6326d83daeb45af39fef35"
+    },
+    "tools/analyze_npu_profile.py": {
+      "baseline_sha256": "2f67fb2f2259307ad0b7ed862044f38eb1ac0026768383390d5ca33dda626188",
+      "combined_sha256": "2f67fb2f2259307ad0b7ed862044f38eb1ac0026768383390d5ca33dda626188"
+    },
+    "tools/analyze_robotwin_moe_ab.py": {
+      "baseline_sha256": "5e3ba04e12ac1160f170529cdc745e0499e43947501bd159039ca6a9893f42a0",
+      "combined_sha256": "5e3ba04e12ac1160f170529cdc745e0499e43947501bd159039ca6a9893f42a0"
+    },
+    "tools/bench_npu_moe_candidates.py": {
+      "baseline_sha256": "bdfbe7cc40a69b5447c32f8616b53cc646acbd10c699ebec79bdd8a91d549a1b",
+      "combined_sha256": "bdfbe7cc40a69b5447c32f8616b53cc646acbd10c699ebec79bdd8a91d549a1b"
+    },
+    "tools/bench_robotwin_npu_moe.sh": {
+      "baseline_sha256": "95a9bccd4b8f48a7519a33e94a103bbc9ee05a59a371bbe78acd40e9d1dbaf0b",
+      "combined_sha256": "95a9bccd4b8f48a7519a33e94a103bbc9ee05a59a371bbe78acd40e9d1dbaf0b"
+    },
+    "tools/bench_video_decode.py": {
+      "baseline_sha256": "1199c4457bc87343f06ed3eb3b675b2178678c658aa632a2c274caeac9e83fd8",
+      "combined_sha256": "1199c4457bc87343f06ed3eb3b675b2178678c658aa632a2c274caeac9e83fd8"
+    },
+    "tools/check_adamw_foreach.py": {
+      "baseline_sha256": null,
+      "combined_sha256": "25bfb305fc464885e5cf378964b4d7470a778d553804b84c33dc6b8a7166026d"
+    },
+    "tools/check_adamw_resume.py": {
+      "baseline_sha256": null,
+      "combined_sha256": "a53726e0cb11450b0a619b7eb99259f747f64b0d27eff37b097fe0d090bca80a"
+    },
+    "tools/check_joint_attention.py": {
+      "baseline_sha256": null,
+      "combined_sha256": "8339d0fdfbba91414bf33bdd4c98413c962e5e0215d287a80e906d7d7f9683eb"
+    },
+    "tools/check_npu_moe_fsdp.py": {
+      "baseline_sha256": "b95a90c02af50b0abab3d5bc587cd49e1ad5c240757fbd5fdc9cba3595b93a1b",
+      "combined_sha256": "b95a90c02af50b0abab3d5bc587cd49e1ad5c240757fbd5fdc9cba3595b93a1b"
+    },
+    "tools/create_train_env.sh": {
+      "baseline_sha256": "1671c29a504cde32113b92233febcc5e8cd20d1e255eb32ee8b96305ddcfbce1",
+      "combined_sha256": "1671c29a504cde32113b92233febcc5e8cd20d1e255eb32ee8b96305ddcfbce1"
+    },
+    "tools/modelscope_login.py": {
+      "baseline_sha256": "adce6b15e70529e0c6f28c7e2417f277d61e5e32ad2d7d92fe622059e48cb9a4",
+      "combined_sha256": "adce6b15e70529e0c6f28c7e2417f277d61e5e32ad2d7d92fe622059e48cb9a4"
+    },
+    "tools/profile_robotwin_npu.sh": {
+      "baseline_sha256": "27d3bffe8f6d1eef51a3c74d96128fadd320c67112eac75351e7c8ff594182e3",
+      "combined_sha256": "27d3bffe8f6d1eef51a3c74d96128fadd320c67112eac75351e7c8ff594182e3"
+    },
+    "tools/upload_robotwin_modelscope.py": {
+      "baseline_sha256": "baf6d10c0d0443aea6a760a04b89c42b8b62b13bd1947f1b3a29ee63a68e3af3",
+      "combined_sha256": "baf6d10c0d0443aea6a760a04b89c42b8b62b13bd1947f1b3a29ee63a68e3af3"
+    },
+    "train_robotwin_npu.sh": {
+      "baseline_sha256": "c1cc67d7615c0baaf5dd547d8a1b12db8379b0e8178f8647bae7d21a271d3635",
+      "combined_sha256": "c1cc67d7615c0baaf5dd547d8a1b12db8379b0e8178f8647bae7d21a271d3635"
+    }
+  },
+  "flags": {
+    "LINGBOT_MOE_MONITOR_BATCH_COUNTS": "default 0 (original)",
+    "LINGBOT_JOINT_ATTN_BACKEND": "default empty (original); sdpa_fp32 opt-in",
+    "LINGBOT_ADAMW_FOREACH_NPU": "default 0 (original NPU scalar path)"
+  },
+  "npu_run": false,
+  "cpu_validation": {
+    "device": "CPU only, no NPU initialized",
+    "monitor": {
+      "passed": true,
+      "cases": 12,
+      "log": "/home/ma-user/work/lingbot-vla-v2/reports/20261016_speed_round2/combined_monitor_cpu.log"
+    },
+    "attention": {
+      "passed": true,
+      "cases": 8,
+      "error_rule_self_checks": 6
+    },
+    "adamw_postload": {
+      "passed": true,
+      "cases": 4,
+      "builder_guard_cases": 6,
+      "steps": 20,
+      "parameter_count": 24
+    },
+    "adamw_resume": {
+      "passed": true,
+      "cases": 12
+    },
+    "all_source_hashes_unchanged_after_tests": true,
+    "optimizer_matches_adamw_snapshot": true,
+    "changed_python_syntax_valid": true,
+    "passed": true
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "uri": "obs://yw-2030-extern/Partner_Qin/robot_1014/robotwin_1ep_fast",
+  "verified_by": "remote SHA256",
+  "files": [
+    {
+      "path": "launch_tmux.sh",
+      "size": 1386,
+      "sha256": "25b8b03b22979a8d3f7bd99adbdc93b79c9489f7e56fc2691b249d89770329b6"
+    },
+    {
+      "path": "preparation.json",
+      "size": 1093,
+      "sha256": "c1c76b25511044c9ae6d03987371b64282914a7d114e8f6bae1ef37a9c9aed21"
+    },
+    {
+      "path": "source/pyav_decoder.py",
+      "size": 5409,
+      "sha256": "b2e3eb3ce2453126318fe3f83987214fa8db28304238f4f2ecbff689d3c4d417"
+    },
+    {
+      "path": "source/video_utils.py",
+      "size": 17633,
+      "sha256": "54cc73b18453a1b933029ce143d80def23aa800daa896b11f6db87aa142f654b"
+    },
+    {
+      "path": "train_robotwin_npu.sh",
+      "size": 16797,
+      "sha256": "e8514772d0630d847702e0b31a0c891e1512d347c325b565587c68c7b69f4de2"
+    },
+    {
+      "path": "training_config.yaml",
+      "size": 5729,
+      "sha256": "9b532eb54ca02023e7154307ecff562a2b971cc8880d151e2367f8663dafec60"
+    }
+  ]
+}

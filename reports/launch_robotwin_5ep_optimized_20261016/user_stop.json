@@ -1,0 +1,127 @@
+{
+  "requested_stop_at": "2026-10-16T19:47:58.914197+08:00",
+  "run_name": "robotwin_5ep_optimized_20261016",
+  "signal": "SIGTERM",
+  "identified_processes": [
+    {
+      "pid": 2844463,
+      "ppid": 1,
+      "pgrp": 2844463,
+      "start_ticks": "1727679854",
+      "comm": "python3.1"
+    },
+    {
+      "pid": 2844465,
+      "ppid": 1,
+      "pgrp": 2844465,
+      "start_ticks": "1727679855",
+      "comm": "python3.1"
+    },
+    {
+      "pid": 2844466,
+      "ppid": 1,
+      "pgrp": 2844466,
+      "start_ticks": "1727679855",
+      "comm": "python3.1"
+    },
+    {
+      "pid": 2844467,
+      "ppid": 1,
+      "pgrp": 2844467,
+      "start_ticks": "1727679855",
+      "comm": "python3.1"
+    },
+    {
+      "pid": 2844468,
+      "ppid": 1,
+      "pgrp": 2844468,
+      "start_ticks": "1727679855",
+      "comm": "python3.1"
+    },
+    {
+      "pid": 2844469,
+      "ppid": 1,
+      "pgrp": 2844469,
+      "start_ticks": "1727679855",
+      "comm": "python3.1"
+    },
+    {
+      "pid": 2844470,
+      "ppid": 1,
+      "pgrp": 2844470,
+      "start_ticks": "1727679856",
+      "comm": "python3.1"
+    },
+    {
+      "pid": 2846259,
+      "ppid": 2844463,
+      "pgrp": 2844463,
+      "start_ticks": "1727682957",
+      "comm": "python3.1"
+    },
+    {
+      "pid": 2846263,
+      "ppid": 2844465,
+      "pgrp": 2844465,
+      "start_ticks": "1727682957",
+      "comm": "python3.1"
+    },
+    {
+      "pid": 2846264,
+      "ppid": 2844467,
+      "pgrp": 2844467,
+      "start_ticks": "1727682957",
+      "comm": "python3.1"
+    },
+    {
+      "pid": 2846274,
+      "ppid": 2844468,
+      "pgrp": 2844468,
+      "start_ticks": "1727682957",
+      "comm": "python3.1"
+    },
+    {
+      "pid": 2846276,
+      "ppid": 2844470,
+      "pgrp": 2844470,
+      "start_ticks": "1727682958",
+      "comm": "python3.1"
+    },
+    {
+      "pid": 2846383,
+      "ppid": 2844466,
+      "pgrp": 2844466,
+      "start_ticks": "1727682969",
+      "comm": "python3.1"
+    },
+    {
+      "pid": 2846446,
+      "ppid": 2844469,
+      "pgrp": 2844469,
+      "start_ticks": "1727682980",
+      "comm": "python3.1"
+    }
+  ],
+  "signaled_pids": [
+    2844463,
+    2844465,
+    2844466,
+    2844467,
+    2844468,
+    2844469,
+    2844470,
+    2846259,
+    2846263,
+    2846264,
+    2846274,
+    2846276,
+    2846383,
+    2846446
+  ],
+  "tmux_pane_was_already_dead": true,
+  "checked_at": "2026-10-16T19:48:11.349434+08:00",
+  "remaining_identified_processes": [],
+  "npu_cards_without_processes": 8,
+  "npu_smi_exit_code": 0,
+  "stopped": true
+}

@@ -1,0 +1,17 @@
+[
+  {
+    "case": "original",
+    "exit_code": 0,
+    "passed": true
+  },
+  {
+    "case": "combined",
+    "exit_code": 0,
+    "passed": true
+  },
+  {
+    "case": "invalid",
+    "exit_code": 1,
+    "passed": true
+  }
+]

@@ -1,0 +1,32 @@
+============================================================
+ 实验名称    : round2_default_160
+ 配置        : /cache/lingbot/profiling/round2_default_20261016_185821/source/configs/vla/robotwin/robotwin_npu.yaml
+ OBS 数据    : 关闭，使用本地数据清单
+ 数据缓存    : /cache/lingbot/robotwin_data/RoboTwin_lerobot_v30
+ 数据清单    : /cache/lingbot/robotwin_data/train_robotwin_clean.txt
+ 检查点暂存  : /cache/lingbot/profiling/round2_default_20261016_185821/default_160/run
+ 小日志      : /cache/lingbot/profiling/round2_default_20261016_185821/default_160/logs
+ OBS 结果    : 关闭
+ 卡数        : NPROC_PER_NODE=8
+ 训练轮数    : 1 epoch
+ 保存        : 每 0 epoch；步间隔=0（0 表示关闭按步保存）
+ 最大步数    : 未设置，按完整 epoch 训练
+ 提前停止步  : 160（不改变学习率调度总长度）
+ batch       : micro=12×卡=8  accum=1  global=96
+ NPU MoE     : gmm
+ 联合注意力  : sdpa_fp32
+ 统计合批    : 1
+ 参数合批    : 1（现有 AdamW 分支）
+ 重计算      : false（用于节省显存，与保存训练进度不同）
+ 视频解码    : PyAV 每个解码器 1 线程，仅转换选中的帧
+ 学习率      : 5e-5 → 1e-5，warmup ratio=0.02
+ 续训        : false（启用时检查 OBS 最新完整检查点）
+ 暂存盘要求  : 至少 70 GiB 可用，按单份检查点估算
+============================================================
+[DRY_RUN] 仅显示命令；未创建目录、下载数据或启动训练。
+cd /cache/lingbot/profiling/round2_default_20261016_185821/source
+export LINGBOT_NPU_MOE_IMPL=gmm
+export LINGBOT_JOINT_ATTN_BACKEND=sdpa_fp32
+export LINGBOT_MOE_MONITOR_BATCH_COUNTS=1
+export LINGBOT_ADAMW_FOREACH_NPU=1
+torchrun --nnodes=1 --nproc-per-node 8 --master-addr=127.0.0.1 --master-port=62541 tasks/vla/train_lingbotvla.py /cache/lingbot/profiling/round2_default_20261016_185821/source/configs/vla/robotwin/robotwin_npu.yaml --data.train_path /cache/lingbot/robotwin_data/train_robotwin_clean.txt --data.data_name multi --data.obs_dataset_uri '' --data.obs_cache_dir /cache/lingbot/robotwin_data/RoboTwin_lerobot_v30 --train.output_dir /cache/lingbot/profiling/round2_default_20261016_185821/default_160/run --train.logging_dir /cache/lingbot/profiling/round2_default_20261016_185821/default_160/logs --train.obs_output_dir '' --train.obs_remove_local_checkpoint true --train.num_train_epochs 1 --train.save_steps 0 --train.save_epochs 0 --train.micro_batch_size 12 --train.gradient_accumulation_steps 1 --train.global_batch_size 96 --train.stop_after_steps 160 --train.lr 5e-5 --train.lr_min 1e-5 --train.lr_decay_style cosine --train.lr_warmup_ratio 0.02 --train.weight_decay 0.001 --train.enable_gradient_checkpointing false --train.train_expert_only true --train.enable_resume false --train.save_hf_weights false --train.enable_profiling true --train.profile_only true --train.profile_ranks '' --train.profile_start_step 13 --train.profile_end_step 17 --train.profile_trace_dir /cache/lingbot/profiling/round2_default_20261016_185821/default_160/trace 

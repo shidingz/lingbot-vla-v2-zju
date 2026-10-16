@@ -1,0 +1,160 @@
+2026-10-16 NPU MoE 优化及验证
+
+默认 8 卡脚本和 NPU 非 EP fused 路径现使用原生 grouped GEMM + 显式一阶反向。保留 stacked 专家权重的形状、名称和现有检查点格式；路由器仍使用原来的 FP32 计算。
+实现：lingbotvla/ops/npu_moe.py。三次前向 GEMM 及输入梯度使用 npu_grouped_matmul；权重梯度使用 npu_grouped_matmul_add_ 的 FP32 累加，再恢复原计算 dtype 与连续布局。计数和 cumsum 留在 NPU；精确 FP32 专家 ID 排序替代整数 ArgSort 的 AICPU 回退。
+
+完整模型 A/B：相同预训练权重、随机种子、数据、8×12=96、Muon、FP32/BF16 策略、teacher 和梯度检查点；各跑 40 步，LR horizon 仍为 5717 步。速度比较仅使用第 13–29 步，排除初始化、profiler 预热/采集/导出和之后的通信等待。
+  原实现：日志内均值 7.2144 s/步，实际步间隔 7.2353 s，吞吐 13.2683 样本/s，峰值已分配显存 53.31 GiB。
+  GMM：日志内均值 3.4516 s/步，实际步间隔 3.4706 s，吞吐 27.6610 样本/s，峰值已分配显存 53.31 GiB。
+  吞吐倍率 2.0847，每步耗时降低 52.03%。
+  40 步配对 loss 最大绝对差 0.0012207；梯度范数最大绝对差 0.0357398。两轮 loss 与梯度均有限；该短跑不能证明完整训练的收敛或任务成功率。
+
+数值验证：10 项硬件测试覆盖随机路由、空专家、top1/top4、冻结输入或权重、实际训练尺寸、非重入检查点以及后端切换。输出和所有输入、路由及权重梯度与原实现对照通过。
+8 卡梯度验证：真实 FSDP2 分片、非重入检查点、同名参考权重严格载入；每个参数的完整梯度与各 rank 参考梯度的全局均值比较；专家和上游 FP32 路由器梯度均非零且有限，AdamW 为全部参数建立优化器状态。
+{
+  "world_size": 8,
+  "non_reentrant_checkpoint": true,
+  "strict_load_of_reference_weights": true,
+  "parameters": {
+    "block.gate": {
+      "relative_l2_error": 7.69013936974261e-08,
+      "gradient_norm": 0.00035464935353957117
+    },
+    "block.gate_proj": {
+      "relative_l2_error": 9.781322418689342e-10,
+      "gradient_norm": 0.005150902550667524
+    },
+    "block.up_proj": {
+      "relative_l2_error": 7.320058448279099e-10,
+      "gradient_norm": 0.005160362459719181
+    },
+    "block.down_proj": {
+      "relative_l2_error": 4.6003800768801284e-10,
+      "gradient_norm": 0.00504037830978632
+    }
+  },
+  "optimizer_state_entries": 4
+}
+
+稳定区间资源采样（卡 0/4；不等同 MFU 或全 epoch 平均）：
+{
+  "torch": {
+    "0": {
+      "HBM Usage Rate(%)": {
+        "mean": 96.0,
+        "min": 96.0,
+        "max": 96.0,
+        "samples": 35
+      },
+      "Aicore Usage Rate(%)": {
+        "mean": 5.714285714285714,
+        "min": 0.0,
+        "max": 32.0,
+        "samples": 35
+      },
+      "Aivector Usage Rate(%)": {
+        "mean": 10.6,
+        "min": 0.0,
+        "max": 52.0,
+        "samples": 35
+      },
+      "HBM Bandwidth Usage Rate(%)": {
+        "mean": 9.457142857142857,
+        "min": 0.0,
+        "max": 16.0,
+        "samples": 35
+      }
+    },
+    "4": {
+      "HBM Usage Rate(%)": {
+        "mean": 96.0,
+        "min": 96.0,
+        "max": 96.0,
+        "samples": 35
+      },
+      "Aicore Usage Rate(%)": {
+        "mean": 5.857142857142857,
+        "min": 0.0,
+        "max": 31.0,
+        "samples": 35
+      },
+      "Aivector Usage Rate(%)": {
+        "mean": 12.457142857142857,
+        "min": 0.0,
+        "max": 52.0,
+        "samples": 35
+      },
+      "HBM Bandwidth Usage Rate(%)": {
+        "mean": 10.82857142857143,
+        "min": 0.0,
+        "max": 55.0,
+        "samples": 35
+      }
+    }
+  },
+  "gmm": {
+    "0": {
+      "HBM Usage Rate(%)": {
+        "mean": 96.0,
+        "min": 96.0,
+        "max": 96.0,
+        "samples": 16
+      },
+      "Aicore Usage Rate(%)": {
+        "mean": 17.375,
+        "min": 0.0,
+        "max": 38.0,
+        "samples": 16
+      },
+      "Aivector Usage Rate(%)": {
+        "mean": 27.8125,
+        "min": 0.0,
+        "max": 59.0,
+        "samples": 16
+      },
+      "HBM Bandwidth Usage Rate(%)": {
+        "mean": 29.9375,
+        "min": 0.0,
+        "max": 72.0,
+        "samples": 16
+      }
+    },
+    "4": {
+      "HBM Usage Rate(%)": {
+        "mean": 96.0,
+        "min": 96.0,
+        "max": 96.0,
+        "samples": 16
+      },
+      "Aicore Usage Rate(%)": {
+        "mean": 14.1875,
+        "min": 0.0,
+        "max": 18.0,
+        "samples": 16
+      },
+      "Aivector Usage Rate(%)": {
+        "mean": 20.75,
+        "min": 17.0,
+        "max": 33.0,
+        "samples": 16
+      },
+      "HBM Bandwidth Usage Rate(%)": {
+        "mean": 15.625,
+        "min": 0.0,
+        "max": 53.0,
+        "samples": 16
+      }
+    }
+  }
+}
+
+基线启动器说明：40 步训练和结束清理正常完成后，外层 shell 因运行期间源脚本更新造成读取偏移，报 unexpected EOF，原始 exit_code=2 已保留。比较使用的是错误发生前完整记录的训练步骤。GMM 启动器使用不可变快照，退出码为 0。详细审计见 baseline_launcher_note.json。
+
+默认运行：bash train_robotwin_npu.sh
+切回原实现：LINGBOT_NPU_MOE_IMPL=torch bash train_robotwin_npu.sh
+数值测试：OMP_NUM_THREADS=1 python3 -m pytest -q tests/test_npu_moe.py
+8 卡梯度测试：OMP_NUM_THREADS=1 torchrun --nproc-per-node 8 --master-port 62519 tools/check_npu_moe_fsdp.py --output /cache/fsdp_gradients.json
+完整模型对照：bash tools/bench_robotwin_npu_moe.sh
+原始日志、采样与优化后 trace：/cache/lingbot/profiling/moe_optimization_20261016/ab
+
+限制：当前验证针对默认 910B1、torch_npu 2.6、非 EP、BF16 专家计算和一阶反向。未测试其他 Ascend 型号、专家并行、高阶梯度、完整 epoch 或 RoboTwin 成功率。

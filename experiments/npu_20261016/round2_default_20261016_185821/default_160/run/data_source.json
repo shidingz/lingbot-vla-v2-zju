@@ -1,0 +1,11 @@
+{
+  "obs_dataset_uri": "",
+  "local_dataset_root": null,
+  "train_path": "/cache/lingbot/robotwin_data/train_robotwin_clean.txt",
+  "source_status": "user-configured dataset",
+  "raw_dataset_modified": false,
+  "video_boundary_policy": "same-episode last valid frame for at most two missing tail frames",
+  "pyav_decode_threads": 1,
+  "pyav_frame_conversion": "nearest-timestamp selection before RGB conversion",
+  "code_repository": "/cache/lingbot/profiling/round2_default_20261016_185821/source"
+}

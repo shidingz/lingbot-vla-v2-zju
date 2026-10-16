@@ -1,0 +1,431 @@
+{
+  "device": "cpu",
+  "torch_version": "2.6.0+cpu",
+  "checks": [
+    {
+      "case": "dense",
+      "shape_B_Lq_Lk_Hq_Hkv_D": [
+        2,
+        17,
+        23,
+        8,
+        2,
+        16
+      ],
+      "backend": "sdpa",
+      "metrics": {
+        "output": {
+          "finite": true,
+          "max_abs": 0,
+          "reference_is_zero": false,
+          "reference_l2": 19.45785903930664,
+          "relative_l2": 0
+        },
+        "dq": {
+          "finite": true,
+          "max_abs": 0,
+          "reference_is_zero": false,
+          "reference_l2": 17.9050235748291,
+          "relative_l2": 0
+        },
+        "dk": {
+          "finite": true,
+          "max_abs": 0,
+          "reference_is_zero": false,
+          "reference_l2": 19.495405197143555,
+          "relative_l2": 0
+        },
+        "dv": {
+          "finite": true,
+          "max_abs": 0,
+          "reference_is_zero": false,
+          "reference_l2": 19.205516815185547,
+          "relative_l2": 0
+        }
+      },
+      "passed": true,
+      "screening_limits": {
+        "max_abs": 0.0001,
+        "relative_l2": 0.0001,
+        "zero_reference": "absolute_error_only"
+      }
+    },
+    {
+      "case": "mixed",
+      "shape_B_Lq_Lk_Hq_Hkv_D": [
+        2,
+        17,
+        23,
+        8,
+        2,
+        16
+      ],
+      "backend": "sdpa",
+      "metrics": {
+        "output": {
+          "finite": true,
+          "max_abs": 0,
+          "reference_is_zero": false,
+          "reference_l2": 23.93948745727539,
+          "relative_l2": 0
+        },
+        "dq": {
+          "finite": true,
+          "max_abs": 0,
+          "reference_is_zero": false,
+          "reference_l2": 19.257694244384766,
+          "relative_l2": 0
+        },
+        "dk": {
+          "finite": true,
+          "max_abs": 0,
+          "reference_is_zero": false,
+          "reference_l2": 19.65433120727539,
+          "relative_l2": 0
+        },
+        "dv": {
+          "finite": true,
+          "max_abs": 0,
+          "reference_is_zero": false,
+          "reference_l2": 24.21526336669922,
+          "relative_l2": 0
+        }
+      },
+      "passed": true,
+      "screening_limits": {
+        "max_abs": 0.0001,
+        "relative_l2": 0.0001,
+        "zero_reference": "absolute_error_only"
+      }
+    },
+    {
+      "case": "prefix_action",
+      "shape_B_Lq_Lk_Hq_Hkv_D": [
+        2,
+        17,
+        23,
+        8,
+        2,
+        16
+      ],
+      "backend": "sdpa",
+      "metrics": {
+        "output": {
+          "finite": true,
+          "max_abs": 2.9802322387695312e-8,
+          "reference_is_zero": false,
+          "reference_l2": 24.18947982788086,
+          "relative_l2": 1.0510388115392288e-8
+        },
+        "dq": {
+          "finite": true,
+          "max_abs": 0,
+          "reference_is_zero": false,
+          "reference_l2": 21.076427459716797,
+          "relative_l2": 0
+        },
+        "dk": {
+          "finite": true,
+          "max_abs": 0,
+          "reference_is_zero": false,
+          "reference_l2": 21.668272018432617,
+          "relative_l2": 0
+        },
+        "dv": {
+          "finite": true,
+          "max_abs": 2.384185791015625e-7,
+          "reference_is_zero": false,
+          "reference_l2": 25.952367782592773,
+          "relative_l2": 4.7891223431406615e-8
+        }
+      },
+      "passed": true,
+      "screening_limits": {
+        "max_abs": 0.0001,
+        "relative_l2": 0.0001,
+        "zero_reference": "absolute_error_only"
+      }
+    },
+    {
+      "case": "all_masked",
+      "shape_B_Lq_Lk_Hq_Hkv_D": [
+        2,
+        17,
+        23,
+        8,
+        2,
+        16
+      ],
+      "backend": "sdpa",
+      "metrics": {
+        "output": {
+          "finite": true,
+          "max_abs": 7.450580596923828e-8,
+          "reference_is_zero": false,
+          "reference_l2": 12.425962448120117,
+          "relative_l2": 1.0480527379286286e-7
+        },
+        "dq": {
+          "finite": true,
+          "max_abs": 0,
+          "reference_is_zero": true,
+          "reference_l2": 0,
+          "relative_l2": null
+        },
+        "dk": {
+          "finite": true,
+          "max_abs": 0,
+          "reference_is_zero": true,
+          "reference_l2": 0,
+          "relative_l2": null
+        },
+        "dv": {
+          "finite": true,
+          "max_abs": 1.1920928955078125e-7,
+          "reference_is_zero": false,
+          "reference_l2": 12.267156600952148,
+          "relative_l2": 1.0839914210691859e-7
+        }
+      },
+      "passed": true,
+      "screening_limits": {
+        "max_abs": 0.0001,
+        "relative_l2": 0.0001,
+        "zero_reference": "absolute_error_only"
+      }
+    },
+    {
+      "case": "one_key",
+      "shape_B_Lq_Lk_Hq_Hkv_D": [
+        2,
+        17,
+        23,
+        8,
+        2,
+        16
+      ],
+      "backend": "sdpa",
+      "metrics": {
+        "output": {
+          "finite": true,
+          "max_abs": 0,
+          "reference_is_zero": false,
+          "reference_l2": 60.91986083984375,
+          "relative_l2": 0
+        },
+        "dq": {
+          "finite": true,
+          "max_abs": 0,
+          "reference_is_zero": true,
+          "reference_l2": 0,
+          "relative_l2": null
+        },
+        "dk": {
+          "finite": true,
+          "max_abs": 0,
+          "reference_is_zero": true,
+          "reference_l2": 0,
+          "relative_l2": null
+        },
+        "dv": {
+          "finite": true,
+          "max_abs": 0,
+          "reference_is_zero": false,
+          "reference_l2": 58.831233978271484,
+          "relative_l2": 0
+        }
+      },
+      "passed": true,
+      "screening_limits": {
+        "max_abs": 0.0001,
+        "relative_l2": 0.0001,
+        "zero_reference": "absolute_error_only"
+      }
+    },
+    {
+      "case": "cache",
+      "shape_B_Lq_Lk_Hq_Hkv_D": [
+        2,
+        3,
+        23,
+        8,
+        2,
+        16
+      ],
+      "backend": "sdpa",
+      "metrics": {
+        "output": {
+          "finite": true,
+          "max_abs": 0,
+          "reference_is_zero": false,
+          "reference_l2": 8.307043075561523,
+          "relative_l2": 0
+        },
+        "dq": {
+          "finite": true,
+          "max_abs": 0,
+          "reference_is_zero": false,
+          "reference_l2": 7.323284149169922,
+          "relative_l2": 0
+        },
+        "dk": {
+          "finite": true,
+          "max_abs": 0,
+          "reference_is_zero": false,
+          "reference_l2": 8.123299598693848,
+          "relative_l2": 0
+        },
+        "dv": {
+          "finite": true,
+          "max_abs": 0,
+          "reference_is_zero": false,
+          "reference_l2": 8.275191307067871,
+          "relative_l2": 0
+        }
+      },
+      "passed": true,
+      "screening_limits": {
+        "max_abs": 0.0001,
+        "relative_l2": 0.0001,
+        "zero_reference": "absolute_error_only"
+      }
+    },
+    {
+      "case": "scaled_logits",
+      "shape_B_Lq_Lk_Hq_Hkv_D": [
+        2,
+        17,
+        23,
+        8,
+        2,
+        16
+      ],
+      "backend": "sdpa",
+      "metrics": {
+        "output": {
+          "finite": true,
+          "max_abs": 7.450580596923828e-8,
+          "reference_is_zero": false,
+          "reference_l2": 59.99299621582031,
+          "relative_l2": 5.264876090649295e-9
+        },
+        "dq": {
+          "finite": true,
+          "max_abs": 0,
+          "reference_is_zero": false,
+          "reference_l2": 40.96107482910156,
+          "relative_l2": 0
+        },
+        "dk": {
+          "finite": true,
+          "max_abs": 0,
+          "reference_is_zero": false,
+          "reference_l2": 46.874732971191406,
+          "relative_l2": 0
+        },
+        "dv": {
+          "finite": true,
+          "max_abs": 9.5367431640625e-7,
+          "reference_is_zero": false,
+          "reference_l2": 60.53999710083008,
+          "relative_l2": 6.891853132628967e-8
+        }
+      },
+      "passed": true,
+      "screening_limits": {
+        "max_abs": 0.0001,
+        "relative_l2": 0.0001,
+        "zero_reference": "absolute_error_only"
+      }
+    },
+    {
+      "case": "dense",
+      "shape_B_Lq_Lk_Hq_Hkv_D": [
+        1,
+        32,
+        32,
+        2,
+        2,
+        128
+      ],
+      "backend": "sdpa",
+      "metrics": {
+        "output": {
+          "finite": true,
+          "max_abs": 3.8743019104003906e-7,
+          "reference_is_zero": false,
+          "reference_l2": 24.62164306640625,
+          "relative_l2": 1.5688031851368578e-7
+        },
+        "dq": {
+          "finite": true,
+          "max_abs": 4.172325134277344e-7,
+          "reference_is_zero": false,
+          "reference_l2": 23.183670043945312,
+          "relative_l2": 2.350493701896994e-7
+        },
+        "dk": {
+          "finite": true,
+          "max_abs": 4.172325134277344e-7,
+          "reference_is_zero": false,
+          "reference_l2": 23.01051139831543,
+          "relative_l2": 2.278254953580472e-7
+        },
+        "dv": {
+          "finite": true,
+          "max_abs": 2.384185791015625e-7,
+          "reference_is_zero": false,
+          "reference_l2": 24.5943546295166,
+          "relative_l2": 1.6958266257915966e-7
+        }
+      },
+      "passed": true,
+      "screening_limits": {
+        "max_abs": 0.0001,
+        "relative_l2": 0.0001,
+        "zero_reference": "absolute_error_only"
+      }
+    }
+  ],
+  "passed": true,
+  "error_rule_checks": [
+    {
+      "case": "zero_reference_roundoff",
+      "expected_acceptance": true,
+      "actual_acceptance": true,
+      "passed": true
+    },
+    {
+      "case": "zero_reference_real_error",
+      "expected_acceptance": false,
+      "actual_acceptance": false,
+      "passed": true
+    },
+    {
+      "case": "zero_reference_nan",
+      "expected_acceptance": false,
+      "actual_acceptance": false,
+      "passed": true
+    },
+    {
+      "case": "nonzero_relative_error",
+      "expected_acceptance": false,
+      "actual_acceptance": false,
+      "passed": true
+    },
+    {
+      "case": "nonzero_absolute_error",
+      "expected_acceptance": false,
+      "actual_acceptance": false,
+      "passed": true
+    },
+    {
+      "case": "nonzero_roundoff",
+      "expected_acceptance": true,
+      "actual_acceptance": true,
+      "passed": true
+    }
+  ],
+  "error_rule_version": "2-zero-reference-absolute-only",
+  "scope": "Isolated attention output/input gradients; full training not validated"
+}

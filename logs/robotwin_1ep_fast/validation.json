@@ -1,0 +1,37 @@
+{
+  "checked_at": "2026-10-16T00:38:31.112945",
+  "tests": {
+    "training_obs_flow": 15,
+    "obs_storage": 14,
+    "video_episode_bounds": 10,
+    "video_episode_loader": 3,
+    "video_decode_optimized": 13
+  },
+  "all_passed": true,
+  "total": 55,
+  "real_video_pixels_identical": true,
+  "baseline_epoch_2354_missing_tail_tested": true,
+  "baseline_epoch_148_two_missing_tail_frames_tested": true,
+  "cpu_decode_benchmark": {
+    "scope": "single CPU worker; three real cameras; warm-cache/order effects and host contention apply",
+    "reference": "old torchvision PyAV RGB-every-frame path, explicitly constrained to the same decoder threads",
+    "root": "/cache/lingbot/robotwin_data/RoboTwin_lerobot_v30",
+    "episode": 1273,
+    "repeats": 2,
+    "results": [
+      {
+        "threads": 1,
+        "requests_per_implementation": 6,
+        "reference_seconds": 0.9364608898758888,
+        "optimized_seconds": 0.4407903403043747,
+        "reference_median_seconds": 0.15421690605580807,
+        "optimized_median_seconds": 0.06635636277496815,
+        "pixels_identical": true,
+        "measured_speedup": 2.1245041105693097
+      }
+    ],
+    "torch_threads": 1,
+    "torch_npu_imported": false
+  },
+  "scope": "decoder benchmark is not end-to-end training throughput"
+}

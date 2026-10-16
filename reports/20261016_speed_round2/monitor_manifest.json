@@ -1,0 +1,8 @@
+{
+  "base_path": "lingbotvla/models/vla/lingbot_vla/modeling_lingbot_vla_v2.py",
+  "base_sha256": "9b3c9a2ad6823f9d58da51b732477785a1e4db0d29db80e030e094c7b605e40c",
+  "candidate_sha256": "398916a884ff46081ffc52fd0ac7ab14f57e9ec2d9a2adca5c59180864525db7",
+  "switch": "LINGBOT_MOE_MONITOR_BATCH_COUNTS=1",
+  "default": "original behavior",
+  "npu_experiment_performed": false
+}

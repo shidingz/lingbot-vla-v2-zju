@@ -1,0 +1,259 @@
+{
+  "shape": {
+    "experts": 32,
+    "tokens": 612,
+    "dim": 768,
+    "hidden": 512,
+    "topk": 4
+  },
+  "master_weights": "float32; cast to bfloat16 in forward",
+  "results": {
+    "baseline": {
+      "median": {
+        "forward_ms": 10.524250566959381,
+        "backward_ms": 23.932792246341705,
+        "total_ms": 34.35593098402023
+      },
+      "iterations": [
+        {
+          "forward_ms": 11.430986225605011,
+          "backward_ms": 25.302540510892868,
+          "total_ms": 36.73352673649788
+        },
+        {
+          "forward_ms": 11.0773965716362,
+          "backward_ms": 24.860236793756485,
+          "total_ms": 35.937633365392685
+        },
+        {
+          "forward_ms": 10.780423879623413,
+          "backward_ms": 23.946285247802734,
+          "total_ms": 34.72670912742615
+        },
+        {
+          "forward_ms": 10.423138737678528,
+          "backward_ms": 23.932792246341705,
+          "total_ms": 34.35593098402023
+        },
+        {
+          "forward_ms": 10.524250566959381,
+          "backward_ms": 23.65284040570259,
+          "total_ms": 34.17709097266197
+        },
+        {
+          "forward_ms": 10.043371468782425,
+          "backward_ms": 23.493140935897827,
+          "total_ms": 33.53651240468025
+        },
+        {
+          "forward_ms": 10.047689080238342,
+          "backward_ms": 23.930691182613373,
+          "total_ms": 33.978380262851715
+        }
+      ],
+      "errors_vs_baseline": [
+        {
+          "tensor": "output",
+          "relative_l2": 0.0,
+          "max_abs": 0.0,
+          "finite": true
+        },
+        {
+          "tensor": "hidden_grad",
+          "relative_l2": 0.0,
+          "max_abs": 0.0,
+          "finite": true
+        },
+        {
+          "tensor": "route_grad",
+          "relative_l2": 0.0,
+          "max_abs": 0.0,
+          "finite": true
+        },
+        {
+          "tensor": "w1_grad",
+          "relative_l2": 0.0,
+          "max_abs": 0.0,
+          "finite": true
+        },
+        {
+          "tensor": "w2_grad",
+          "relative_l2": 0.0,
+          "max_abs": 0.0,
+          "finite": true
+        },
+        {
+          "tensor": "w3_grad",
+          "relative_l2": 0.0,
+          "max_abs": 0.0,
+          "finite": true
+        }
+      ]
+    },
+    "unbind_weights": {
+      "median": {
+        "forward_ms": 9.311795234680176,
+        "backward_ms": 18.690451979637146,
+        "total_ms": 28.00687775015831
+      },
+      "iterations": [
+        {
+          "forward_ms": 9.452525526285172,
+          "backward_ms": 18.840253353118896,
+          "total_ms": 28.292778879404068
+        },
+        {
+          "forward_ms": 9.133443236351013,
+          "backward_ms": 18.690451979637146,
+          "total_ms": 27.82389521598816
+        },
+        {
+          "forward_ms": 9.311795234680176,
+          "backward_ms": 18.55006068944931,
+          "total_ms": 27.861855924129486
+        },
+        {
+          "forward_ms": 9.361416101455688,
+          "backward_ms": 18.64546164870262,
+          "total_ms": 28.00687775015831
+        },
+        {
+          "forward_ms": 9.37645509839058,
+          "backward_ms": 18.35447922348976,
+          "total_ms": 27.73093432188034
+        },
+        {
+          "forward_ms": 9.280335158109665,
+          "backward_ms": 19.048012793064117,
+          "total_ms": 28.328347951173782
+        },
+        {
+          "forward_ms": 9.264413267374039,
+          "backward_ms": 18.9209021627903,
+          "total_ms": 28.185315430164337
+        }
+      ],
+      "errors_vs_baseline": [
+        {
+          "tensor": "output",
+          "relative_l2": 0.0,
+          "max_abs": 0.0,
+          "finite": true
+        },
+        {
+          "tensor": "hidden_grad",
+          "relative_l2": 0.0,
+          "max_abs": 0.0,
+          "finite": true
+        },
+        {
+          "tensor": "route_grad",
+          "relative_l2": 0.0,
+          "max_abs": 0.0,
+          "finite": true
+        },
+        {
+          "tensor": "w1_grad",
+          "relative_l2": 0.0,
+          "max_abs": 0.0,
+          "finite": true
+        },
+        {
+          "tensor": "w2_grad",
+          "relative_l2": 0.0,
+          "max_abs": 0.0,
+          "finite": true
+        },
+        {
+          "tensor": "w3_grad",
+          "relative_l2": 0.0,
+          "max_abs": 0.0,
+          "finite": true
+        }
+      ]
+    },
+    "unbind_weights_and_cat": {
+      "median": {
+        "forward_ms": 6.7292675375938416,
+        "backward_ms": 14.696165919303894,
+        "total_ms": 21.42418920993805
+      },
+      "iterations": [
+        {
+          "forward_ms": 6.669320166110992,
+          "backward_ms": 14.671426266431808,
+          "total_ms": 21.3407464325428
+        },
+        {
+          "forward_ms": 6.775539368391037,
+          "backward_ms": 14.696165919303894,
+          "total_ms": 21.47170528769493
+        },
+        {
+          "forward_ms": 6.646439433097839,
+          "backward_ms": 14.8673877120018,
+          "total_ms": 21.51382714509964
+        },
+        {
+          "forward_ms": 6.717301905155182,
+          "backward_ms": 14.706887304782867,
+          "total_ms": 21.42418920993805
+        },
+        {
+          "forward_ms": 6.76494836807251,
+          "backward_ms": 14.592036604881287,
+          "total_ms": 21.356984972953796
+        },
+        {
+          "forward_ms": 6.7292675375938416,
+          "backward_ms": 14.881841838359833,
+          "total_ms": 21.611109375953674
+        },
+        {
+          "forward_ms": 6.747860461473465,
+          "backward_ms": 14.645058661699295,
+          "total_ms": 21.39291912317276
+        }
+      ],
+      "errors_vs_baseline": [
+        {
+          "tensor": "output",
+          "relative_l2": 0.0,
+          "max_abs": 0.0,
+          "finite": true
+        },
+        {
+          "tensor": "hidden_grad",
+          "relative_l2": 0.0,
+          "max_abs": 0.0,
+          "finite": true
+        },
+        {
+          "tensor": "route_grad",
+          "relative_l2": 0.0,
+          "max_abs": 0.0,
+          "finite": true
+        },
+        {
+          "tensor": "w1_grad",
+          "relative_l2": 0.0,
+          "max_abs": 0.0,
+          "finite": true
+        },
+        {
+          "tensor": "w2_grad",
+          "relative_l2": 0.0,
+          "max_abs": 0.0,
+          "finite": true
+        },
+        {
+          "tensor": "w3_grad",
+          "relative_l2": 0.0,
+          "max_abs": 0.0,
+          "finite": true
+        }
+      ]
+    }
+  },
+  "limits": "One MoE layer, synthetic routing, no FSDP/checkpoint/teacher/optimizer; not an end-to-end training speedup."
+}

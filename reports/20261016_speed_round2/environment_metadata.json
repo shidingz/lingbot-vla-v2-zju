@@ -1,0 +1,18 @@
+{
+  "recorded_at": "2026-10-16T17:15:01.720680+08:00",
+  "scope": "Read-only package metadata during the experimental sequence; not a complete environment lockfile",
+  "python": "3.11.10",
+  "machine": "aarch64",
+  "packages": {
+    "torch": "2.6.0",
+    "torch-npu": "2.6.0",
+    "transformers": "4.57.3",
+    "numpy": "1.26.4",
+    "av": "18.1.0",
+    "accelerate": "1.13.0",
+    "safetensors": "0.5.3",
+    "einops": "0.8.0"
+  },
+  "torch_npu_version_file": "__version__ = '2.6.0'\ngit_version = '41d2476c22b22f484ad1f07b5a6d011200638b6d'\n",
+  "torch_npu_version_path": "/home/ma-user/anaconda3/envs/PyTorch-2.6.0/lib/python3.11/site-packages/torch_npu/version.py"
+}

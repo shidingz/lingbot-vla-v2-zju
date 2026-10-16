@@ -37,6 +37,7 @@ from datasets import load_dataset as _hf_load_dataset
 from ...utils import logging
 from .utils import FeatureTransform
 from .video_utils import decode_video_frames
+from .video_episode_bounds import VideoEpisodeBoundaryError, bound_episode_video_timestamps
 
 
 logger = logging.get_logger(__name__)
@@ -77,6 +78,8 @@ class LeRobotDataset(BaseLeRobotDataset):
     ):
         super().__init__(repo_id, **kwargs)
         self.load_image = load_image
+        # DataLoader workers own separate counters; logs identify their rank/PID.
+        self.video_boundary_stats = {}
 
     def _query_hf_dataset(self, query_indices: dict[str, list[int]]) -> dict:
         """
@@ -111,8 +114,35 @@ class LeRobotDataset(BaseLeRobotDataset):
                 # LeRobot v3 stores episodes sequentially in a shared mp4, so
                 # query timestamps are relative to the episode start.
                 ep = self.meta.episodes[ep_idx]
-                from_timestamp = ep[f"videos/{vid_key}/from_timestamp"]
-                query_ts = [from_timestamp + ts for ts in query_ts]
+                original_ts = list(query_ts)
+                try:
+                    query_ts, repaired = bound_episode_video_timestamps(
+                        original_ts,
+                        from_timestamp=ep[f"videos/{vid_key}/from_timestamp"],
+                        to_timestamp=ep[f"videos/{vid_key}/to_timestamp"],
+                        fps=self.meta.fps,
+                        episode_length=ep["length"],
+                    )
+                except VideoEpisodeBoundaryError as error:
+                    raise VideoEpisodeBoundaryError(
+                        f"dataset={self.root}, episode={ep_idx}, camera={vid_key}: {error}"
+                    ) from error
+                stats = self.video_boundary_stats.setdefault(
+                    vid_key, {"queries": 0, "repaired_samples": 0, "current_clamps": 0, "future_clamps": 0}
+                )
+                stats["queries"] += 1
+                if repaired:
+                    stats["repaired_samples"] += 1
+                    stats["current_clamps"] += int(0 in repaired)
+                    stats["future_clamps"] += sum(position > 0 for position in repaired)
+                    if stats["repaired_samples"] == 1 or stats["repaired_samples"] % 500 == 0:
+                        logger.warning(
+                            "Video tail repeated within episode: rank=%s pid=%s dataset=%s "
+                            "episode=%s camera=%s requested_relative=%s used_absolute=%s "
+                            "worker_camera_stats=%s",
+                            os.environ.get("RANK", "0"), os.getpid(), self.root,
+                            ep_idx, vid_key, original_ts, query_ts, dict(stats),
+                        )
 
             video_path = self.root / self.meta.get_video_file_path(ep_idx, vid_key)
             frames = decode_video_frames(video_path, query_ts, self.tolerance_s, self.video_backend)

@@ -28,6 +28,8 @@ import torchvision
 from datasets.features.features import register_feature
 from PIL import Image
 
+from .pyav_decoder import decode_video_frames_pyav
+
 
 def get_safe_default_codec():
     if importlib.util.find_spec("torchcodec"):
@@ -63,7 +65,9 @@ def decode_video_frames(
         backend = get_safe_default_codec()
     if backend == "torchcodec":
         return decode_video_frames_torchcodec(video_path, timestamps, tolerance_s)
-    elif backend in ["pyav", "video_reader"]:
+    elif backend == "pyav":
+        return decode_video_frames_pyav(video_path, timestamps, tolerance_s)
+    elif backend == "video_reader":
         return decode_video_frames_torchvision(video_path, timestamps, tolerance_s, backend)
     else:
         raise ValueError(f"Unsupported video backend: {backend}")
@@ -95,6 +99,9 @@ def decode_video_frames_torchvision(
     and all subsequent frames until reaching the requested frame. The number of key frames in a video
     can be adjusted during encoding to take into account decoding time and video size in bytes.
     """
+    if backend == "pyav":
+        return decode_video_frames_pyav(video_path, timestamps, tolerance_s, log_loaded_timestamps)
+
     video_path = str(video_path)
 
     # set backend

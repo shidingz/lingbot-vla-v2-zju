@@ -1,0 +1,14 @@
+{
+  "warm_baseline_steps": [
+    2,
+    11
+  ],
+  "warm_baseline_mean_seconds": 7.110470342636108,
+  "profiled_steps": [
+    13,
+    16
+  ],
+  "profiled_mean_seconds": 9.256004989147186,
+  "profiling_time_increase_pct": 30.174299914394286,
+  "all_loss_and_grad_finite": true
+}
