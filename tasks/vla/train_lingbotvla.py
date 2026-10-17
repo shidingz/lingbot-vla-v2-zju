@@ -48,6 +48,7 @@ from lingbotvla.models.vla.vision_models.module_utils import (
     build_depth_model,
     build_video_model,
     get_depth_target,
+    get_depth_target_pair,
     get_video_target,
     log_video,
 )
@@ -447,6 +448,7 @@ def main():
     )
     use_depth_align = True if args.train.align_params != {} else False
     use_future_depth = args.train.align_params.get('depth', {}).get('use_future_depth', False)
+    batch_depth_teachers = use_future_depth and os.environ.get("LINGBOT_BATCH_DEPTH_TEACHERS", "0") == "1"
     use_future_video = use_depth_align and args.train.align_params.get('use_future_video', False)
     depth_model_type = None
     video_teacher = None
@@ -897,11 +899,20 @@ def main():
                         pil_images = micro_batch.pop('pil_images', None)
                         future_pil_images = micro_batch.pop('future_pil_images', None) if (use_future_depth or use_future_video) else None
                         with torch.autocast("cuda", dtype=torch.bfloat16):
-                            with training_profiler.scope("teacher.current_depth"):
-                                depth_targets, cls_token = get_depth_target(depth_model_type, (moge_model, morgbd_model), pil_images)
-                            if use_future_depth:
-                                with training_profiler.scope("teacher.future_depth"):
-                                    future_depth_targets, future_cls_token = get_depth_target(depth_model_type, (moge_model, morgbd_model), future_pil_images)
+                            if batch_depth_teachers:
+                                with training_profiler.scope("teacher.depth_batched"):
+                                    (depth_targets, cls_token), (future_depth_targets, future_cls_token) = (
+                                        get_depth_target_pair(
+                                            depth_model_type, (moge_model, morgbd_model),
+                                            pil_images, future_pil_images,
+                                        )
+                                    )
+                            else:
+                                with training_profiler.scope("teacher.current_depth"):
+                                    depth_targets, cls_token = get_depth_target(depth_model_type, (moge_model, morgbd_model), pil_images)
+                                if use_future_depth:
+                                    with training_profiler.scope("teacher.future_depth"):
+                                        future_depth_targets, future_cls_token = get_depth_target(depth_model_type, (moge_model, morgbd_model), future_pil_images)
                         if use_future_video:
                             with torch.autocast("cuda", dtype=torch.bfloat16), training_profiler.scope("teacher.video"):
                                 future_video_target_bundle = get_video_target(

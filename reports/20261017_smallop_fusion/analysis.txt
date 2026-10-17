@@ -1,0 +1,37 @@
+昇腾 8 卡训练的小算子 profiling 与融合实验（2026-10-17）
+
+结论
+在脚本默认的每卡 micro batch=12、全局 batch=96 下，当前/未来帧深度教师合批是本轮值得默认启用的改动：同配置 45 步对照中，未采样的第 31–43 步从 2.1929 降至 2.1618 秒/步，耗时减少 1.42%，吞吐提高 1.44%。rank 0 的单步内核任务从 36,775 降至 34,857（减少 1,918 个，5.22%），稳定窗口峰值分配显存均约 50.48 GiB。融合 AdamW 单独运行有收益，但与教师合批同时开启的结果不如只开启教师合批，因此保留为可选开关，默认关闭。所有有效训练和 profiler 作业退出码为 0，实验前后源码哈希一致。
+
+瓶颈画像
+默认 batch=12 基线的 rank 0 单步 profiler 记录 36,775 个内核任务，其中 AI Vector 30,592 个；21,102 个 Vector 内核短于 20 微秒（约 69%）。按数量排序的常见类型包括 Cast 5,980、Mul 4,689、Slice 4,005、Add 2,405。另一次 batch=6 的带调用栈双步采样中，FSDP2 参数展开/回收路径出现 8,274 次 copy_ 和 946 次类型转换；其余短算子分布在教师前向、Muon/AdamW 优化器和模型前后向，数据等待约 1 毫秒/步。默认 batch=12 每卡 AI Core 的 npu-smi 离散采样均值约 19.7%；低利用率不能只归因于 MoE，细碎算子派发、FSDP 同步及每卡计算工作量共同影响该读数。
+采样步 rank 0 仍有 174 次 all-gather、74 次 reduce-scatter、6 次 all-reduce；两项改动都不改变这 254 次跨卡任务。Profiler 会扰动速度，下述阶段耗时只用于定位和组间比较，真实训练加速以未采样窗口的 step_time 为准。
+
+改动一：当前/未来深度教师合批（默认开启）
+原训练分别对当前帧和未来帧调用 MoGe + MoRGBD 冻结教师。现在把两个输入沿 batch 维拼接，让两位教师各运行一次，再将目标特征按原 batch 大小拆回；未来帧输入多帧时仍只使用第一帧，保持原有语义。设置 LINGBOT_BATCH_DEPTH_TEACHERS=0 可回退。
+默认 batch=12 的采样步，train.teachers 主机范围由 404.8 降至 335.9 毫秒；任务数减少 1,918 个，通信任务仍为 254 个。第 31–43 步 loss 均值为基线 0.353891、合批 0.353797；逐步 loss 平均绝对差约 0.000319，属于 BF16 运行的微小数值差异，不能据此推断完整训练收敛相同。显存分配峰值约 50.48 GiB，无 OOM。
+
+改动二：原生 fused AdamW（保留可选）
+Muon 的 1D/非矩阵参数由 AdamW 更新。新增 LINGBOT_ADAMW_FUSED_NPU=1，给同质 Tensor/DTensor 参数组使用 torch.optim.AdamW(fused=True)；混合组保留非融合路径，加载优化器状态后重新应用本进程的执行策略。关闭时继续使用现有 foreach 路径。
+在每卡 batch=6 的独立 80 步对照中，第 31–70 步由 1.8725 降至 1.8401 秒/步（耗时减少 1.73%），AdamW 采样步主机耗时从 59.3 降至 24.7 毫秒。轨迹证实调用 aclnnApplyAdamWV2，但仍对 376 个参数逐一发起更新；整步任务数反而从 36,621 增至 36,917。收益来自主机派发，而非大幅减少设备内核数。
+
+完整对照（8× Ascend 910B1，同一基础版本、数据清单和其他优化开关；实验功能及其所需代码按表切换）
+每卡 batch=6；第 31–70 步，40 个未采样更新；rank 0 于第 79 步采样：
+  foreach 基线       fused=0 teacher_batch=0  1.8725 s/步  36,621 任务/采样步
+  仅 fused AdamW      fused=1 teacher_batch=0  1.8401 s/步  36,917 任务/采样步
+  仅深度教师合批       fused=0 teacher_batch=1  1.8232 s/步  34,703 任务/采样步
+  同时开启             fused=1 teacher_batch=1  1.8693 s/步  两项收益未叠加
+每卡 batch=12（脚本默认）；第 31–43 步，13 个未采样更新；rank 0 于第 44 步采样：
+  foreach 基线       fused=0 teacher_batch=0  2.1929 s/步  36,775 任务/采样步
+  仅深度教师合批       fused=0 teacher_batch=1  2.1618 s/步  34,857 任务/采样步
+  同时开启             fused=1 teacher_batch=1  2.1736 s/步  35,153 任务/采样步
+组合运行中的教师、前后向和 Muon 阶段也出现整体波动；现有数据不足以把组合未叠加严格归因于算子冲突。按默认 batch=12 的实测总步耗时，选择仅教师合批作为默认。AI Core 采样均值在 batch=12 的三组分别约为 19.7%、23.9%、20.6%；它是离散利用率读数，不等于模型 FLOPs 利用率，也不应单独作为优化成败指标。
+
+验证和边界
+7 组有效 8 卡作业（4 组 batch=6、3 组 batch=12）均退出 0，源码哈希校验通过；脚本 bash -n、Python py_compile、DRY_RUN 通过；tests/test_round3_optimizations.py 为 20 passed、1 skipped；深度教师合批在 CPU 假教师上与逐次调用完全一致，也检查了多未来帧只取首帧的语义。落地代码把开关读取移到训练循环外，并在合批前显式截取首帧；当前 RoboTwin 数据形状下语义不变，但这两处整理后的最终文件哈希未另跑完整 8 卡短跑。此前第一次隔离工作树试跑没有正确设置 REPO_ROOT，相关 /cache 目录已标记 INVALID_FOR_COMPARISON，本报告完全排除这些数据。本轮为短跑，没有验证完整 epoch、机器人任务成功率，也没有做真实 8 卡检查点恢复；fused AdamW 的状态加载策略通过了合成测试，但保持默认关闭。
+
+原始证据（不提交到 Git）
+带调用栈定位：/cache/lingbot/profiling/smallop_stack_20261017_rank0/
+8卡 batch=6：/cache/lingbot/profiling/card8_micro6_{adamwcontrol_valid_20261017_210857,adamwfused_valid_20261017_210035,depthbatch_valid_20261017_211725,combined_valid_20261017_212600}/
+8卡 batch=12：/cache/lingbot/profiling/card8_micro12_{default12_control_20261017_214208,default12_depthbatch_20261017_214950,default12_combined_20261017_213427}/
+各目录含 experiment_manifest.json、logs/loss.jsonl、resource_samples.jsonl、source_hash_check.json、trace/rank0/.../ASCEND_PROFILER_OUTPUT；可复算逐步耗时、利用率和内核任务。

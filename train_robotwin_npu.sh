@@ -8,6 +8,7 @@
 #   - 配置: configs/vla/robotwin/robotwin_npu.yaml（FP32 SDPA + 原生 GMM + sdpa teacher）
 #   - 第二轮默认：AdamW foreach、MoE 监控合批、关闭动作层梯度重计算
 #   - 第三轮默认：Muon 专家合批、CPU 位置元数据、FP32 RMSNorm 融合
+#   - 第五轮默认：当前/未来深度教师合批；NPU fused AdamW 保留独立开关
 #   - 两阶段 FSDP 显式预取保留实验开关；消融收益不足 1%，默认关闭
 #   - 默认 1 epoch，结束后保存 OBS；/cache 暂存一份检查点，验证后清理
 #   - 小日志放仓库 logs/；默认从 OBS 最新完整检查点恢复
@@ -98,6 +99,10 @@ EMPTY_CACHE_STEPS="${EMPTY_CACHE_STEPS:-}"
 export LINGBOT_JOINT_ATTN_BACKEND="${LINGBOT_JOINT_ATTN_BACKEND-sdpa_fp32}"
 export LINGBOT_MOE_MONITOR_BATCH_COUNTS="${LINGBOT_MOE_MONITOR_BATCH_COUNTS:-1}"
 export LINGBOT_ADAMW_FOREACH_NPU="${LINGBOT_ADAMW_FOREACH_NPU:-1}"
+# Fused AdamW cuts host dispatch in isolation; the combined path was slower than
+# teacher batching alone, so keep this experiment opt-in.
+export LINGBOT_ADAMW_FUSED_NPU="${LINGBOT_ADAMW_FUSED_NPU:-0}"
+export LINGBOT_BATCH_DEPTH_TEACHERS="${LINGBOT_BATCH_DEPTH_TEACHERS:-1}"
 # 第三轮保持 Muon 公式和参数状态结构；批输入额外限制为 32 MiB。
 export LINGBOT_MUON_LOCAL_BATCH="${LINGBOT_MUON_LOCAL_BATCH:-8}"
 export LINGBOT_HOST_METADATA="${LINGBOT_HOST_METADATA:-1}"
@@ -113,7 +118,7 @@ case "$LINGBOT_JOINT_ATTN_BACKEND" in
   ""|eager|sdpa_fp32) ;;
   *) echo "[错误] LINGBOT_JOINT_ATTN_BACKEND 必须为空、eager 或 sdpa_fp32。" >&2; exit 1 ;;
 esac
-for speed_switch in LINGBOT_MOE_MONITOR_BATCH_COUNTS LINGBOT_ADAMW_FOREACH_NPU \
+for speed_switch in LINGBOT_MOE_MONITOR_BATCH_COUNTS LINGBOT_ADAMW_FOREACH_NPU LINGBOT_ADAMW_FUSED_NPU LINGBOT_BATCH_DEPTH_TEACHERS \
   LINGBOT_HOST_METADATA LINGBOT_NPU_FUSED_RMSNORM LINGBOT_FSDP_FORWARD_PREFETCH; do
   case "${!speed_switch}" in
     0|1) ;;
@@ -333,7 +338,8 @@ cat <<EOF
  NPU MoE     : $LINGBOT_NPU_MOE_IMPL
  联合注意力  : ${LINGBOT_JOINT_ATTN_BACKEND:-配置原值}
  统计合批    : $LINGBOT_MOE_MONITOR_BATCH_COUNTS
- 参数合批    : $LINGBOT_ADAMW_FOREACH_NPU（现有 AdamW 分支）
+ AdamW 融合  : $LINGBOT_ADAMW_FUSED_NPU（关闭后 foreach=$LINGBOT_ADAMW_FOREACH_NPU）
+ 深度教师合批: $LINGBOT_BATCH_DEPTH_TEACHERS
  Muon 合批   : $LINGBOT_MUON_LOCAL_BATCH（每批输入最多 32 MiB，单个参数除外）
  CPU 元数据  : $LINGBOT_HOST_METADATA
  融合 RMSNorm: $LINGBOT_NPU_FUSED_RMSNORM（FP32 归一化）
@@ -354,6 +360,8 @@ if [ "$DRY_RUN" = "1" ]; then
   printf 'export LINGBOT_JOINT_ATTN_BACKEND=%q\n' "$LINGBOT_JOINT_ATTN_BACKEND"
   printf 'export LINGBOT_MOE_MONITOR_BATCH_COUNTS=%q\n' "$LINGBOT_MOE_MONITOR_BATCH_COUNTS"
   printf 'export LINGBOT_ADAMW_FOREACH_NPU=%q\n' "$LINGBOT_ADAMW_FOREACH_NPU"
+  printf 'export LINGBOT_ADAMW_FUSED_NPU=%q\n' "$LINGBOT_ADAMW_FUSED_NPU"
+  printf 'export LINGBOT_BATCH_DEPTH_TEACHERS=%q\n' "$LINGBOT_BATCH_DEPTH_TEACHERS"
   printf 'export TASK_QUEUE_ENABLE=%q\n' "$TASK_QUEUE_ENABLE"
   for speed_switch in LINGBOT_MUON_LOCAL_BATCH LINGBOT_HOST_METADATA LINGBOT_NPU_FUSED_RMSNORM LINGBOT_FSDP_FORWARD_PREFETCH; do
     printf 'export %s=%q\n' "$speed_switch" "${!speed_switch}"
@@ -408,9 +416,9 @@ conda activate "$CONDA_ENV"
 mkdir -p "$OUTPUT_DIR" "$LOG_DIR"
 
 # 环境开关不在 YAML 中；追加到正式训练日志，便于复现和续训核对。
-printf '[NPU speed] moe=%s joint_attention=%s monitor_batch=%s adamw_foreach=%s gradient_checkpointing=%s\n' \
+printf '[NPU speed] moe=%s joint_attention=%s monitor_batch=%s adamw_foreach=%s adamw_fused=%s depth_teacher_batch=%s gradient_checkpointing=%s\n' \
   "$LINGBOT_NPU_MOE_IMPL" "${LINGBOT_JOINT_ATTN_BACKEND:-from_config}" \
-  "$LINGBOT_MOE_MONITOR_BATCH_COUNTS" "$LINGBOT_ADAMW_FOREACH_NPU" \
+  "$LINGBOT_MOE_MONITOR_BATCH_COUNTS" "$LINGBOT_ADAMW_FOREACH_NPU" "$LINGBOT_ADAMW_FUSED_NPU" "$LINGBOT_BATCH_DEPTH_TEACHERS" \
   "${ENABLE_GRAD_CKPT:-from_config}" | tee -a "$LOG_DIR/train.log"
 printf '[NPU speed round3] muon_local_batch=%s host_metadata=%s fused_rmsnorm=%s fsdp_forward_prefetch=%s\n' \
   "$LINGBOT_MUON_LOCAL_BATCH" "$LINGBOT_HOST_METADATA" "$LINGBOT_NPU_FUSED_RMSNORM" \

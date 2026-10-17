@@ -454,6 +454,26 @@ def get_depth_target(model_type, depth_model, pil_images):
 
     return depth_target.to(dtype=torch.bfloat16), cls_token
 
+
+def get_depth_target_pair(model_type, depth_model, current_images, future_images):
+    """Run the same frozen depth teachers once for current and future frames."""
+    # get_depth_target uses the first frame from each input; normalize the
+    # frame count here so callers with several future frames keep that contract.
+    current_images = current_images[:, :1]
+    future_images = future_images[:, :1]
+    if current_images.shape[1:] != future_images.shape[1:]:
+        raise ValueError("Depth teacher inputs must have matching non-batch dimensions")
+    current_count = current_images.shape[0]
+    future_count = future_images.shape[0]
+    targets, cls_tokens = get_depth_target(
+        model_type, depth_model, torch.cat((current_images, future_images), dim=0)
+    )
+    current_target, future_target = targets.split((current_count, future_count), dim=0)
+    if cls_tokens is None:
+        return (current_target, None), (future_target, None)
+    current_cls, future_cls = cls_tokens.split((current_count, future_count), dim=0)
+    return (current_target, current_cls), (future_target, future_cls)
+
 def log_depth(vis_head, depth_pred_feats, depth_target_feats=None, steps=0, config=None, cls_token=None, is_future=False):
     model_type = config['depth']['model_type']
     if model_type != 'MoRGBD':
