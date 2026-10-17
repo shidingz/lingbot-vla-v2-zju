@@ -438,11 +438,11 @@ class DistributedCheckpointer(CheckpointerBase):
                 dcp.load(
                     state_dict={"state": OptimizerState(model=state["model"], optimizer=state["optimizer"])}, # 1043
                     storage_reader=FileSystemReader(optimizer_dir), # 1027
-                    planner = DefaultLoadPlanner(allow_partial_load=True),
+                    planner=DefaultLoadPlanner(allow_partial_load=allow_partial_load),
                     process_group=process_group,
                 )
-            except:
-                logger.info_rank0(f"Skip loading Optimizer from {checkpoint_dir}")
+            except Exception as exc:
+                raise RuntimeError(f"Failed to restore optimizer from {checkpoint_dir}") from exc
         else:
             model_dir = os.path.join(checkpoint_dir, _MODEL_DIR)
             dcp.load(
