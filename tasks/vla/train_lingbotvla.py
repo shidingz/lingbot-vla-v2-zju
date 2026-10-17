@@ -1187,6 +1187,9 @@ def main():
                     "future_video_loss": float(total_future_video_loss),
                     "grad_norm": float(grad_norm), "lr": lr, "expert_lr": expert_lr,
                     "step_time": delta_time,
+                    "memory_peak_allocated_gib": train_metrics["max_memory_allocated(GB)"],
+                    "memory_peak_reserved_gib": train_metrics["max_memory_reserved(GB)"],
+                    "memory_alloc_retries": train_metrics["num_alloc_retries"],
                 }
                 loss_file.write(json.dumps(loss_record, ensure_ascii=False) + "\n")
 
@@ -1205,6 +1208,15 @@ def main():
                                     current_target_feats=future_video_current_dino,
                                     current_pred_feats=future_video_current_preds,
                                 )
+
+            # Periodic per-layer logging performs device-to-host copies and
+            # queues CPU plots on rank 0. Keep other ranks out of the next
+            # FSDP iteration until these finish: on Ascend, running ahead here
+            # can exhaust allocator memory and deadlock pending collectives.
+            if global_step % max(1, args.train.moe_monitor_interval) == 0:
+                if args.train.global_rank == 0:
+                    writer.flush()
+                dist.barrier()
 
             training_profiler.step()
             if args.train.save_steps and global_step % args.train.save_steps == 0:
